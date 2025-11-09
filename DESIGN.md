@@ -1,176 +1,104 @@
-# Turtleand — Editorial Hero + Quadrant Navigation
+# Turtleand Portal — Current Design Reference
 
-**Design Specification Document (for implementation)**
-
----
-
-## 1. Brand Concept
-
-**Core idea:**
-Turtleand is a reflective, global, human-centered ecosystem exploring technology and systems.
-The homepage acts as a gateway to four subdomains — AI, Growth, Build, and Blockchain — presented as “pillars of exploration.”
-The design should feel modern, editorial, and timeless, bridging philosophical clarity with tech minimalism.
+**Purpose:** capture how the production branch currently looks/behaves so future passes know what is in place and what is still pending.
 
 ---
 
-## 2. Visual Identity
+## 1. Status Snapshot
 
-### Color Palette
-
-| Purpose                              | Color                                                                        | Hex                 | Notes                                                    |
-| ------------------------------------ | ---------------------------------------------------------------------------- | ------------------- | -------------------------------------------------------- |
-| Primary Gradient 1 (Hero Background) | Deep ocean blue → teal green                                                 | `#0E1E2B → #2E8373` | Represents depth + balance between nature and technology |
-| Accent Gradient 2 (Subdomain Cards)  | Soft cyan → dusk orange                                                      | `#7AD6C2 → #F9A856` | Used for hover transitions or subtle overlays            |
-| Text Primary                         | Off-white                                                                    | `#F4F4F4`           | Gentle contrast on dark backgrounds                      |
-| Text Secondary                       | Muted gray                                                                   | `#A8B3BA`           | Used for sublines and taglines                           |
-| Card Backgrounds                     | AI: `#0C2238` / Growth: `#1B4B43` / Build: `#12313B` / Blockchain: `#3A2416` | —                   | Distinct tone per domain; dark enough to unify with hero |
-| Interactive / CTA                    | Light teal                                                                   | `#6FE1C3`           | Button borders, links, hover glow                        |
-| Error/Warning                        | Amber                                                                        | `#F7B267`           | Rarely used; only for subtle status elements             |
+- **Framework:** Astro 4 + TailwindCSS 3 with a single `Layout` shell that loads Playfair Display and Inter from Google Fonts and injects global CSS tokens (`src/styles/globals.css`).
+- **Shipped sections:** animated hero background with editorial copy, quadrant navigation powered by `QuadrantGrid`/`DomainCard`, and a placeholder footer banner.
+- **Interaction polish:** card hover glow, subtle lift, and staggered fade-up entrance powered by custom keyframes declared in Tailwind config.
+- **Not yet implemented:** logo artwork, navigation links, scroll indicator/CTA, detailed footer content, and per-domain destination pages (cards currently deep-link to external subdomains).
 
 ---
 
-## 3. Typography
+## 2. Visual System
 
-| Role                    | Font Family      | Weight | Style                                                 |
-| ----------------------- | ---------------- | ------ | ----------------------------------------------------- |
-| Headings (H1–H2)        | Playfair Display | 600    | Editorial, serif, evokes authority and calm intellect |
-| Subheadings / Hero Line | Inter            | 500    | Clean sans-serif, for balance and clarity             |
-| Body Text               | Inter            | 400    | Default text across cards, footer, and CTA labels     |
-| Buttons / Labels        | Inter            | 500    | All caps or small caps for clarity                    |
+### Color Tokens (from `:root` in `globals.css`****)
 
-**Fallbacks:**
-Playfair Display, Georgia, serif
-Inter, Helvetica Neue, Arial, sans-serif
+| Token / Usage             | Hex        | Notes                                                                |
+| ------------------------- | ---------- | -------------------------------------------------------------------- |
+| `--color-deep-blue`       | `#0E1E2B`  | Page background + body fill                                          |
+| `--color-teal`            | `#2E8373`  | Secondary tone, used inside the radial hero gradient                 |
+| `--color-off-white`       | `#F4F4F4`  | Primary text                                                         |
+| `--color-muted`           | `#A8B3BA`  | Supporting copy (hero subline, domain taglines)                      |
+| `--color-accent`          | `#6FE1C3`  | Focus ring + intended CTA/interactive accents                        |
+| `--card-ai`               | `#0C2238`  | Domain card background: AI                                           |
+| `--card-growth`           | `#1B4B43`  | Domain card background: Growth                                       |
+| `--card-build`            | `#12313B`  | Domain card background: Build                                        |
+| `--card-blockchain`       | `#3A2416`  | Domain card background: Blockchain                                   |
+| Gradient (utility class)  | teal → navy radial | Applied through `.hero-gradient`; animated with `heroWave` keyframes |
 
----
+### Typography
 
-## 4. Layout Structure
-
-### Hero Section
-
-```
-+---------------------------------------------------+
-| LOGO (top-left)           NAV (top-right)         |
-|                                                   |
-|           [H1] Exploring Humanity, Systems,       |
-|                and the Future of Technology        |
-|           [Subline] Turtleand is a network of     |
-|                ideas — from AI to blockchain.     |
-|                                                   |
-|        [ ↓  Scroll indicator / Enter the map ]    |
-+---------------------------------------------------+
-```
-
-**Height:** 90–100vh (full screen)
-**Background:** Animated gradient from `#0E1E2B` to `#2E8373` with soft moving wave overlay (SVG or canvas-based).
-**Text alignment:** Centered (horizontal and vertical).
-**Logo:** Small turtle icon or minimalist text mark “Turtleand”.
+| Role                  | Font Stack                                  | Weight(s) in use | Implementation detail                                      |
+| --------------------- | ------------------------------------------- | ---------------- | ---------------------------------------------------------- |
+| Headings (`font-heading`) | Playfair Display, Georgia, serif             | 500, 600         | Hero H1 (`text-4xl` → `text-6xl`), card titles (`text-3xl`) |
+| Body (`font-body`)    | Inter, Helvetica Neue, Arial, sans-serif    | 400, 500         | Layout body copy, nav placeholders, card taglines          |
 
 ---
 
-### Quadrant Section (Subdomain Cards)
+## 3. Layout & Components
 
-```
-+---------------------------------------------------+
-| ┌────────────┬────────────┬────────────┬──────────┐
-| │  AI        │ Growth     │ Build      │ Blockchain│
-| │ Machine    │ Human      │ Code as    │ Decentralized│
-| │ Reasoning  │ Potential  │ Creation   │ Trust      │
-| │ [Enter →]  │ [Enter →]  │ [Enter →]  │ [Enter →]  │
-| └────────────┴────────────┴────────────┴──────────┘
-+---------------------------------------------------+
-```
+### Layout Shell (`src/layouts/Layout.astro`)
 
-* **Grid:** 4 equal cards horizontally (responsive: 2×2 on tablet, 1×4 stacked on mobile).
-* **Card size:** 320×320px (desktop baseline).
-* **Padding:** 2rem.
-* **Border radius:** 1rem (soft, modern feel).
+- Applies dark background, off-white text, and the `font-body` class to `<body>`.
+- Injects SEO meta, Google Font preconnects, and exposes `<slot />` for page content plus a named footer slot.
+- No global header/footer component yet; children must supply them.
 
-**Hover state:**
+### Hero (`src/components/Hero.astro`)
 
-* Subtle scale-up (1.02x)
-* Gradient border glow (`#6FE1C3 → #F9A856`)
-* Elevation shadow `0 8px 24px rgba(0,0,0,0.25)`
-* Button “Enter” slides up slightly (`translateY(-4px)`)
+- Split across two stacked sections sharing the animated radial gradient background.
+- **Top bar:** placeholder text for logo (`"TODO: add logo"`) and nav (`"TODO: add relevant navigation"`); nav hidden below `md`.
+- **Main hero copy:** centered content block (`max-w-3xl`) with the line “Where Humans and Technology Evolve Together” and supporting paragraph. No CTA button or scroll indicator is present yet.
 
----
+### Quadrant Navigation (`src/components/QuadrantGrid.astro` + `DomainCard.astro`)
 
-## 5. Motion & Interaction Design
+- Grid renders four cards sourced from a local `domains` array (AI, Growth, Build, Blockchain) with emoji badges and descriptive taglines.
+- Layout: single column on mobile, switches to two columns at `md` and stays two columns on larger breakpoints (there is no 4-up desktop layout yet).
+- Card styling (`card-surface` + `card-content`):
+  - Variant-specific dark backgrounds tied to the tokens above.
+  - Gradient border glow appears on hover/focus via a pseudo-element; cards lift by `translateY(-4px)` and scale to `1.02`.
+  - Focus-visible rings respect accessibility guidelines (`ring-accent` on top of deep blue offset).
+  - Entry animation: `animate-fadeUp` with a stagger controlled by inline `animation-delay`.
+- Each card links to an external Turtleand subdomain (`https://{domain}.turtleand.com`).
 
-### Global Motion Principles
+### Footer (`src/components/Footer.astro`)
 
-Smooth, slow, confident — never flashy.
-Prioritize “calm animation” (ease-in-out cubic, Apple-inspired).
-
-| Element              | Animation                           | Timing                 | Behavior                           |
-| -------------------- | ----------------------------------- | ---------------------- | ---------------------------------- |
-| Hero gradient        | Subtle wave or parallax motion      | Infinite (30–60s loop) | Background breathes gently         |
-| Scroll indicator     | Fade up/down loop                   | 2s loop                | Encourages scroll without clutter  |
-| Card hover           | Scale (1.02) + glow                 | 250ms                  | Ease-out cubic                     |
-| Card entry (on load) | Fade-in + stagger (0.1s delay each) | 600ms total            | Sequential introduction of 4 cards |
-| Button hover         | Border + text color change          | 150ms                  | Immediate feedback                 |
+- Currently a minimal container with a TODO note and a subtle top border (`border-white/10`) over a solid `#0b1823` background.
+- Needs real navigation/content before launch.
 
 ---
 
-## 6. Tone & Experience
+## 4. Motion & Interaction
 
-**Tone:** Reflective, trustworthy, global.
-Balance between tech sophistication and human warmth.
-Voice should feel like an intelligent guide, not a marketer.
+| Element / Class        | Behavior                                                                 | Source |
+| ---------------------- | ------------------------------------------------------------------------- | ------ |
+| `.hero-gradient.animate-heroWave` | 40s alternating background-position animation simulating gentle wave motion | Tailwind `heroWave` keyframes |
+| `.card-surface` hover  | Gradient outline fade-in + scale/translate + drop shadow                  | `globals.css` |
+| `.card-content.animate-fadeUp` | 0.6s fade/slide from below with per-card delay                      | Tailwind `fadeUp` keyframes |
+| `.scroll-indicator`    | Styles exist but component not wired into the hero yet                    | `globals.css` |
 
-**Intended emotional impact:**
-Calm curiosity — the visitor feels they’ve arrived in a place that understands both the logic of technology and the depth of human thought.
-
-**Keywords:**
-Clarity · Depth · Balance · Global · Reflective · Human
-
----
-
-## 7. Responsive Behavior
-
-| Viewport          | Layout Adaptation                                         |
-| ----------------- | --------------------------------------------------------- |
-| Desktop (≥1200px) | 4-column grid; hero text centered.                        |
-| Tablet (≥768px)   | 2×2 grid; hero text slightly smaller (max-width 75%).     |
-| Mobile (<768px)   | Single column; each card full-width; hero stack centered. |
-
-**Hero background:** Simplify wave animation for mobile (use static gradient).
+Animations use easing curves defined inline (Tailwind’s default `ease-in-out` / `ease-out`).
 
 ---
 
-## 8. Implementation Notes
+## 5. Responsive Behavior
 
-* **Framework:** Astro or Next.js + TailwindCSS (for consistent spacing, typography, and transitions).
-* **Animations:** Framer Motion or CSS keyframes (no heavy JS).
-* **Hosting:** Netlify static deployment, pre-rendered HTML for SEO.
-* **SEO:** Each subdomain card links via canonical tag.
-
-**Accessibility:**
-
-* Contrast ratio ≥ 4.5:1 for all text.
-* Tab focus visible on all interactive elements.
-* Buttons use semantic `<a>` or `<button>` elements.
+| Breakpoint            | Current behavior                                                                                               |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Base / Mobile (<768px)| Hero padding collapses to `px-6`, nav hidden; quadrant grid stacks cards vertically with full-width tiles.      |
+| `md` (≥768px)         | Hero padding grows, nav appears inline, grid switches to two columns.                                          |
+| `lg`+                 | No additional layout change yet (cards remain in two columns; hero text caps at `max-w-3xl`).                   |
+| Motion fallback       | Media query disables hero animation below 768px, swapping to a static radial gradient for performance reasons. |
 
 ---
 
-## 9. Example Tagline Set (for hover tooltips or cards)
+## 6. Outstanding TODOs / Next Design Steps
 
-| Subdomain  | Tagline                                                       |
-| ---------- | ------------------------------------------------------------- |
-| AI         | “Understanding reasoning, intelligence, and machine thought.” |
-| Growth     | “Exploring human potential and systems of improvement.”       |
-| Build      | “Engineering software and logic for a connected world.”       |
-| Blockchain | “Decentralizing trust, ownership, and identity.”              |
-
----
-
-## 10. Summary
-
-**Design Signature:**
-
-* Editorial hero (philosophical intro)
-* Calm gradient motion (depth)
-* Quadrant navigation (clarity)
-* Unified tone (human + tech harmony)
-
-This page should feel like the calm surface of a deep ocean — elegant, global, and intelligent.
+1. Design and implement the Turtleand wordmark/logo plus the supporting top navigation items.
+2. Add a CTA or scroll affordance under the hero copy (existing `.scroll-indicator` styles can be reused).
+3. Expand the quadrant grid to a true 4-column experience on large screens, or intentionally document the two-column choice.
+4. Populate the footer with navigation, contact, and ownership metadata to balance the page.
+5. Audit contrast/typography once the missing elements are in place to ensure the color tokens still meet accessibility targets.
