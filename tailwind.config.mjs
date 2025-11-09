@@ -1,4 +1,4 @@
-import { defineConfig } from 'tailwindcss';
+import { defineConfig } from 'tailwindcss/helpers';
 
 export default defineConfig({
   content: ['src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
