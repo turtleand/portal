@@ -1,6 +1,5 @@
-import { defineConfig } from 'tailwindcss/helpers';
-
-export default defineConfig({
+/** @type {import('tailwindcss').Config} */
+const config = {
   content: ['src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
@@ -49,4 +48,6 @@ export default defineConfig({
     },
   },
   plugins: [],
-});
+};
+
+export default config;
