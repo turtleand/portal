@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-deep-blue: #0e1e2b;
+  --color-teal: #2e8373;
+  --color-off-white: #f4f4f4;
+  --color-muted: #a8b3ba;
+  --color-accent: #6fe1c3;
+  --card-ai: #0c2238;
+  --card-growth: #1b4b43;
+  --card-build: #12313b;
+  --card-blockchain: #3a2416;
+}
+
+body {
+  background-color: var(--color-deep-blue);
+  color: var(--color-off-white);
+}
+
+.hero-gradient {
+  background: radial-gradient(circle at top, rgba(46, 131, 115, 0.6) 0%, rgba(14, 30, 43, 0.95) 55%, rgba(14, 30, 43, 1) 100%);
+  background-size: 200% 200%;
+}
+
+.card-surface {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 250ms ease, box-shadow 250ms ease;
+}
+
+.card-surface::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  z-index: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(111, 225, 195, 0.6), rgba(249, 168, 86, 0.6));
+  opacity: 0;
+  transition: opacity 250ms ease;
+}
+
+.card-surface:hover::before,
+.card-surface:focus-within::before {
+  opacity: 1;
+}
+
+.card-surface > .card-content {
+  position: relative;
+  z-index: 1;
+  border-radius: calc(1rem - 2px);
+}
+
+.card-surface:hover,
+.card-surface:focus-within {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.scroll-indicator {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, rgba(244, 244, 244, 0), rgba(244, 244, 244, 0.7));
+  position: relative;
+}
+
+.scroll-indicator::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: var(--color-off-white);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@media (max-width: 767px) {
+  .hero-gradient {
+    animation: none;
+    background: radial-gradient(circle at top, rgba(46, 131, 115, 0.5) 0%, rgba(14, 30, 43, 1) 70%);
+  }
+}
