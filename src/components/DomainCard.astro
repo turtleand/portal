@@ -1,35 +1,36 @@
 ---
 const { label, emoji, tagline, href, variant, delay = 0 } = Astro.props;
 const backgroundClasses = {
-  ai: 'bg-card-ai',
-  growth: 'bg-card-growth',
-  build: 'bg-card-build',
-  blockchain: 'bg-card-blockchain',
+  ai: "bg-card-ai",
+  growth: "bg-card-growth",
+  build: "bg-card-build",
+  blockchain: "bg-card-blockchain",
 };
 ---
+
 <a
   href={href}
   class:list={{
-    'card-surface': true,
+    "card-surface": true,
     group: true,
-    'focus:outline-none': true,
-    'focus-visible:ring-2': true,
-    'focus-visible:ring-offset-2': true,
-    'focus-visible:ring-accent': true,
-    'focus-visible:ring-offset-deepBlue': true,
+    "focus:outline-none": true,
+    "focus-visible:ring-2": true,
+    "focus-visible:ring-offset-2": true,
+    "focus-visible:ring-accent": true,
+    "focus-visible:ring-offset-deepBlue": true,
   }}
 >
   <div
     class:list={{
-      'card-content': true,
-      'flex': true,
-      'h-full': true,
-      'flex-col': true,
-      'justify-between': true,
-      'p-8': true,
-      'transition-transform': true,
-      'animate-fadeUp': true,
-      [backgroundClasses[variant] ?? 'bg-card-ai']: true,
+      "card-content": true,
+      flex: true,
+      "h-full": true,
+      "flex-col": true,
+      "justify-between": true,
+      "p-8": true,
+      "transition-transform": true,
+      "animate-fadeUp": true,
+      [backgroundClasses[variant] ?? "bg-card-ai"]: true,
     }}
     style={`animation-delay: ${delay}ms;`}
   >
@@ -39,10 +40,6 @@ const backgroundClasses = {
         <h2 class="font-heading text-3xl">{label}</h2>
         <p class="text-muted mt-2 text-base">{tagline}</p>
       </div>
-    </div>
-    <div class="mt-8 flex items-center gap-2 text-sm uppercase tracking-[0.4em] text-muted transition-transform group-hover:-translate-y-1">
-      <span>Enter</span>
-      <span aria-hidden="true">→</span>
     </div>
   </div>
 </a>

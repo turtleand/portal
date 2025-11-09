@@ -1,47 +1,44 @@
 ---
-import DomainCard from './DomainCard.astro';
+import DomainCard from "./DomainCard.astro";
 
 const domains = [
   {
-    label: 'AI',
-    emoji: '🧠',
-    tagline: 'Understanding reasoning, intelligence, and machine thought.',
-    href: 'https://ai.turtleand.com',
-    variant: 'ai',
+    label: "AI",
+    emoji: "🧠",
+    tagline: "Understanding reasoning, intelligence, and machine thought.",
+    href: "https://ai.turtleand.com",
+    variant: "ai",
   },
   {
-    label: 'Growth',
-    emoji: '🌱',
-    tagline: 'Exploring human potential and systems of improvement.',
-    href: 'https://growth.turtleand.com',
-    variant: 'growth',
+    label: "Growth",
+    emoji: "🌱",
+    tagline: "Exploring human potential and systems of improvement.",
+    href: "https://growth.turtleand.com",
+    variant: "growth",
   },
   {
-    label: 'Build',
-    emoji: '⚙️',
-    tagline: 'Engineering software and logic for a connected world.',
-    href: 'https://build.turtleand.com',
-    variant: 'build',
+    label: "Build",
+    emoji: "⚙️",
+    tagline: "Engineering software and logic for a connected world.",
+    href: "https://build.turtleand.com",
+    variant: "build",
   },
   {
-    label: 'Blockchain',
-    emoji: '🔗',
-    tagline: 'Decentralizing trust, ownership, and identity.',
-    href: 'https://blockchain.turtleand.com',
-    variant: 'blockchain',
+    label: "Blockchain",
+    emoji: "🔗",
+    tagline: "Decentralizing trust, ownership, and identity.",
+    href: "https://blockchain.turtleand.com",
+    variant: "blockchain",
   },
 ];
 ---
+
 <section id="quadrants" class="max-w-6xl mx-auto px-6 py-16">
-  <header class="mb-10 max-w-3xl">
-    <h2 class="font-heading text-3xl md:text-4xl">Pillars of Exploration</h2>
-    <p class="text-muted mt-3 text-base md:text-lg">
-      Navigate Turtleand’s four domains. Each is a deep dive into the systems shaping intelligence, human growth, engineering craft, and decentralized futures.
-    </p>
-  </header>
-  <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-    {domains.map((domain, index) => (
-      <DomainCard {...domain} delay={index * 120} />
-    ))}
+  <div class="grid gap-6 md:grid-cols-2">
+    {
+      domains.map((domain, index) => (
+        <DomainCard {...domain} delay={index * 120} />
+      ))
+    }
   </div>
 </section>
