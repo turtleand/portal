@@ -1,5 +1,15 @@
 ---
 import DomainCard from "./DomainCard.astro";
+import aiBackgroundAsset from "../images/ai.png";
+import growthBackgroundAsset from "../images/growth.png";
+import buildBackgroundAsset from "../images/build.png";
+import blockchainBackgroundAsset from "../images/blockchain.png";
+
+const aiBackground = aiBackgroundAsset.src ?? aiBackgroundAsset;
+const growthBackground = growthBackgroundAsset.src ?? growthBackgroundAsset;
+const buildBackground = buildBackgroundAsset.src ?? buildBackgroundAsset;
+const blockchainBackground =
+  blockchainBackgroundAsset.src ?? blockchainBackgroundAsset;
 
 const domains = [
   {
@@ -8,6 +18,7 @@ const domains = [
     tagline: "Understanding reasoning, intelligence, and machine thought.",
     href: "https://ai.turtleand.com",
     variant: "ai",
+    image: aiBackground,
   },
   {
     label: "Growth",
@@ -15,6 +26,7 @@ const domains = [
     tagline: "Exploring human potential and systems of improvement.",
     href: "https://growth.turtleand.com",
     variant: "growth",
+    image: growthBackground,
   },
   {
     label: "Build",
@@ -22,6 +34,7 @@ const domains = [
     tagline: "Engineering software and logic for a connected world.",
     href: "https://build.turtleand.com",
     variant: "build",
+    image: buildBackground,
   },
   {
     label: "Blockchain",
@@ -29,6 +42,7 @@ const domains = [
     tagline: "Decentralizing trust, ownership, and identity.",
     href: "https://blockchain.turtleand.com",
     variant: "blockchain",
+    image: blockchainBackground,
   },
 ];
 ---
