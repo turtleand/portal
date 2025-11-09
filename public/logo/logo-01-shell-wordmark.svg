@@ -1,0 +1,35 @@
+<svg width="240" height="48" viewBox="0 0 240 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="markGlow" x1="12" y1="8" x2="48" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7FE3FF" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#3BD38C" stop-opacity="0.7"/>
+    </linearGradient>
+    <radialGradient id="markCore" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(30 24) scale(18 16)">
+      <stop stop-color="#7FE3FF" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#3BD38C" stop-opacity="0.4"/>
+    </radialGradient>
+    <linearGradient id="wordGradient" x1="62" y1="12" x2="240" y2="36" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7FE3FF"/>
+      <stop offset="1" stop-color="#3BD38C"/>
+    </linearGradient>
+  </defs>
+  <g id="mark" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M30 10l12 7v14l-12 7-12-7V17l12-7z" fill="url(#markCore)" stroke="rgba(255,255,255,0.85)" stroke-width="1.4"/>
+    <path d="M18 17l12 6 12-6" stroke="url(#markGlow)" stroke-width="2.2"/>
+    <path d="M18 24l12 6 12-6" stroke="url(#markGlow)" stroke-width="2.2"/>
+    <path d="M30 10v34" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+    <path d="M18 17v14l12 7" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+    <path d="M42 17v14l-12 7" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+  </g>
+  <g id="wordmark" fill="url(#wordGradient)" stroke="rgba(255,255,255,0.4)" stroke-width="0.4" stroke-linejoin="round">
+    <path d="M62 12h18v4h-7v20h-4V16h-7z"/>
+    <path d="M83 12h4v16c0 4 2 6 5 6s5-2 5-6V12h4v16c0 6-3 10-9 10s-9-4-9-10z"/>
+    <path d="M102 12h11c7 0 11 4 11 9 0 4-2 7-6 8l7 11h-5l-6-10h-8v10h-4zm4 4v9h7c4 0 7-2 7-5 0-3-3-4-7-4z"/>
+    <path d="M123 12h18v4h-7v20h-4V16h-7z"/>
+    <path d="M144 12h4v20h14v4h-18z"/>
+    <path d="M161 12h18v4h-14v6h12v4h-12v6h14v4h-18z"/>
+    <path d="M182 32l8-20h4l8 20h-4.4l-1.6-4h-8l-1.6 4H182zm9-8h5.6L191 16.4z"/>
+    <path d="M201 12h4l10 18V12h4v24h-4l-10-18v18h-4z"/>
+    <path d="M222 12h11c7 0 13 6 13 12s-6 12-13 12h-11zm4 4v16h7c5 0 9-4 9-8s-4-8-9-8z"/>
+  </g>
+</svg>
