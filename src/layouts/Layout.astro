@@ -1,0 +1,34 @@
+---
+import '../styles/globals.css';
+
+const {
+  title = 'Turtleand — Exploring Humanity, Systems, and Technology',
+  description = 'Turtleand is a network of ideas spanning AI, growth, build, and blockchain.',
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="bg-deepBlue text-offWhite font-body antialiased min-h-screen">
+    <div class="relative overflow-hidden">
+      <main>
+        <slot />
+      </main>
+      <footer class="mt-24">
+        <slot name="footer" />
+      </footer>
+    </div>
+  </body>
+</html>
