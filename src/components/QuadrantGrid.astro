@@ -56,3 +56,21 @@ const domains = [
     }
   </div>
 </section>
+<script is:inline>
+  if (typeof window !== "undefined") {
+    const markCachedImages = () => {
+      document.querySelectorAll("[data-domain-card] img").forEach((image) => {
+        if (image.complete && image.naturalWidth > 0) {
+          const card = image.closest("[data-domain-card]");
+          if (card) {
+            card.setAttribute("data-image-ready", "true");
+          }
+        }
+      });
+    };
+
+    // Run as soon as possible and once every resource finishes loading.
+    markCachedImages();
+    window.addEventListener("load", markCachedImages, { once: true });
+  }
+</script>

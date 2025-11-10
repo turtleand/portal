@@ -47,7 +47,8 @@ const imageState = hasImage ? "pending" : "false";
           class="card-media"
           src={image}
           alt=""
-          loading="lazy"
+          loading="eager"
+          fetchpriority="high"
           decoding="async"
           aria-hidden="true"
           onload="this.closest('[data-domain-card]').dataset.imageReady = 'true';"

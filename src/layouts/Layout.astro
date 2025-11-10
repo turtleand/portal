@@ -2,11 +2,22 @@
 import '../styles/globals.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import { primaryNavigation } from '../config/navigation';
+import aiBackgroundAsset from '../images/ai.png';
+import growthBackgroundAsset from '../images/growth.png';
+import buildBackgroundAsset from '../images/build.png';
+import blockchainBackgroundAsset from '../images/blockchain.png';
 
 const {
   title = 'Turtleand — Exploring Humanity, Systems, and Technology',
   description = 'Turtleand is a network of ideas spanning AI, growth, build, and blockchain.',
 } = Astro.props;
+
+const preloadImages = [
+  aiBackgroundAsset,
+  growthBackgroundAsset,
+  buildBackgroundAsset,
+  blockchainBackgroundAsset,
+].map((asset) => asset?.src ?? asset);
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -21,6 +32,11 @@ const {
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    {
+      preloadImages.map((image) => (
+        <link rel="preload" as="image" href={image} />
+      ))
+    }
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body class="bg-deepBlue text-offWhite font-body antialiased min-h-screen">
