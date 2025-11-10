@@ -1,0 +1,9 @@
+---
+interface Props {
+  noPadding?: boolean;
+}
+
+const { noPadding = false }: Props = Astro.props;
+---
+
+<hr class={`border-t border-white/10 ${noPadding ? "my-0" : "my-6"}`} />

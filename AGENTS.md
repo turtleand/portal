@@ -1,2 +1,2 @@
-1. Whenever the task is completed at the very end, exactly once, add a line in the pending_notifications.txt file with a one-sentence summary about the task that has just been completed.
+1. Whenever the task is completed at the very end, exactly once, add a line in the pending_notifications.txt file with a one-sentence summary about the task that has just been completed. You're entry will be deleted by watcher.js, so trigger it just once. Don't check it after doing so.
 2. After working and completing a task listed in TODO/pending_creation.md, or a folder within TODO/, remove said line on folder. 
