@@ -1,5 +1,7 @@
 ---
 import '../styles/globals.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import { primaryNavigation } from '../config/navigation';
 
 const {
   title = 'Turtleand — Exploring Humanity, Systems, and Technology',
@@ -23,6 +25,7 @@ const {
   </head>
   <body class="bg-deepBlue text-offWhite font-body antialiased min-h-screen">
     <div class="relative overflow-hidden">
+      <SiteHeader items={primaryNavigation} />
       <main>
         <slot />
       </main>

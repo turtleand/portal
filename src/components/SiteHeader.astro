@@ -1,0 +1,61 @@
+---
+import type { NavigationItem } from "../config/navigation";
+
+interface Props {
+  items?: NavigationItem[];
+}
+
+const { items = [] }: Props = Astro.props;
+const currentPath = Astro.url?.pathname ?? "/";
+---
+
+<header
+  class="bg-deepBlue/90 supports-[backdrop-filter]:bg-deepBlue/80 backdrop-blur border-b border-white/5"
+>
+  <div
+    class="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-4 md:flex-row md:items-center md:justify-between md:px-12"
+  >
+    <a
+      href="/"
+      class="flex items-center transition-transform hover:scale-105 focus-visible:scale-105 focus-visible:outline-none"
+    >
+      <img
+        src="/logo.svg"
+        alt="Turtleand logo"
+        width="140"
+        height="48"
+        class="h-14 w-auto md:h-16"
+        loading="lazy"
+        decoding="async"
+      />
+    </a>
+    <nav
+      aria-label="Main navigation"
+      class="flex flex-wrap items-center gap-5 text-base font-medium text-muted md:justify-end"
+    >
+      {
+        items.map(({ label, href }) => {
+          const isActive = currentPath === href;
+          return (
+            <a
+              class={`group relative tracking-wide transition-colors hover:text-offWhite focus-visible:text-offWhite focus-visible:outline-none ${
+                isActive ? "text-offWhite" : ""
+              }`}
+              href={href}
+              aria-current={isActive ? "page" : undefined}
+            >
+              {label}
+              <span
+                class={`pointer-events-none absolute inset-x-0 -bottom-1 block h-px origin-left bg-offWhite transition-transform duration-200 ease-out ${
+                  isActive
+                    ? "scale-x-100"
+                    : "scale-x-0 group-hover:scale-x-100 group-focus-visible:scale-x-100"
+                }`}
+              />
+            </a>
+          );
+        })
+      }
+    </nav>
+  </div>
+</header>
