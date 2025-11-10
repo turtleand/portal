@@ -1,0 +1,62 @@
+{
+  "site": {
+    "title": "Turtleand — Explorando la Humanidad, los Sistemas y la Tecnología",
+    "description": "Turtleand es una red de ideas que abarca IA, crecimiento, construcción y blockchain."
+  },
+  "navigation": {
+    "about": "Acerca de",
+    "localeGroupLabel": "Idioma",
+    "locales": {
+      "en": {
+        "label": "EN",
+        "aria": "Cambiar idioma a inglés"
+      },
+      "es": {
+        "label": "ES",
+        "aria": "Cambiar idioma a español"
+      }
+    }
+  },
+  "hero": {
+    "title": "Donde los humanos y la tecnología evolucionan juntos",
+    "description": "Una exploración reflexiva de la IA, la evolución personal y la artesanía; combinando lo digital y lo humano para dar forma a lo que sigue."
+  },
+  "quadrants": {
+    "ai": {
+      "label": "IA",
+      "tagline": "Comprendiendo el razonamiento, la inteligencia y el pensamiento de las máquinas."
+    },
+    "growth": {
+      "label": "Crecimiento",
+      "tagline": "Explorando el potencial humano y los sistemas de mejora."
+    },
+    "build": {
+      "label": "Construcción",
+      "tagline": "Ingeniería de software y lógica para un mundo conectado."
+    },
+    "blockchain": {
+      "label": "Blockchain",
+      "tagline": "Descentralizando la confianza, la propiedad y la identidad."
+    }
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados."
+  },
+  "about": {
+    "pageTitle": "Acerca de — Turtleand",
+    "pageDescription": "Conoce más sobre la mente detrás de Turtleand.",
+    "backLabel": "Regresar al inicio",
+    "traits": [
+      "Pensador estratégico",
+      "Ingeniero de software con más de 10 años de experiencia",
+      "Ciudadano global",
+      "Entusiasta de blockchain",
+      "Aprendiz de IA",
+      "Optimista",
+      "Creyente en la humanidad",
+      "Lector y escritor apasionado",
+      "Un león que ruge frente a la adversidad",
+      "Una tortuga que siempre avanza"
+    ]
+  }
+}

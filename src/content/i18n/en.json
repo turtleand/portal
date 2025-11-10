@@ -1,0 +1,62 @@
+{
+  "site": {
+    "title": "Turtleand — Exploring Humanity, Systems, and Technology",
+    "description": "Turtleand is a network of ideas spanning AI, growth, build, and blockchain."
+  },
+  "navigation": {
+    "about": "About",
+    "localeGroupLabel": "Language",
+    "locales": {
+      "en": {
+        "label": "EN",
+        "aria": "Change language to English"
+      },
+      "es": {
+        "label": "ES",
+        "aria": "Change language to Spanish"
+      }
+    }
+  },
+  "hero": {
+    "title": "Where Humans and Technology Evolve Together",
+    "description": "A reflective exploration of AI, personal evolution, and craft — combining the digital and the human to shape what comes next."
+  },
+  "quadrants": {
+    "ai": {
+      "label": "AI",
+      "tagline": "Understanding reasoning, intelligence, and machine thought."
+    },
+    "growth": {
+      "label": "Growth",
+      "tagline": "Exploring human potential and systems of improvement."
+    },
+    "build": {
+      "label": "Build",
+      "tagline": "Engineering software and logic for a connected world."
+    },
+    "blockchain": {
+      "label": "Blockchain",
+      "tagline": "Decentralizing trust, ownership, and identity."
+    }
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  },
+  "about": {
+    "pageTitle": "About — Turtleand",
+    "pageDescription": "Learn more about the mind behind Turtleand.",
+    "backLabel": "Back to main",
+    "traits": [
+      "Strategic Thinker",
+      "Software Engineer with +10 years of experience",
+      "Global Citizen",
+      "Blockchain Enthusiast",
+      "AI learner",
+      "Optimist",
+      "Believer in Humanity",
+      "Passionate Reader and Writer",
+      "A Lion that Roars in the face of adversity",
+      "A Turtle that always moves forward"
+    ]
+  }
+}
