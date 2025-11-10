@@ -1,13 +1,15 @@
 ---
 import Hr from "./Hr.astro";
 import Socials from "./Socials.astro";
+import type { CopyToken } from "../utils/i18n";
 
 interface Props {
   noMarginTop?: boolean;
+  rightsCopy: CopyToken;
 }
 
 const currentYear = new Date().getFullYear();
-const { noMarginTop = false }: Props = Astro.props;
+const { noMarginTop = false, rightsCopy }: Props = Astro.props;
 ---
 
 <footer
@@ -25,7 +27,7 @@ const { noMarginTop = false }: Props = Astro.props;
     >
       <span>Copyright © {currentYear}</span>
       <span class="separator hidden px-2 text-offWhite/60 sm:inline">|</span>
-      <span>All rights reserved.</span>
+      <span data-i18n-key={rightsCopy.key}>{rightsCopy.text}</span>
     </div>
   </div>
 </footer>

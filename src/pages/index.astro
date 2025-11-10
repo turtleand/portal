@@ -3,9 +3,28 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import QuadrantGrid from '../components/QuadrantGrid.astro';
 import Footer from '../components/Footer.astro';
+import { initI18n, makeCopyToken } from '../utils/i18n';
+
+const { locale, dictionary, t } = initI18n(Astro);
+
+const heroTitle = makeCopyToken('hero.title', t);
+const heroDescription = makeCopyToken('hero.description', t);
+const quadrantLabels = {
+  ai: makeCopyToken('quadrants.ai.label', t),
+  growth: makeCopyToken('quadrants.growth.label', t),
+  build: makeCopyToken('quadrants.build.label', t),
+  blockchain: makeCopyToken('quadrants.blockchain.label', t),
+};
+const quadrantTaglines = {
+  ai: makeCopyToken('quadrants.ai.tagline', t),
+  growth: makeCopyToken('quadrants.growth.tagline', t),
+  build: makeCopyToken('quadrants.build.tagline', t),
+  blockchain: makeCopyToken('quadrants.blockchain.tagline', t),
+};
+const footerRightsCopy = makeCopyToken('footer.rights', t);
 ---
-<Layout>
-  <Hero />
-  <QuadrantGrid />
-  <Footer slot="footer" />
+<Layout locale={locale} dictionary={dictionary}>
+  <Hero title={heroTitle} description={heroDescription} />
+  <QuadrantGrid labels={quadrantLabels} taglines={quadrantTaglines} />
+  <Footer slot="footer" rightsCopy={footerRightsCopy} />
 </Layout>

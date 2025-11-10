@@ -6,11 +6,29 @@ import aiBackgroundAsset from '../images/ai.png';
 import growthBackgroundAsset from '../images/growth.png';
 import buildBackgroundAsset from '../images/build.png';
 import blockchainBackgroundAsset from '../images/blockchain.png';
+import localeClientModule from '../scripts/locale-client.ts?url';
+import type { Dictionary, Locale } from '../utils/i18n';
+import {
+  createTranslator,
+  DEFAULT_LOCALE,
+  LOCALE_COOKIE,
+  serializeDictionaries,
+} from '../utils/i18n';
 
-const {
-  title = 'Turtleand — Exploring Humanity, Systems, and Technology',
-  description = 'Turtleand is a network of ideas spanning AI, growth, build, and blockchain.',
-} = Astro.props;
+interface Props {
+  title?: string;
+  description?: string;
+  locale: Locale;
+  dictionary: Dictionary;
+}
+
+const { locale, dictionary, title, description }: Props = Astro.props;
+const t = createTranslator(locale);
+
+const resolvedTitle =
+  title ?? t('site.title');
+const resolvedDescription =
+  description ?? t('site.description');
 
 const preloadImages = [
   aiBackgroundAsset,
@@ -18,14 +36,62 @@ const preloadImages = [
   buildBackgroundAsset,
   blockchainBackgroundAsset,
 ].map((asset) => asset?.src ?? asset);
+
+const buildLocaleAwareHref = (href: string) => {
+  const normalizedHref = href.startsWith('http')
+    ? href
+    : `http://placeholder${href.startsWith('/') ? '' : '/'}${href}`;
+  const url = new URL(normalizedHref);
+  if (locale !== DEFAULT_LOCALE) {
+    url.searchParams.set('lang', locale);
+  } else {
+    url.searchParams.delete('lang');
+  }
+  const path = url.pathname === '/' && !url.search ? '/' : `${url.pathname}${url.search}${url.hash}`;
+  return path;
+};
+
+const navigationItems = primaryNavigation.map((item) => ({
+  baseHref: item.href,
+  href: buildLocaleAwareHref(item.href),
+  label: dictionary.navigation[item.labelKey],
+  key: `navigation.${item.labelKey}`,
+}));
+
+const localeMetadata = {
+  groupLabel: dictionary.navigation.localeGroupLabel,
+  locales: Object.fromEntries(
+    Object.entries(dictionary.navigation.locales).map(([key, value]) => [
+      key,
+      {
+        label: value.label,
+        aria: value.aria,
+        key: `navigation.locales.${key}.label`,
+        ariaKey: `navigation.locales.${key}.aria`,
+      },
+    ]),
+  ),
+};
+
+const localeBootstrapData = JSON.stringify({
+  locale,
+  defaultLocale: DEFAULT_LOCALE,
+  cookieName: LOCALE_COOKIE,
+  translations: serializeDictionaries(),
+}).replace(/</g, '\\u003c');
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
+    <title data-i18n-key="site.title">{resolvedTitle}</title>
+    <meta
+      name="description"
+      content={resolvedDescription}
+      data-i18n-key="site.description"
+      data-i18n-attr="content"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -41,7 +107,12 @@ const preloadImages = [
   </head>
   <body class="bg-deepBlue text-offWhite font-body antialiased min-h-screen">
     <div class="relative overflow-hidden">
-      <SiteHeader items={primaryNavigation} />
+      <SiteHeader
+        items={navigationItems}
+        locale={locale}
+        localeGroupLabel={localeMetadata.groupLabel}
+        localeMetadata={localeMetadata.locales}
+      />
       <main>
         <slot />
       </main>
@@ -49,5 +120,10 @@ const preloadImages = [
         <slot name="footer" />
       </footer>
     </div>
+    <script
+      is:inline
+      set:html={`window.__turtleandLocale = ${localeBootstrapData};`}
+    ></script>
+    <script type="module" src={localeClientModule}></script>
   </body>
 </html>

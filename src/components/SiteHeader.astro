@@ -1,12 +1,42 @@
 ---
-import type { NavigationItem } from "../config/navigation";
+import type { Locale } from "../utils/i18n";
+
+type NavigationLink = {
+  href: string;
+  baseHref: string;
+  label: string;
+  key: string;
+};
+
+type LocaleCopy = {
+  label: string;
+  aria: string;
+  key: string;
+  ariaKey: string;
+};
 
 interface Props {
-  items?: NavigationItem[];
+  items?: NavigationLink[];
+  locale: Locale;
+  localeGroupLabel: string;
+  localeMetadata: Record<string, LocaleCopy>;
 }
 
-const { items = [] }: Props = Astro.props;
-const currentPath = Astro.url?.pathname ?? "/";
+const {
+  items = [],
+  locale,
+  localeGroupLabel,
+  localeMetadata,
+}: Props = Astro.props;
+const placeholderOrigin = "http://placeholder.internal";
+const currentUrl = Astro.url ?? new URL(placeholderOrigin);
+const currentPath = currentUrl.pathname ?? "/";
+const locales = Object.keys(localeMetadata) as (keyof typeof localeMetadata)[];
+const baseToggleClasses =
+  "inline-flex items-center justify-center rounded-full border border-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offWhite/70 focus-visible:ring-offset-deepBlue";
+const activeToggleClasses =
+  "bg-offWhite text-deepBlue shadow-[0_8px_32px_rgba(8,12,20,0.35)]";
+const inactiveToggleClasses = "text-offWhite/70 hover:text-offWhite";
 ---
 
 <header
@@ -29,33 +59,78 @@ const currentPath = Astro.url?.pathname ?? "/";
         decoding="async"
       />
     </a>
-    <nav
-      aria-label="Main navigation"
-      class="flex flex-wrap items-center gap-5 text-base font-medium text-muted md:justify-end"
-    >
-      {
-        items.map(({ label, href }) => {
-          const isActive = currentPath === href;
-          return (
-            <a
-              class={`group relative tracking-wide transition-colors hover:text-offWhite focus-visible:text-offWhite focus-visible:outline-none ${
-                isActive ? "text-offWhite" : ""
-              }`}
-              href={href}
-              aria-current={isActive ? "page" : undefined}
-            >
-              {label}
-              <span
-                class={`pointer-events-none absolute inset-x-0 -bottom-1 block h-px origin-left bg-offWhite transition-transform duration-200 ease-out ${
-                  isActive
-                    ? "scale-x-100"
-                    : "scale-x-0 group-hover:scale-x-100 group-focus-visible:scale-x-100"
+    <div class="flex flex-wrap items-center gap-4 md:gap-6 md:justify-end">
+      <nav
+        aria-label="Main navigation"
+        class="flex flex-wrap items-center gap-5 text-base font-medium text-muted"
+      >
+        {
+          items.map(({ label, href, baseHref, key }) => {
+            let isActive = false;
+            try {
+              const itemUrl = new URL(
+                href,
+                href.startsWith("http") ? undefined : placeholderOrigin,
+              );
+              isActive = itemUrl.pathname === currentPath;
+            } catch {
+              isActive = currentPath === href;
+            }
+            return (
+              <a
+                class={`group relative tracking-wide transition-colors hover:text-offWhite focus-visible:text-offWhite focus-visible:outline-none ${
+                  isActive ? "text-offWhite" : ""
                 }`}
-              />
-            </a>
-          );
-        })
-      }
-    </nav>
+                href={href}
+                data-base-href={baseHref}
+                data-locale-link
+                aria-current={isActive ? "page" : undefined}
+                data-i18n-key={key}
+              >
+                {label}
+                <span
+                  class={`pointer-events-none absolute inset-x-0 -bottom-1 block h-px origin-left bg-offWhite transition-transform duration-200 ease-out ${
+                    isActive
+                      ? "scale-x-100"
+                      : "scale-x-0 group-hover:scale-x-100 group-focus-visible:scale-x-100"
+                  }`}
+                />
+              </a>
+            );
+          })
+        }
+      </nav>
+      <div
+        class="flex items-center gap-2 rounded-full border border-white/10 px-2 py-1 text-xs font-semibold uppercase tracking-[0.2em]"
+        role="group"
+        aria-label={localeGroupLabel}
+      >
+        {
+          locales.map((code) => {
+            const metadata = localeMetadata[code];
+            const isCurrent = locale === code;
+            return (
+              <button
+                type="button"
+                class={`${baseToggleClasses} ${
+                  isCurrent ? activeToggleClasses : inactiveToggleClasses
+                }`}
+                data-locale-button
+                data-locale={code}
+                data-active={isCurrent ? "true" : "false"}
+                aria-pressed={isCurrent}
+                data-active-class={activeToggleClasses}
+                data-inactive-class={inactiveToggleClasses}
+                data-i18n-key={metadata.ariaKey}
+                data-i18n-attr="aria-label"
+                aria-label={metadata.aria}
+              >
+                <span data-i18n-key={metadata.key}>{metadata.label}</span>
+              </button>
+            );
+          })
+        }
+      </div>
+    </div>
   </div>
 </header>

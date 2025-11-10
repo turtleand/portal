@@ -1,8 +1,10 @@
+export type NavigationLabelKey = 'about';
+
 export type NavigationItem = {
-  label: string;
+  labelKey: NavigationLabelKey;
   href: string;
 };
 
 export const primaryNavigation: NavigationItem[] = [
-  { label: 'About', href: '/about' },
+  { labelKey: 'about', href: '/about' },
 ];

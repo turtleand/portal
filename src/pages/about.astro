@@ -1,20 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { initI18n, makeCopyToken } from '../utils/i18n';
 
-const traits = [
-  'Strategic Thinker',
-  'Software Engineer with +10 years of experience',
-  'Global Citizen',
-  'Blockchain Enthusiast',
-  'AI learner',
-  'Optimist',
-  'Believer in Humanity',
-  'Passionate Reader and Writer',
-  'A Lion that Roars in the face of adversity',
-  'A Turtle that always moves forward',
-];
+const { locale, dictionary, t } = initI18n(Astro);
+const traits = dictionary.about.traits ?? [];
+const backLabel = makeCopyToken('about.backLabel', t);
+const pageDescriptionCopy = makeCopyToken('about.pageDescription', t);
 ---
-<Layout title="About — Turtleand" description="Learn more about the mind behind Turtleand.">
+<Layout
+  title={t('about.pageTitle')}
+  description={pageDescriptionCopy.text}
+  locale={locale}
+  dictionary={dictionary}
+>
   <section
     class="px-6 py-16 md:px-0 md:py-20"
     data-about-section
@@ -24,15 +22,24 @@ const traits = [
     >
       <a
         href="/"
-        aria-label="Back to main"
+        data-locale-link
+        data-base-href="/"
+        aria-label={backLabel.text}
+        data-i18n-key={backLabel.key}
+        data-i18n-attr="aria-label"
         class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-lg text-muted transition-colors hover:text-offWhite focus-visible:text-offWhite focus-visible:outline-none"
       >
         <span aria-hidden="true">←</span>
+        <span class="sr-only" data-i18n-key={backLabel.key}>{backLabel.text}</span>
       </a>
+      <p class="text-base text-offWhite/80" data-i18n-key={pageDescriptionCopy.key}>
+        {pageDescriptionCopy.text}
+      </p>
       <ul class="space-y-3 text-base md:text-lg">
-        {traits.map((trait) => (
+        {traits.map((trait, index) => (
           <li
             class="rounded-lg border border-white/5 bg-white/5 px-4 py-3 text-offWhite backdrop-blur"
+            data-i18n-key={`about.traits.${index}`}
           >
             {trait}
           </li>

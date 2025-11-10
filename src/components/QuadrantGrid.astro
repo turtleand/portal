@@ -4,6 +4,24 @@ import aiBackgroundAsset from "../images/ai.png";
 import growthBackgroundAsset from "../images/growth.png";
 import buildBackgroundAsset from "../images/build.png";
 import blockchainBackgroundAsset from "../images/blockchain.png";
+import type { CopyToken } from "../utils/i18n";
+
+interface Props {
+  labels: {
+    ai: CopyToken;
+    growth: CopyToken;
+    build: CopyToken;
+    blockchain: CopyToken;
+  };
+  taglines: {
+    ai: CopyToken;
+    growth: CopyToken;
+    build: CopyToken;
+    blockchain: CopyToken;
+  };
+}
+
+const { labels, taglines }: Props = Astro.props;
 
 const aiBackground = aiBackgroundAsset.src ?? aiBackgroundAsset;
 const growthBackground = growthBackgroundAsset.src ?? growthBackgroundAsset;
@@ -13,33 +31,33 @@ const blockchainBackground =
 
 const domains = [
   {
-    label: "AI",
+    labelCopy: labels.ai,
     emoji: "🧠",
-    tagline: "Understanding reasoning, intelligence, and machine thought.",
+    taglineCopy: taglines.ai,
     href: "https://ai.turtleand.com",
     variant: "ai",
     image: aiBackground,
   },
   {
-    label: "Growth",
+    labelCopy: labels.growth,
     emoji: "🌱",
-    tagline: "Exploring human potential and systems of improvement.",
+    taglineCopy: taglines.growth,
     href: "https://growth.turtleand.com",
     variant: "growth",
     image: growthBackground,
   },
   {
-    label: "Build",
+    labelCopy: labels.build,
     emoji: "⚙️",
-    tagline: "Engineering software and logic for a connected world.",
+    taglineCopy: taglines.build,
     href: "https://build.turtleand.com",
     variant: "build",
     image: buildBackground,
   },
   {
-    label: "Blockchain",
+    labelCopy: labels.blockchain,
     emoji: "🔗",
-    tagline: "Decentralizing trust, ownership, and identity.",
+    taglineCopy: taglines.blockchain,
     href: "https://blockchain.turtleand.com",
     variant: "blockchain",
     image: blockchainBackground,
