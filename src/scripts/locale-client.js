@@ -1,62 +1,71 @@
-import type { Locale } from '../utils/i18n';
+// @ts-check
+/**
+ * @typedef {import('../utils/i18n').Locale} Locale
+ * @typedef {Record<string, unknown>} Translations
+ * @typedef {{
+ *   locale: Locale;
+ *   defaultLocale: Locale;
+ *   cookieName: string;
+ *   translations: Record<Locale, Translations>;
+ * }} LocaleBootstrap
+ * @typedef {(locale: Locale) => void} Subscriber
+ * @typedef {Window & {
+ *   __turtleandLocale?: LocaleBootstrap;
+ *   turtleandLocaleStore?: {
+ *     locale: Locale;
+ *     setLocale: (locale: Locale) => void;
+ *     subscribe: (fn: Subscriber) => () => void;
+ *     t: (key: string) => string;
+ *   };
+ * }} TurtleWindow
+ */
 
-type Translations = Record<string, unknown>;
-
-type LocaleBootstrap = {
-  locale: Locale;
-  defaultLocale: Locale;
-  cookieName: string;
-  translations: Record<Locale, Translations>;
-};
-
-type Subscriber = (locale: Locale) => void;
-
-declare global {
-  interface Window {
-    __turtleandLocale?: LocaleBootstrap;
-    turtleandLocaleStore?: {
-      locale: Locale;
-      setLocale: (locale: Locale) => void;
-      subscribe: (fn: Subscriber) => () => void;
-      t: (key: string) => string;
-    };
-  }
-}
-
-const bootstrap = window.__turtleandLocale;
+const turtleWindow = /** @type {TurtleWindow} */ (window);
+const bootstrap = turtleWindow.__turtleandLocale;
 
 if (!bootstrap) {
   if (import.meta.env.DEV) {
     console.warn('[i18n] Missing bootstrap data. Locale toggle is disabled.');
   }
 } else {
-  const supportedLocales = Object.keys(bootstrap.translations) as Locale[];
+  /** @type {Locale[]} */
+  const supportedLocales = /** @type {Locale[]} */ (
+    Object.keys(bootstrap.translations)
+  );
   const defaultLocale = bootstrap.defaultLocale ?? 'en';
-  const subscribers = new Set<Subscriber>();
-  const isSupportedLocale = (value: string | null | undefined): value is Locale =>
-    !!value && supportedLocales.includes(value as Locale);
+  /** @type {Set<Subscriber>} */
+  const subscribers = new Set();
+  const isSupportedLocale = (value) =>
+    typeof value === 'string' && supportedLocales.includes(/** @type {Locale} */ (value));
 
-  const readCookieLocale = (): Locale | undefined => {
+  /** @returns {Locale | undefined} */
+  const readCookieLocale = () => {
     const entries = document.cookie.split(';').map((part) => part.trim());
     const entry = entries.find((cookie) => cookie.startsWith(`${bootstrap.cookieName}=`));
     if (!entry) return undefined;
     const value = entry.split('=')[1];
-    if (isSupportedLocale(value)) return value;
+    if (isSupportedLocale(value)) return /** @type {Locale} */ (value);
     return undefined;
   };
 
-  const pickInitialLocale = (): Locale => {
+  /** @returns {Locale} */
+  const pickInitialLocale = () => {
     const urlLocale = new URL(window.location.href).searchParams.get('lang');
-    if (isSupportedLocale(urlLocale)) return urlLocale;
+    if (isSupportedLocale(urlLocale)) return /** @type {Locale} */ (urlLocale);
     const cookieLocale = readCookieLocale();
     if (cookieLocale) return cookieLocale;
     return bootstrap.locale;
   };
 
-  let currentLocale: Locale = pickInitialLocale();
+  let currentLocale = pickInitialLocale();
 
-  const pick = (dictionary: Translations, key: string): unknown => {
-    return key.split('.').reduce<unknown>((acc, segment) => {
+  /**
+   * @param {Translations} dictionary
+   * @param {string} key
+   * @returns {unknown}
+   */
+  const pick = (dictionary, key) => {
+    return key.split('.').reduce((acc, segment) => {
       if (acc == null) return undefined;
       if (Array.isArray(acc)) {
         const index = Number(segment);
@@ -64,13 +73,18 @@ if (!bootstrap) {
         return acc[index];
       }
       if (typeof acc === 'object') {
-        return (acc as Record<string, unknown>)[segment];
+        return /** @type {Record<string, unknown>} */ (acc)[segment];
       }
       return undefined;
     }, dictionary);
   };
 
-  const getValue = (locale: Locale, key: string): unknown => {
+  /**
+   * @param {Locale} locale
+   * @param {string} key
+   * @returns {unknown}
+   */
+  const getValue = (locale, key) => {
     const dictionary = bootstrap.translations[locale];
     const fallback = bootstrap.translations.en;
 
@@ -79,7 +93,11 @@ if (!bootstrap) {
     return pick(fallback, key);
   };
 
-  const buildLocaleAwareHref = (baseHref: string, locale: Locale) => {
+  /**
+   * @param {string} baseHref
+   * @param {Locale} locale
+   */
+  const buildLocaleAwareHref = (baseHref, locale) => {
     if (!baseHref) return baseHref;
     const isExternal =
       /^(https?:)?\/\//.test(baseHref) &&
@@ -102,8 +120,11 @@ if (!bootstrap) {
     }
   };
 
-  const updateLocaleLinks = (locale: Locale) => {
-    const links = document.querySelectorAll<HTMLAnchorElement>('a[data-locale-link]');
+  /**
+   * @param {Locale} locale
+   */
+  const updateLocaleLinks = (locale) => {
+    const links = document.querySelectorAll('a[data-locale-link]');
     links.forEach((link) => {
       const baseHref = link.getAttribute('data-base-href');
       if (!baseHref) return;
@@ -111,10 +132,13 @@ if (!bootstrap) {
     });
   };
 
-  const applyTranslations = (locale: Locale) => {
+  /**
+   * @param {Locale} locale
+   */
+  const applyTranslations = (locale) => {
     document.documentElement.lang = locale;
 
-    const nodes = document.querySelectorAll<HTMLElement>('[data-i18n-key]');
+    const nodes = document.querySelectorAll('[data-i18n-key]');
     nodes.forEach((node) => {
       const key = node.getAttribute('data-i18n-key');
       if (!key) return;
@@ -128,17 +152,16 @@ if (!bootstrap) {
       }
     });
 
-    const toggleButtons =
-      document.querySelectorAll<HTMLButtonElement>('[data-locale-button]');
+    const toggleButtons = document.querySelectorAll('[data-locale-button]');
 
     toggleButtons.forEach((button) => {
-      const targetLocale = button.dataset.locale as Locale | undefined;
+      const targetLocale = button.getAttribute('data-locale');
       if (!targetLocale) return;
       const isActive = targetLocale === locale;
       button.dataset.active = String(isActive);
       button.setAttribute('aria-pressed', String(isActive));
-      const activeClass = button.dataset.activeClass;
-      const inactiveClass = button.dataset.inactiveClass;
+      const activeClass = button.getAttribute('data-active-class');
+      const inactiveClass = button.getAttribute('data-inactive-class');
       if (activeClass && inactiveClass) {
         const activeSet = activeClass.split(' ').filter(Boolean);
         const inactiveSet = inactiveClass.split(' ').filter(Boolean);
@@ -147,10 +170,12 @@ if (!bootstrap) {
       }
     });
 
-    document.title = (getValue(locale, 'site.title') as string) ?? document.title;
-    const descriptionMeta = document.querySelector<HTMLMetaElement>(
-      'meta[name="description"]',
-    );
+    const fallbackTitle = document.title;
+    const translatedTitle = getValue(locale, 'site.title');
+    document.title =
+      typeof translatedTitle === 'string' ? translatedTitle : fallbackTitle;
+
+    const descriptionMeta = document.querySelector('meta[name="description"]');
     const descriptionValue = getValue(locale, 'site.description');
     if (descriptionMeta && typeof descriptionValue === 'string') {
       descriptionMeta.setAttribute('content', descriptionValue);
@@ -158,10 +183,11 @@ if (!bootstrap) {
     updateLocaleLinks(locale);
   };
 
-  const persistLocale = (
-    locale: Locale,
-    options: { forceUrlUpdate?: boolean } = {},
-  ) => {
+  /**
+   * @param {Locale} locale
+   * @param {{ forceUrlUpdate?: boolean }} [options]
+   */
+  const persistLocale = (locale, options = {}) => {
     document.cookie = `${bootstrap.cookieName}=${locale};path=/;max-age=31536000;samesite=Lax`;
     const currentUrl = new URL(window.location.href);
     const shouldUpdate =
@@ -172,29 +198,35 @@ if (!bootstrap) {
     window.history.replaceState({}, '', currentUrl.toString());
   };
 
-  const setLocale = (locale: Locale) => {
+  /**
+   * @param {Locale} locale
+   */
+  const setLocale = (locale) => {
     if (locale === currentLocale) return;
     if (!supportedLocales.includes(locale)) return;
     currentLocale = locale;
     applyTranslations(locale);
     persistLocale(locale, { forceUrlUpdate: true });
     subscribers.forEach((fn) => fn(locale));
-    if (window.turtleandLocaleStore) {
-      window.turtleandLocaleStore.locale = locale;
+    if (turtleWindow.turtleandLocaleStore) {
+      turtleWindow.turtleandLocaleStore.locale = locale;
     }
   };
 
-  const handleToggleClick = (event: Event) => {
-    const target = event.currentTarget as HTMLElement;
-    const nextLocale = target.getAttribute('data-locale') as Locale | null;
+  /**
+   * @param {Event} event
+   */
+  const handleToggleClick = (event) => {
+    const target = event.currentTarget;
+    if (!(target instanceof HTMLElement)) return;
+    const nextLocale = target.getAttribute('data-locale');
     if (!nextLocale) return;
     event.preventDefault();
-    setLocale(nextLocale);
+    setLocale(/** @type {Locale} */ (nextLocale));
   };
 
   const registerToggleListeners = () => {
-    const buttons =
-      document.querySelectorAll<HTMLElement>('[data-locale-button]');
+    const buttons = document.querySelectorAll('[data-locale-button]');
     buttons.forEach((button) => {
       button.removeEventListener('click', handleToggleClick);
       button.addEventListener('click', handleToggleClick);
@@ -207,14 +239,14 @@ if (!bootstrap) {
     registerToggleListeners();
   };
 
-  window.turtleandLocaleStore = {
+  turtleWindow.turtleandLocaleStore = {
     locale: currentLocale,
     setLocale,
-    subscribe: (fn: Subscriber) => {
+    subscribe: (fn) => {
       subscribers.add(fn);
       return () => subscribers.delete(fn);
     },
-    t: (key: string) => {
+    t: (key) => {
       const value = getValue(currentLocale, key);
       if (typeof value === 'string') return value;
       return key;
