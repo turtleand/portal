@@ -1,3 +1,2 @@
-- Add TODO footer
-- Add an SVG logo and add to Header
+- Adjust SVG logo in Header
 - Fix favicon for uniformity

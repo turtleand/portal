@@ -8,10 +8,10 @@
   --color-off-white: #f4f4f4;
   --color-muted: #a8b3ba;
   --color-accent: #6fe1c3;
-  --card-ai: #0c2238;
-  --card-growth: #1b4b43;
-  --card-build: #12313b;
-  --card-blockchain: #3a2416;
+  --card-ai: #041c2c;
+  --card-growth: #0d2f2a;
+  --card-build: #051722;
+  --card-blockchain: #0f343e;
 }
 
 body {

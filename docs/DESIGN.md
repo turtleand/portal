@@ -24,10 +24,10 @@
 | `--color-off-white`       | `#F4F4F4`  | Primary text                                                         |
 | `--color-muted`           | `#A8B3BA`  | Supporting copy (hero subline, domain taglines)                      |
 | `--color-accent`          | `#6FE1C3`  | Focus ring + intended CTA/interactive accents                        |
-| `--card-ai`               | `#0C2238`  | Domain card background: AI                                           |
-| `--card-growth`           | `#1B4B43`  | Domain card background: Growth                                       |
-| `--card-build`            | `#12313B`  | Domain card background: Build                                        |
-| `--card-blockchain`       | `#3A2416`  | Domain card background: Blockchain                                   |
+| `--card-ai`               | `#041C2C`  | Domain card background: AI                                           |
+| `--card-growth`           | `#0D2F2A`  | Domain card background: Growth                                       |
+| `--card-build`            | `#051722`  | Domain card background: Build                                        |
+| `--card-blockchain`       | `#0F343E`  | Domain card background: Blockchain                                   |
 | Gradient (utility class)  | teal → navy radial | Applied through `.hero-gradient`; animated with `heroWave` keyframes |
 
 ### Typography
