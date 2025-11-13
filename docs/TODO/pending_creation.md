@@ -1,2 +1,1 @@
-- Adjust SVG logo in Header
 - Fix favicon for uniformity
