@@ -1,1 +1,0 @@
-- Fix favicon for uniformity
