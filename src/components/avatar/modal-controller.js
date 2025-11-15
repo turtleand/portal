@@ -1,33 +1,35 @@
-type TriggerButton = HTMLButtonElement | HTMLAnchorElement;
+/**
+ * @typedef {HTMLButtonElement | HTMLAnchorElement} TriggerButton
+ */
 
 class AvatarGalleryModalController {
-  private modal: HTMLElement;
-  private overlay: HTMLElement | null;
-  private panel: HTMLElement | null;
-  private triggers: TriggerButton[] = [];
-  private closeButtons: HTMLButtonElement[] = [];
-  private active = false;
-  private lastTrigger: TriggerButton | null = null;
-  private backgroundNodes: HTMLElement[] = [];
-
-  constructor(modal: HTMLElement) {
+  /**
+   * @param {HTMLElement} modal
+   */
+  constructor(modal) {
     this.modal = modal;
-    this.overlay = modal.querySelector<HTMLElement>('[data-avatar-modal-overlay]');
-    this.panel = modal.querySelector<HTMLElement>('[data-avatar-modal-panel]');
-    this.closeButtons = Array.from(
-      modal.querySelectorAll<HTMLButtonElement>('[data-avatar-modal-close]'),
-    );
+    this.overlay = modal.querySelector('[data-avatar-modal-overlay]');
+    this.panel = modal.querySelector('[data-avatar-modal-panel]');
+    /** @type {TriggerButton[]} */
+    this.triggers = [];
+    /** @type {HTMLButtonElement[]} */
+    this.closeButtons = Array.from(modal.querySelectorAll('[data-avatar-modal-close]'));
+    this.active = false;
+    /** @type {TriggerButton | null} */
+    this.lastTrigger = null;
+    /** @type {HTMLElement[]} */
+    this.backgroundNodes = [];
     this.collectTriggers();
     this.attachEvents();
   }
 
-  private collectTriggers() {
+  collectTriggers() {
     this.triggers = Array.from(
-      document.querySelectorAll<TriggerButton>('[data-open-avatar-gallery]'),
+      document.querySelectorAll('[data-open-avatar-gallery]'),
     );
   }
 
-  private attachEvents() {
+  attachEvents() {
     this.triggers.forEach((trigger) => {
       trigger.addEventListener('click', (event) => {
         event.preventDefault();
@@ -48,7 +50,10 @@ class AvatarGalleryModalController {
     });
   }
 
-  private open(trigger: TriggerButton) {
+  /**
+   * @param {TriggerButton} trigger
+   */
+  open(trigger) {
     if (this.active) return;
     this.active = true;
     this.lastTrigger = trigger;
@@ -65,7 +70,7 @@ class AvatarGalleryModalController {
     }, 0);
   }
 
-  private close() {
+  close() {
     if (!this.active) return;
     this.active = false;
     this.modal.classList.add('hidden');
@@ -79,62 +84,61 @@ class AvatarGalleryModalController {
     this.lastTrigger?.focus();
   }
 
-  private lockScroll() {
+  lockScroll() {
     document.body.style.setProperty('overflow', 'hidden');
   }
 
-  private unlockScroll() {
+  unlockScroll() {
     document.body.style.removeProperty('overflow');
   }
 
-  private disableBackground() {
+  disableBackground() {
     this.backgroundNodes = Array.from(document.body.children).filter(
-      (node): node is HTMLElement => node !== this.modal && node instanceof HTMLElement,
+      (node) => node !== this.modal && node instanceof HTMLElement,
     );
     this.backgroundNodes.forEach((node) => {
       node.setAttribute('aria-hidden', 'true');
       node.setAttribute('data-avatar-inert', 'true');
-      // @ts-expect-error inert is still experimental but supported
       node.inert = true;
     });
   }
 
-  private enableBackground() {
+  enableBackground() {
     this.backgroundNodes.forEach((node) => {
       node.removeAttribute('aria-hidden');
       node.removeAttribute('data-avatar-inert');
-      // @ts-expect-error inert is still experimental but supported
       node.inert = false;
     });
     this.backgroundNodes = [];
   }
 
-  private trapFocus(event: KeyboardEvent) {
+  /**
+   * @param {KeyboardEvent} event
+   */
+  trapFocus(event) {
     if (!this.panel) return;
     const focusableSelectors =
       'a[href], button:not([disabled]), textarea, input:not([disabled]), select, [tabindex]:not([tabindex="-1"])';
-    const focusable = Array.from(
-      this.panel.querySelectorAll<HTMLElement>(focusableSelectors),
-    ).filter((node) => !node.hasAttribute('disabled'));
+    const focusable = Array.from(this.panel.querySelectorAll(focusableSelectors)).filter(
+      (node) => !node.hasAttribute('disabled'),
+    );
     if (!focusable.length) return;
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
-    const activeElement = document.activeElement as HTMLElement;
+    const activeElement = document.activeElement;
 
     if (event.shiftKey) {
       if (activeElement === first) {
         event.preventDefault();
         last.focus();
       }
-    } else {
-      if (activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
+    } else if (activeElement === last) {
+      event.preventDefault();
+      first.focus();
     }
   }
 
-  private updateTriggerState(expanded: boolean) {
+  updateTriggerState(expanded) {
     this.triggers.forEach((trigger) => {
       trigger.setAttribute('aria-pressed', String(expanded));
       trigger.setAttribute('aria-expanded', String(expanded));
@@ -143,8 +147,8 @@ class AvatarGalleryModalController {
 }
 
 const initModal = () => {
-  const modal = document.querySelector<HTMLElement>('[data-avatar-modal]');
-  if (!modal) return;
+  const modal = document.querySelector('[data-avatar-modal]');
+  if (!(modal instanceof HTMLElement)) return;
   new AvatarGalleryModalController(modal);
 };
 
