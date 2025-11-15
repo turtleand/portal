@@ -1,47 +1,68 @@
-type AvatarGalleryEntry = {
-  id: string;
-  version: string;
-  date: string;
-  title: string;
-  description: string;
-  titleEs: string;
-  descriptionEs: string;
-  finalImage: string;
-};
+// @ts-check
 
-type AvatarGalleryConfig = {
-  animation?: 'fade' | 'morph';
-};
+/**
+ * @typedef {Object} AvatarGalleryEntry
+ * @property {string} id
+ * @property {string} version
+ * @property {string} date
+ * @property {string} title
+ * @property {string} description
+ * @property {string} titleEs
+ * @property {string} descriptionEs
+ * @property {string} finalImage
+ */
+
+/**
+ * @typedef {Object} AvatarGalleryConfig
+ * @property {'fade' | 'morph'} [animation]
+ */
 
 const AUTOPLAY_INTERVAL = 3000;
 
 class MinimalGalleryController {
-  private root: HTMLElement;
-  private entries: AvatarGalleryEntry[];
-  private config: AvatarGalleryConfig;
-  private index = 0;
-  private autoplayId: number | null = null;
-  private paused = false;
-  private locale: 'en' | 'es' = 'en';
-  private localeObserver?: MutationObserver;
-
-  private image?: HTMLImageElement | null;
-  private titleNode?: HTMLElement | null;
-  private metaNode?: HTMLElement | null;
-  private descriptionNode?: HTMLElement | null;
-  private prevButton?: HTMLButtonElement | null;
-  private nextButton?: HTMLButtonElement | null;
-  private hoverZone?: HTMLElement | null;
-  private headingNode?: HTMLElement | null;
-  private prevLabelNode?: HTMLElement | null;
-  private nextLabelNode?: HTMLElement | null;
-
-  constructor(root: HTMLElement) {
+  /**
+   * @param {HTMLElement} root
+   */
+  constructor(root) {
+    /** @type {HTMLElement} */
     this.root = root;
+    /** @type {AvatarGalleryEntry[]} */
     this.entries = this.parseEntries();
+    /** @type {AvatarGalleryConfig} */
     this.config = this.parseConfig();
-    if (!this.entries.length) return;
+    this.index = 0;
+    /** @type {number | null} */
+    this.autoplayId = null;
+    this.paused = false;
+    /** @type {'en' | 'es'} */
     this.locale = this.detectLocale();
+    /** @type {MutationObserver | undefined} */
+    this.localeObserver = undefined;
+
+    /** @type {HTMLImageElement | null} */
+    this.image = null;
+    /** @type {HTMLElement | null} */
+    this.titleNode = null;
+    /** @type {HTMLElement | null} */
+    this.metaNode = null;
+    /** @type {HTMLElement | null} */
+    this.descriptionNode = null;
+    /** @type {HTMLButtonElement | null} */
+    this.prevButton = null;
+    /** @type {HTMLButtonElement | null} */
+    this.nextButton = null;
+    /** @type {HTMLElement | null} */
+    this.hoverZone = null;
+    /** @type {HTMLElement | null} */
+    this.headingNode = null;
+    /** @type {HTMLElement | null} */
+    this.prevLabelNode = null;
+    /** @type {HTMLElement | null} */
+    this.nextLabelNode = null;
+
+    if (!this.entries.length) {
+      return;
+    }
     this.cacheElements();
     this.bindEvents();
     this.render();
@@ -49,20 +70,25 @@ class MinimalGalleryController {
     this.observeLocaleChanges();
   }
 
-  private parseEntries(): AvatarGalleryEntry[] {
-    const dataNode = this.root.querySelector<HTMLScriptElement>(
-      'script[data-avatar-gallery-data]',
-    );
+  /**
+   * @returns {AvatarGalleryEntry[]}
+   */
+  parseEntries() {
+    /** @type {HTMLScriptElement | null} */
+    const dataNode = this.root.querySelector('script[data-avatar-gallery-data]');
     if (!dataNode?.textContent) return [];
     try {
-      return JSON.parse(dataNode.textContent) as AvatarGalleryEntry[];
+      return JSON.parse(dataNode.textContent);
     } catch (error) {
       console.error('[avatar-gallery] Unable to parse entries', error);
       return [];
     }
   }
 
-  private parseConfig(): AvatarGalleryConfig {
+  /**
+   * @returns {AvatarGalleryConfig}
+   */
+  parseConfig() {
     const raw = this.root.getAttribute('data-gallery-config');
     if (!raw) return {};
     try {
@@ -72,26 +98,20 @@ class MinimalGalleryController {
     }
   }
 
-  private cacheElements() {
-    this.image = this.root.querySelector<HTMLImageElement>('[data-gallery-final]');
-    this.titleNode = this.root.querySelector<HTMLElement>('[data-gallery-title]');
-    this.metaNode = this.root.querySelector<HTMLElement>('[data-gallery-meta]');
-    this.descriptionNode = this.root.querySelector<HTMLElement>(
-      '[data-gallery-description]',
-    );
-    this.prevButton = this.root.querySelector<HTMLButtonElement>(
-      '[data-gallery-action="prev"]',
-    );
-    this.nextButton = this.root.querySelector<HTMLButtonElement>(
-      '[data-gallery-action="next"]',
-    );
-    this.hoverZone = this.root.querySelector<HTMLElement>('[data-gallery-hover-zone]');
-    this.headingNode = this.root.querySelector<HTMLElement>('[data-gallery-heading]');
-    this.prevLabelNode = this.root.querySelector<HTMLElement>('[data-gallery-prev-label]');
-    this.nextLabelNode = this.root.querySelector<HTMLElement>('[data-gallery-next-label]');
+  cacheElements() {
+    this.image = this.root.querySelector('[data-gallery-final]');
+    this.titleNode = this.root.querySelector('[data-gallery-title]');
+    this.metaNode = this.root.querySelector('[data-gallery-meta]');
+    this.descriptionNode = this.root.querySelector('[data-gallery-description]');
+    this.prevButton = this.root.querySelector('[data-gallery-action="prev"]');
+    this.nextButton = this.root.querySelector('[data-gallery-action="next"]');
+    this.hoverZone = this.root.querySelector('[data-gallery-hover-zone]');
+    this.headingNode = this.root.querySelector('[data-gallery-heading]');
+    this.prevLabelNode = this.root.querySelector('[data-gallery-prev-label]');
+    this.nextLabelNode = this.root.querySelector('[data-gallery-next-label]');
   }
 
-  private bindEvents() {
+  bindEvents() {
     this.prevButton?.addEventListener('click', () => this.showPrevious());
     this.nextButton?.addEventListener('click', () => this.showNext());
 
@@ -104,12 +124,15 @@ class MinimalGalleryController {
     this.hoverZone?.addEventListener('pointerleave', resume);
   }
 
-  private detectLocale(): 'en' | 'es' {
+  /**
+   * @returns {'en' | 'es'}
+   */
+  detectLocale() {
     const langAttr = document.documentElement.lang?.toLowerCase() ?? 'en';
     return langAttr.startsWith('es') ? 'es' : 'en';
   }
 
-  private observeLocaleChanges() {
+  observeLocaleChanges() {
     this.localeObserver = new MutationObserver(() => {
       const nextLocale = this.detectLocale();
       if (nextLocale !== this.locale) {
@@ -123,7 +146,10 @@ class MinimalGalleryController {
     });
   }
 
-  private setPaused(nextPaused: boolean) {
+  /**
+   * @param {boolean} nextPaused
+   */
+  setPaused(nextPaused) {
     if (this.paused === nextPaused) return;
     this.paused = nextPaused;
     if (this.paused) {
@@ -133,29 +159,29 @@ class MinimalGalleryController {
     }
   }
 
-  private startAutoplay() {
+  startAutoplay() {
     if (this.autoplayId || this.paused) return;
     this.autoplayId = window.setInterval(() => this.showNext(), AUTOPLAY_INTERVAL);
   }
 
-  private stopAutoplay() {
+  stopAutoplay() {
     if (this.autoplayId) {
       window.clearInterval(this.autoplayId);
       this.autoplayId = null;
     }
   }
 
-  private showNext() {
+  showNext() {
     this.index = (this.index + 1) % this.entries.length;
     this.render();
   }
 
-  private showPrevious() {
+  showPrevious() {
     this.index = (this.index - 1 + this.entries.length) % this.entries.length;
     this.render();
   }
 
-  private render() {
+  render() {
     const entry = this.entries[this.index];
     if (!entry || !this.image) return;
     const { title, description } = this.getLocalizedCopy(entry);
@@ -170,7 +196,10 @@ class MinimalGalleryController {
     this.applyChromeCopy();
   }
 
-  private getLocalizedCopy(entry: AvatarGalleryEntry) {
+  /**
+   * @param {AvatarGalleryEntry} entry
+   */
+  getLocalizedCopy(entry) {
     if (this.locale === 'es') {
       return {
         title: entry.titleEs ?? entry.title,
@@ -183,7 +212,7 @@ class MinimalGalleryController {
     };
   }
 
-  private applyChromeCopy() {
+  applyChromeCopy() {
     if (this.headingNode) {
       const heading =
         this.locale === 'es'
@@ -227,7 +256,11 @@ class MinimalGalleryController {
     }
   }
 
-  private animateImage(nextSrc: string, alt: string) {
+  /**
+   * @param {string} nextSrc
+   * @param {string} alt
+   */
+  animateImage(nextSrc, alt) {
     if (!this.image) return;
     if (this.image.src !== nextSrc) {
       const keyframes =
@@ -247,14 +280,25 @@ class MinimalGalleryController {
   }
 }
 
-const init = () => {
-  document
-    .querySelectorAll<HTMLElement>('[data-avatar-gallery]')
-    .forEach((node) => new MinimalGalleryController(node));
+let domContentLoadedBound = false;
+
+const runGalleryInit = () => {
+  document.querySelectorAll('[data-avatar-gallery]').forEach((node) => {
+    new MinimalGalleryController(/** @type {HTMLElement} */ (node));
+  });
 };
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init, { once: true });
-} else {
-  init();
-}
+const initOnReady = () => {
+  if (document.readyState === 'loading') {
+    if (domContentLoadedBound) return;
+    domContentLoadedBound = true;
+    document.addEventListener('DOMContentLoaded', runGalleryInit, { once: true });
+  } else {
+    runGalleryInit();
+  }
+};
+
+initOnReady();
+
+export default initOnReady;
+export { initOnReady as initAvatarGallery };
