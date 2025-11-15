@@ -1,0 +1,51 @@
+---
+import AvatarGallery from './AvatarGallery.astro';
+import modalControllerModule from './modal-controller.ts?url';
+import type { Locale } from '../../utils/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale = 'en' }: Partial<Props> = Astro.props;
+const modalId = 'avatar-gallery-modal';
+const badgeLabel = locale === 'es' ? 'Evolución del avatar' : 'Avatar Evolution';
+const closeLabel = locale === 'es' ? 'Cerrar' : 'Close';
+---
+
+<div
+  id={modalId}
+  class="pointer-events-none fixed inset-0 z-[70] hidden"
+  data-avatar-modal
+  aria-hidden="true"
+>
+  <div
+    class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-300"
+    data-avatar-modal-overlay
+  ></div>
+  <div class="relative z-10 flex min-h-full items-center justify-center p-4">
+    <div
+      class="w-full max-w-6xl rounded-[2.5rem] border border-white/10 bg-deepBlue/95 p-6 shadow-[0_30px_120px_rgba(0,0,0,0.75)] transition-transform duration-300"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Turtleand Avatar Evolution Gallery"
+      data-avatar-modal-panel
+      tabindex="-1"
+    >
+      <div class="flex items-center justify-between gap-4 pb-4">
+        <p class="text-xs uppercase tracking-[0.4em] text-offWhite/50">
+          {badgeLabel}
+        </p>
+        <button
+          type="button"
+          class="rounded-full border border-white/30 px-4 py-2 text-xs uppercase tracking-[0.35em] text-offWhite transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
+          data-avatar-modal-close
+        >
+          {closeLabel}
+        </button>
+      </div>
+      <AvatarGallery locale={locale} />
+    </div>
+  </div>
+</div>
+<script type="module" src={modalControllerModule}></script>

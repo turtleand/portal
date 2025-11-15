@@ -1,0 +1,134 @@
+---
+import {
+  avatarGalleryEntries,
+  avatarGalleryConfig,
+} from "../../data/avatarGallery";
+import galleryControllerModule from "./gallery-controller.ts?url";
+import type { Locale } from "../../utils/i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale = "en" }: Partial<Props> = Astro.props;
+const entriesJson = JSON.stringify(avatarGalleryEntries).replace(
+  /</g,
+  "\\u003c",
+);
+const configJson = JSON.stringify(avatarGalleryConfig).replace(/</g, "\\u003c");
+const galleryTitle =
+  locale === "es" ? "Archivo de Evolución" : "Evolution Archive";
+const prevLabel = locale === "es" ? "Anterior" : "Prev";
+const nextLabel = locale === "es" ? "Siguiente" : "Next";
+const initialEntry = avatarGalleryEntries[0];
+const initialTitle =
+  locale === "es" ? initialEntry.titleEs : initialEntry.title;
+const initialDescription =
+  locale === "es" ? initialEntry.descriptionEs : initialEntry.description;
+---
+
+<section
+  class="relative isolate overflow-hidden rounded-3xl border border-white/10 bg-deepBlue/80 p-6 shadow-[0_20px_60px_rgba(4,10,25,0.55)] backdrop-blur"
+  data-avatar-gallery
+  data-gallery-config={configJson}
+>
+  <script
+    type="application/json"
+    data-avatar-gallery-data
+    set:html={entriesJson}
+  />
+  <div class="space-y-6">
+    <header class="text-center">
+      <h2
+        class="text-3xl font-heading text-offWhite"
+        data-gallery-heading
+        data-heading-en="Evolution Archive"
+        data-heading-es="Archivo de Evolución"
+      >
+        {galleryTitle}
+      </h2>
+    </header>
+    <div
+      class="relative flex flex-col gap-4 rounded-[28px] border border-white/10 bg-gradient-to-br from-emerald-900/30 via-deepBlue to-deepBlue/80 p-6"
+      data-gallery-stage
+    >
+      <div
+        class="relative mx-auto flex h-[360px] max-h-[70vh] w-full max-w-2xl items-center justify-center"
+        data-gallery-stage-canvas
+        data-gallery-hover-zone
+      >
+        <img
+          data-gallery-final
+          src={avatarGalleryEntries[0].finalImage}
+          alt={initialTitle}
+          class="h-full w-full object-contain transition duration-500 will-change-transform"
+          loading="lazy"
+        />
+      </div>
+      <div class="text-center space-y-1">
+        <p class="text-xs uppercase tracking-[0.4em] text-emerald-200">
+          <span data-gallery-meta>
+            {avatarGalleryEntries[0].version} • {avatarGalleryEntries[0].date}
+          </span>
+        </p>
+        <h3 class="text-2xl font-heading text-offWhite" data-gallery-title>
+          {initialTitle}
+        </h3>
+        <p class="text-offWhite/70" data-gallery-description>
+          {initialDescription}
+        </p>
+      </div>
+      <div class="flex items-center justify-center gap-4">
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-emerald-400/10 px-5 py-2 text-sm uppercase tracking-[0.3em] text-offWhite transition hover:bg-emerald-400/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
+          data-gallery-action="prev"
+          aria-label={locale === "es" ? "Avatar anterior" : "Previous avatar"}
+          data-prev-aria-es="Avatar anterior"
+          data-prev-aria-en="Previous avatar"
+        >
+          <svg viewBox="0 0 32 32" class="h-4 w-4" aria-hidden="true">
+            <path
+              d="m18 10-6 6 6 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+          <span
+            data-gallery-prev-label
+            data-label-en="Prev"
+            data-label-es="Anterior"
+          >
+            {prevLabel}
+          </span>
+        </button>
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-emerald-400/10 px-5 py-2 text-sm uppercase tracking-[0.3em] text-offWhite transition hover:bg-emerald-400/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
+          data-gallery-action="next"
+          aria-label={locale === "es" ? "Siguiente avatar" : "Next avatar"}
+          data-next-aria-es="Siguiente avatar"
+          data-next-aria-en="Next avatar"
+        >
+          <span
+            data-gallery-next-label
+            data-label-en="Next"
+            data-label-es="Siguiente"
+          >
+            {nextLabel}
+          </span>
+          <svg viewBox="0 0 32 32" class="h-4 w-4" aria-hidden="true">
+            <path
+              d="m14 10 6 6-6 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="module" src={galleryControllerModule}></script>

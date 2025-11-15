@@ -45,25 +45,31 @@ const inactiveToggleClasses = "text-offWhite/70 hover:text-offWhite";
   <div
     class="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-4 md:flex-row md:items-center md:justify-between md:px-12"
   >
-    <a
-      href="/"
-      class="flex items-center gap-4 transition-transform hover:scale-105 focus-visible:scale-105 focus-visible:outline-none"
-    >
-      <img
-        src="/logo.svg"
-        alt="Turtleand logo"
-        width="940"
-        height="548"
-        class="h-16 w-auto md:h-24"
-        loading="lazy"
-        decoding="async"
-      />
-      <span
-        class="inline-flex whitespace-nowrap rounded-full border border-white/10 px-4 py-1 text-xl font-heading uppercase tracking-[0.3em] text-offWhite/90 shadow-[0_10px_35px_rgba(5,10,20,0.45)] backdrop-blur-sm"
+    <div class="flex items-center gap-4">
+      <button
+        type="button"
+        class="flex items-center gap-4 transition-transform hover:scale-105 focus-visible:scale-105 focus-visible:outline-none"
+        data-open-avatar-gallery
+        aria-haspopup="dialog"
+        aria-expanded="false"
+        aria-pressed="false"
       >
-        TurtleanD
-      </span>
-    </a>
+        <img
+          src="/logo.svg"
+          alt="Open Turtleand avatar gallery"
+          width="940"
+          height="548"
+          class="h-16 w-auto md:h-24"
+          loading="lazy"
+          decoding="async"
+        />
+        <span
+          class="inline-flex whitespace-nowrap rounded-full border border-white/10 px-4 py-1 text-xl font-heading uppercase tracking-[0.3em] text-offWhite/90 shadow-[0_10px_35px_rgba(5,10,20,0.45)] backdrop-blur-sm"
+        >
+          TurtleanD
+        </span>
+      </button>
+    </div>
     <div class="flex flex-wrap items-center gap-4 md:gap-6 md:justify-end">
       <nav
         aria-label="Main navigation"

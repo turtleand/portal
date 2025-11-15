@@ -1,6 +1,7 @@
 ---
 import '../styles/globals.css';
 import SiteHeader from '../components/SiteHeader.astro';
+import AvatarGalleryModal from '../components/avatar/AvatarGalleryModal.astro';
 import { primaryNavigation } from '../config/navigation';
 import aiBackgroundAsset from '../images/ai.png';
 import growthBackgroundAsset from '../images/growth.png';
@@ -120,6 +121,7 @@ const localeBootstrapData = JSON.stringify({
         <slot name="footer" />
       </footer>
     </div>
+    <AvatarGalleryModal locale={locale} />
     <script
       is:inline
       set:html={`window.__turtleandLocale = ${localeBootstrapData};`}

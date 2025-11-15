@@ -1,1 +1,3 @@
+- Fix the mailto:hello@turtleand.com in socials. Currently nothing happens when clicking it
+- Improve the email icon
 - Fix favicon for uniformity
