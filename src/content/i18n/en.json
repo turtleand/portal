@@ -57,7 +57,20 @@
       "Passionate Reader and Writer",
       "A Lion that Roars in the face of adversity",
       "A Turtle that always moves forward"
-    ]
+    ],
+    "traitDescriptions": [
+      "Connects long-range visions with actionable systems for every initiative.",
+      "Builds resilient software stacks shaped by a decade of shipping production systems.",
+      "Blends perspectives from multiple cultures to inform human-centered products.",
+      "Explores decentralized tools as a path to transparent, trust-minimized collaboration.",
+      "Constantly studies intelligence research to bridge human creativity with machine reasoning.",
+      "Leads with possibility, framing challenges as invitations to design better systems.",
+      "Trusts collective potential and designs technology that elevates people first.",
+      "Curates and shares ideas through reflective essays, marginalia, and storytelling.",
+      "Channels bold, fearless energy when facing complex problems or adversity.",
+      "Moves forward with patient persistence, ensuring progress compounds day after day."
+    ],
+    "traitPopoverCloseLabel": "Close description"
   },
   "avatar": {
     "modal": {

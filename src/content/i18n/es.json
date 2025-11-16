@@ -57,7 +57,20 @@
       "Lector y escritor apasionado",
       "Un león que ruge frente a la adversidad",
       "Una tortuga que siempre avanza"
-    ]
+    ],
+    "traitDescriptions": [
+      "Conecta visiones de largo plazo con sistemas accionables para cada iniciativa.",
+      "Construye pilas de software resilientes tras una década enviando sistemas a producción.",
+      "Fusiona perspectivas de múltiples culturas para crear productos centrados en las personas.",
+      "Explora herramientas descentralizadas como camino hacia una colaboración transparente y de confianza minimizada.",
+      "Estudia constantemente la investigación en inteligencia para unir la creatividad humana con el razonamiento de las máquinas.",
+      "Lidera con posibilidad, interpretando los retos como invitaciones a diseñar mejores sistemas.",
+      "Confía en el potencial colectivo y diseña tecnología que prioriza a las personas.",
+      "Comparte ideas mediante ensayos reflexivos, notas al margen y narrativas.",
+      "Canaliza una energía audaz e intrépida frente a problemas complejos o la adversidad.",
+      "Avanza con paciencia persistente, asegurando que el progreso se componga día tras día."
+    ],
+    "traitPopoverCloseLabel": "Cerrar descripción"
   },
   "avatar": {
     "modal": {

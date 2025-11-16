@@ -4,8 +4,16 @@ import { initI18n, makeCopyToken } from '../utils/i18n';
 
 const { locale, dictionary, t } = initI18n(Astro);
 const traits = dictionary.about.traits ?? [];
+const traitDescriptions = dictionary.about.traitDescriptions ?? [];
 const backLabel = makeCopyToken('about.backLabel', t);
 const pageDescriptionCopy = makeCopyToken('about.pageDescription', t);
+const traitPopoverCloseCopy = makeCopyToken('about.traitPopoverCloseLabel', t);
+const traitItems = traits.map((trait, index) => ({
+  key: `about.traits.${index}`,
+  descriptionKey: `about.traitDescriptions.${index}`,
+  label: trait,
+  description: traitDescriptions[index] ?? '',
+}));
 ---
 <Layout
   title={t('about.pageTitle')}
@@ -35,16 +43,49 @@ const pageDescriptionCopy = makeCopyToken('about.pageDescription', t);
       <p class="text-base text-offWhite/80" data-i18n-key={pageDescriptionCopy.key}>
         {pageDescriptionCopy.text}
       </p>
-      <ul class="space-y-3 text-base md:text-lg">
-        {traits.map((trait, index) => (
+      <ul
+        class="space-y-3 text-base md:text-lg"
+        data-about-trait-list
+      >
+        {traitItems.map((trait) => (
           <li
-            class="rounded-lg border border-white/5 bg-white/5 px-4 py-3 text-offWhite backdrop-blur"
-            data-i18n-key={`about.traits.${index}`}
+            class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-offWhite backdrop-blur transition-colors focus-within:border-white/30"
+            data-trait-item
           >
-            {trait}
+            <button
+              type="button"
+              class="group flex w-full items-center justify-between gap-3 text-left font-semibold text-offWhite/90 transition-colors hover:text-offWhite focus-visible:text-offWhite focus-visible:outline-none"
+              data-trait-trigger
+              aria-expanded="false"
+            >
+              <span data-trait-label data-i18n-key={trait.key}>
+                {trait.label}
+              </span>
+              <span
+                aria-hidden="true"
+                class="text-lg text-offWhite/50 transition group-hover:text-offWhite"
+              >
+                →
+              </span>
+            </button>
+            <p
+              class="mt-3 hidden border-t border-white/5 pt-3 text-sm text-offWhite/80"
+              data-trait-inline-description
+              data-i18n-key={trait.descriptionKey}
+            >
+              {trait.description}
+            </p>
           </li>
         ))}
       </ul>
+      <span
+        class="hidden"
+        aria-hidden="true"
+        data-trait-popover-close
+        data-i18n-key={traitPopoverCloseCopy.key}
+      >
+        {traitPopoverCloseCopy.text}
+      </span>
     </div>
   </section>
   <script is:inline>
@@ -56,12 +97,305 @@ const pageDescriptionCopy = makeCopyToken('about.pageDescription', t);
         if (!section || !shell) return;
 
         section.addEventListener("click", (event) => {
-          const target = event.target as Node;
+          const target = event.target;
+          if (!(target instanceof Node)) return;
           if (!shell.contains(target)) {
             window.location.href = "/";
           }
         });
+
+        const traitList = document.querySelector("[data-about-trait-list]");
+        if (!traitList) return;
+
+        const closeLabelSource = document.querySelector("[data-trait-popover-close]");
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const smallScreenQuery = window.matchMedia("(max-width: 768px)");
+        const shouldUseInlineMode = () => prefersReducedMotion.matches || smallScreenQuery.matches;
+        let useInlineMode = shouldUseInlineMode();
+        /** @type {HTMLElement | null} */
+        let activeItem = null;
+        let hideTimeout = 0;
+        /** @type {HTMLElement | null} */
+        let lastFocusedElement = null;
+
+        const setActiveTraitItem = (next) => {
+          if (activeItem && activeItem !== next) {
+            activeItem.removeAttribute("data-active-trait");
+          }
+          activeItem = next;
+          if (activeItem) {
+            activeItem.setAttribute("data-active-trait", "true");
+          }
+        };
+
+        const popover = document.createElement("div");
+        popover.dataset.traitPopover = "true";
+        popover.setAttribute("role", "dialog");
+        popover.setAttribute("aria-modal", "false");
+        popover.className =
+          "pointer-events-auto absolute z-40 max-w-sm rounded-2xl border border-white/20 bg-deepBlue p-5 text-offWhite shadow-glow/40 ring-1 ring-white/10 backdrop-blur-md transition duration-150 ease-out";
+        popover.style.opacity = "0";
+        popover.style.transform = "translateY(8px)";
+        popover.hidden = true;
+
+        const popoverTitle = document.createElement("p");
+        popoverTitle.id = "about-trait-popover-title";
+        popoverTitle.className = "text-base font-semibold text-offWhite";
+        popover.appendChild(popoverTitle);
+
+        const popoverDescription = document.createElement("p");
+        popoverDescription.className = "mt-2 text-sm text-offWhite/90 leading-relaxed";
+        popover.appendChild(popoverDescription);
+
+        const closeButton = document.createElement("button");
+        closeButton.type = "button";
+        closeButton.className =
+          "mt-4 inline-flex items-center justify-center rounded-full border border-white/20 px-4 py-1.5 text-sm text-offWhite/80 transition hover:text-offWhite focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50";
+        popover.appendChild(closeButton);
+
+        popover.setAttribute("aria-labelledby", popoverTitle.id);
+        popover.addEventListener("keydown", (event) => {
+          if (event.key === "Tab") {
+            event.preventDefault();
+            closeButton.focus();
+          }
+        });
+
+        document.body.appendChild(popover);
+
+        const readCloseLabel = () => closeLabelSource?.textContent?.trim() || "Close";
+        const updateCloseButtonLabel = () => {
+          closeButton.textContent = readCloseLabel();
+        };
+
+        const getTrigger = (item) =>
+          /** @type {HTMLButtonElement | null} */ (item.querySelector("[data-trait-trigger]"));
+        const getDescriptionNode = (item) =>
+          /** @type {HTMLElement | null} */ (item.querySelector("[data-trait-inline-description]"));
+
+        const updatePopoverContent = (item) => {
+          const trigger = getTrigger(item);
+          const descriptionNode = getDescriptionNode(item);
+          if (!trigger || !descriptionNode) return;
+          const labelNode = /** @type {HTMLElement | null} */ (
+            trigger.querySelector("[data-trait-label]")
+          );
+          const title = (labelNode ?? trigger).textContent?.trim() || "";
+          const description = descriptionNode.textContent?.trim() || "";
+          popoverTitle.textContent = title;
+          popoverDescription.textContent = description;
+        };
+
+        const positionPopover = (trigger) => {
+          if (!trigger) return;
+          const rect = trigger.getBoundingClientRect();
+          const scrollX = window.scrollX || window.pageXOffset;
+          const scrollY = window.scrollY || window.pageYOffset;
+          const spacing = 18;
+          const viewportWidth = document.documentElement.clientWidth;
+          const viewportHeight = document.documentElement.clientHeight;
+
+          popover.style.left = "0px";
+          popover.style.top = "0px";
+          const { offsetWidth, offsetHeight } = popover;
+
+          const centerOffset = rect.top + rect.height / 2 - offsetHeight / 2;
+          const fitsRight = rect.right + spacing + offsetWidth <= scrollX + viewportWidth - 16;
+          const fitsLeft = rect.left - spacing - offsetWidth >= scrollX + 16;
+          let left;
+          let top;
+
+          if (fitsRight) {
+            left = rect.right + spacing + scrollX;
+            top = centerOffset + scrollY;
+          } else if (fitsLeft) {
+            left = rect.left - spacing - offsetWidth + scrollX;
+            top = centerOffset + scrollY;
+          } else {
+            left = Math.max(
+              scrollX + 16,
+              Math.min(rect.left + scrollX, scrollX + viewportWidth - offsetWidth - 16),
+            );
+            top = rect.bottom + spacing + scrollY;
+            if (top + offsetHeight > scrollY + viewportHeight - 16 && rect.top > offsetHeight + spacing) {
+              top = rect.top + scrollY - offsetHeight - spacing;
+            }
+          }
+
+          top = Math.max(scrollY + 16, Math.min(top, scrollY + viewportHeight - offsetHeight - 16));
+
+          popover.style.left = `${left}px`;
+          popover.style.top = `${top}px`;
+        };
+
+        updateCloseButtonLabel();
+
+        const localeStore = window.turtleandLocaleStore;
+        if (localeStore?.subscribe) {
+          localeStore.subscribe(() => {
+            updateCloseButtonLabel();
+            if (activeItem && !popover.hidden && !useInlineMode) {
+              updatePopoverContent(activeItem);
+              positionPopover(getTrigger(activeItem));
+            }
+          });
+        }
+
+        const collapseInlineDescriptions = () => {
+          const inlineNodes = traitList.querySelectorAll("[data-trait-inline-description]");
+          inlineNodes.forEach((node) => node.classList.add("hidden"));
+          const triggers = traitList.querySelectorAll("[data-trait-trigger]");
+          triggers.forEach((button) => button.setAttribute("aria-expanded", "false"));
+          setActiveTraitItem(null);
+        };
+
+        const closePopover = ({ returnFocus = true } = {}) => {
+          if (popover.hidden) return;
+          popover.style.opacity = "0";
+          popover.style.transform = "translateY(6px)";
+          const previous = activeItem;
+          setActiveTraitItem(null);
+          if (previous) {
+            const previousTrigger = getTrigger(previous);
+            previousTrigger?.setAttribute("aria-expanded", "false");
+          }
+          hideTimeout = window.setTimeout(() => {
+            popover.hidden = true;
+          }, 180);
+          if (returnFocus && lastFocusedElement) {
+            lastFocusedElement.focus();
+          }
+        };
+
+        closeButton.addEventListener("click", () => closePopover());
+
+        const openInlineForItem = (item) => {
+          const descriptionNode = getDescriptionNode(item);
+          const trigger = getTrigger(item);
+          if (!descriptionNode || !trigger) return;
+          const isVisible = !descriptionNode.classList.contains("hidden");
+          collapseInlineDescriptions();
+          if (!isVisible) {
+            descriptionNode.classList.remove("hidden");
+            trigger.setAttribute("aria-expanded", "true");
+            setActiveTraitItem(item);
+          }
+        };
+
+        const openPopoverForItem = (item, { focusPopover = true } = {}) => {
+          const trigger = getTrigger(item);
+          const descriptionNode = getDescriptionNode(item);
+          if (!trigger || !descriptionNode) return;
+          if (hideTimeout) {
+            window.clearTimeout(hideTimeout);
+          }
+          setActiveTraitItem(item);
+          updatePopoverContent(item);
+          popover.hidden = false;
+          popover.style.opacity = "0";
+          popover.style.transform = "translateY(8px)";
+          positionPopover(trigger);
+          requestAnimationFrame(() => {
+            popover.style.opacity = "1";
+            popover.style.transform = "translateY(0)";
+          });
+          if (focusPopover) {
+            lastFocusedElement =
+              document.activeElement instanceof HTMLElement ? document.activeElement : null;
+            closeButton.focus();
+          } else {
+            lastFocusedElement = null;
+          }
+          trigger.setAttribute("aria-expanded", "true");
+        };
+
+        const handleTriggerClick = (event) => {
+          const currentTarget = event.currentTarget;
+          if (!(currentTarget instanceof HTMLElement)) return;
+          const item = currentTarget.closest("[data-trait-item]");
+          if (!(item instanceof HTMLElement)) return;
+          if (useInlineMode) {
+            openInlineForItem(item);
+            return;
+          }
+          if (activeItem === item && !popover.hidden) {
+            closePopover();
+            return;
+          }
+          collapseInlineDescriptions();
+          closePopover({ returnFocus: false });
+          openPopoverForItem(item);
+        };
+
+        const handlePointerDown = (event) => {
+          if (popover.hidden) return;
+          const target = event.target;
+          if (!(target instanceof Node)) return;
+          if (!popover.contains(target) && (!activeItem || !activeItem.contains(target))) {
+            closePopover({ returnFocus: false });
+          }
+        };
+
+        const handleKeydown = (event) => {
+          if (event.key === "Escape") {
+            if (!popover.hidden) {
+              closePopover();
+            } else {
+              collapseInlineDescriptions();
+            }
+          }
+        };
+
+        const handleInteractionModeChange = () => {
+          const nextInlineState = shouldUseInlineMode();
+          if (useInlineMode === nextInlineState) return;
+          const current = activeItem;
+          useInlineMode = nextInlineState;
+          if (useInlineMode) {
+            const target = current;
+            closePopover({ returnFocus: false });
+            if (target) {
+              openInlineForItem(target);
+            }
+          } else {
+            collapseInlineDescriptions();
+            if (current) {
+              openPopoverForItem(current, { focusPopover: false });
+            }
+          }
+        };
+
+        traitList.querySelectorAll("[data-trait-trigger]").forEach((button) => {
+          button.addEventListener("click", handleTriggerClick);
+        });
+
+        document.addEventListener("pointerdown", handlePointerDown);
+        document.addEventListener("keydown", handleKeydown);
+
+        if (typeof prefersReducedMotion.addEventListener === "function") {
+          prefersReducedMotion.addEventListener("change", handleInteractionModeChange);
+        } else if (typeof prefersReducedMotion.addListener === "function") {
+          prefersReducedMotion.addListener(handleInteractionModeChange);
+        }
+        if (typeof smallScreenQuery.addEventListener === "function") {
+          smallScreenQuery.addEventListener("change", handleInteractionModeChange);
+        } else if (typeof smallScreenQuery.addListener === "function") {
+          smallScreenQuery.addListener(handleInteractionModeChange);
+        }
       });
     }
   </script>
+  <style>
+    :global([data-trait-item][data-active-trait='true']) {
+      border-color: rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 25px 60px rgba(9, 17, 31, 0.35);
+    }
+    :global([data-trait-item][data-active-trait='true'] [data-trait-trigger]) {
+      color: rgba(255, 255, 255, 0.98);
+    }
+    :global([data-trait-item][data-active-trait='true'] [data-trait-trigger] span:last-child) {
+      color: rgba(255, 255, 255, 0.9);
+    }
+  </style>
 </Layout>
