@@ -18,8 +18,7 @@ Switching to the About page with `?lang=es` causes the header toggle to momentar
    - Outcome: script still executes after the browser has already painted the header because it’s placed after the markup and depends on `window`. On fast navigations the flicker remains, meaning we need SSR-level locale selection or a `<script>` placed in the `<head>` before first paint.
 
 ### Recommended Direction
-- **Server-side locale rendering**: Convert the project to SSR or enable per-locale SSG by generating `/index` and `/index.es` (or `/es/index`) and routing via middleware. Astro’s `getStaticPaths` or `Astro.locals` could provide the locale during build if we emit distinct pages per locale.
-- **Inline `<head>` bootstrap**: If SSR is not an option, move the locale-detection script into the `<head>` (e.g., from `Layout.astro`) and use a tiny `defer`-less inline script before stylesheets to set `document.documentElement.lang` and add a `data-locale-ready` attribute/class that CSS can target to suppress the EN styles until the locale is known.
+- **Inline `<head>` bootstrap**: Move the locale-detection script into the `<head>` (e.g., from `Layout.astro`) and use a tiny `defer`-less inline script before stylesheets to set `document.documentElement.lang` and add a `data-locale-ready` attribute/class that CSS can target to suppress the EN styles until the locale is known.
 - **Reduce layout dependency on active classes**: Instead of toggling actual Tailwind classes, consider using CSS variables or `[dir]`/`[lang]` selectors so the header appearance derives from `html[lang="es"]`, making the flash less noticeable even if the toggle updates later.
 
 ### Verification Guidance

@@ -58,5 +58,12 @@
       "A Lion that Roars in the face of adversity",
       "A Turtle that always moves forward"
     ]
+  },
+  "avatar": {
+    "modal": {
+      "badgeLabel": "Avatar Evolution",
+      "closeLabel": "Close",
+      "ariaLabel": "Turtleand Avatar Evolution Gallery"
+    }
   }
 }

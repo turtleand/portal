@@ -58,5 +58,12 @@
       "Un león que ruge frente a la adversidad",
       "Una tortuga que siempre avanza"
     ]
+  },
+  "avatar": {
+    "modal": {
+      "badgeLabel": "Evolución del avatar",
+      "closeLabel": "Cerrar",
+      "ariaLabel": "Galería de Evolución del Avatar de Turtleand"
+    }
   }
 }

@@ -1,0 +1,2 @@
+- The avatar images are never cached and they keep doing requests
+- Update links to ai, growth, build, and blockchain once they're ready
