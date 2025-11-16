@@ -1,2 +1,3 @@
-- The avatar images are never cached and they keep doing requests
+- Improve ES translations
+- Add descriptions for each of the elements in the about section
 - Update links to ai, growth, build, and blockchain once they're ready
