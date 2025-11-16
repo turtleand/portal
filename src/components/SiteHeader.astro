@@ -33,14 +33,15 @@ const currentUrl = Astro.url ?? new URL(placeholderOrigin);
 const currentPath = currentUrl.pathname ?? "/";
 const locales = Object.keys(localeMetadata) as (keyof typeof localeMetadata)[];
 const baseToggleClasses =
-  "inline-flex items-center justify-center rounded-full border border-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offWhite/70 focus-visible:ring-offset-deepBlue";
+  "inline-flex items-center justify-center rounded-full border border-white/20 px-4 py-1.5 text-sm font-semibold uppercase tracking-[0.12em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent focus-visible:ring-offset-[#050f1d]";
 const activeToggleClasses =
-  "bg-offWhite text-deepBlue shadow-[0_8px_32px_rgba(8,12,20,0.35)]";
-const inactiveToggleClasses = "text-offWhite/70 hover:text-offWhite";
+  "bg-teal text-deepBlue shadow-[0_12px_32px_rgba(6,10,25,0.45)]";
+const inactiveToggleClasses =
+  "text-offWhite/50 hover:text-offWhite/80 focus-visible:text-offWhite";
 ---
 
 <header
-  class="bg-deepBlue/90 supports-[backdrop-filter]:bg-deepBlue/80 backdrop-blur border-b border-white/5"
+  class="bg-[#050f1d] border-b border-white/10 shadow-[0_20px_45px_rgba(5,10,20,0.65)]"
 >
   <div
     class="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-4 md:flex-row md:items-center md:justify-between md:px-12"
@@ -64,7 +65,7 @@ const inactiveToggleClasses = "text-offWhite/70 hover:text-offWhite";
           decoding="async"
         />
         <span
-          class="inline-flex whitespace-nowrap rounded-full border border-white/10 px-4 py-1 text-xl font-heading uppercase tracking-[0.3em] text-offWhite/90 shadow-[0_10px_35px_rgba(5,10,20,0.45)] backdrop-blur-sm"
+          class="inline-flex whitespace-nowrap rounded-full border border-white/15 px-5 py-1.5 text-2xl font-heading uppercase tracking-[0.15em] text-offWhite shadow-[0_10px_35px_rgba(5,10,20,0.45)]"
         >
           TurtleanD
         </span>
@@ -112,7 +113,7 @@ const inactiveToggleClasses = "text-offWhite/70 hover:text-offWhite";
         }
       </nav>
       <div
-        class="flex items-center gap-2 rounded-full border border-white/10 px-2 py-1 text-xs font-semibold uppercase tracking-[0.2em]"
+        class="flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-2.5 py-1 text-sm font-semibold uppercase tracking-[0.1em]"
         role="group"
         aria-label={localeGroupLabel}
       >

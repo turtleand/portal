@@ -13,7 +13,7 @@ const { noMarginTop = false, rightsCopy }: Props = Astro.props;
 ---
 
 <footer
-  class={`w-full bg-[#0b1823] text-sm text-offWhite/80 ${
+  class={`w-full bg-[#0b1823] text-sm text-offWhite/90 shadow-[0_-20px_60px_rgba(1,4,9,0.55)] ${
     noMarginTop ? "" : "mt-auto"
   }`}
 >
@@ -23,11 +23,13 @@ const { noMarginTop = false, rightsCopy }: Props = Astro.props;
   >
     <Socials centered />
     <div
-      class="copyright-wrapper flex flex-col items-center whitespace-nowrap text-offWhite/80 sm:flex-row"
+      class="copyright-wrapper flex flex-col items-center whitespace-nowrap text-xs uppercase tracking-[0.15em] text-offWhite/55 sm:flex-row"
     >
-      <span>Copyright © {currentYear}</span>
-      <span class="separator hidden px-2 text-offWhite/60 sm:inline">|</span>
-      <span data-i18n-key={rightsCopy.key}>{rightsCopy.text}</span>
+      <span class="text-offWhite/80">Copyright © {currentYear}</span>
+      <span class="separator hidden px-2 text-offWhite/30 sm:inline">|</span>
+      <span class="font-medium text-offWhite/60" data-i18n-key={rightsCopy.key}>
+        {rightsCopy.text}
+      </span>
     </div>
   </div>
 </footer>

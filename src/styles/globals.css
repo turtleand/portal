@@ -20,8 +20,26 @@ body {
 }
 
 .hero-gradient {
-  background: radial-gradient(circle at top, rgba(46, 131, 115, 0.6) 0%, rgba(14, 30, 43, 0.95) 55%, rgba(14, 30, 43, 1) 100%);
-  background-size: 200% 200%;
+  position: relative;
+  isolation: isolate;
+  background: radial-gradient(circle at 25% 15%, rgba(46, 131, 115, 0.75) 0%, rgba(23, 73, 91, 0.95) 42%, rgba(9, 21, 33, 0.98) 68%, rgba(4, 10, 20, 1) 100%);
+  background-size: 180% 180%;
+  overflow: hidden;
+}
+
+.hero-gradient::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 140px;
+  background: linear-gradient(180deg, rgba(4, 10, 20, 0) 0%, rgba(4, 10, 20, 0.75) 60%, #03070f 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-gradient > * {
+  position: relative;
+  z-index: 1;
 }
 
 .card-surface {
@@ -169,6 +187,6 @@ body {
 @media (max-width: 767px) {
   .hero-gradient {
     animation: none;
-    background: radial-gradient(circle at top, rgba(46, 131, 115, 0.5) 0%, rgba(14, 30, 43, 1) 70%);
+    background: radial-gradient(circle at 30% 15%, rgba(46, 131, 115, 0.55) 0%, rgba(22, 68, 85, 0.95) 55%, rgba(5, 12, 22, 1) 100%);
   }
 }

@@ -30,7 +30,7 @@ const modalAriaLabel = t('avatar.modal.ariaLabel');
     class="relative z-10 flex min-h-full items-start justify-center overflow-y-auto p-4 sm:items-center sm:p-6"
   >
     <div
-      class="w-full max-w-6xl rounded-[2.5rem] border border-white/10 bg-deepBlue/95 p-6 shadow-[0_30px_120px_rgba(0,0,0,0.75)] transition-transform duration-300 max-h-[90vh] overflow-y-auto"
+      class="w-full max-w-6xl rounded-[2.5rem] border border-white/15 bg-gradient-to-br from-[#1b2a3f] via-[#0c1627] to-[#050b16] p-8 shadow-[0_45px_160px_rgba(2,6,15,0.85)] transition-transform duration-300 max-h-[90vh] overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-label={modalAriaLabel}
@@ -41,14 +41,14 @@ const modalAriaLabel = t('avatar.modal.ariaLabel');
     >
       <div class="flex items-center justify-between gap-4 pb-4">
         <p
-          class="text-xs uppercase tracking-[0.4em] text-offWhite/50"
+          class="text-sm uppercase tracking-[0.18em] text-offWhite/80"
           data-i18n-key="avatar.modal.badgeLabel"
         >
           {badgeLabel}
         </p>
         <button
           type="button"
-          class="rounded-full border border-white/30 px-4 py-2 text-xs uppercase tracking-[0.35em] text-offWhite transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
+          class="rounded-full border border-white/30 px-5 py-2 text-sm uppercase tracking-[0.18em] text-offWhite transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           data-avatar-modal-close
           data-i18n-key="avatar.modal.closeLabel"
         >

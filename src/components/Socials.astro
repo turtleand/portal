@@ -13,14 +13,17 @@ const shouldOpenInNewTab = (href: string) => href.startsWith('http');
 ---
 
 <ul
-  class={`socials flex gap-3 text-offWhite transition-colors ${
+  class={`socials flex gap-4 text-offWhite transition-colors ${
     centered ? "justify-center" : "justify-end"
   }`}
 >
 {activeSocials.map((link) => (
   <li>
     <a
-      class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 p-2 text-offWhite/80 transition-transform hover:rotate-6 hover:text-offWhite focus-visible:rotate-6 focus-visible:text-offWhite focus-visible:outline-none"
+      class={`inline-flex items-center rounded-full border transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent ${link.icon === 'mail'
+        ? 'gap-3 border-teal/60 bg-teal/20 px-5 py-2 text-sm font-semibold tracking-wide text-offWhite shadow-glow hover:bg-teal/30 focus-visible:ring-offset-[#0b1823]'
+        : 'h-11 w-11 justify-center border-white/35 bg-white/10 text-offWhite/90 hover:text-offWhite hover:bg-white/20 focus-visible:ring-offset-[#0b1823]'
+      }`}
       href={link.href}
       aria-label={link.linkTitle}
       title={link.linkTitle}
@@ -55,6 +58,9 @@ const shouldOpenInNewTab = (href: string) => href.startsWith('http');
             d="m4 7.5 7.42 5.07a1.5 1.5 0 0 0 1.66 0L20.5 7.5"
           />
         </svg>
+      )}
+      {link.icon === 'mail' && (
+        <span class="text-offWhite/90">{link.name}</span>
       )}
     </a>
   </li>
