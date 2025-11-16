@@ -33,11 +33,11 @@ const currentUrl = Astro.url ?? new URL(placeholderOrigin);
 const currentPath = currentUrl.pathname ?? "/";
 const locales = Object.keys(localeMetadata) as (keyof typeof localeMetadata)[];
 const baseToggleClasses =
-  "inline-flex items-center justify-center rounded-full border border-white/20 px-4 py-1.5 text-sm font-semibold uppercase tracking-[0.12em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent focus-visible:ring-offset-[#050f1d]";
+  "inline-flex items-center justify-center rounded-full border border-white/30 px-4 py-1.5 text-base font-semibold uppercase tracking-[0.08em] text-offWhite transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent focus-visible:ring-offset-[#050f1d] sm:px-5 md:text-sm md:tracking-[0.12em]";
 const activeToggleClasses =
   "bg-teal text-deepBlue shadow-[0_12px_32px_rgba(6,10,25,0.45)]";
 const inactiveToggleClasses =
-  "text-offWhite/50 hover:text-offWhite/80 focus-visible:text-offWhite";
+  "bg-white/10 text-offWhite/85 hover:text-offWhite focus-visible:text-offWhite";
 ---
 
 <header
@@ -60,12 +60,12 @@ const inactiveToggleClasses =
           alt="Open Turtleand avatar gallery"
           width="940"
           height="548"
-          class="h-16 w-auto md:h-24"
+          class="h-12 w-auto sm:h-14 md:h-24"
           loading="lazy"
           decoding="async"
         />
         <span
-          class="inline-flex whitespace-nowrap rounded-full border border-white/15 px-5 py-1.5 text-2xl font-heading uppercase tracking-[0.15em] text-offWhite shadow-[0_10px_35px_rgba(5,10,20,0.45)]"
+          class="inline-flex whitespace-nowrap rounded-full border border-white/15 px-4 py-1 text-lg font-heading uppercase tracking-[0.08em] text-offWhite shadow-[0_10px_35px_rgba(5,10,20,0.45)] sm:px-5 sm:py-1.5 sm:text-xl md:text-2xl md:tracking-[0.15em]"
         >
           TurtleanD
         </span>
@@ -101,10 +101,10 @@ const inactiveToggleClasses =
               >
                 {label}
                 <span
-                  class={`pointer-events-none absolute inset-x-0 -bottom-1 block h-px origin-left bg-offWhite transition-transform duration-200 ease-out ${
+                  class={`pointer-events-none absolute inset-x-0 -bottom-1 block h-0.5 origin-left rounded-full bg-offWhite transition-all duration-200 ease-out ${
                     isActive
-                      ? "scale-x-100"
-                      : "scale-x-0 group-hover:scale-x-100 group-focus-visible:scale-x-100"
+                      ? "scale-x-100 opacity-90 md:opacity-100"
+                      : "scale-x-100 opacity-45 md:scale-x-0 md:opacity-0 md:group-hover:scale-x-100 md:group-hover:opacity-100 md:group-focus-visible:scale-x-100 md:group-focus-visible:opacity-100"
                   }`}
                 />
               </a>
@@ -113,7 +113,7 @@ const inactiveToggleClasses =
         }
       </nav>
       <div
-        class="flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-2.5 py-1 text-sm font-semibold uppercase tracking-[0.1em]"
+        class="flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-2.5 py-1 text-base font-semibold uppercase tracking-[0.08em] text-offWhite md:text-sm md:tracking-[0.1em]"
         role="group"
         aria-label={localeGroupLabel}
       >

@@ -44,12 +44,12 @@ const traitItems = traits.map((trait, index) => ({
         {pageDescriptionCopy.text}
       </p>
       <ul
-        class="space-y-3 text-base md:text-lg"
+        class="space-y-4 text-base sm:space-y-5 md:text-lg"
         data-about-trait-list
       >
         {traitItems.map((trait) => (
           <li
-            class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-offWhite backdrop-blur transition-colors focus-within:border-white/30"
+            class="rounded-2xl border border-white/15 bg-white/10 px-4 py-4 text-offWhite shadow-[0_18px_45px_rgba(6,12,24,0.45)] backdrop-blur transition-colors sm:px-5 md:bg-white/5 md:shadow-none focus-within:border-white/30"
             data-trait-item
           >
             <button
@@ -69,7 +69,7 @@ const traitItems = traits.map((trait, index) => ({
               </span>
             </button>
             <p
-              class="mt-3 hidden border-t border-white/5 pt-3 text-sm text-offWhite/80"
+              class="mt-4 hidden border-t border-white/15 pt-4 text-base leading-relaxed text-offWhite/95 sm:text-sm sm:leading-relaxed sm:text-offWhite/85"
               data-trait-inline-description
               data-i18n-key={trait.descriptionKey}
             >
