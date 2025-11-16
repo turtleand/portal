@@ -1,12 +1,18 @@
 ---
 import type { CopyToken } from "../utils/i18n";
 
+type HeroTitleSegments = {
+  before: CopyToken;
+  highlight: CopyToken;
+  after: CopyToken;
+};
+
 interface Props {
-  title: CopyToken;
+  titleSegments: HeroTitleSegments;
   description: CopyToken;
 }
 
-const { title, description }: Props = Astro.props;
+const { titleSegments, description }: Props = Astro.props;
 ---
 
 <section
@@ -14,10 +20,22 @@ const { title, description }: Props = Astro.props;
 >
   <div class="space-y-7 max-w-3xl">
     <h1
-      class="font-heading text-4xl md:text-6xl leading-snug md:leading-[1.2] text-transparent bg-gradient-to-b from-offWhite via-offWhite to-accent/80 bg-clip-text drop-shadow-[0_10px_35px_rgba(3,8,18,0.35)]"
-      data-i18n-key={title.key}
+      class="font-heading text-4xl md:text-6xl leading-snug md:leading-[1.2] text-offWhite drop-shadow-[0_10px_35px_rgba(3,8,18,0.35)]"
     >
-      {title.text}
+      <span data-i18n-key={titleSegments.before.key}>
+        {titleSegments.before.text}
+      </span>
+      {" "}
+      <span
+        class="text-transparent bg-gradient-to-r from-offWhite via-offWhite to-accent bg-clip-text"
+        data-i18n-key={titleSegments.highlight.key}
+      >
+        {titleSegments.highlight.text}
+      </span>
+      {" "}
+      <span data-i18n-key={titleSegments.after.key}>
+        {titleSegments.after.text}
+      </span>
     </h1>
     <p
       class="text-base md:text-lg text-offWhite/85"

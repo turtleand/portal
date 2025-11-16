@@ -18,7 +18,11 @@
     }
   },
   "hero": {
-    "title": "Where Humans and Technology Evolve Together",
+    "title": {
+      "before": "Where Humans and",
+      "highlight": "Technology",
+      "after": "Evolve Together"
+    },
     "description": "A reflective exploration of AI, personal evolution, and craft — combining the digital and the human to shape what comes next."
   },
   "quadrants": {

@@ -6,3 +6,4 @@ misc/
 .netlify/
 .astro/
 dist/
+coverage/

@@ -7,7 +7,11 @@ import { initI18n, makeCopyToken } from '../utils/i18n';
 
 const { locale, dictionary, t } = initI18n(Astro);
 
-const heroTitle = makeCopyToken('hero.title', t);
+const heroTitleSegments = {
+  before: makeCopyToken('hero.title.before', t),
+  highlight: makeCopyToken('hero.title.highlight', t),
+  after: makeCopyToken('hero.title.after', t),
+};
 const heroDescription = makeCopyToken('hero.description', t);
 const quadrantLabels = {
   ai: makeCopyToken('quadrants.ai.label', t),
@@ -24,7 +28,7 @@ const quadrantTaglines = {
 const footerRightsCopy = makeCopyToken('footer.rights', t);
 ---
 <Layout locale={locale} dictionary={dictionary}>
-  <Hero title={heroTitle} description={heroDescription} />
+  <Hero titleSegments={heroTitleSegments} description={heroDescription} />
   <QuadrantGrid labels={quadrantLabels} taglines={quadrantTaglines} />
   <Footer slot="footer" rightsCopy={footerRightsCopy} />
 </Layout>

@@ -18,7 +18,11 @@
     }
   },
   "hero": {
-    "title": "Donde los humanos y la tecnología evolucionan juntos",
+    "title": {
+      "before": "Donde los humanos y la",
+      "highlight": "tecnología",
+      "after": "evolucionan juntos"
+    },
     "description": "Una exploración reflexiva de la IA, la evolución personal y la artesanía; combinando lo digital y lo humano para dar forma a lo que sigue."
   },
   "quadrants": {
