@@ -3,3 +3,6 @@ watcher.js
 README-local.md
 .DS_Store
 misc/
+.netlify/
+.astro/
+dist/
