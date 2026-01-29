@@ -5,7 +5,7 @@ interface Props {
   labelCopy: CopyToken;
   emoji: string;
   taglineCopy: CopyToken;
-  href: string;
+  href?: string;
   variant: "ai" | "growth" | "build" | "blockchain";
   delay?: number;
   image?: string;
@@ -20,6 +20,9 @@ const {
   delay = 0,
   image,
 }: Props = Astro.props;
+const isDisabled = !href;
+const Tag = href ? "a" : "div";
+const tagProps = href ? { href } : { "aria-disabled": "true" };
 const backgroundClasses = {
   ai: "bg-card-ai",
   growth: "bg-card-growth",
@@ -31,16 +34,20 @@ const animationDelay = `${delay}ms`;
 const imageState = hasImage ? "pending" : "false";
 ---
 
-<a
-  href={href}
+<Tag
+  {...tagProps}
   class:list={{
     "card-surface": true,
     group: true,
-    "focus:outline-none": true,
-    "focus-visible:ring-2": true,
-    "focus-visible:ring-offset-2": true,
-    "focus-visible:ring-accent": true,
-    "focus-visible:ring-offset-deepBlue": true,
+    "focus:outline-none": !isDisabled,
+    "focus-visible:ring-2": !isDisabled,
+    "focus-visible:ring-offset-2": !isDisabled,
+    "focus-visible:ring-accent": !isDisabled,
+    "focus-visible:ring-offset-deepBlue": !isDisabled,
+    "cursor-not-allowed": isDisabled,
+    "pointer-events-none": isDisabled,
+    "opacity-60": isDisabled,
+    grayscale: isDisabled,
   }}
 >
   <div
@@ -94,4 +101,4 @@ const imageState = hasImage ? "pending" : "false";
       </div>
     </div>
   </div>
-</a>
+</Tag>
