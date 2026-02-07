@@ -1,0 +1,5 @@
+# Welcome all crawlers and AI agents
+User-agent: *
+Allow: /
+
+Sitemap: https://turtleand.com/sitemap-index.xml
