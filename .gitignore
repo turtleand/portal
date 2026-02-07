@@ -8,3 +8,5 @@ misc/
 dist/
 coverage/
 node_modules/
+
+.claude/*
