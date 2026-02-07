@@ -2,6 +2,7 @@ import avatar001 from '../images/avatar/turtleand-0.0.1-transparent-2025-03-10.p
 import avatar002 from '../images/avatar/turtleand-0.0.2-transparent-2025-04-21.png';
 import avatar003 from '../images/avatar/turtleand-0.0.3-transparent-2025-05-17.png';
 import avatar004 from '../images/avatar/turtleand-0.0.4-transparent-2025-06-29.png';
+import avatar010 from '../images/avatar/turtleand-0.1.0-transparent-2026-02-07.png';
 
 export type AvatarPaletteToken = 'seafoam' | 'tide' | 'sand' | 'ember';
 
@@ -37,6 +38,22 @@ export const avatarGalleryConfig: AvatarGalleryConfig = {
 };
 
 export const avatarGalleryEntries: AvatarGalleryEntry[] = [
+  {
+    id: 'hydraulic-brace',
+    version: 'v0.1.0',
+    date: '2026-02-07',
+    title: 'The Hydraulic Brace',
+    description: 'External piston-braces and metallic rim transform organic into industrial. Enhanced output, automated workflows.',
+    titleEs: 'El Exoesqueleto Hidráulico',
+    descriptionEs: 'Pistones externos y borde metálico transforman lo orgánico en industrial. Salida mejorada, flujos automatizados.',
+    finalImage: avatar010.src,
+    sketchImage: null,
+    palette: ['seafoam', 'tide', 'ember'],
+    preferences: {
+      transition: 'fade',
+      blur: 'soft',
+    },
+  },
   {
     id: 'genesis-shell',
     version: 'v0.0.1',
