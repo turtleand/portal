@@ -237,3 +237,71 @@ body {
     background: radial-gradient(circle at 30% 15%, rgba(46, 131, 115, 0.55) 0%, rgba(22, 68, 85, 0.95) 55%, rgba(5, 12, 22, 1) 100%);
   }
 }
+
+/* Speech Bubble for Avatar Gallery */
+.speech-bubble {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  background: linear-gradient(135deg, #fffef5 0%, #f5f0e0 100%);
+  border: 2px solid #2a4a5a;
+  border-radius: 16px;
+  padding: 12px 18px;
+  max-width: 200px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  z-index: 10;
+  animation: gentleFloat 3s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.speech-bubble-text {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: #2a3a4a;
+  line-height: 1.4;
+  display: block;
+}
+
+.speech-bubble-tail {
+  position: absolute;
+  bottom: -12px;
+  left: 30%;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 12px solid #2a4a5a;
+}
+
+.speech-bubble-tail::before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: -10px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #f5f0e0;
+}
+
+[data-gallery-hover-zone]:hover .speech-bubble {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  animation-play-state: running;
+}
+
+@keyframes gentleFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}

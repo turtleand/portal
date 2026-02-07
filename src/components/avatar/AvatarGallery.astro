@@ -64,6 +64,12 @@ const initialDescription =
           class="h-full w-full object-contain will-change-transform"
           loading="eager"
         />
+        <div class="speech-bubble" data-gallery-speech-bubble>
+          <span class="speech-bubble-text" data-gallery-speech-text>
+            {avatarGalleryEntries[0].italianQuote || ''}
+          </span>
+          <div class="speech-bubble-tail"></div>
+        </div>
       </div>
       <div class="text-center space-y-1.5">
         <p class="text-base font-semibold uppercase tracking-[0.12em] text-emerald-50/90 sm:text-sm sm:tracking-[0.18em]">

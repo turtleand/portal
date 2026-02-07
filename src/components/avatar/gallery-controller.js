@@ -9,6 +9,7 @@
  * @property {string} description
  * @property {string} titleEs
  * @property {string} descriptionEs
+ * @property {string} [italianQuote]
  * @property {string} finalImage
  */
 
@@ -53,6 +54,8 @@ class MinimalGalleryController {
     this.nextButton = null;
     /** @type {HTMLElement | null} */
     this.hoverZone = null;
+    /** @type {HTMLElement | null} */
+    this.speechTextNode = null;
     /** @type {HTMLElement | null} */
     this.headingNode = null;
     /** @type {HTMLElement | null} */
@@ -116,6 +119,7 @@ class MinimalGalleryController {
     this.prevButton = this.root.querySelector('[data-gallery-action="prev"]');
     this.nextButton = this.root.querySelector('[data-gallery-action="next"]');
     this.hoverZone = this.root.querySelector('[data-gallery-hover-zone]');
+    this.speechTextNode = this.root.querySelector('[data-gallery-speech-text]');
     this.headingNode = this.root.querySelector('[data-gallery-heading]');
     this.prevLabelNode = this.root.querySelector('[data-gallery-prev-label]');
     this.nextLabelNode = this.root.querySelector('[data-gallery-next-label]');
@@ -202,6 +206,9 @@ class MinimalGalleryController {
     }
     if (this.descriptionNode) {
       this.descriptionNode.textContent = description;
+    }
+    if (this.speechTextNode) {
+      this.speechTextNode.textContent = entry.italianQuote || '';
     }
     this.applyChromeCopy();
   }
