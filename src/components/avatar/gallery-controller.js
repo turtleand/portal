@@ -59,11 +59,14 @@ class MinimalGalleryController {
     this.prevLabelNode = null;
     /** @type {HTMLElement | null} */
     this.nextLabelNode = null;
+    /** @type {Animation | null} */
+    this.currentAnimation = null;
 
     if (!this.entries.length) {
       return;
     }
     this.cacheElements();
+    this.preloadAllImages();
     this.bindEvents();
     this.render();
     this.startAutoplay();
@@ -96,6 +99,13 @@ class MinimalGalleryController {
     } catch {
       return {};
     }
+  }
+
+  preloadAllImages() {
+    this.entries.forEach((entry) => {
+      const img = new Image();
+      img.src = entry.finalImage;
+    });
   }
 
   cacheElements() {
@@ -263,6 +273,11 @@ class MinimalGalleryController {
   animateImage(nextSrc, alt) {
     if (!this.image) return;
     if (this.image.src !== nextSrc) {
+      if (this.currentAnimation) {
+        this.currentAnimation.cancel();
+        this.currentAnimation = null;
+      }
+      this.image.src = nextSrc;
       const keyframes =
         this.config.animation === 'morph'
           ? [
@@ -273,8 +288,10 @@ class MinimalGalleryController {
             { opacity: 0.2, transform: 'scale(0.96)' },
             { opacity: 1, transform: 'scale(1)' },
           ];
-      this.image.animate(keyframes, { duration: 250 });
-      this.image.src = nextSrc;
+      this.currentAnimation = this.image.animate(keyframes, {
+        duration: 250,
+        fill: 'backwards',
+      });
     }
     this.image.alt = alt;
   }
