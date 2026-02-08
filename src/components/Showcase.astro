@@ -1,0 +1,60 @@
+---
+import type { CopyToken } from "../utils/i18n";
+
+interface ShowcaseItem {
+  titleCopy: CopyToken;
+  descriptionCopy: CopyToken;
+  href: string;
+  emoji: string;
+  tool: string;
+}
+
+interface Props {
+  sectionTitleCopy: CopyToken;
+  items: ShowcaseItem[];
+}
+
+const { sectionTitleCopy, items }: Props = Astro.props;
+---
+
+<section id="showcase" class="max-w-6xl mx-auto px-6 py-12">
+  <h2
+    class="text-2xl font-heading font-semibold text-offWhite/90 mb-8 text-center tracking-wide"
+    data-i18n-key={sectionTitleCopy.key}
+  >
+    {sectionTitleCopy.text}
+  </h2>
+  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    {items.map((item) => (
+      <a
+        href={item.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur transition-all duration-200 hover:border-white/25 hover:bg-white/10 hover:shadow-glow/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+      >
+        <div class="flex items-center gap-3">
+          <span class="text-2xl" aria-hidden="true">{item.emoji}</span>
+          <span class="text-xs uppercase tracking-wider text-offWhite/50 font-medium">
+            {item.tool}
+          </span>
+        </div>
+        <h3
+          class="text-lg font-semibold text-offWhite group-hover:text-white transition-colors"
+          data-i18n-key={item.titleCopy.key}
+        >
+          {item.titleCopy.text}
+        </h3>
+        <p
+          class="text-sm text-offWhite/70 leading-relaxed"
+          data-i18n-key={item.descriptionCopy.key}
+        >
+          {item.descriptionCopy.text}
+        </p>
+        <span class="mt-auto pt-2 text-sm text-accent/80 group-hover:text-accent transition-colors flex items-center gap-1">
+          Explore
+          <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
+        </span>
+      </a>
+    ))}
+  </div>
+</section>

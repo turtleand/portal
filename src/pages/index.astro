@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import QuadrantGrid from '../components/QuadrantGrid.astro';
+import Showcase from '../components/Showcase.astro';
 import Footer from '../components/Footer.astro';
 import { initI18n, makeCopyToken } from '../utils/i18n';
 
@@ -26,9 +27,21 @@ const quadrantTaglines = {
   blockchain: makeCopyToken('quadrants.blockchain.tagline', t),
 };
 const footerRightsCopy = makeCopyToken('footer.rights', t);
+
+const showcaseSectionTitle = makeCopyToken('showcase.sectionTitle', t);
+const showcaseItems = [
+  {
+    titleCopy: makeCopyToken('showcase.items.notebooklm.title', t),
+    descriptionCopy: makeCopyToken('showcase.items.notebooklm.description', t),
+    href: 'https://notebooklm.google.com/notebook/17fc4b1a-66c3-40c9-9a9e-d1c189f25bfa',
+    emoji: '📓',
+    tool: 'NotebookLM',
+  },
+];
 ---
 <Layout locale={locale} dictionary={dictionary}>
   <Hero titleSegments={heroTitleSegments} description={heroDescription} />
   <QuadrantGrid labels={quadrantLabels} taglines={quadrantTaglines} />
+  <Showcase sectionTitleCopy={showcaseSectionTitle} items={showcaseItems} />
   <Footer slot="footer" rightsCopy={footerRightsCopy} />
 </Layout>

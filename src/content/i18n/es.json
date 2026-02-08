@@ -82,5 +82,14 @@
       "closeLabel": "Cerrar",
       "ariaLabel": "Galería de Evolución del Avatar de Turtleand"
     }
+  },
+  "showcase": {
+    "sectionTitle": "Ejemplos Concretos",
+    "items": {
+      "notebooklm": {
+        "title": "Inmersión en IA Centrada en el Humano",
+        "description": "Una exploración interactiva en NotebookLM sobre filosofía de IA, colaboración humano-máquina y pensamiento estratégico del blog de Turtleand."
+      }
+    }
   }
 }

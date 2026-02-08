@@ -82,5 +82,14 @@
       "closeLabel": "Close",
       "ariaLabel": "Turtleand Avatar Evolution Gallery"
     }
+  },
+  "showcase": {
+    "sectionTitle": "Concrete Examples",
+    "items": {
+      "notebooklm": {
+        "title": "Human-Centered AI Deep Dive",
+        "description": "An interactive NotebookLM exploration of AI philosophy, human-machine collaboration, and strategic thinking from the Turtleand blog."
+      }
+    }
   }
 }
