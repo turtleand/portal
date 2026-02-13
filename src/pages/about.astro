@@ -8,12 +8,24 @@ const traitDescriptions = dictionary.about.traitDescriptions ?? [];
 const backLabel = makeCopyToken('about.backLabel', t);
 const pageDescriptionCopy = makeCopyToken('about.pageDescription', t);
 const traitPopoverCloseCopy = makeCopyToken('about.traitPopoverCloseLabel', t);
-const traitItems = traits.map((trait, index) => ({
+const traitItems = traits.map((trait: string, index: number) => ({
   key: `about.traits.${index}`,
   descriptionKey: `about.traitDescriptions.${index}`,
   label: trait,
   description: traitDescriptions[index] ?? '',
 }));
+
+const summary = makeCopyToken('about.summary', t);
+const philosophy = makeCopyToken('about.philosophy', t);
+const currentFocusTitle = makeCopyToken('about.currentFocusTitle', t);
+const currentFocus: string[] = dictionary.about.currentFocus ?? [];
+const buildingTitle = makeCopyToken('about.buildingTitle', t);
+const buildingItems: { emoji: string; name: string; url: string; description: string }[] = dictionary.about.buildingItems ?? [];
+const writingTitle = makeCopyToken('about.writingTitle', t);
+const writingItems: { title: string; url: string }[] = dictionary.about.writingItems ?? [];
+const valuesTitle = makeCopyToken('about.valuesTitle', t);
+const connectTitle = makeCopyToken('about.connectTitle', t);
+const connectCta = makeCopyToken('about.connectCta', t);
 ---
 <Layout
   title={t('about.pageTitle')}
@@ -25,9 +37,10 @@ const traitItems = traits.map((trait, index) => ({
     class="px-6 py-16 md:px-0 md:py-20"
     data-about-section
   >
-    <div class="mx-auto flex max-w-3xl flex-col gap-6 text-left rounded-3xl border border-white/5 bg-deepBlue/80 p-8 shadow-glow/0 backdrop-blur"
+    <div class="mx-auto flex max-w-3xl flex-col gap-10 text-left rounded-3xl border border-white/5 bg-deepBlue/80 p-8 shadow-glow/0 backdrop-blur"
       data-about-shell
     >
+      <!-- Back arrow -->
       <a
         href="/"
         data-locale-link
@@ -40,52 +53,175 @@ const traitItems = traits.map((trait, index) => ({
         <span aria-hidden="true">←</span>
         <span class="sr-only" data-i18n-key={backLabel.key}>{backLabel.text}</span>
       </a>
-      <p class="text-base text-offWhite/80" data-i18n-key={pageDescriptionCopy.key}>
-        {pageDescriptionCopy.text}
-      </p>
-      <ul
-        class="space-y-4 text-base sm:space-y-5 md:text-lg"
-        data-about-trait-list
-      >
-        {traitItems.map((trait) => (
-          <li
-            class="rounded-2xl border border-white/15 bg-white/10 px-4 py-4 text-offWhite shadow-[0_18px_45px_rgba(6,12,24,0.45)] backdrop-blur transition-colors sm:px-5 md:bg-white/5 md:shadow-none focus-within:border-white/30"
-            data-trait-item
-          >
-            <button
-              type="button"
-              class="group flex w-full items-center justify-between gap-3 text-left font-semibold text-offWhite/90 transition-colors hover:text-offWhite focus-visible:text-offWhite focus-visible:outline-none"
-              data-trait-trigger
-              aria-expanded="false"
+
+      <!-- Professional Summary -->
+      <div class="space-y-4">
+        <p class="text-lg font-semibold text-offWhite leading-relaxed" data-i18n-key={summary.key}>
+          {summary.text}
+        </p>
+        <p class="text-base text-offWhite/70 leading-relaxed" data-i18n-key={philosophy.key}>
+          {philosophy.text}
+        </p>
+      </div>
+
+      <!-- Current Focus -->
+      <div class="space-y-4">
+        <h2 class="text-lg font-semibold text-offWhite" data-i18n-key={currentFocusTitle.key}>
+          {currentFocusTitle.text}
+        </h2>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {currentFocus.map((item: string, i: number) => (
+            <li
+              class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-offWhite/80"
+              data-i18n-key={`about.currentFocus.${i}`}
             >
-              <span data-trait-label data-i18n-key={trait.key}>
-                {trait.label}
-              </span>
-              <span
-                aria-hidden="true"
-                class="text-lg text-offWhite/50 transition group-hover:text-offWhite"
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- What I'm Building -->
+      <div class="space-y-4">
+        <h2 class="text-lg font-semibold text-offWhite" data-i18n-key={buildingTitle.key}>
+          {buildingTitle.text}
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {buildingItems.map((item: { emoji: string; name: string; url: string; description: string }, i: number) => {
+            const inner = (
+              <div class="flex flex-col gap-1">
+                <span class="font-semibold text-offWhite">
+                  <span>{item.emoji}</span>{' '}
+                  <span data-i18n-key={`about.buildingItems.${i}.name`}>{item.name}</span>
+                </span>
+                <span class="text-sm text-offWhite/60" data-i18n-key={`about.buildingItems.${i}.description`}>
+                  {item.description}
+                </span>
+              </div>
+            );
+            return item.url ? (
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition-colors hover:border-white/20 hover:bg-white/10"
               >
-                →
-              </span>
-            </button>
-            <p
-              class="mt-4 hidden border-t border-white/15 pt-4 text-base leading-relaxed text-offWhite/95 sm:text-sm sm:leading-relaxed sm:text-offWhite/85"
-              data-trait-inline-description
-              data-i18n-key={trait.descriptionKey}
+                {inner}
+              </a>
+            ) : (
+              <div class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 opacity-60">
+                {inner}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <!-- Featured Writing -->
+      <div class="space-y-4">
+        <h2 class="text-lg font-semibold text-offWhite" data-i18n-key={writingTitle.key}>
+          {writingTitle.text}
+        </h2>
+        <div class="flex flex-col gap-3">
+          {writingItems.map((item: { title: string; url: string }, i: number) => (
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition-colors hover:border-white/20 hover:bg-white/10"
             >
-              {trait.description}
-            </p>
-          </li>
-        ))}
-      </ul>
-      <span
-        class="hidden"
-        aria-hidden="true"
-        data-trait-popover-close
-        data-i18n-key={traitPopoverCloseCopy.key}
-      >
-        {traitPopoverCloseCopy.text}
-      </span>
+              <span class="text-offWhite/80 group-hover:text-offWhite transition-colors" data-i18n-key={`about.writingItems.${i}.title`}>
+                {item.title}
+              </span>
+              <span class="text-offWhite/40 group-hover:text-offWhite/70 transition-colors" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Values & Character (existing traits) -->
+      <div class="space-y-4">
+        <h2 class="text-lg font-semibold text-offWhite" data-i18n-key={valuesTitle.key}>
+          {valuesTitle.text}
+        </h2>
+        <ul
+          class="space-y-4 text-base sm:space-y-5 md:text-lg"
+          data-about-trait-list
+        >
+          {traitItems.map((trait) => (
+            <li
+              class="rounded-2xl border border-white/15 bg-white/10 px-4 py-4 text-offWhite shadow-[0_18px_45px_rgba(6,12,24,0.45)] backdrop-blur transition-colors sm:px-5 md:bg-white/5 md:shadow-none focus-within:border-white/30"
+              data-trait-item
+            >
+              <button
+                type="button"
+                class="group flex w-full items-center justify-between gap-3 text-left font-semibold text-offWhite/90 transition-colors hover:text-offWhite focus-visible:text-offWhite focus-visible:outline-none"
+                data-trait-trigger
+                aria-expanded="false"
+              >
+                <span data-trait-label data-i18n-key={trait.key}>
+                  {trait.label}
+                </span>
+                <span
+                  aria-hidden="true"
+                  class="text-lg text-offWhite/50 transition group-hover:text-offWhite"
+                >
+                  →
+                </span>
+              </button>
+              <p
+                class="mt-4 hidden border-t border-white/15 pt-4 text-base leading-relaxed text-offWhite/95 sm:text-sm sm:leading-relaxed sm:text-offWhite/85"
+                data-trait-inline-description
+                data-i18n-key={trait.descriptionKey}
+              >
+                {trait.description}
+              </p>
+            </li>
+          ))}
+        </ul>
+        <span
+          class="hidden"
+          aria-hidden="true"
+          data-trait-popover-close
+          data-i18n-key={traitPopoverCloseCopy.key}
+        >
+          {traitPopoverCloseCopy.text}
+        </span>
+      </div>
+
+      <!-- Connect -->
+      <div class="space-y-4 border-t border-white/10 pt-8">
+        <h2 class="text-lg font-semibold text-offWhite" data-i18n-key={connectTitle.key}>
+          {connectTitle.text}
+        </h2>
+        <p class="text-base text-offWhite/70 leading-relaxed" data-i18n-key={connectCta.key}>
+          {connectCta.text}
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a
+            href="https://github.com/turtlean"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-offWhite/80 transition-colors hover:border-white/20 hover:text-offWhite"
+          >
+            GitHub
+          </a>
+          <a
+            href="mailto:hello@turtleand.com"
+            class="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-offWhite/80 transition-colors hover:border-white/20 hover:text-offWhite"
+          >
+            Email
+          </a>
+          <a
+            href="https://x.com/turtleand_world"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-offWhite/80 transition-colors hover:border-white/20 hover:text-offWhite"
+          >
+            X / Twitter
+          </a>
+        </div>
+      </div>
     </div>
   </section>
   <script is:inline>
