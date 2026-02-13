@@ -15,7 +15,8 @@
         "label": "ES",
         "aria": "Cambiar idioma a español"
       }
-    }
+    },
+    "consulting": "Consultoría"
   },
   "hero": {
     "title": {
@@ -136,5 +137,73 @@
       "closeLabel": "Cerrar",
       "ariaLabel": "Galería de Evolución del Avatar de Turtleand"
     }
+  },
+  "consulting": {
+    "pageTitle": "Consultoría de IA — Turtleand",
+    "pageDescription": "Ayudo a equipos a cerrar la brecha entre el hype de la IA y su implementación práctica.",
+    "backLabel": "Regresar al inicio",
+    "headline": "Cerrá la Brecha Entre el Hype de la IA y su Implementación Práctica",
+    "subheadline": "Ayudo a equipos de ingeniería a integrar IA donde realmente importa — con claridad, pragmatismo y un enfoque centrado en las personas.",
+    "whoTitle": "Para Quién Es Esto",
+    "whoItems": [
+      "Equipos de ingeniería explorando IA pero sin saber por dónde empezar",
+      "Organizaciones con pilotos de IA fallidos buscando próximos pasos prácticos",
+      "Líderes técnicos que necesitan una evaluación honesta — no un discurso de ventas",
+      "Equipos construyendo funcionalidades con LLM que quieren evitar errores comunes"
+    ],
+    "servicesTitle": "Lo Que Ofrezco",
+    "services": [
+      {
+        "icon": "🔍",
+        "title": "Evaluación de Preparación para IA",
+        "description": "Evaluación honesta de dónde la IA puede — y no puede — ayudar a tu equipo. Identifico oportunidades de alto impacto, señalo falsos comienzos y trazo un camino de integración realista."
+      },
+      {
+        "icon": "🏗️",
+        "title": "Arquitectura e Integración",
+        "description": "Desde ingeniería de prompts hasta arquitecturas de agentes, ayudo a diseñar sistemas de IA que funcionan en producción — no solo en demos. Enfocado en confiabilidad, observabilidad y supervisión humana."
+      },
+      {
+        "icon": "🎓",
+        "title": "Capacitación de Equipos",
+        "description": "Talleres y guía práctica para que tu equipo construya capacidad de IA internamente. Transfiero conocimiento, no dependencia. Basado en mi currículo de AI Lab (lab.turtleand.com)."
+      },
+      {
+        "icon": "🛡️",
+        "title": "Gobernanza y Seguridad de IA",
+        "description": "Frameworks prácticos para un despliegue responsable de IA. Auditorías de sesgo, diseño human-in-the-loop, análisis de modos de falla y barreras que no matan la velocidad."
+      }
+    ],
+    "approachTitle": "Mi Enfoque",
+    "approachItems": [
+      {
+        "bold": "Honesto antes que optimista.",
+        "text": "Te diré cuándo NO usar IA. Eso ahorra más dinero que cualquier implementación."
+      },
+      {
+        "bold": "Centrado en las personas.",
+        "text": "La tecnología debe elevar a las personas, no reemplazarlas. Diseño sistemas donde los humanos siguen siendo el cuello de botella estratégico — por elección."
+      },
+      {
+        "bold": "Probado en batalla.",
+        "text": "Más de 10 años construyendo sistemas en producción. Sé qué sobrevive al contacto con la realidad y qué no."
+      },
+      {
+        "bold": "Transferencia de conocimiento, no dependencia.",
+        "text": "Mi objetivo es que tu equipo sea autosuficiente. Tengo éxito cuando ya no me necesitás."
+      }
+    ],
+    "credentialTitle": "Experiencia",
+    "credentials": [
+      "Más de 10 años en ingeniería de software en producción",
+      "Construí y desplegué sistemas de agentes de IA en entornos reales",
+      "Creé un currículo de IA de 6 módulos (lab.turtleand.com)",
+      "Publicaciones sobre colaboración humano-IA leídas por miles",
+      "Experiencia profunda conectando implementación técnica y pensamiento estratégico"
+    ],
+    "ctaTitle": "Hablemos",
+    "ctaText": "Si tu equipo está navegando la integración de IA y quiere una perspectiva práctica y sin hype — me gustaría conocer el desafío.",
+    "ctaButton": "Contactame",
+    "ctaEmail": "hello@turtleand.com"
   }
 }

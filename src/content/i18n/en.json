@@ -15,7 +15,8 @@
         "label": "ES",
         "aria": "Change language to Spanish"
       }
-    }
+    },
+    "consulting": "Consulting"
   },
   "hero": {
     "title": {
@@ -136,5 +137,73 @@
       "closeLabel": "Close",
       "ariaLabel": "Turtleand Avatar Evolution Gallery"
     }
+  },
+  "consulting": {
+    "pageTitle": "AI Consulting — Turtleand",
+    "pageDescription": "I help teams bridge the gap between AI hype and practical deployment.",
+    "backLabel": "Back to main",
+    "headline": "Bridge the Gap Between AI Hype and Practical Deployment",
+    "subheadline": "I help engineering teams integrate AI where it actually matters — with clarity, pragmatism, and a human-centered approach.",
+    "whoTitle": "Who This Is For",
+    "whoItems": [
+      "Engineering teams exploring AI but unsure where to start",
+      "Organizations with failed AI pilots looking for practical next steps",
+      "Technical leaders who need an honest assessment — not a sales pitch",
+      "Teams building LLM-powered features who want to avoid common pitfalls"
+    ],
+    "servicesTitle": "What I Offer",
+    "services": [
+      {
+        "icon": "🔍",
+        "title": "AI Readiness Assessment",
+        "description": "Honest evaluation of where AI can — and can't — help your team. I'll identify high-impact opportunities, flag false starts, and map a realistic integration path."
+      },
+      {
+        "icon": "🏗️",
+        "title": "Architecture & Integration",
+        "description": "From prompt engineering to agent architectures, I help design AI systems that work in production — not just in demos. Focused on reliability, observability, and human oversight."
+      },
+      {
+        "icon": "🎓",
+        "title": "Team Enablement",
+        "description": "Workshops and hands-on guidance so your team builds AI capability internally. I transfer knowledge, not dependency. Based on my AI Lab curriculum (lab.turtleand.com)."
+      },
+      {
+        "icon": "🛡️",
+        "title": "AI Governance & Safety",
+        "description": "Practical frameworks for responsible AI deployment. Bias audits, human-in-the-loop design, failure mode analysis, and guardrails that don't kill velocity."
+      }
+    ],
+    "approachTitle": "My Approach",
+    "approachItems": [
+      {
+        "bold": "Honest over optimistic.",
+        "text": "I'll tell you when NOT to use AI. That saves more money than any implementation."
+      },
+      {
+        "bold": "Human-centered.",
+        "text": "Technology should elevate people, not replace them. I design systems where humans remain the strategic bottleneck — by choice."
+      },
+      {
+        "bold": "Battle-tested.",
+        "text": "10+ years building production systems. I know what survives contact with reality and what doesn't."
+      },
+      {
+        "bold": "Knowledge transfer, not dependency.",
+        "text": "My goal is to make your team self-sufficient. I succeed when you no longer need me."
+      }
+    ],
+    "credentialTitle": "Background",
+    "credentials": [
+      "10+ years in production software engineering",
+      "Built and deployed AI agent systems in real-world environments",
+      "Created a 6-module AI curriculum (lab.turtleand.com)",
+      "Published writing on human-AI collaboration read by thousands",
+      "Deep experience bridging technical implementation and strategic thinking"
+    ],
+    "ctaTitle": "Let's Talk",
+    "ctaText": "If your team is navigating AI integration and wants a practical, no-hype perspective — I'd like to hear about the challenge.",
+    "ctaButton": "Get in touch",
+    "ctaEmail": "hello@turtleand.com"
   }
 }

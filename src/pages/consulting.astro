@@ -1,0 +1,199 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { initI18n, makeCopyToken } from '../utils/i18n';
+
+const { locale, dictionary, t } = initI18n(Astro);
+const backLabel = makeCopyToken('consulting.backLabel', t);
+const headline = makeCopyToken('consulting.headline', t);
+const subheadline = makeCopyToken('consulting.subheadline', t);
+const whoTitle = makeCopyToken('consulting.whoTitle', t);
+const whoItems: string[] = dictionary.consulting.whoItems ?? [];
+const servicesTitle = makeCopyToken('consulting.servicesTitle', t);
+const services: { icon: string; title: string; description: string }[] = dictionary.consulting.services ?? [];
+const approachTitle = makeCopyToken('consulting.approachTitle', t);
+const approachItems: { bold: string; text: string }[] = dictionary.consulting.approachItems ?? [];
+const credentialTitle = makeCopyToken('consulting.credentialTitle', t);
+const credentials: string[] = dictionary.consulting.credentials ?? [];
+const ctaTitle = makeCopyToken('consulting.ctaTitle', t);
+const ctaText = makeCopyToken('consulting.ctaText', t);
+const ctaButton = makeCopyToken('consulting.ctaButton', t);
+const ctaEmail = dictionary.consulting.ctaEmail ?? 'hello@turtleand.com';
+---
+<Layout
+  title={t('consulting.pageTitle')}
+  description={t('consulting.pageDescription')}
+  locale={locale}
+  dictionary={dictionary}
+>
+  <section class="px-6 py-16 md:px-0 md:py-20">
+    <div class="mx-auto flex max-w-3xl flex-col gap-12 text-left">
+
+      <!-- Back arrow -->
+      <a
+        href="/"
+        data-locale-link
+        data-base-href="/"
+        aria-label={backLabel.text}
+        data-i18n-key={backLabel.key}
+        data-i18n-attr="aria-label"
+        class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-lg text-muted transition-colors hover:text-offWhite focus-visible:text-offWhite focus-visible:outline-none"
+      >
+        <span aria-hidden="true">←</span>
+        <span class="sr-only" data-i18n-key={backLabel.key}>{backLabel.text}</span>
+      </a>
+
+      <!-- Hero -->
+      <div class="space-y-4">
+        <h1
+          class="text-3xl font-bold text-offWhite leading-tight md:text-4xl"
+          data-i18n-key={headline.key}
+        >
+          {headline.text}
+        </h1>
+        <p
+          class="text-lg text-offWhite/70 leading-relaxed"
+          data-i18n-key={subheadline.key}
+        >
+          {subheadline.text}
+        </p>
+      </div>
+
+      <!-- Who This Is For -->
+      <div class="space-y-4">
+        <h2
+          class="text-xl font-semibold text-offWhite"
+          data-i18n-key={whoTitle.key}
+        >
+          {whoTitle.text}
+        </h2>
+        <ul class="space-y-3">
+          {whoItems.map((item: string, i: number) => (
+            <li
+              class="flex items-start gap-3 text-offWhite/80"
+              data-i18n-key={`consulting.whoItems.${i}`}
+            >
+              <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-offWhite/40" aria-hidden="true" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Services -->
+      <div class="space-y-6">
+        <h2
+          class="text-xl font-semibold text-offWhite"
+          data-i18n-key={servicesTitle.key}
+        >
+          {servicesTitle.text}
+        </h2>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {services.map((service, i: number) => (
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-5 space-y-3 backdrop-blur transition-colors hover:border-white/20 hover:bg-white/8">
+              <div class="text-2xl">{service.icon}</div>
+              <h3
+                class="text-base font-semibold text-offWhite"
+                data-i18n-key={`consulting.services.${i}.title`}
+              >
+                {service.title}
+              </h3>
+              <p
+                class="text-sm text-offWhite/70 leading-relaxed"
+                data-i18n-key={`consulting.services.${i}.description`}
+              >
+                {service.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Approach -->
+      <div class="space-y-4">
+        <h2
+          class="text-xl font-semibold text-offWhite"
+          data-i18n-key={approachTitle.key}
+        >
+          {approachTitle.text}
+        </h2>
+        <div class="space-y-4">
+          {approachItems.map((item, i: number) => (
+            <div class="rounded-xl border border-white/10 bg-white/5 px-5 py-4">
+              <p class="text-offWhite/90 leading-relaxed">
+                <strong
+                  class="text-offWhite"
+                  data-i18n-key={`consulting.approachItems.${i}.bold`}
+                >
+                  {item.bold}
+                </strong>{' '}
+                <span data-i18n-key={`consulting.approachItems.${i}.text`}>
+                  {item.text}
+                </span>
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Background -->
+      <div class="space-y-4">
+        <h2
+          class="text-xl font-semibold text-offWhite"
+          data-i18n-key={credentialTitle.key}
+        >
+          {credentialTitle.text}
+        </h2>
+        <ul class="space-y-2">
+          {credentials.map((item: string, i: number) => (
+            <li
+              class="flex items-start gap-3 text-offWhite/80"
+              data-i18n-key={`consulting.credentials.${i}`}
+            >
+              <span class="mt-1.5 text-offWhite/40" aria-hidden="true">✓</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- CTA -->
+      <div class="rounded-2xl border border-white/15 bg-white/5 p-8 text-center space-y-5 backdrop-blur">
+        <h2
+          class="text-2xl font-bold text-offWhite"
+          data-i18n-key={ctaTitle.key}
+        >
+          {ctaTitle.text}
+        </h2>
+        <p
+          class="text-offWhite/70 leading-relaxed max-w-lg mx-auto"
+          data-i18n-key={ctaText.key}
+        >
+          {ctaText.text}
+        </p>
+        <a
+          href={`mailto:${ctaEmail}`}
+          class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-base font-medium text-offWhite transition-colors hover:bg-white/20 hover:border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+          data-i18n-key={ctaButton.key}
+        >
+          {ctaButton.text}
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "AI Consulting — Turtleand",
+    "description": "Helping teams bridge the gap between AI hype and practical deployment.",
+    "provider": {
+      "@type": "Person",
+      "name": "Turtleand",
+      "url": "https://turtleand.com"
+    },
+    "serviceType": "AI Consulting",
+    "areaServed": "Worldwide",
+    "url": "https://turtleand.com/consulting"
+  })} />
+</Layout>
