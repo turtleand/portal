@@ -50,6 +50,60 @@
     "pageTitle": "About — Turtleand",
     "pageDescription": "Learn more about the mind behind Turtleand.",
     "backLabel": "Back to main",
+    "summary": "Software engineer with 10+ years building production systems. Currently focused on AI integration, agent architectures, and human-centered technology design.",
+    "philosophy": "I explore how humans and technology evolve together — bridging the gap between AI hype and practical deployment. My work sits at the intersection of engineering craft, emerging technology, and the human experience.",
+    "currentFocusTitle": "Current Focus",
+    "currentFocus": [
+      "AI agent systems and orchestration",
+      "Human-AI collaboration frameworks",
+      "Blockchain and decentralized systems",
+      "Building tools that compound human capability"
+    ],
+    "buildingTitle": "What I'm Building",
+    "buildingItems": [
+      {
+        "emoji": "🧪",
+        "name": "AI Lab",
+        "url": "https://lab.turtleand.com",
+        "description": "A hands-on curriculum for building practical LLM tools and agents"
+      },
+      {
+        "emoji": "📈",
+        "name": "Growth",
+        "url": "https://growth.turtleand.com",
+        "description": "Essays on AI, technology, and human potential"
+      },
+      {
+        "emoji": "🔧",
+        "name": "Build",
+        "url": "https://build.turtleand.com",
+        "description": "Engineering fundamentals and software craft"
+      },
+      {
+        "emoji": "🔗",
+        "name": "Blockchain",
+        "url": "",
+        "description": "Exploring decentralized trust, ownership, and identity (coming soon)"
+      }
+    ],
+    "writingTitle": "Featured Writing",
+    "writingItems": [
+      {
+        "title": "Escaping the Echo Chamber",
+        "url": "https://growth.turtleand.com/posts/exploring-unknown-unknowns-ai/"
+      },
+      {
+        "title": "The Human Bottleneck",
+        "url": "https://growth.turtleand.com/posts/human-bottleneck-ai/"
+      },
+      {
+        "title": "When Questions Matter More Than Answers",
+        "url": "https://growth.turtleand.com/posts/ask-better-questions-ai/"
+      }
+    ],
+    "valuesTitle": "Values & Character",
+    "connectTitle": "Connect",
+    "connectCta": "Interested in AI integration, human-centered technology, or just want to connect? Say hello.",
     "traits": [
       "Strategic Thinker",
       "Software Engineer with +10 years of experience",
