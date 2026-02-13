@@ -19,8 +19,6 @@ const summary = makeCopyToken('about.summary', t);
 const philosophy = makeCopyToken('about.philosophy', t);
 const currentFocusTitle = makeCopyToken('about.currentFocusTitle', t);
 const currentFocus: string[] = dictionary.about.currentFocus ?? [];
-const buildingTitle = makeCopyToken('about.buildingTitle', t);
-const buildingItems: { emoji: string; name: string; url: string; description: string }[] = dictionary.about.buildingItems ?? [];
 const writingTitle = makeCopyToken('about.writingTitle', t);
 const writingItems: { title: string; url: string }[] = dictionary.about.writingItems ?? [];
 const valuesTitle = makeCopyToken('about.valuesTitle', t);
@@ -79,42 +77,6 @@ const connectCta = makeCopyToken('about.connectCta', t);
             </li>
           ))}
         </ul>
-      </div>
-
-      <!-- What I'm Building -->
-      <div class="space-y-4">
-        <h2 class="text-lg font-semibold text-offWhite" data-i18n-key={buildingTitle.key}>
-          {buildingTitle.text}
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {buildingItems.map((item: { emoji: string; name: string; url: string; description: string }, i: number) => {
-            const inner = (
-              <div class="flex flex-col gap-1">
-                <span class="font-semibold text-offWhite">
-                  <span>{item.emoji}</span>{' '}
-                  <span data-i18n-key={`about.buildingItems.${i}.name`}>{item.name}</span>
-                </span>
-                <span class="text-sm text-offWhite/60" data-i18n-key={`about.buildingItems.${i}.description`}>
-                  {item.description}
-                </span>
-              </div>
-            );
-            return item.url ? (
-              <a
-                href={item.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition-colors hover:border-white/20 hover:bg-white/10"
-              >
-                {inner}
-              </a>
-            ) : (
-              <div class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 opacity-60">
-                {inner}
-              </div>
-            );
-          })}
-        </div>
       </div>
 
       <!-- Featured Writing -->
@@ -199,7 +161,7 @@ const connectCta = makeCopyToken('about.connectCta', t);
         </p>
         <div class="flex flex-wrap gap-4">
           <a
-            href="https://github.com/turtlean"
+            href="https://github.com/turtleand"
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-offWhite/80 transition-colors hover:border-white/20 hover:text-offWhite"
@@ -211,6 +173,14 @@ const connectCta = makeCopyToken('about.connectCta', t);
             class="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-offWhite/80 transition-colors hover:border-white/20 hover:text-offWhite"
           >
             Email
+          </a>
+          <a
+            href="https://dev.to/turtleand"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-offWhite/80 transition-colors hover:border-white/20 hover:text-offWhite"
+          >
+            Dev.to
           </a>
           <a
             href="https://x.com/turtleand_world"
