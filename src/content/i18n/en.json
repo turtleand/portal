@@ -50,14 +50,14 @@
     "pageTitle": "About — Turtleand",
     "pageDescription": "Learn more about the mind behind Turtleand.",
     "backLabel": "Back to main",
-    "summary": "Software engineer with 10+ years building production systems. Currently focused on AI integration, agent architectures, and human-centered technology design.",
-    "philosophy": "I explore how humans and technology evolve together — bridging the gap between AI hype and practical deployment. My work sits at the intersection of engineering craft, emerging technology, and the human experience.",
+    "summary": "Software engineer with 10+ years building production systems. AI power user and integrator — designing autonomous AI workflows, persistent agent architectures, and human-AI collaboration systems that bridge the gap between AI hype and practical deployment.",
+    "philosophy": "I explore how humans and technology evolve together. Beyond using AI tools, I build infrastructure where AI agents work autonomously — from multi-stage analysis pipelines to voice-driven workflows. My focus: making deep AI integration a compounding advantage, not just a productivity hack.",
     "currentFocusTitle": "Current Focus",
     "currentFocus": [
-      "AI agent systems and orchestration",
-      "Human-AI collaboration frameworks",
-      "Blockchain and decentralized systems",
-      "Building tools that compound human capability"
+      "Autonomous AI workflows and persistent agent orchestration",
+      "AI-first infrastructure — pipelines, briefings, and voice integration",
+      "Human-AI collaboration frameworks and integration patterns",
+      "Blockchain, decentralized systems, and tools that compound human capability"
     ],
     "buildingTitle": "What I'm Building",
     "buildingItems": [
@@ -93,12 +93,12 @@
         "url": "https://growth.turtleand.com/posts/exploring-unknown-unknowns-ai/"
       },
       {
-        "title": "The Human Bottleneck",
-        "url": "https://growth.turtleand.com/posts/human-bottleneck-ai/"
+        "title": "Would You Accept That a Thinking Model Is Better Than You at Your Craft?",
+        "url": "https://growth.turtleand.com/posts/accept-ai-better-than-you-craft/"
       },
       {
-        "title": "When Questions Matter More Than Answers",
-        "url": "https://growth.turtleand.com/posts/ask-better-questions-ai/"
+        "title": "Archetypes of Human Work in the AI Era",
+        "url": "https://growth.turtleand.com/posts/archetypes-human-work-ai-era/"
       }
     ],
     "valuesTitle": "Values & Character",
@@ -109,7 +109,7 @@
       "Software Engineer with +10 years of experience",
       "Global Citizen",
       "Blockchain Enthusiast",
-      "AI learner",
+      "AI Power User & Integrator",
       "Optimist",
       "Believer in Humanity",
       "Passionate Reader and Writer",
@@ -121,7 +121,7 @@
       "Builds resilient software stacks shaped by a decade of shipping production systems.",
       "Blends perspectives from multiple cultures to inform human-centered products.",
       "Explores decentralized tools as a path to transparent, trust-minimized collaboration.",
-      "Constantly studies intelligence research to bridge human creativity with machine reasoning.",
+      "Designs autonomous AI workflows and persistent agent systems — integrating AI deeply into daily operations as infrastructure, not just a tool.",
       "Leads with possibility, framing challenges as invitations to design better systems.",
       "Trusts collective potential and designs technology that elevates people first.",
       "Curates and shares ideas through reflective essays, marginalia, and storytelling.",

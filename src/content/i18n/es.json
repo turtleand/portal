@@ -50,14 +50,14 @@
     "pageTitle": "Acerca de — Turtleand",
     "pageDescription": "Conoce más sobre la mente detrás de Turtleand.",
     "backLabel": "Regresar al inicio",
-    "summary": "Ingeniero de software con más de 10 años construyendo sistemas en producción. Actualmente enfocado en integración de IA, arquitecturas de agentes y diseño de tecnología centrada en el ser humano.",
-    "philosophy": "Exploro cómo los humanos y la tecnología evolucionan juntos — acortando la brecha entre el hype de la IA y su despliegue práctico. Mi trabajo se ubica en la intersección entre la artesanía de la ingeniería, la tecnología emergente y la experiencia humana.",
+    "summary": "Ingeniero de software con más de 10 años construyendo sistemas en producción. Power user e integrador de IA — diseñando flujos de trabajo autónomos, arquitecturas de agentes persistentes y sistemas de colaboración humano-IA que acortan la brecha entre el hype y el despliegue práctico.",
+    "philosophy": "Exploro cómo los humanos y la tecnología evolucionan juntos. Más allá de usar herramientas de IA, construyo infraestructura donde los agentes de IA trabajan de forma autónoma — desde pipelines de análisis multi-etapa hasta flujos de trabajo por voz. Mi enfoque: hacer que la integración profunda de IA sea una ventaja que se compone, no solo un truco de productividad.",
     "currentFocusTitle": "Enfoque Actual",
     "currentFocus": [
-      "Sistemas de agentes de IA y orquestación",
-      "Frameworks de colaboración humano-IA",
-      "Blockchain y sistemas descentralizados",
-      "Construyendo herramientas que potencian la capacidad humana"
+      "Flujos de trabajo autónomos de IA y orquestación de agentes persistentes",
+      "Infraestructura AI-first — pipelines, briefings y integración por voz",
+      "Frameworks de colaboración humano-IA y patrones de integración",
+      "Blockchain, sistemas descentralizados y herramientas que potencian la capacidad humana"
     ],
     "buildingTitle": "Lo Que Estoy Construyendo",
     "buildingItems": [
@@ -93,12 +93,12 @@
         "url": "https://growth.turtleand.com/posts/exploring-unknown-unknowns-ai/"
       },
       {
-        "title": "The Human Bottleneck",
-        "url": "https://growth.turtleand.com/posts/human-bottleneck-ai/"
+        "title": "Would You Accept That a Thinking Model Is Better Than You at Your Craft?",
+        "url": "https://growth.turtleand.com/posts/accept-ai-better-than-you-craft/"
       },
       {
-        "title": "When Questions Matter More Than Answers",
-        "url": "https://growth.turtleand.com/posts/ask-better-questions-ai/"
+        "title": "Archetypes of Human Work in the AI Era",
+        "url": "https://growth.turtleand.com/posts/archetypes-human-work-ai-era/"
       }
     ],
     "valuesTitle": "Valores y Carácter",
@@ -109,7 +109,7 @@
       "Ingeniero de software con más de 10 años de experiencia",
       "Ciudadano global",
       "Entusiasta de blockchain",
-      "Aprendiz de IA",
+      "Power User e Integrador de IA",
       "Optimista",
       "Creyente en la humanidad",
       "Lector y escritor apasionado",
@@ -121,7 +121,7 @@
       "Construye pilas de software resilientes tras una década enviando sistemas a producción.",
       "Fusiona perspectivas de múltiples culturas para crear productos centrados en las personas.",
       "Explora herramientas descentralizadas como camino hacia una colaboración transparente y de confianza minimizada.",
-      "Estudia constantemente la investigación en inteligencia para unir la creatividad humana con el razonamiento de las máquinas.",
+      "Diseña flujos de trabajo autónomos de IA y sistemas de agentes persistentes — integrando la IA profundamente en las operaciones diarias como infraestructura, no solo como herramienta.",
       "Lidera con posibilidad, interpretando los retos como invitaciones a diseñar mejores sistemas.",
       "Confía en el potencial colectivo y diseña tecnología que prioriza a las personas.",
       "Comparte ideas mediante ensayos reflexivos, notas al margen y narrativas.",
