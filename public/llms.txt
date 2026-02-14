@@ -1,0 +1,18 @@
+# Turtleand
+
+> Where Humans and Technology Evolve Together. Personal ecosystem exploring AI, growth engineering, software craft, and blockchain.
+
+## Main Sites
+- [Growth Blog](https://growth.turtleand.com/llms.txt): Essays on AI, technology, human potential, and personal growth
+- [AI Lab](https://lab.turtleand.com/llms.txt): 6-module hands-on curriculum for building practical LLM tools and agents
+- [Build](https://build.turtleand.com/llms.txt): Engineering fundamentals, software craft, and deep technical understanding
+- [OpenClaw Lab](https://openclaw.turtleand.com/llms.txt): Setup guides for the OpenClaw AI assistant platform
+
+## About
+- [About Turtleand](https://turtleand.com/about): Software engineer with 10+ years building production systems, focused on AI integration and human-centered technology
+
+## Connect
+- GitHub: https://github.com/turtleand
+- Email: hello@turtleand.com
+- X/Twitter: https://x.com/turtleand_world
+- Dev.to: https://dev.to/turtleand
