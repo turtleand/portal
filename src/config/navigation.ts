@@ -1,4 +1,4 @@
-export type NavigationLabelKey = 'about';
+export type NavigationLabelKey = 'about' | 'consulting';
 
 export type NavigationItem = {
   labelKey: NavigationLabelKey;
@@ -7,4 +7,5 @@ export type NavigationItem = {
 
 export const primaryNavigation: NavigationItem[] = [
   { labelKey: 'about', href: '/about' },
+  { labelKey: 'consulting', href: '/consulting' },
 ];
