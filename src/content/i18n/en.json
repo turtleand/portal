@@ -94,19 +94,14 @@
         "source": "Growth Blog"
       },
       {
-        "title": "AI Tsunami Tracker — Where Do You Stand?",
-        "url": "https://atlas.turtleand.com/tsunami",
+        "title": "AI Atlas — Mapping the Tools Reshaping Work",
+        "url": "https://atlas.turtleand.com",
         "source": "AI Atlas"
       },
       {
         "title": "Sub-Agents: When Your AI Builds Its Own Team",
         "url": "https://openclaw.turtleand.com/topics/sub-agents/",
         "source": "OpenClaw Lab"
-      },
-      {
-        "title": "Your First AI Safety Baseline",
-        "url": "https://lab.turtleand.com/topics/safety-baseline/",
-        "source": "AI Lab"
       }
     ],
     "valuesTitle": "Values & Character",
