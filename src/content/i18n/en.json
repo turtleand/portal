@@ -86,19 +86,22 @@
         "description": "Exploring decentralized trust, ownership, and identity (coming soon)"
       }
     ],
-    "writingTitle": "Featured Writing",
+    "writingTitle": "Featured Work",
     "writingItems": [
       {
-        "title": "Escaping the Echo Chamber",
-        "url": "https://growth.turtleand.com/posts/exploring-unknown-unknowns-ai/"
+        "title": "Pursuing Your Intent — Skills Expire, But Direction Compounds",
+        "url": "https://growth.turtleand.com/posts/pursuing-your-intent/",
+        "source": "Growth Blog"
       },
       {
-        "title": "Would You Accept That a Thinking Model Is Better Than You at Your Craft?",
-        "url": "https://growth.turtleand.com/posts/accept-ai-better-than-you-craft/"
+        "title": "AI Atlas — Mapping the Tools Reshaping Work",
+        "url": "https://atlas.turtleand.com",
+        "source": "AI Atlas"
       },
       {
-        "title": "Archetypes of Human Work in the AI Era",
-        "url": "https://growth.turtleand.com/posts/archetypes-human-work-ai-era/"
+        "title": "OpenClaw Lab — Building with AI Agents",
+        "url": "https://openclaw.turtleand.com/",
+        "source": "OpenClaw Lab"
       }
     ],
     "valuesTitle": "Values & Character",
