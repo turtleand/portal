@@ -86,19 +86,27 @@
         "description": "Explorando confianza descentralizada, propiedad e identidad (próximamente)"
       }
     ],
-    "writingTitle": "Escritos Destacados",
+    "writingTitle": "Trabajo Destacado",
     "writingItems": [
       {
-        "title": "Escaping the Echo Chamber",
-        "url": "https://growth.turtleand.com/posts/exploring-unknown-unknowns-ai/"
+        "title": "Persiguiendo Tu Intención — Las Habilidades Expiran, Pero la Dirección Acumula",
+        "url": "https://growth.turtleand.com/posts/pursuing-your-intent/",
+        "source": "Blog de Crecimiento"
       },
       {
-        "title": "Would You Accept That a Thinking Model Is Better Than You at Your Craft?",
-        "url": "https://growth.turtleand.com/posts/accept-ai-better-than-you-craft/"
+        "title": "AI Tsunami Tracker — ¿Dónde Estás Parado?",
+        "url": "https://atlas.turtleand.com/tsunami",
+        "source": "AI Atlas"
       },
       {
-        "title": "Archetypes of Human Work in the AI Era",
-        "url": "https://growth.turtleand.com/posts/archetypes-human-work-ai-era/"
+        "title": "Sub-Agentes: Cuando Tu IA Construye Su Propio Equipo",
+        "url": "https://openclaw.turtleand.com/topics/sub-agents/",
+        "source": "OpenClaw Lab"
+      },
+      {
+        "title": "Tu Primera Línea Base de Seguridad con IA",
+        "url": "https://lab.turtleand.com/topics/safety-baseline/",
+        "source": "AI Lab"
       }
     ],
     "valuesTitle": "Valores y Carácter",

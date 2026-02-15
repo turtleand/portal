@@ -86,19 +86,27 @@
         "description": "Exploring decentralized trust, ownership, and identity (coming soon)"
       }
     ],
-    "writingTitle": "Featured Writing",
+    "writingTitle": "Featured Work",
     "writingItems": [
       {
-        "title": "Escaping the Echo Chamber",
-        "url": "https://growth.turtleand.com/posts/exploring-unknown-unknowns-ai/"
+        "title": "Pursuing Your Intent — Skills Expire, But Direction Compounds",
+        "url": "https://growth.turtleand.com/posts/pursuing-your-intent/",
+        "source": "Growth Blog"
       },
       {
-        "title": "Would You Accept That a Thinking Model Is Better Than You at Your Craft?",
-        "url": "https://growth.turtleand.com/posts/accept-ai-better-than-you-craft/"
+        "title": "AI Tsunami Tracker — Where Do You Stand?",
+        "url": "https://atlas.turtleand.com/tsunami",
+        "source": "AI Atlas"
       },
       {
-        "title": "Archetypes of Human Work in the AI Era",
-        "url": "https://growth.turtleand.com/posts/archetypes-human-work-ai-era/"
+        "title": "Sub-Agents: When Your AI Builds Its Own Team",
+        "url": "https://openclaw.turtleand.com/topics/sub-agents/",
+        "source": "OpenClaw Lab"
+      },
+      {
+        "title": "Your First AI Safety Baseline",
+        "url": "https://lab.turtleand.com/topics/safety-baseline/",
+        "source": "AI Lab"
       }
     ],
     "valuesTitle": "Values & Character",
