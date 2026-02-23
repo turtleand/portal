@@ -52,13 +52,6 @@
     "backLabel": "Back to main",
     "summary": "Software engineer with 10+ years building production systems. AI power user and integrator — designing autonomous AI workflows, persistent agent architectures, and human-AI collaboration systems that bridge the gap between AI hype and practical deployment.",
     "philosophy": "I explore how humans and technology evolve together. Beyond using AI tools, I build infrastructure where AI agents work autonomously — from multi-stage analysis pipelines to voice-driven workflows. My focus: making deep AI integration a compounding advantage, not just a productivity hack.",
-    "currentFocusTitle": "Current Focus",
-    "currentFocus": [
-      "Autonomous AI workflows and persistent agent orchestration",
-      "AI-first infrastructure — pipelines, briefings, and voice integration",
-      "Human-AI collaboration frameworks and integration patterns",
-      "Blockchain, decentralized systems, and tools that compound human capability"
-    ],
     "buildingTitle": "What I'm Building",
     "buildingItems": [
       {
@@ -88,6 +81,11 @@
     ],
     "writingTitle": "Featured Work",
     "writingItems": [
+      {
+        "title": "Human-AI Collaboration Handbook — Principles for Working with AI",
+        "url": "https://handbook.turtleand.com",
+        "source": "Handbook"
+      },
       {
         "title": "Pursuing Your Intent — Skills Expire, But Direction Compounds",
         "url": "https://growth.turtleand.com/posts/pursuing-your-intent/",

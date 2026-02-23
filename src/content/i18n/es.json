@@ -52,13 +52,6 @@
     "backLabel": "Regresar al inicio",
     "summary": "Ingeniero de software con más de 10 años construyendo sistemas en producción. Power user e integrador de IA — diseñando flujos de trabajo autónomos, arquitecturas de agentes persistentes y sistemas de colaboración humano-IA que acortan la brecha entre el hype y el despliegue práctico.",
     "philosophy": "Exploro cómo los humanos y la tecnología evolucionan juntos. Más allá de usar herramientas de IA, construyo infraestructura donde los agentes de IA trabajan de forma autónoma — desde pipelines de análisis multi-etapa hasta flujos de trabajo por voz. Mi enfoque: hacer que la integración profunda de IA sea una ventaja que se compone, no solo un truco de productividad.",
-    "currentFocusTitle": "Enfoque Actual",
-    "currentFocus": [
-      "Flujos de trabajo autónomos de IA y orquestación de agentes persistentes",
-      "Infraestructura AI-first — pipelines, briefings y integración por voz",
-      "Frameworks de colaboración humano-IA y patrones de integración",
-      "Blockchain, sistemas descentralizados y herramientas que potencian la capacidad humana"
-    ],
     "buildingTitle": "Lo Que Estoy Construyendo",
     "buildingItems": [
       {
@@ -88,6 +81,11 @@
     ],
     "writingTitle": "Trabajo Destacado",
     "writingItems": [
+      {
+        "title": "Manual de Colaboración Humano-IA — Principios para Trabajar con IA",
+        "url": "https://handbook.turtleand.com",
+        "source": "Handbook"
+      },
       {
         "title": "Persiguiendo Tu Intención — Las Habilidades Expiran, Pero la Dirección Acumula",
         "url": "https://growth.turtleand.com/posts/pursuing-your-intent/",
