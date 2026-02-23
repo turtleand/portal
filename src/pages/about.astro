@@ -17,8 +17,6 @@ const traitItems = traits.map((trait: string, index: number) => ({
 
 const summary = makeCopyToken('about.summary', t);
 const philosophy = makeCopyToken('about.philosophy', t);
-const currentFocusTitle = makeCopyToken('about.currentFocusTitle', t);
-const currentFocus: string[] = dictionary.about.currentFocus ?? [];
 const writingTitle = makeCopyToken('about.writingTitle', t);
 const writingItems: { title: string; url: string }[] = dictionary.about.writingItems ?? [];
 const valuesTitle = makeCopyToken('about.valuesTitle', t);
@@ -60,23 +58,6 @@ const connectCta = makeCopyToken('about.connectCta', t);
         <p class="text-base text-offWhite/70 leading-relaxed" data-i18n-key={philosophy.key}>
           {philosophy.text}
         </p>
-      </div>
-
-      <!-- Current Focus -->
-      <div class="space-y-4">
-        <h2 class="text-lg font-semibold text-offWhite" data-i18n-key={currentFocusTitle.key}>
-          {currentFocusTitle.text}
-        </h2>
-        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {currentFocus.map((item: string, i: number) => (
-            <li
-              class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-offWhite/80"
-              data-i18n-key={`about.currentFocus.${i}`}
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
       </div>
 
       <!-- Featured Writing -->
