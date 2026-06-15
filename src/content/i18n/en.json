@@ -73,6 +73,12 @@
         "description": "Engineering fundamentals and software craft"
       },
       {
+        "emoji": "🪽",
+        "name": "Hermes Lab",
+        "url": "https://hermes.turtleand.com/",
+        "description": "Field notes on Hermes Agent workflows, voice, tools, skills, and reliability"
+      },
+      {
         "emoji": "🔗",
         "name": "Blockchain",
         "url": "",
