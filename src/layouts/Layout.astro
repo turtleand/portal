@@ -21,15 +21,27 @@ interface Props {
   description?: string;
   locale: Locale;
   dictionary: Dictionary;
+  canonicalURL?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
 }
 
-const { locale, dictionary, title, description }: Props = Astro.props;
+const {
+  locale,
+  dictionary,
+  title,
+  description,
+  canonicalURL,
+  ogImage = '/logo.svg',
+  ogType = 'website',
+}: Props = Astro.props;
 const t = createTranslator(locale);
 
-const resolvedTitle =
-  title ?? t('site.title');
-const resolvedDescription =
-  description ?? t('site.description');
+const resolvedTitle = title ?? t('site.title');
+const resolvedDescription = description ?? t('site.description');
+const resolvedCanonicalURL = canonicalURL ?? new URL(Astro.url.pathname, Astro.site).href;
+const resolvedOgImage = new URL(ogImage, resolvedCanonicalURL).href;
+const siteName = 'Turtleand';
 
 const preloadImages = [
   aiBackgroundAsset,
@@ -87,12 +99,25 @@ const localeBootstrapData = JSON.stringify({
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title data-i18n-key="site.title">{resolvedTitle}</title>
+    <meta name="title" content={resolvedTitle} />
     <meta
       name="description"
       content={resolvedDescription}
       data-i18n-key="site.description"
       data-i18n-attr="content"
     />
+    <link rel="canonical" href={resolvedCanonicalURL} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={resolvedTitle} />
+    <meta property="og:description" content={resolvedDescription} />
+    <meta property="og:url" content={resolvedCanonicalURL} />
+    <meta property="og:image" content={resolvedOgImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={resolvedTitle} />
+    <meta name="twitter:description" content={resolvedDescription} />
+    <meta name="twitter:image" content={resolvedOgImage} />
+    <meta name="theme-color" content="#07182f" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
