@@ -449,6 +449,9 @@ const connectCta = makeCopyToken('about.connectCta', t);
           const currentTarget = event.currentTarget;
           if (!(currentTarget instanceof HTMLElement)) return;
           cancelHoverClose();
+          if (popoverInteractionMode === "click" && activeItem === currentTarget && !popover.hidden) {
+            return;
+          }
           collapseInlineDescriptions();
           openPopoverForItem(currentTarget, { focusPopover: false, source: "hover" });
         };
