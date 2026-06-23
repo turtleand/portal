@@ -9,11 +9,15 @@
     "locales": {
       "en": {
         "label": "EN",
-        "aria": "Change language to English"
+        "aria": "Change language to English",
+        "currentLabel": "Current",
+        "currentAria": "Current language: English"
       },
       "es": {
         "label": "ES",
-        "aria": "Change language to Spanish"
+        "aria": "Change language to Spanish",
+        "currentLabel": "Current",
+        "currentAria": "Current language: Spanish"
       }
     }
   },

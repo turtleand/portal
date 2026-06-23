@@ -209,6 +209,8 @@ const connectCta = makeCopyToken('about.connectCta', t);
         /** @type {HTMLElement | null} */
         let activeItem = null;
         let hideTimeout = 0;
+        let hoverCloseTimeout = 0;
+        let popoverInteractionMode = null;
         /** @type {HTMLElement | null} */
         let lastFocusedElement = null;
 
@@ -345,6 +347,11 @@ const connectCta = makeCopyToken('about.connectCta', t);
 
         const closePopover = ({ returnFocus = true } = {}) => {
           if (popover.hidden) return;
+          if (hoverCloseTimeout) {
+            window.clearTimeout(hoverCloseTimeout);
+            hoverCloseTimeout = 0;
+          }
+          popoverInteractionMode = null;
           popover.style.opacity = "0";
           popover.style.transform = "translateY(6px)";
           const previous = activeItem;
@@ -363,6 +370,20 @@ const connectCta = makeCopyToken('about.connectCta', t);
 
         closeButton.addEventListener("click", () => closePopover());
 
+        const cancelHoverClose = () => {
+          if (!hoverCloseTimeout) return;
+          window.clearTimeout(hoverCloseTimeout);
+          hoverCloseTimeout = 0;
+        };
+
+        const scheduleHoverClose = () => {
+          if (popoverInteractionMode !== "hover") return;
+          cancelHoverClose();
+          hoverCloseTimeout = window.setTimeout(() => {
+            closePopover({ returnFocus: false });
+          }, 180);
+        };
+
         const openInlineForItem = (item) => {
           const descriptionNode = getDescriptionNode(item);
           const trigger = getTrigger(item);
@@ -376,13 +397,15 @@ const connectCta = makeCopyToken('about.connectCta', t);
           }
         };
 
-        const openPopoverForItem = (item, { focusPopover = true } = {}) => {
+        const openPopoverForItem = (item, { focusPopover = true, source = "click" } = {}) => {
           const trigger = getTrigger(item);
           const descriptionNode = getDescriptionNode(item);
           if (!trigger || !descriptionNode) return;
           if (hideTimeout) {
             window.clearTimeout(hideTimeout);
           }
+          cancelHoverClose();
+          popoverInteractionMode = source;
           setActiveTraitItem(item);
           updatePopoverContent(item);
           popover.hidden = false;
@@ -412,13 +435,27 @@ const connectCta = makeCopyToken('about.connectCta', t);
             openInlineForItem(item);
             return;
           }
-          if (activeItem === item && !popover.hidden) {
+          if (activeItem === item && !popover.hidden && popoverInteractionMode === "click") {
             closePopover();
             return;
           }
           collapseInlineDescriptions();
           closePopover({ returnFocus: false });
-          openPopoverForItem(item);
+          openPopoverForItem(item, { source: "click" });
+        };
+
+        const handleTraitPointerEnter = (event) => {
+          if (useInlineMode) return;
+          const currentTarget = event.currentTarget;
+          if (!(currentTarget instanceof HTMLElement)) return;
+          cancelHoverClose();
+          collapseInlineDescriptions();
+          openPopoverForItem(currentTarget, { focusPopover: false, source: "hover" });
+        };
+
+        const handleTraitPointerLeave = () => {
+          if (useInlineMode) return;
+          scheduleHoverClose();
         };
 
         const handlePointerDown = (event) => {
@@ -458,6 +495,14 @@ const connectCta = makeCopyToken('about.connectCta', t);
             }
           }
         };
+
+        traitList.querySelectorAll("[data-trait-item]").forEach((item) => {
+          item.addEventListener("pointerenter", handleTraitPointerEnter);
+          item.addEventListener("pointerleave", handleTraitPointerLeave);
+        });
+
+        popover.addEventListener("pointerenter", cancelHoverClose);
+        popover.addEventListener("pointerleave", scheduleHoverClose);
 
         traitList.querySelectorAll("[data-trait-trigger]").forEach((button) => {
           button.addEventListener("click", handleTriggerClick);

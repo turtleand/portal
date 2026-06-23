@@ -160,6 +160,23 @@ if (!bootstrap) {
       const isActive = targetLocale === locale;
       button.dataset.active = String(isActive);
       button.setAttribute('aria-pressed', String(isActive));
+      if (isActive) {
+        button.setAttribute('aria-current', 'true');
+      } else {
+        button.removeAttribute('aria-current');
+      }
+      const ariaKey = button.getAttribute(isActive ? 'data-current-aria-key' : 'data-inactive-aria-key');
+      const ariaValue = ariaKey ? getValue(locale, ariaKey) : undefined;
+      if (typeof ariaValue === 'string') {
+        button.setAttribute('aria-label', ariaValue);
+      }
+      const currentIndicator = button.querySelector('[data-locale-current-indicator]');
+      const currentLabel = button.querySelector('[data-locale-current-label]');
+      [currentIndicator, currentLabel].forEach((node) => {
+        if (!(node instanceof HTMLElement)) return;
+        node.classList.toggle('hidden', !isActive);
+        node.classList.toggle(node === currentIndicator ? 'inline-block' : 'inline-flex', isActive);
+      });
       const activeClass = button.getAttribute('data-active-class');
       const inactiveClass = button.getAttribute('data-inactive-class');
       if (activeClass && inactiveClass) {
