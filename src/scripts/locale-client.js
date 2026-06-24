@@ -160,6 +160,16 @@ if (!bootstrap) {
       const isActive = targetLocale === locale;
       button.dataset.active = String(isActive);
       button.setAttribute('aria-pressed', String(isActive));
+      if (isActive) {
+        button.setAttribute('aria-current', 'true');
+      } else {
+        button.removeAttribute('aria-current');
+      }
+      const ariaKey = button.getAttribute(isActive ? 'data-current-aria-key' : 'data-inactive-aria-key');
+      const ariaValue = ariaKey ? getValue(locale, ariaKey) : undefined;
+      if (typeof ariaValue === 'string') {
+        button.setAttribute('aria-label', ariaValue);
+      }
       const activeClass = button.getAttribute('data-active-class');
       const inactiveClass = button.getAttribute('data-inactive-class');
       if (activeClass && inactiveClass) {
