@@ -170,13 +170,6 @@ if (!bootstrap) {
       if (typeof ariaValue === 'string') {
         button.setAttribute('aria-label', ariaValue);
       }
-      const currentIndicator = button.querySelector('[data-locale-current-indicator]');
-      const currentLabel = button.querySelector('[data-locale-current-label]');
-      [currentIndicator, currentLabel].forEach((node) => {
-        if (!(node instanceof HTMLElement)) return;
-        node.classList.toggle('hidden', !isActive);
-        node.classList.toggle(node === currentIndicator ? 'inline-block' : 'inline-flex', isActive);
-      });
       const activeClass = button.getAttribute('data-active-class');
       const inactiveClass = button.getAttribute('data-inactive-class');
       if (activeClass && inactiveClass) {

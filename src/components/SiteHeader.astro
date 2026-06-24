@@ -11,11 +11,9 @@ type NavigationLink = {
 type LocaleCopy = {
   label: string;
   aria: string;
-  currentLabel: string;
   currentAria: string;
   key: string;
   ariaKey: string;
-  currentLabelKey: string;
   currentAriaKey: string;
 };
 
@@ -37,11 +35,11 @@ const currentUrl = Astro.url ?? new URL(placeholderOrigin);
 const currentPath = currentUrl.pathname ?? "/";
 const locales = Object.keys(localeMetadata) as (keyof typeof localeMetadata)[];
 const baseToggleClasses =
-  "inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-white/30 px-3.5 py-1.5 text-base font-semibold uppercase tracking-[0.08em] text-offWhite transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent focus-visible:ring-offset-[#050f1d] sm:px-4 md:text-sm md:tracking-[0.12em]";
+  "inline-flex min-h-11 items-center justify-center rounded-full border px-4 py-1.5 text-sm font-semibold uppercase tracking-[0.14em] transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent focus-visible:ring-offset-[#050f1d] sm:min-h-10 sm:px-4";
 const activeToggleClasses =
-  "border-accent bg-offWhite text-deepBlue shadow-[0_12px_32px_rgba(6,10,25,0.45)] ring-2 ring-accent/70";
+  "border-accent/70 bg-offWhite text-deepBlue shadow-[inset_0_0_0_1px_rgba(255,255,255,0.55),0_10px_28px_rgba(2,8,20,0.32)]";
 const inactiveToggleClasses =
-  "bg-white/10 text-offWhite/85 hover:bg-white/15 hover:text-offWhite focus-visible:text-offWhite";
+  "border-transparent bg-transparent text-offWhite/68 hover:bg-white/10 hover:text-offWhite focus-visible:text-offWhite";
 ---
 
 <header
@@ -117,7 +115,7 @@ const inactiveToggleClasses =
         }
       </nav>
       <div
-        class="flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-2.5 py-1 text-base font-semibold uppercase tracking-[0.08em] text-offWhite md:text-sm md:tracking-[0.1em]"
+        class="flex items-center gap-1 rounded-full border border-white/20 bg-white/[0.07] p-1 text-sm font-semibold uppercase tracking-[0.12em] text-offWhite shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
         role="group"
         aria-label={localeGroupLabel}
       >
@@ -142,23 +140,7 @@ const inactiveToggleClasses =
                 data-inactive-aria-key={metadata.ariaKey}
                 aria-label={isCurrent ? metadata.currentAria : metadata.aria}
               >
-                <span
-                  aria-hidden="true"
-                  class={`h-2 w-2 rounded-full bg-deepBlue shadow-[0_0_0_3px_rgba(14,30,43,0.12)] ${
-                    isCurrent ? "inline-block" : "hidden"
-                  }`}
-                  data-locale-current-indicator
-                ></span>
                 <span data-i18n-key={metadata.key}>{metadata.label}</span>
-                <span
-                  class={`rounded-full bg-deepBlue/10 px-2 py-0.5 text-[0.62rem] font-bold leading-none tracking-[0.12em] ${
-                    isCurrent ? "inline-flex" : "hidden"
-                  }`}
-                  data-locale-current-label
-                  data-i18n-key={metadata.currentLabelKey}
-                >
-                  {metadata.currentLabel}
-                </span>
               </button>
             );
           })
