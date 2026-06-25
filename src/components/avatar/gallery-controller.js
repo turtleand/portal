@@ -251,38 +251,20 @@ class MinimalGalleryController {
   }
 
   applyChromeCopy() {
-    const copy =
-      this.locale === 'es'
-        ? {
-          heading: 'Archivo de Evolución',
-          previous: 'Anterior',
-          next: 'Siguiente',
-          previousAria: 'Avatar anterior',
-          nextAria: 'Siguiente avatar',
-        }
-        : {
-          heading: 'Evolution Archive',
-          previous: 'Prev',
-          next: 'Next',
-          previousAria: 'Previous avatar',
-          nextAria: 'Next avatar',
-        };
+    if (this.locale === 'es') {
+      if (this.headingNode) this.headingNode.textContent = 'Archivo de Evolución';
+      if (this.prevLabelNode) this.prevLabelNode.textContent = 'Anterior';
+      if (this.nextLabelNode) this.nextLabelNode.textContent = 'Siguiente';
+      if (this.prevButton) this.prevButton.setAttribute('aria-label', 'Avatar anterior');
+      if (this.nextButton) this.nextButton.setAttribute('aria-label', 'Siguiente avatar');
+      return;
+    }
 
-    if (this.headingNode) {
-      this.headingNode.textContent = copy.heading;
-    }
-    if (this.prevLabelNode) {
-      this.prevLabelNode.textContent = copy.previous;
-    }
-    if (this.nextLabelNode) {
-      this.nextLabelNode.textContent = copy.next;
-    }
-    if (this.prevButton) {
-      this.prevButton.setAttribute('aria-label', copy.previousAria);
-    }
-    if (this.nextButton) {
-      this.nextButton.setAttribute('aria-label', copy.nextAria);
-    }
+    if (this.headingNode) this.headingNode.textContent = 'Evolution Archive';
+    if (this.prevLabelNode) this.prevLabelNode.textContent = 'Prev';
+    if (this.nextLabelNode) this.nextLabelNode.textContent = 'Next';
+    if (this.prevButton) this.prevButton.setAttribute('aria-label', 'Previous avatar');
+    if (this.nextButton) this.nextButton.setAttribute('aria-label', 'Next avatar');
   }
 
   /**
