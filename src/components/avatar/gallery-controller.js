@@ -31,6 +31,7 @@ class MinimalGalleryController {
     /** @type {AvatarGalleryConfig} */
     this.config = this.parseConfig();
     this.index = 0;
+    this.requestedIndex = 0;
     /** @type {number | null} */
     this.autoplayId = null;
     this.paused = false;
@@ -276,6 +277,7 @@ class MinimalGalleryController {
     const modal = this.getContainingModal();
     modal?.addEventListener('avatar-gallery:open', () => {
       this.index = 0;
+      this.requestedIndex = 0;
       this.navigationRequestId += 1;
       this.render();
       this.preloadAllImages(this.index);
@@ -355,12 +357,16 @@ class MinimalGalleryController {
    * @param {{ fromAutoplay?: boolean }} [options]
    */
   showNext(options = {}) {
-    const nextIndex = (this.index + 1) % this.entries.length;
+    if (options.fromAutoplay && this.requestedIndex !== this.index) {
+      return Promise.resolve();
+    }
+    const baseIndex = options.fromAutoplay ? this.index : this.requestedIndex;
+    const nextIndex = (baseIndex + 1) % this.entries.length;
     return this.goToIndex(nextIndex, options);
   }
 
   showPrevious() {
-    const previousIndex = (this.index - 1 + this.entries.length) % this.entries.length;
+    const previousIndex = (this.requestedIndex - 1 + this.entries.length) % this.entries.length;
     return this.goToIndex(previousIndex);
   }
 
@@ -372,6 +378,7 @@ class MinimalGalleryController {
     if (!this.entries.length) return;
 
     const normalizedIndex = (nextIndex + this.entries.length) % this.entries.length;
+    this.requestedIndex = normalizedIndex;
     const requestId = this.navigationRequestId + 1;
     this.navigationRequestId = requestId;
 
@@ -380,11 +387,13 @@ class MinimalGalleryController {
     if (options.fromAutoplay && this.paused) return;
 
     if (!ready) {
+      this.requestedIndex = this.index;
       if (options.fromAutoplay) this.scheduleAutoplayRetry();
       return;
     }
 
     this.index = normalizedIndex;
+    this.requestedIndex = normalizedIndex;
     this.render();
     this.preloadAllImages(this.index);
   }
