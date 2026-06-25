@@ -39,8 +39,8 @@ class MinimalGalleryController {
     /** @type {MutationObserver | undefined} */
     this.localeObserver = undefined;
 
-    /** @type {HTMLImageElement | null} */
-    this.image = null;
+    /** @type {HTMLImageElement[]} */
+    this.images = [];
     /** @type {HTMLElement | null} */
     this.titleNode = null;
     /** @type {HTMLElement | null} */
@@ -69,7 +69,11 @@ class MinimalGalleryController {
     this.preloadAllImages();
     this.bindEvents();
     this.render();
-    this.startAutoplay();
+    if (this.isInsideHiddenModal()) {
+      this.paused = true;
+    } else {
+      this.startAutoplay();
+    }
     this.observeLocaleChanges();
   }
 
@@ -81,7 +85,10 @@ class MinimalGalleryController {
     const dataNode = this.root.querySelector('script[data-avatar-gallery-data]');
     if (!dataNode?.textContent) return [];
     try {
-      return JSON.parse(dataNode.textContent);
+      const parsed = JSON.parse(dataNode.textContent);
+      return Array.isArray(parsed)
+        ? parsed.sort((a, b) => a.date.localeCompare(b.date))
+        : [];
     } catch (error) {
       console.error('[avatar-gallery] Unable to parse entries', error);
       return [];
@@ -102,14 +109,14 @@ class MinimalGalleryController {
   }
 
   preloadAllImages() {
-    this.entries.forEach((entry) => {
-      const img = new Image();
-      img.src = entry.finalImage;
-    });
+    // Images are server-rendered in the stage so their URLs stay out of the
+    // JSON-driven client renderer and are requested by the browser directly.
   }
 
   cacheElements() {
-    this.image = this.root.querySelector('[data-gallery-final]');
+    this.images = Array.from(this.root.querySelectorAll('[data-gallery-final]')).filter(
+      (node) => node instanceof HTMLImageElement,
+    );
     this.titleNode = this.root.querySelector('[data-gallery-title]');
     this.metaNode = this.root.querySelector('[data-gallery-meta]');
     this.descriptionNode = this.root.querySelector('[data-gallery-description]');
@@ -132,6 +139,27 @@ class MinimalGalleryController {
     this.root.addEventListener('focusout', resume);
     this.hoverZone?.addEventListener('pointerenter', pause);
     this.hoverZone?.addEventListener('pointerleave', resume);
+
+    const modal = this.getContainingModal();
+    modal?.addEventListener('avatar-gallery:open', () => {
+      this.index = 0;
+      this.render();
+      this.setPaused(false);
+    });
+    modal?.addEventListener('avatar-gallery:close', pause);
+  }
+
+  /**
+   * @returns {HTMLElement | null}
+   */
+  getContainingModal() {
+    const modal = this.root.closest('[data-avatar-modal]');
+    return modal instanceof HTMLElement ? modal : null;
+  }
+
+  isInsideHiddenModal() {
+    const modal = this.getContainingModal();
+    return modal?.getAttribute('aria-hidden') === 'true';
   }
 
   /**
@@ -193,9 +221,9 @@ class MinimalGalleryController {
 
   render() {
     const entry = this.entries[this.index];
-    if (!entry || !this.image) return;
+    if (!entry || !this.images.length) return;
     const { title, description } = this.getLocalizedCopy(entry);
-    this.animateImage(entry.finalImage, title);
+    this.animateImage(this.index, title);
     if (this.titleNode) this.titleNode.textContent = title;
     if (this.metaNode) {
       this.metaNode.textContent = `${entry.version} • ${entry.date}`;
@@ -223,77 +251,56 @@ class MinimalGalleryController {
   }
 
   applyChromeCopy() {
-    if (this.headingNode) {
-      const heading =
-        this.locale === 'es'
-          ? this.headingNode.getAttribute('data-heading-es')
-          : this.headingNode.getAttribute('data-heading-en');
-      if (heading) {
-        this.headingNode.textContent = heading;
-      }
+    if (this.locale === 'es') {
+      if (this.headingNode) this.headingNode.textContent = 'Archivo de Evolución';
+      if (this.prevLabelNode) this.prevLabelNode.textContent = 'Anterior';
+      if (this.nextLabelNode) this.nextLabelNode.textContent = 'Siguiente';
+      if (this.prevButton) this.prevButton.setAttribute('aria-label', 'Avatar anterior');
+      if (this.nextButton) this.nextButton.setAttribute('aria-label', 'Siguiente avatar');
+      return;
     }
-    if (this.prevLabelNode) {
-      const prev =
-        this.locale === 'es'
-          ? this.prevLabelNode.getAttribute('data-label-es')
-          : this.prevLabelNode.getAttribute('data-label-en');
-      if (prev) {
-        this.prevLabelNode.textContent = prev;
-      }
-    }
-    if (this.nextLabelNode) {
-      const next =
-        this.locale === 'es'
-          ? this.nextLabelNode.getAttribute('data-label-es')
-          : this.nextLabelNode.getAttribute('data-label-en');
-      if (next) {
-        this.nextLabelNode.textContent = next;
-      }
-    }
-    const prevAria =
-      this.locale === 'es'
-        ? this.prevButton?.getAttribute('data-prev-aria-es')
-        : this.prevButton?.getAttribute('data-prev-aria-en');
-    if (prevAria && this.prevButton) {
-      this.prevButton.setAttribute('aria-label', prevAria);
-    }
-    const nextAria =
-      this.locale === 'es'
-        ? this.nextButton?.getAttribute('data-next-aria-es')
-        : this.nextButton?.getAttribute('data-next-aria-en');
-    if (nextAria && this.nextButton) {
-      this.nextButton.setAttribute('aria-label', nextAria);
-    }
+
+    if (this.headingNode) this.headingNode.textContent = 'Evolution Archive';
+    if (this.prevLabelNode) this.prevLabelNode.textContent = 'Prev';
+    if (this.nextLabelNode) this.nextLabelNode.textContent = 'Next';
+    if (this.prevButton) this.prevButton.setAttribute('aria-label', 'Previous avatar');
+    if (this.nextButton) this.nextButton.setAttribute('aria-label', 'Next avatar');
   }
 
   /**
-   * @param {string} nextSrc
+   * @param {number} nextIndex
    * @param {string} alt
    */
-  animateImage(nextSrc, alt) {
-    if (!this.image) return;
-    if (this.image.src !== nextSrc) {
-      if (this.currentAnimation) {
-        this.currentAnimation.cancel();
-        this.currentAnimation = null;
-      }
-      this.image.src = nextSrc;
-      const keyframes =
-        this.config.animation === 'morph'
-          ? [
-            { opacity: 0.4, filter: 'blur(6px)' },
-            { opacity: 1, filter: 'blur(0px)' },
-          ]
-          : [
-            { opacity: 0.2, transform: 'scale(0.96)' },
-            { opacity: 1, transform: 'scale(1)' },
-          ];
-      this.currentAnimation = this.image.animate(keyframes, {
-        duration: 250,
-        fill: 'backwards',
-      });
+  animateImage(nextIndex, alt) {
+    const nextImage = this.images[nextIndex];
+    if (!nextImage) return;
+
+    if (this.currentAnimation) {
+      this.currentAnimation.cancel();
+      this.currentAnimation = null;
     }
-    this.image.alt = alt;
+
+    this.images.forEach((image, index) => {
+      const isActive = index === nextIndex;
+      image.hidden = !isActive;
+      image.classList.toggle('hidden', !isActive);
+    });
+
+    const keyframes =
+      this.config.animation === 'morph'
+        ? [
+          { opacity: 0.4, filter: 'blur(6px)' },
+          { opacity: 1, filter: 'blur(0px)' },
+        ]
+        : [
+          { opacity: 0.2, transform: 'scale(0.96)' },
+          { opacity: 1, transform: 'scale(1)' },
+        ];
+    this.currentAnimation = nextImage.animate(keyframes, {
+      duration: 250,
+      fill: 'backwards',
+    });
+    nextImage.alt = alt;
   }
 }
 
