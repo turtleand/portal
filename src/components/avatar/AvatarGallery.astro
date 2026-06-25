@@ -11,16 +11,16 @@ interface Props {
 }
 
 const { locale = "en" }: Partial<Props> = Astro.props;
-const entriesJson = JSON.stringify(avatarGalleryEntries).replace(
-  /</g,
-  "\\u003c",
+const displayEntries = [...avatarGalleryEntries].sort((a, b) =>
+  a.date.localeCompare(b.date),
 );
+const entriesJson = JSON.stringify(displayEntries).replace(/</g, "\\u003c");
 const configJson = JSON.stringify(avatarGalleryConfig).replace(/</g, "\\u003c");
 const galleryTitle =
   locale === "es" ? "Archivo de Evolución" : "Evolution Archive";
 const prevLabel = locale === "es" ? "Anterior" : "Prev";
 const nextLabel = locale === "es" ? "Siguiente" : "Next";
-const initialEntry = avatarGalleryEntries[0];
+const initialEntry = displayEntries[0];
 const initialTitle =
   locale === "es" ? initialEntry.titleEs : initialEntry.title;
 const initialDescription =
@@ -59,7 +59,7 @@ const initialDescription =
       >
         <img
           data-gallery-final
-          src={avatarGalleryEntries[0].finalImage}
+          src={displayEntries[0].finalImage}
           alt={initialTitle}
           class="h-full w-full object-contain will-change-transform"
           loading="eager"
@@ -68,7 +68,7 @@ const initialDescription =
       <div class="text-center space-y-1.5">
         <p class="text-base font-semibold uppercase tracking-[0.12em] text-emerald-50/90 sm:text-sm sm:tracking-[0.18em]">
           <span data-gallery-meta>
-            {avatarGalleryEntries[0].version} • {avatarGalleryEntries[0].date}
+            {displayEntries[0].version} • {displayEntries[0].date}
           </span>
         </p>
         <h3 class="text-2xl font-heading text-offWhite" data-gallery-title>

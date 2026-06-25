@@ -85,7 +85,10 @@ class MinimalGalleryController {
     const dataNode = this.root.querySelector('script[data-avatar-gallery-data]');
     if (!dataNode?.textContent) return [];
     try {
-      return JSON.parse(dataNode.textContent);
+      const parsed = JSON.parse(dataNode.textContent);
+      return Array.isArray(parsed)
+        ? parsed.sort((a, b) => a.date.localeCompare(b.date))
+        : [];
     } catch (error) {
       console.error('[avatar-gallery] Unable to parse entries', error);
       return [];
@@ -141,7 +144,7 @@ class MinimalGalleryController {
     modal?.addEventListener('avatar-gallery:open', () => {
       this.index = 0;
       this.render();
-      this.setPaused(true);
+      this.setPaused(false);
     });
     modal?.addEventListener('avatar-gallery:close', pause);
   }
