@@ -57,13 +57,23 @@ const initialDescription =
         data-gallery-stage-canvas
         data-gallery-hover-zone
       >
-        <img
-          data-gallery-final
-          src={displayEntries[0].finalImage}
-          alt={initialTitle}
-          class="h-full w-full object-contain will-change-transform"
-          loading="eager"
-        />
+        {
+          displayEntries.map((entry, index) => {
+            const title = locale === "es" ? entry.titleEs : entry.title;
+            return (
+              <img
+                data-gallery-final
+                data-gallery-image-index={index}
+                src={entry.finalImage}
+                alt={title}
+                class={`absolute inset-0 h-full w-full object-contain will-change-transform ${
+                  index === 0 ? "" : "hidden"
+                }`}
+                loading={index === 0 ? "eager" : "lazy"}
+              />
+            );
+          })
+        }
       </div>
       <div class="text-center space-y-1.5">
         <p class="text-base font-semibold uppercase tracking-[0.12em] text-emerald-50/90 sm:text-sm sm:tracking-[0.18em]">

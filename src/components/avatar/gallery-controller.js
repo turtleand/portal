@@ -39,8 +39,8 @@ class MinimalGalleryController {
     /** @type {MutationObserver | undefined} */
     this.localeObserver = undefined;
 
-    /** @type {HTMLImageElement | null} */
-    this.image = null;
+    /** @type {HTMLImageElement[]} */
+    this.images = [];
     /** @type {HTMLElement | null} */
     this.titleNode = null;
     /** @type {HTMLElement | null} */
@@ -109,14 +109,14 @@ class MinimalGalleryController {
   }
 
   preloadAllImages() {
-    this.entries.forEach((entry) => {
-      const img = new Image();
-      img.src = entry.finalImage;
-    });
+    // Images are server-rendered in the stage so their URLs stay out of the
+    // JSON-driven client renderer and are requested by the browser directly.
   }
 
   cacheElements() {
-    this.image = this.root.querySelector('[data-gallery-final]');
+    this.images = Array.from(this.root.querySelectorAll('[data-gallery-final]')).filter(
+      (node) => node instanceof HTMLImageElement,
+    );
     this.titleNode = this.root.querySelector('[data-gallery-title]');
     this.metaNode = this.root.querySelector('[data-gallery-meta]');
     this.descriptionNode = this.root.querySelector('[data-gallery-description]');
@@ -221,9 +221,9 @@ class MinimalGalleryController {
 
   render() {
     const entry = this.entries[this.index];
-    if (!entry || !this.image) return;
+    if (!entry || !this.images.length) return;
     const { title, description } = this.getLocalizedCopy(entry);
-    this.animateImage(entry.finalImage, title);
+    this.animateImage(this.index, title);
     if (this.titleNode) this.titleNode.textContent = title;
     if (this.metaNode) {
       this.metaNode.textContent = `${entry.version} • ${entry.date}`;
@@ -268,33 +268,39 @@ class MinimalGalleryController {
   }
 
   /**
-   * @param {string} nextSrc
+   * @param {number} nextIndex
    * @param {string} alt
    */
-  animateImage(nextSrc, alt) {
-    if (!this.image) return;
-    if (this.image.src !== nextSrc) {
-      if (this.currentAnimation) {
-        this.currentAnimation.cancel();
-        this.currentAnimation = null;
-      }
-      this.image.src = nextSrc;
-      const keyframes =
-        this.config.animation === 'morph'
-          ? [
-            { opacity: 0.4, filter: 'blur(6px)' },
-            { opacity: 1, filter: 'blur(0px)' },
-          ]
-          : [
-            { opacity: 0.2, transform: 'scale(0.96)' },
-            { opacity: 1, transform: 'scale(1)' },
-          ];
-      this.currentAnimation = this.image.animate(keyframes, {
-        duration: 250,
-        fill: 'backwards',
-      });
+  animateImage(nextIndex, alt) {
+    const nextImage = this.images[nextIndex];
+    if (!nextImage) return;
+
+    if (this.currentAnimation) {
+      this.currentAnimation.cancel();
+      this.currentAnimation = null;
     }
-    this.image.alt = alt;
+
+    this.images.forEach((image, index) => {
+      const isActive = index === nextIndex;
+      image.hidden = !isActive;
+      image.classList.toggle('hidden', !isActive);
+    });
+
+    const keyframes =
+      this.config.animation === 'morph'
+        ? [
+          { opacity: 0.4, filter: 'blur(6px)' },
+          { opacity: 1, filter: 'blur(0px)' },
+        ]
+        : [
+          { opacity: 0.2, transform: 'scale(0.96)' },
+          { opacity: 1, transform: 'scale(1)' },
+        ];
+    this.currentAnimation = nextImage.animate(keyframes, {
+      duration: 250,
+      fill: 'backwards',
+    });
+    nextImage.alt = alt;
   }
 }
 
