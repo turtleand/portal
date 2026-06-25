@@ -251,46 +251,37 @@ class MinimalGalleryController {
   }
 
   applyChromeCopy() {
+    const copy =
+      this.locale === 'es'
+        ? {
+          heading: 'Archivo de Evolución',
+          previous: 'Anterior',
+          next: 'Siguiente',
+          previousAria: 'Avatar anterior',
+          nextAria: 'Siguiente avatar',
+        }
+        : {
+          heading: 'Evolution Archive',
+          previous: 'Prev',
+          next: 'Next',
+          previousAria: 'Previous avatar',
+          nextAria: 'Next avatar',
+        };
+
     if (this.headingNode) {
-      const heading =
-        this.locale === 'es'
-          ? this.headingNode.getAttribute('data-heading-es')
-          : this.headingNode.getAttribute('data-heading-en');
-      if (heading) {
-        this.headingNode.textContent = heading;
-      }
+      this.headingNode.textContent = copy.heading;
     }
     if (this.prevLabelNode) {
-      const prev =
-        this.locale === 'es'
-          ? this.prevLabelNode.getAttribute('data-label-es')
-          : this.prevLabelNode.getAttribute('data-label-en');
-      if (prev) {
-        this.prevLabelNode.textContent = prev;
-      }
+      this.prevLabelNode.textContent = copy.previous;
     }
     if (this.nextLabelNode) {
-      const next =
-        this.locale === 'es'
-          ? this.nextLabelNode.getAttribute('data-label-es')
-          : this.nextLabelNode.getAttribute('data-label-en');
-      if (next) {
-        this.nextLabelNode.textContent = next;
-      }
+      this.nextLabelNode.textContent = copy.next;
     }
-    const prevAria =
-      this.locale === 'es'
-        ? this.prevButton?.getAttribute('data-prev-aria-es')
-        : this.prevButton?.getAttribute('data-prev-aria-en');
-    if (prevAria && this.prevButton) {
-      this.prevButton.setAttribute('aria-label', prevAria);
+    if (this.prevButton) {
+      this.prevButton.setAttribute('aria-label', copy.previousAria);
     }
-    const nextAria =
-      this.locale === 'es'
-        ? this.nextButton?.getAttribute('data-next-aria-es')
-        : this.nextButton?.getAttribute('data-next-aria-en');
-    if (nextAria && this.nextButton) {
-      this.nextButton.setAttribute('aria-label', nextAria);
+    if (this.nextButton) {
+      this.nextButton.setAttribute('aria-label', copy.nextAria);
     }
   }
 
