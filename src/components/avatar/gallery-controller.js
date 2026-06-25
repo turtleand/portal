@@ -69,7 +69,11 @@ class MinimalGalleryController {
     this.preloadAllImages();
     this.bindEvents();
     this.render();
-    this.startAutoplay();
+    if (this.isInsideHiddenModal()) {
+      this.paused = true;
+    } else {
+      this.startAutoplay();
+    }
     this.observeLocaleChanges();
   }
 
@@ -132,6 +136,27 @@ class MinimalGalleryController {
     this.root.addEventListener('focusout', resume);
     this.hoverZone?.addEventListener('pointerenter', pause);
     this.hoverZone?.addEventListener('pointerleave', resume);
+
+    const modal = this.getContainingModal();
+    modal?.addEventListener('avatar-gallery:open', () => {
+      this.index = 0;
+      this.render();
+      this.setPaused(true);
+    });
+    modal?.addEventListener('avatar-gallery:close', pause);
+  }
+
+  /**
+   * @returns {HTMLElement | null}
+   */
+  getContainingModal() {
+    const modal = this.root.closest('[data-avatar-modal]');
+    return modal instanceof HTMLElement ? modal : null;
+  }
+
+  isInsideHiddenModal() {
+    const modal = this.getContainingModal();
+    return modal?.getAttribute('aria-hidden') === 'true';
   }
 
   /**

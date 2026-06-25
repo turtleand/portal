@@ -65,6 +65,7 @@ class AvatarGalleryModalController {
     this.lockScroll();
     this.disableBackground();
     this.updateTriggerState(true);
+    this.modal.dispatchEvent(new CustomEvent('avatar-gallery:open'));
     window.setTimeout(() => {
       this.panel?.focus();
     }, 0);
@@ -81,6 +82,7 @@ class AvatarGalleryModalController {
     this.unlockScroll();
     this.enableBackground();
     this.updateTriggerState(false);
+    this.modal.dispatchEvent(new CustomEvent('avatar-gallery:close'));
     this.lastTrigger?.focus();
   }
 
