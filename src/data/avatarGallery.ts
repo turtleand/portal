@@ -3,6 +3,7 @@ import avatar002 from '../images/avatar/turtleand-0.0.2-transparent-2025-04-21.p
 import avatar003 from '../images/avatar/turtleand-0.0.3-transparent-2025-05-17.png';
 import avatar004 from '../images/avatar/turtleand-0.0.4-transparent-2025-06-29.png';
 import avatar010 from '../images/avatar/turtleand-0.1.0-transparent-2026-02-07.png';
+import avatar011 from '../images/avatar/turtleand-0.1.1-transparent-2026-06-25.png';
 
 export type AvatarPaletteToken = 'seafoam' | 'tide' | 'sand' | 'ember';
 
@@ -38,6 +39,22 @@ export const avatarGalleryConfig: AvatarGalleryConfig = {
 };
 
 export const avatarGalleryEntries: AvatarGalleryEntry[] = [
+  {
+    id: 'frontier-cartographer',
+    version: 'v0.1.1',
+    date: '2026-06-25',
+    title: 'The Frontier Cartographer',
+    description: 'Maps the frontier and turns changing terrain into direction.',
+    titleEs: 'El Cartógrafo de la Frontera',
+    descriptionEs: 'Mapea la frontera y convierte el terreno cambiante en dirección.',
+    finalImage: avatar011.src,
+    sketchImage: null,
+    palette: ['seafoam', 'tide', 'sand', 'ember'],
+    preferences: {
+      transition: 'fade',
+      blur: 'soft',
+    },
+  },
   {
     id: 'hydraulic-brace',
     version: 'v0.1.0',
