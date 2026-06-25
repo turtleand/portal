@@ -61,17 +61,25 @@ class MinimalGalleryController {
     this.nextLabelNode = null;
     /** @type {Animation | null} */
     this.currentAnimation = null;
+    /** @type {Set<number>} */
+    this.readyImageIndexes = new Set();
+    /** @type {Map<number, Promise<boolean>>} */
+    this.imageReadyPromises = new Map();
+    /** @type {number | null} */
+    this.autoplayRetryId = null;
+    this.navigationRequestId = 0;
 
     if (!this.entries.length) {
       return;
     }
     this.cacheElements();
-    this.preloadAllImages();
+    this.prepareInitialImage();
     this.bindEvents();
     this.render();
     if (this.isInsideHiddenModal()) {
       this.paused = true;
     } else {
+      this.preloadAllImages(this.index);
       this.startAutoplay();
     }
     this.observeLocaleChanges();
@@ -108,9 +116,130 @@ class MinimalGalleryController {
     }
   }
 
-  preloadAllImages() {
-    // Images are server-rendered in the stage so their URLs stay out of the
-    // JSON-driven client renderer and are requested by the browser directly.
+  prepareInitialImage() {
+    const firstImage = this.images[0];
+    if (!firstImage) return;
+    firstImage.loading = 'eager';
+    firstImage.fetchPriority = 'high';
+    firstImage.decoding = 'async';
+    void this.ensureImageReady(0);
+  }
+
+  /**
+   * @param {number} [startIndex]
+   */
+  preloadAllImages(startIndex = this.index) {
+    if (!this.images.length) return;
+
+    this.images.forEach((image, index) => {
+      image.loading = 'eager';
+      image.decoding = 'async';
+      if (index !== 0) image.fetchPriority = 'low';
+    });
+
+    void this.ensureImageReady(startIndex);
+    void this.preloadImagesAfter(startIndex);
+  }
+
+  /**
+   * @param {number} startIndex
+   */
+  async preloadImagesAfter(startIndex) {
+    const preloadOrder = this.getPreloadOrder(startIndex);
+    for (const index of preloadOrder) {
+      await this.ensureImageReady(index);
+    }
+  }
+
+  /**
+   * @param {number} startIndex
+   * @returns {number[]}
+   */
+  getPreloadOrder(startIndex) {
+    const count = this.images.length;
+    if (count <= 1) return [];
+    return Array.from({ length: count - 1 }, (_, offset) => (startIndex + offset + 1) % count);
+  }
+
+  /**
+   * @param {number} index
+   * @returns {Promise<boolean>}
+   */
+  ensureImageReady(index) {
+    const image = this.images[index];
+    if (!image) return Promise.resolve(false);
+
+    image.loading = 'eager';
+    image.decoding = 'async';
+
+    if (this.isImageReady(index)) {
+      this.readyImageIndexes.add(index);
+      return Promise.resolve(true);
+    }
+
+    const existingPromise = this.imageReadyPromises.get(index);
+    if (existingPromise) return existingPromise;
+
+    const readinessPromise = this.waitForImageLoad(image)
+      .then(async () => {
+        if (typeof image.decode === 'function') {
+          try {
+            await image.decode();
+          } catch (error) {
+            if (!this.isImageReady(index)) {
+              throw error;
+            }
+          }
+        }
+
+        const ready = this.isImageReady(index);
+        if (ready) this.readyImageIndexes.add(index);
+        return ready;
+      })
+      .catch((error) => {
+        console.warn('[avatar-gallery] Image did not finish preloading', { index, error });
+        return false;
+      })
+      .finally(() => {
+        this.imageReadyPromises.delete(index);
+      });
+
+    this.imageReadyPromises.set(index, readinessPromise);
+    return readinessPromise;
+  }
+
+  /**
+   * @param {number} index
+   */
+  isImageReady(index) {
+    const image = this.images[index];
+    return Boolean(image?.complete && image.naturalWidth > 0);
+  }
+
+  /**
+   * @param {HTMLImageElement} image
+   * @returns {Promise<void>}
+   */
+  waitForImageLoad(image) {
+    if (image.complete) return Promise.resolve();
+
+    return new Promise((resolve, reject) => {
+      const cleanup = () => {
+        image.removeEventListener('load', handleLoad);
+        image.removeEventListener('error', handleError);
+      };
+      const handleLoad = () => {
+        cleanup();
+        resolve();
+      };
+      const handleError = () => {
+        cleanup();
+        reject(new Error('Image failed to load'));
+      };
+
+      image.addEventListener('load', handleLoad, { once: true });
+      image.addEventListener('error', handleError, { once: true });
+    });
   }
 
   cacheElements() {
@@ -129,8 +258,12 @@ class MinimalGalleryController {
   }
 
   bindEvents() {
-    this.prevButton?.addEventListener('click', () => this.showPrevious());
-    this.nextButton?.addEventListener('click', () => this.showNext());
+    this.prevButton?.addEventListener('click', () => {
+      void this.showPrevious();
+    });
+    this.nextButton?.addEventListener('click', () => {
+      void this.showNext();
+    });
 
     const pause = () => this.setPaused(true);
     const resume = () => this.setPaused(false);
@@ -143,7 +276,9 @@ class MinimalGalleryController {
     const modal = this.getContainingModal();
     modal?.addEventListener('avatar-gallery:open', () => {
       this.index = 0;
+      this.navigationRequestId += 1;
       this.render();
+      this.preloadAllImages(this.index);
       this.setPaused(false);
     });
     modal?.addEventListener('avatar-gallery:close', pause);
@@ -191,6 +326,7 @@ class MinimalGalleryController {
     if (this.paused === nextPaused) return;
     this.paused = nextPaused;
     if (this.paused) {
+      this.navigationRequestId += 1;
       this.stopAutoplay();
     } else {
       this.startAutoplay();
@@ -199,7 +335,9 @@ class MinimalGalleryController {
 
   startAutoplay() {
     if (this.autoplayId || this.paused) return;
-    this.autoplayId = window.setInterval(() => this.showNext(), AUTOPLAY_INTERVAL);
+    this.autoplayId = window.setInterval(() => {
+      void this.showNext({ fromAutoplay: true });
+    }, AUTOPLAY_INTERVAL);
   }
 
   stopAutoplay() {
@@ -207,16 +345,56 @@ class MinimalGalleryController {
       window.clearInterval(this.autoplayId);
       this.autoplayId = null;
     }
+    if (this.autoplayRetryId) {
+      window.clearTimeout(this.autoplayRetryId);
+      this.autoplayRetryId = null;
+    }
   }
 
-  showNext() {
-    this.index = (this.index + 1) % this.entries.length;
-    this.render();
+  /**
+   * @param {{ fromAutoplay?: boolean }} [options]
+   */
+  showNext(options = {}) {
+    const nextIndex = (this.index + 1) % this.entries.length;
+    return this.goToIndex(nextIndex, options);
   }
 
   showPrevious() {
-    this.index = (this.index - 1 + this.entries.length) % this.entries.length;
+    const previousIndex = (this.index - 1 + this.entries.length) % this.entries.length;
+    return this.goToIndex(previousIndex);
+  }
+
+  /**
+   * @param {number} nextIndex
+   * @param {{ fromAutoplay?: boolean }} [options]
+   */
+  async goToIndex(nextIndex, options = {}) {
+    if (!this.entries.length) return;
+
+    const normalizedIndex = (nextIndex + this.entries.length) % this.entries.length;
+    const requestId = this.navigationRequestId + 1;
+    this.navigationRequestId = requestId;
+
+    const ready = await this.ensureImageReady(normalizedIndex);
+    if (requestId !== this.navigationRequestId) return;
+    if (options.fromAutoplay && this.paused) return;
+
+    if (!ready) {
+      if (options.fromAutoplay) this.scheduleAutoplayRetry();
+      return;
+    }
+
+    this.index = normalizedIndex;
     this.render();
+    this.preloadAllImages(this.index);
+  }
+
+  scheduleAutoplayRetry() {
+    if (this.paused || this.autoplayRetryId) return;
+    this.autoplayRetryId = window.setTimeout(() => {
+      this.autoplayRetryId = null;
+      void this.showNext({ fromAutoplay: true });
+    }, 250);
   }
 
   render() {
