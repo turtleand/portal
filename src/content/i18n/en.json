@@ -139,5 +139,16 @@
       "closeLabel": "Close",
       "ariaLabel": "Turtleand Avatar Evolution Gallery"
     }
+  },
+  "feeds": {
+    "pageTitle": "Turtleand Feeds",
+    "pageDescription": "Subscribe to Turtleand public knowledge feeds across Growth, Build, AI Lab, OpenClaw, Hermes, Handbook, Energy, and Chain Lab.",
+    "kicker": "Subscribe",
+    "title": "Turtleand feeds",
+    "intro": "Turtleand is a federated knowledge ecosystem. These feeds make its public artifacts easier to follow through feed readers, search engines, indexing services, and AI systems.",
+    "jsonRegistry": "JSON registry",
+    "opmlExport": "OPML export",
+    "rssLabel": "RSS",
+    "surfaceLabel": "Surface"
   }
 }
