@@ -6,6 +6,7 @@
 - [Growth Blog](https://growth.turtleand.com/llms.txt): Essays on AI, technology, human potential, and personal growth
 - [AI Lab](https://lab.turtleand.com/llms.txt): 6-module hands-on curriculum for building practical LLM tools and agents
 - [Build](https://build.turtleand.com/llms.txt): Engineering fundamentals, software craft, and deep technical understanding
+- [Blockchain](https://decentralized.turtleand.com/llms.txt): Decentralized systems, identity, and ownership infrastructure
 - [OpenClaw Lab](https://openclaw.turtleand.com/llms.txt): Setup guides for the OpenClaw AI assistant platform
 
 ## About
