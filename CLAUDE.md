@@ -18,4 +18,4 @@ This site uses a "bot translation layer" — structured content for AI agents:
 ## Stack
 - Astro 6 + Tailwind + Netlify SSR
 - i18n: EN + ES (`src/content/i18n/`)
-- Hub site linking to: growth, lab, build, openclaw subdomains
+- Hub site linking to: growth, lab, build, hermes subdomains
