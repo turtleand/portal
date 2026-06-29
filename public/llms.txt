@@ -9,6 +9,9 @@
 - [Blockchain](https://decentralized.turtleand.com/llms.txt): Decentralized systems, identity, and ownership infrastructure
 - [OpenClaw Lab](https://openclaw.turtleand.com/llms.txt): Setup guides for the OpenClaw AI assistant platform
 
+## Secondary Learning Surfaces
+- [Energy](https://energy.turtleand.com/llms.txt): Electricity, circuits, power, storage, grids, and physical energy systems
+
 ## About
 - [About Turtleand](https://turtleand.com/about): Software engineer with 10+ years building production systems, focused on AI integration and human-centered technology
 
