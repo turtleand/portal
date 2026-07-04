@@ -1,0 +1,41 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { turtleandFeeds } from '../../data/feeds';
+import { initI18n } from '../../utils/i18n';
+
+const { locale, dictionary, t } = initI18n(Astro);
+const canonicalURL = new URL('/feeds/', Astro.site).href;
+const feedCopy = dictionary.feeds;
+---
+
+<Layout
+  locale={locale}
+  dictionary={dictionary}
+  title={t('feeds.pageTitle')}
+  description={feedCopy.pageDescription}
+  canonicalURL={canonicalURL}
+>
+  <section class="mx-auto max-w-5xl px-6 py-24 text-offWhite">
+    <p class="text-sm uppercase tracking-[0.3em] text-teal/80" data-i18n-key="feeds.kicker">{feedCopy.kicker}</p>
+    <h1 class="mt-4 font-display text-4xl md:text-6xl" data-i18n-key="feeds.title">{feedCopy.title}</h1>
+    <p class="mt-6 max-w-3xl text-lg leading-8 text-offWhite/75" data-i18n-key="feeds.intro">
+      {feedCopy.intro}
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3 text-sm">
+      <a class="rounded-full border border-teal/40 px-4 py-2 text-teal hover:bg-teal/10" href="/feeds.json" data-i18n-key="feeds.jsonRegistry">{feedCopy.jsonRegistry}</a>
+      <a class="rounded-full border border-teal/40 px-4 py-2 text-teal hover:bg-teal/10" href="/feeds.opml" data-i18n-key="feeds.opmlExport">{feedCopy.opmlExport}</a>
+    </div>
+    <div class="mt-12 grid gap-4 md:grid-cols-2">
+      {turtleandFeeds.map((feed) => (
+        <article class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 shadow-xl shadow-black/10">
+          <h2 class="font-display text-2xl">{feed.surface}</h2>
+          <p class="mt-3 text-sm leading-6 text-offWhite/70">{feed.description}</p>
+          <div class="mt-5 flex flex-wrap gap-3 text-sm">
+            <a class="text-teal hover:text-gold" href={feed.url} data-i18n-key="feeds.rssLabel">{feedCopy.rssLabel}</a>
+            <a class="text-offWhite/65 hover:text-offWhite" href={feed.siteUrl} data-i18n-key="feeds.surfaceLabel">{feedCopy.surfaceLabel}</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>
