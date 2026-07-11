@@ -46,6 +46,18 @@ const progress = t('avatar.evolution.progress')
         aria-label={`${firstStage.version}: ${firstTitle}. ${firstDescription}`}
       >
         <div class="absolute inset-0 flex items-center justify-center" data-evolution-stage></div>
+        <div
+          class="pointer-events-none absolute inset-0 z-[3] overflow-hidden"
+          data-evolution-effects
+          aria-hidden="true"
+          hidden
+        >
+          <span class="evolution-halo" data-evolution-halo></span>
+          <span class="evolution-scan" data-evolution-scan></span>
+          <span class="evolution-particle" data-evolution-particle style="--particle-x: 34%; --particle-y: 34%;"></span>
+          <span class="evolution-particle" data-evolution-particle style="--particle-x: 48%; --particle-y: 57%;"></span>
+          <span class="evolution-particle" data-evolution-particle style="--particle-x: 61%; --particle-y: 39%;"></span>
+        </div>
         <img
           class="absolute inset-0 hidden h-full w-full object-contain p-2 sm:p-4"
           data-evolution-fallback
@@ -166,10 +178,49 @@ const progress = t('avatar.evolution.progress')
     color: #f4f4f4;
   }
 
+  .evolution-halo {
+    position: absolute;
+    inset: 8% 12%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(111 225 195 / 0.2), rgb(38 211 199 / 0.08) 42%, transparent 72%);
+    filter: blur(12px);
+    opacity: 0;
+  }
+
+  .evolution-scan {
+    position: absolute;
+    top: 7%;
+    bottom: 7%;
+    left: 0;
+    width: 2px;
+    background: linear-gradient(180deg, transparent, rgb(194 255 239 / 0.85) 16%, rgb(111 225 195 / 0.95) 50%, rgb(194 255 239 / 0.85) 84%, transparent);
+    box-shadow: 0 0 12px 3px rgb(111 225 195 / 0.42), 0 0 30px 9px rgb(48 238 218 / 0.14);
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+
+  .evolution-particle {
+    position: absolute;
+    left: var(--particle-x);
+    top: var(--particle-y);
+    width: 5px;
+    height: 5px;
+    border: 1px solid rgb(202 255 241 / 0.9);
+    border-radius: 9999px;
+    background: rgb(111 225 195 / 0.9);
+    box-shadow: 0 0 12px rgb(111 225 195 / 0.8);
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .evolution-control,
     [data-evolution-marker-bar] {
       transition: none;
+    }
+
+    [data-evolution-effects] {
+      display: none !important;
     }
   }
 </style>

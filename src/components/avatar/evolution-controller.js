@@ -1,8 +1,7 @@
 // @ts-check
 
-const TRANSITION_DURATION = 2200;
+const TRANSITION_DURATION = 1600;
 const STAGE_HOLD_DURATION = 1000;
-const NUMBER_PATTERN = /-?\d*\.?\d+(?:e[-+]?\d+)?/gi;
 
 /**
  * @typedef {Object} AvatarEvolutionStage
@@ -18,20 +17,9 @@ const NUMBER_PATTERN = /-?\d*\.?\d+(?:e[-+]?\d+)?/gi;
  */
 
 /**
- * @typedef {Object} MorphPair
- * @property {SVGPathElement} path
- * @property {string} template
- * @property {number[]} from
- * @property {number[]} to
- */
-
-/**
  * @typedef {Object} TransitionState
  * @property {number} targetIndex
- * @property {number} elapsed
- * @property {number | null} lastTimestamp
  * @property {boolean} continueAutoplay
- * @property {MorphPair[]} pairs
  */
 
 class AvatarEvolutionController {
@@ -42,6 +30,8 @@ class AvatarEvolutionController {
     this.stages = this.parseStages();
     /** @type {(SVGSVGElement | null)[]} */
     this.svgStages = [];
+    /** @type {(HTMLElement | null)[]} */
+    this.stageLayers = [];
     /** @type {Animation[]} */
     this.detailAnimations = [];
     /** @type {TransitionState | null} */
@@ -55,7 +45,6 @@ class AvatarEvolutionController {
     this.paused = false;
     this.activatedThisOpen = false;
     this.completed = false;
-    this.frameId = 0;
     this.holdId = 0;
     this.locale = this.detectLocale();
     this.reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -72,6 +61,10 @@ class AvatarEvolutionController {
     this.progressNode = this.root.querySelector('[data-evolution-progress]');
     this.announcementNode = this.root.querySelector('[data-evolution-announcement]');
     this.markers = Array.from(this.root.querySelectorAll('[data-evolution-marker]'));
+    this.effectsNode = this.root.querySelector('[data-evolution-effects]');
+    this.scanNode = this.root.querySelector('[data-evolution-scan]');
+    this.haloNode = this.root.querySelector('[data-evolution-halo]');
+    this.particles = Array.from(this.root.querySelectorAll('[data-evolution-particle]'));
     this.previousButton = this.getButton('previous');
     this.playButton = this.getButton('play');
     this.nextButton = this.getButton('next');
@@ -183,16 +176,19 @@ class AvatarEvolutionController {
           const svg = documentNode.documentElement;
           if (!(svg instanceof SVGSVGElement)) throw new Error('Missing SVG root');
 
+          const layer = document.createElement('div');
+          layer.dataset.evolutionLayer = String(index);
+          layer.className = 'absolute inset-0 flex items-center justify-center';
+          layer.hidden = true;
+          layer.setAttribute('aria-hidden', 'true');
+
           svg.dataset.evolutionSvg = String(index);
-          svg.classList.add('absolute', 'inset-0', 'h-full', 'w-full', 'object-contain', 'p-1', 'sm:p-3');
+          svg.classList.add('h-full', 'w-full', 'object-contain', 'p-1', 'sm:p-3');
           svg.setAttribute('aria-hidden', 'true');
           svg.removeAttribute('role');
-          svg.style.display = 'none';
-          svg.querySelectorAll('[data-morph-key]').forEach((node) => {
-            if (node instanceof SVGPathElement) node.dataset.originalD = node.getAttribute('d') ?? '';
-          });
-          this.stageHost?.append(svg);
-          return svg;
+          layer.append(svg);
+          this.stageHost?.append(layer);
+          return { svg, layer };
         } catch (error) {
           console.warn('[avatar-evolution] Vector stage failed to load', { stage: stage.id, error });
           return null;
@@ -200,7 +196,8 @@ class AvatarEvolutionController {
       }),
     );
 
-    this.svgStages = results;
+    this.svgStages = results.map((result) => result?.svg ?? null);
+    this.stageLayers = results.map((result) => result?.layer ?? null);
     this.fallbackMode = results.some((stage) => !stage);
     this.loaded = true;
     this.loading = false;
@@ -248,9 +245,6 @@ class AvatarEvolutionController {
     this.clearHold();
     if (this.transition) {
       this.paused = true;
-      window.cancelAnimationFrame(this.frameId);
-      this.frameId = 0;
-      this.transition.lastTimestamp = null;
       this.detailAnimations.forEach((animation) => animation.pause());
     }
     this.render(false);
@@ -313,74 +307,38 @@ class AvatarEvolutionController {
    * @param {boolean} continueAutoplay
    */
   startTransition(targetIndex, continueAutoplay) {
-    const currentSvg = this.svgStages[this.index];
-    const targetSvg = this.svgStages[targetIndex];
-    if (!currentSvg || !targetSvg) {
+    const currentLayer = this.stageLayers[this.index];
+    const targetLayer = this.stageLayers[targetIndex];
+    if (!currentLayer || !targetLayer) {
       this.showStableStage(targetIndex);
       this.autoplay = false;
       this.render(true);
       return;
     }
 
-    this.restoreMorphPaths(currentSvg);
-    this.restoreMorphPaths(targetSvg);
-    currentSvg.style.display = '';
-    targetSvg.style.display = '';
-    currentSvg.style.opacity = '1';
-    targetSvg.style.opacity = '0';
-    targetSvg.style.transformOrigin = '50% 58%';
+    const direction = targetIndex > this.index ? 1 : -1;
+    currentLayer.hidden = false;
+    targetLayer.hidden = false;
+    currentLayer.style.zIndex = '1';
+    targetLayer.style.zIndex = '2';
 
-    const pairs = this.createMorphPairs(currentSvg, targetSvg);
-    this.transition = {
-      targetIndex,
-      elapsed: 0,
-      lastTimestamp: null,
-      continueAutoplay,
-      pairs,
-    };
+    const transition = { targetIndex, continueAutoplay };
+    this.transition = transition;
     this.paused = false;
-    this.detailAnimations = this.animateTransitionDetails(currentSvg, targetSvg);
-    this.frameId = window.requestAnimationFrame((timestamp) => this.tickTransition(timestamp));
-    this.render(false);
-  }
-
-  /** @param {number} timestamp */
-  tickTransition(timestamp) {
-    const transition = this.transition;
-    if (!transition || this.paused) return;
-    if (transition.lastTimestamp == null) transition.lastTimestamp = timestamp;
-    const delta = Math.min(48, timestamp - transition.lastTimestamp);
-    transition.lastTimestamp = timestamp;
-    transition.elapsed += delta;
-    const rawProgress = Math.min(1, transition.elapsed / TRANSITION_DURATION);
-    const progress = rawProgress < 0.5
-      ? 4 * rawProgress * rawProgress * rawProgress
-      : 1 - Math.pow(-2 * rawProgress + 2, 3) / 2;
-
-    transition.pairs.forEach((pair) => {
-      let numberIndex = 0;
-      const nextD = pair.template.replace(NUMBER_PATTERN, () => {
-        const value = pair.from[numberIndex] + (pair.to[numberIndex] - pair.from[numberIndex]) * progress;
-        numberIndex += 1;
-        return Number(value.toFixed(2)).toString();
-      });
-      pair.path.setAttribute('d', nextD);
+    this.detailAnimations = this.animateTransition(currentLayer, targetLayer, direction);
+    const completion = this.detailAnimations.map((animation) => animation.finished.catch(() => undefined));
+    void Promise.all(completion).then(() => {
+      if (this.transition === transition) this.finishTransition();
     });
-
-    if (rawProgress >= 1) {
-      this.finishTransition();
-      return;
-    }
-    this.frameId = window.requestAnimationFrame((nextTimestamp) => this.tickTransition(nextTimestamp));
+    this.render(false);
   }
 
   resumeTransition() {
     if (!this.transition) return;
     this.paused = false;
     this.transition.continueAutoplay = true;
-    this.transition.lastTimestamp = null;
     this.detailAnimations.forEach((animation) => animation.play());
-    this.frameId = window.requestAnimationFrame((timestamp) => this.tickTransition(timestamp));
+    this.render(false);
   }
 
   finishTransition() {
@@ -391,7 +349,7 @@ class AvatarEvolutionController {
     this.detailAnimations.forEach((animation) => animation.cancel());
     this.detailAnimations = [];
     this.transition = null;
-    this.frameId = 0;
+    this.hideEffects();
     this.showStableStage(targetIndex);
     this.render(true);
 
@@ -409,143 +367,120 @@ class AvatarEvolutionController {
 
   cancelTransition() {
     this.clearHold();
-    window.cancelAnimationFrame(this.frameId);
-    this.frameId = 0;
     this.detailAnimations.forEach((animation) => animation.cancel());
     this.detailAnimations = [];
     this.transition = null;
     this.paused = false;
-    this.svgStages.forEach((svg) => {
-      if (!svg) return;
-      this.restoreMorphPaths(svg);
-      svg.style.removeProperty('opacity');
-      svg.style.removeProperty('transform');
+    this.hideEffects();
+    this.stageLayers.forEach((layer, layerIndex) => {
+      if (!layer) return;
+      this.resetLayerStyles(layer);
+      layer.hidden = layerIndex !== this.index;
     });
   }
 
   /**
-   * @param {SVGSVGElement} currentSvg
-   * @param {SVGSVGElement} targetSvg
-   * @returns {MorphPair[]}
-   */
-  createMorphPairs(currentSvg, targetSvg) {
-    /** @type {MorphPair[]} */
-    const pairs = [];
-    currentSvg.querySelectorAll('[data-morph-key]').forEach((node) => {
-      if (!(node instanceof SVGPathElement)) return;
-      const key = node.dataset.morphKey;
-      if (!key) return;
-      const target = targetSvg.querySelector(`[data-morph-key="${key}"]`);
-      if (!(target instanceof SVGPathElement)) return;
-      const fromD = node.getAttribute('d') ?? '';
-      const toD = target.getAttribute('d') ?? '';
-      const fromNumbers = (fromD.match(NUMBER_PATTERN) ?? []).map(Number);
-      const toNumbers = (toD.match(NUMBER_PATTERN) ?? []).map(Number);
-      const fromCommands = fromD.replace(NUMBER_PATTERN, '').replace(/[\s,]+/g, '');
-      const toCommands = toD.replace(NUMBER_PATTERN, '').replace(/[\s,]+/g, '');
-      if (fromNumbers.length !== toNumbers.length || fromCommands !== toCommands) return;
-      pairs.push({ path: node, template: fromD, from: fromNumbers, to: toNumbers });
-    });
-    return pairs;
-  }
-
-  /**
-   * @param {SVGSVGElement} currentSvg
-   * @param {SVGSVGElement} targetSvg
+   * @param {HTMLElement} currentLayer
+   * @param {HTMLElement} targetLayer
+   * @param {number} direction
    * @returns {Animation[]}
    */
-  animateTransitionDetails(currentSvg, targetSvg) {
-    /** @type {Animation[]} */
-    const animations = [];
-    animations.push(
-      currentSvg.animate(
-        [{ opacity: 1, offset: 0 }, { opacity: 1, offset: 0.68 }, { opacity: 0, offset: 1 }],
-        { duration: TRANSITION_DURATION, easing: 'ease-in-out', fill: 'both' },
-      ),
-    );
-    animations.push(
-      targetSvg.animate(
+  animateTransition(currentLayer, targetLayer, direction) {
+    const revealStart = direction > 0 ? 'inset(0 102% 0 0)' : 'inset(0 0 0 102%)';
+    const animations = [
+      currentLayer.animate(
         [
-          { opacity: 0, transform: 'scale(0.97)', offset: 0 },
-          { opacity: 0, transform: 'scale(0.98)', offset: 0.48 },
-          { opacity: 1, transform: 'scale(1)', offset: 1 },
+          { opacity: 1, transform: 'scale(1)', offset: 0 },
+          { opacity: 0.96, transform: 'scale(0.997)', offset: 0.42 },
+          { opacity: 0.72, transform: 'scale(0.99)', offset: 0.82 },
+          { opacity: 0, transform: 'scale(0.985)', offset: 1 },
         ],
-        { duration: TRANSITION_DURATION, easing: 'cubic-bezier(.22,.75,.25,1)', fill: 'both' },
+        { duration: TRANSITION_DURATION, easing: 'cubic-bezier(.32,.02,.18,1)', fill: 'both' },
       ),
-    );
+      targetLayer.animate(
+        [
+          { clipPath: revealStart, opacity: 0.22, transform: 'scale(1.008)', offset: 0 },
+          { clipPath: revealStart, opacity: 0.42, transform: 'scale(1.006)', offset: 0.12 },
+          { clipPath: 'inset(0 0 0 0)', opacity: 1, transform: 'scale(1)', offset: 0.88 },
+          { clipPath: 'inset(0 0 0 0)', opacity: 1, transform: 'scale(1)', offset: 1 },
+        ],
+        { duration: TRANSITION_DURATION, easing: 'linear', fill: 'both' },
+      ),
+    ];
 
-    const currentArtwork = currentSvg.querySelector('[data-group="artwork"]');
-    const targetArtwork = targetSvg.querySelector('[data-group="artwork"]');
-    if (currentArtwork instanceof SVGElement) {
+    if (this.effectsNode instanceof HTMLElement) this.effectsNode.hidden = false;
+    if (this.scanNode instanceof HTMLElement) {
+      const stageWidth = this.canvas instanceof HTMLElement ? this.canvas.clientWidth : currentLayer.clientWidth;
+      const start = direction > 0 ? stageWidth * -0.04 : stageWidth * 1.04;
+      const end = direction > 0 ? stageWidth * 1.04 : stageWidth * -0.04;
+      const skew = direction > 0 ? 'skewX(-8deg)' : 'skewX(8deg)';
       animations.push(
-        currentArtwork.animate(
-          [{ opacity: 1, offset: 0 }, { opacity: 0, offset: 0.34 }, { opacity: 0, offset: 1 }],
-          { duration: TRANSITION_DURATION, easing: 'ease-in', fill: 'both' },
+        this.scanNode.animate(
+          [
+            { opacity: 0, transform: `translate3d(${start}px,0,0) ${skew}`, offset: 0 },
+            { opacity: 0.92, transform: `translate3d(${start}px,0,0) ${skew}`, offset: 0.12 },
+            { opacity: 0.92, transform: `translate3d(${end}px,0,0) ${skew}`, offset: 0.88 },
+            { opacity: 0, transform: `translate3d(${end}px,0,0) ${skew}`, offset: 1 },
+          ],
+          { duration: TRANSITION_DURATION, easing: 'linear', fill: 'both' },
         ),
       );
     }
-    if (targetArtwork instanceof SVGElement) {
+    if (this.haloNode instanceof HTMLElement) {
       animations.push(
-        targetArtwork.animate(
-          [{ opacity: 0, offset: 0 }, { opacity: 0, offset: 0.66 }, { opacity: 1, offset: 1 }],
+        this.haloNode.animate(
+          [
+            { opacity: 0, transform: 'scale(0.94)', offset: 0 },
+            { opacity: 0.42, transform: 'scale(1)', offset: 0.38 },
+            { opacity: 0.18, transform: 'scale(1.025)', offset: 0.72 },
+            { opacity: 0, transform: 'scale(1.04)', offset: 1 },
+          ],
           { duration: TRANSITION_DURATION, easing: 'ease-out', fill: 'both' },
         ),
       );
     }
-
-    ['circuits', 'accessories', 'map'].forEach((groupName, groupIndex) => {
-      const group = targetSvg.querySelector(`[data-group="${groupName}"]`);
-      if (!(group instanceof SVGElement)) return;
-      group.style.transformOrigin = '50% 55%';
+    this.particles.forEach((node, index) => {
+      if (!(node instanceof HTMLElement)) return;
+      const horizontal = direction * (28 + index * 10);
+      const vertical = index % 2 === 0 ? -18 - index * 4 : 14 + index * 3;
       animations.push(
-        group.animate(
+        node.animate(
           [
-            { opacity: 0, transform: `scale(${0.9 + groupIndex * 0.02})`, offset: 0 },
-            { opacity: 0, transform: 'scale(0.96)', offset: 0.42 },
-            { opacity: 1, transform: 'scale(1)', offset: 1 },
+            { opacity: 0, transform: 'translate3d(0,0,0) scale(.7)', offset: 0 },
+            { opacity: 0, transform: 'translate3d(0,0,0) scale(.7)', offset: 0.24 + index * 0.03 },
+            { opacity: 0.9, transform: `translate3d(${horizontal * 0.35}px,${vertical * 0.35}px,0) scale(1)`, offset: 0.52 },
+            { opacity: 0, transform: `translate3d(${horizontal}px,${vertical}px,0) scale(.5)`, offset: 0.82 + index * 0.02 },
+            { opacity: 0, transform: `translate3d(${horizontal}px,${vertical}px,0) scale(.5)`, offset: 1 },
           ],
-          { duration: TRANSITION_DURATION, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'both' },
+          { duration: TRANSITION_DURATION, easing: 'ease-out', fill: 'both' },
         ),
       );
-      group.querySelectorAll('path').forEach((path) => {
-        if (!(path instanceof SVGPathElement)) return;
-        try {
-          const length = path.getTotalLength();
-          path.style.strokeDasharray = `${length}`;
-          animations.push(
-            path.animate(
-              [{ strokeDashoffset: length }, { strokeDashoffset: 0 }],
-              { duration: TRANSITION_DURATION * 0.72, delay: TRANSITION_DURATION * 0.25, easing: 'ease-out', fill: 'both' },
-            ),
-          );
-        } catch {
-          // Some filled accessory paths do not expose a usable length.
-        }
-      });
     });
     return animations;
   }
 
-  /** @param {SVGSVGElement} svg */
-  restoreMorphPaths(svg) {
-    svg.querySelectorAll('[data-morph-key]').forEach((node) => {
-      if (node instanceof SVGPathElement && node.dataset.originalD) {
-        node.setAttribute('d', node.dataset.originalD);
-      }
-    });
+  hideEffects() {
+    if (this.effectsNode instanceof HTMLElement) this.effectsNode.hidden = true;
+  }
+
+  /** @param {HTMLElement} layer */
+  resetLayerStyles(layer) {
+    layer.style.removeProperty('opacity');
+    layer.style.removeProperty('transform');
+    layer.style.removeProperty('clip-path');
+    layer.style.removeProperty('z-index');
   }
 
   /** @param {number} index */
   showStableStage(index) {
     this.index = index;
     this.completed = index === this.stages.length - 1;
-    this.svgStages.forEach((svg, svgIndex) => {
-      if (!svg) return;
-      this.restoreMorphPaths(svg);
-      svg.style.display = svgIndex === index ? '' : 'none';
-      svg.style.removeProperty('opacity');
-      svg.style.removeProperty('transform');
+    this.stageLayers.forEach((layer, layerIndex) => {
+      if (!layer) return;
+      this.resetLayerStyles(layer);
+      layer.hidden = layerIndex !== index;
     });
+    this.hideEffects();
 
     const activeSvg = this.svgStages[index];
     if (this.fallbackImage instanceof HTMLImageElement) {

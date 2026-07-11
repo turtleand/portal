@@ -8,6 +8,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "validate:avatar-evolution": "node scripts/validate-avatar-evolution.mjs",
     "astro": "astro"
   },
   "dependencies": {
