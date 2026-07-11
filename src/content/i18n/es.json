@@ -138,6 +138,28 @@
       "badgeLabel": "Evolución del avatar",
       "closeLabel": "Cerrar",
       "ariaLabel": "Galería de Evolución del Avatar de Turtleand"
+    },
+    "tabs": {
+      "label": "Vistas de la galería del avatar",
+      "archive": "Archivo de Evolución",
+      "animated": "Evolución Animada"
+    },
+    "evolution": {
+      "eyebrow": "Identidad viva",
+      "heading": "Evolución en Movimiento",
+      "timelineLabel": "Seis etapas de evolución del avatar",
+      "controlsLabel": "Controles de reproducción de la evolución",
+      "ready": "Selecciona esta vista para cargar la evolución vectorial",
+      "loading": "Cargando la evolución vectorial",
+      "loadError": "La animación vectorial no está disponible. Se muestran las imágenes originales.",
+      "motionReduced": "El movimiento está reducido. Usa Anterior y Siguiente para explorar.",
+      "play": "Reproducir",
+      "pause": "Pausar",
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "restart": "Reiniciar",
+      "progress": "Etapa {current} de {total}",
+      "announcement": "Mostrando {version}, {title}. Etapa {current} de {total}."
     }
   }
 }

@@ -273,6 +273,8 @@ class MinimalGalleryController {
     this.root.addEventListener('focusout', resume);
     this.hoverZone?.addEventListener('pointerenter', pause);
     this.hoverZone?.addEventListener('pointerleave', resume);
+    this.root.addEventListener('avatar-gallery:deactivate', pause);
+    this.root.addEventListener('avatar-gallery:activate', resume);
 
     const modal = this.getContainingModal();
     modal?.addEventListener('avatar-gallery:open', () => {

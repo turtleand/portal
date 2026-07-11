@@ -138,6 +138,28 @@
       "badgeLabel": "Avatar Evolution",
       "closeLabel": "Close",
       "ariaLabel": "Turtleand Avatar Evolution Gallery"
+    },
+    "tabs": {
+      "label": "Avatar gallery views",
+      "archive": "Evolution Archive",
+      "animated": "Animated Evolution"
+    },
+    "evolution": {
+      "eyebrow": "Living identity",
+      "heading": "Evolution in Motion",
+      "timelineLabel": "Six avatar evolution stages",
+      "controlsLabel": "Evolution playback controls",
+      "ready": "Select this view to load the vector evolution",
+      "loading": "Loading vector evolution",
+      "loadError": "Vector animation unavailable. Showing original images.",
+      "motionReduced": "Motion is reduced. Use Previous and Next to explore.",
+      "play": "Play",
+      "pause": "Pause",
+      "previous": "Previous",
+      "next": "Next",
+      "restart": "Restart",
+      "progress": "Stage {current} of {total}",
+      "announcement": "Now showing {version}, {title}. Stage {current} of {total}."
     }
   }
 }

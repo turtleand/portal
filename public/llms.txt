@@ -10,6 +10,7 @@
 
 ## About
 - [About Turtleand](https://turtleand.com/about): Software engineer with 10+ years building production systems, focused on AI integration and human-centered technology
+- Avatar Evolution Gallery: Open the Turtleand logo to explore the static archive and the animated six-stage vector evolution
 
 ## Connect
 - GitHub: https://github.com/turtleand

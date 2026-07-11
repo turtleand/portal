@@ -122,7 +122,11 @@ class AvatarGalleryModalController {
     const focusableSelectors =
       'a[href], button:not([disabled]), textarea, input:not([disabled]), select, [tabindex]:not([tabindex="-1"])';
     const focusable = Array.from(this.panel.querySelectorAll(focusableSelectors)).filter(
-      (node) => !node.hasAttribute('disabled'),
+      (node) =>
+        !node.hasAttribute('disabled') &&
+        !node.closest('[hidden]') &&
+        !node.closest('[inert]') &&
+        node.getAttribute('aria-hidden') !== 'true',
     );
     if (!focusable.length) return;
     const first = focusable[0];

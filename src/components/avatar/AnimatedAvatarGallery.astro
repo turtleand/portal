@@ -1,0 +1,175 @@
+---
+import { avatarEvolutionStages } from '../../data/avatarEvolution';
+import evolutionControllerModule from './evolution-controller.js?url';
+import { createTranslator } from '../../utils/i18n';
+import type { Locale } from '../../utils/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale = 'en' }: Partial<Props> = Astro.props;
+const t = createTranslator(locale);
+const stagesJson = JSON.stringify(avatarEvolutionStages).replace(/</g, '\\u003c');
+const firstStage = avatarEvolutionStages[0];
+const firstTitle = locale === 'es' ? firstStage.titleEs : firstStage.title;
+const firstDescription = locale === 'es' ? firstStage.descriptionEs : firstStage.description;
+const progress = t('avatar.evolution.progress')
+  .replace('{current}', '1')
+  .replace('{total}', String(avatarEvolutionStages.length));
+---
+
+<section
+  class="relative isolate overflow-hidden rounded-3xl border border-white/10 bg-deepBlue/80 p-4 shadow-[0_20px_60px_rgba(4,10,25,0.55)] backdrop-blur sm:p-6"
+  data-avatar-evolution
+>
+  <script type="application/json" data-avatar-evolution-data set:html={stagesJson} />
+
+  <div class="space-y-5">
+    <header class="space-y-1 text-center">
+      <p
+        class="text-xs font-semibold uppercase tracking-[0.18em] text-accent/80"
+        data-i18n-key="avatar.evolution.eyebrow"
+      >
+        {t('avatar.evolution.eyebrow')}
+      </p>
+      <h2 class="text-2xl font-heading text-offWhite sm:text-3xl" data-i18n-key="avatar.evolution.heading">
+        {t('avatar.evolution.heading')}
+      </h2>
+    </header>
+
+    <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-[radial-gradient(circle_at_50%_42%,rgba(32,159,142,0.22),rgba(5,15,29,0.96)_67%)] sm:rounded-[28px]">
+      <div
+        class="relative mx-auto flex h-[272px] w-full max-w-3xl items-center justify-center sm:h-[360px] lg:h-[410px]"
+        data-evolution-canvas
+        role="img"
+        aria-label={`${firstStage.version}: ${firstTitle}. ${firstDescription}`}
+      >
+        <div class="absolute inset-0 flex items-center justify-center" data-evolution-stage></div>
+        <img
+          class="absolute inset-0 hidden h-full w-full object-contain p-2 sm:p-4"
+          data-evolution-fallback
+          src={firstStage.fallbackImage}
+          alt=""
+          width="1024"
+          height="1024"
+          decoding="async"
+        />
+        <div class="absolute inset-0 flex items-center justify-center bg-[#071321]/70" data-evolution-loading>
+          <div class="flex items-center gap-3 rounded-full border border-white/10 bg-[#071321]/90 px-5 py-3 text-sm text-offWhite/80">
+            <span class="h-2.5 w-2.5 rounded-full bg-accent shadow-[0_0_18px_rgba(111,225,195,0.85)] motion-safe:animate-pulse" aria-hidden="true"></span>
+            <span data-evolution-status data-i18n-key="avatar.evolution.ready">{t('avatar.evolution.ready')}</span>
+          </div>
+        </div>
+        <div class="pointer-events-none absolute inset-x-5 bottom-4 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" aria-hidden="true"></div>
+      </div>
+
+      <div class="border-t border-white/10 px-4 py-4 sm:px-6">
+        <ol class="grid grid-cols-6 gap-2" data-evolution-timeline aria-label={t('avatar.evolution.timelineLabel')} data-i18n-key="avatar.evolution.timelineLabel" data-i18n-attr="aria-label">
+          {avatarEvolutionStages.map((stage, index) => (
+            <li class="min-w-0" data-evolution-marker data-active={index === 0 ? 'true' : 'false'}>
+              <span class="mb-2 block h-1.5 rounded-full bg-white/15 transition-colors" data-evolution-marker-bar></span>
+              <span class="block truncate text-center text-[0.65rem] font-semibold tracking-[0.06em] text-offWhite/45 sm:text-xs">
+                {stage.version}
+              </span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+
+    <p
+      class="mx-auto max-w-2xl rounded-xl border border-amber-200/20 bg-amber-100/5 px-4 py-3 text-center text-sm text-amber-50/85"
+      data-evolution-notice
+      role="status"
+      hidden
+    ></p>
+
+    <div class="min-h-[7.5rem] space-y-1.5 text-center">
+      <p class="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-100/80 sm:text-sm">
+        <span data-evolution-meta>{firstStage.version} • {firstStage.date}</span>
+        <span aria-hidden="true"> · </span>
+        <span data-evolution-progress>{progress}</span>
+      </p>
+      <h3 class="text-2xl font-heading text-offWhite" data-evolution-title>{firstTitle}</h3>
+      <p class="mx-auto max-w-2xl text-sm leading-relaxed text-offWhite/70 sm:text-base" data-evolution-description>{firstDescription}</p>
+      <p class="sr-only" aria-live="polite" aria-atomic="true" data-evolution-announcement></p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-3" role="group" aria-label={t('avatar.evolution.controlsLabel')} data-i18n-key="avatar.evolution.controlsLabel" data-i18n-attr="aria-label">
+      <button type="button" class="evolution-control" data-evolution-action="previous" aria-label={t('avatar.evolution.previous')} data-i18n-key="avatar.evolution.previous" data-i18n-attr="aria-label">
+        <span aria-hidden="true">←</span><span data-i18n-key="avatar.evolution.previous">{t('avatar.evolution.previous')}</span>
+      </button>
+      <button type="button" class="evolution-control evolution-control-primary" data-evolution-action="play" aria-label={t('avatar.evolution.play')}>
+        <span aria-hidden="true" data-evolution-play-icon>▶</span><span data-evolution-play-label>{t('avatar.evolution.play')}</span>
+      </button>
+      <button type="button" class="evolution-control" data-evolution-action="next" aria-label={t('avatar.evolution.next')} data-i18n-key="avatar.evolution.next" data-i18n-attr="aria-label">
+        <span data-i18n-key="avatar.evolution.next">{t('avatar.evolution.next')}</span><span aria-hidden="true">→</span>
+      </button>
+      <button type="button" class="evolution-control" data-evolution-action="restart" aria-label={t('avatar.evolution.restart')} data-i18n-key="avatar.evolution.restart" data-i18n-attr="aria-label">
+        <span aria-hidden="true">↺</span><span data-i18n-key="avatar.evolution.restart">{t('avatar.evolution.restart')}</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script type="module" src={evolutionControllerModule}></script>
+
+<style>
+  .evolution-control {
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    border: 1px solid rgb(255 255 255 / 0.18);
+    border-radius: 9999px;
+    padding: 0.7rem 1rem;
+    background: rgb(255 255 255 / 0.05);
+    color: rgb(244 244 244 / 0.82);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease, transform 180ms ease;
+  }
+
+  .evolution-control:hover:not(:disabled) {
+    border-color: rgb(111 225 195 / 0.65);
+    background: rgb(111 225 195 / 0.1);
+    color: #f4f4f4;
+    transform: translateY(-1px);
+  }
+
+  .evolution-control:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  .evolution-control:disabled {
+    cursor: not-allowed;
+    opacity: 0.38;
+  }
+
+  .evolution-control-primary {
+    border-color: rgb(111 225 195 / 0.55);
+    background: rgb(46 131 115 / 0.34);
+    color: #f4f4f4;
+  }
+
+  [data-evolution-marker][data-active='true'] [data-evolution-marker-bar] {
+    background: var(--color-accent);
+    box-shadow: 0 0 18px rgb(111 225 195 / 0.7);
+  }
+
+  [data-evolution-marker][data-active='true'] span:last-child {
+    color: #f4f4f4;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .evolution-control,
+    [data-evolution-marker-bar] {
+      transition: none;
+    }
+  }
+</style>
