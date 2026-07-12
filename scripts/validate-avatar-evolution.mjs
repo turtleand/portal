@@ -76,6 +76,9 @@ versions.forEach((version) => {
   });
   assert(gait && typeof gait === 'object', `v${version}: missing gait configuration`);
   assert.equal(typeof gait.mechanical, 'boolean', `v${version}: mechanical must be a boolean`);
+  if ('coherentPassing' in gait) {
+    assert.equal(typeof gait.coherentPassing, 'boolean', `v${version}: coherentPassing must be a boolean`);
+  }
   for (const [field, expectedLength] of [['pairA', 2], ['behindBody', 2]]) {
     const indices = gait[field];
     assert(Array.isArray(indices), `v${version}: ${field} must be an array`);
@@ -83,6 +86,14 @@ versions.forEach((version) => {
     assert.equal(new Set(indices).size, indices.length, `v${version}: ${field} indices must be unique`);
     indices.forEach((index) => {
       assert(Number.isInteger(index) && index >= 0 && index < regions.length, `v${version}: ${field} index ${index} is out of range`);
+    });
+  }
+  if ('animatedLimbs' in gait) {
+    assert(Array.isArray(gait.animatedLimbs), `v${version}: animatedLimbs must be an array`);
+    assert.equal(gait.animatedLimbs.length, 2, `v${version}: animatedLimbs must contain two limb indices`);
+    assert.equal(new Set(gait.animatedLimbs).size, gait.animatedLimbs.length, `v${version}: animatedLimbs indices must be unique`);
+    gait.animatedLimbs.forEach((index) => {
+      assert(Number.isInteger(index) && gait.behindBody.includes(index), `v${version}: animated limb ${index} must be a behind-body limb`);
     });
   }
 });

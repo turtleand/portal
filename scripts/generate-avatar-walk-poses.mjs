@@ -9,9 +9,10 @@ const outputDirectory = path.join(sourceDirectory, 'walking');
 
 const createPoseConfig = (pose, gait) => {
   if (pose === 'passing') {
+    const limbY = gait.coherentPassing ? 5 : 0;
     return {
       bodyY: 5,
-      limbs: [0, 1, 2, 3].map(() => ({ x: 0, y: 0, angle: 0 })),
+      limbs: [0, 1, 2, 3].map(() => ({ x: 0, y: limbY, angle: 0 })),
     };
   }
 
@@ -26,7 +27,10 @@ const createPoseConfig = (pose, gait) => {
     : { x: 0, y: 0, angle: 1.6 };
   return {
     bodyY: 0,
-    limbs: [0, 1, 2, 3].map((index) => advancing.has(index) ? forward : supporting),
+    limbs: [0, 1, 2, 3].map((index) => {
+      if (gait.animatedLimbs && !gait.animatedLimbs.includes(index)) return { x: 0, y: 0, angle: 0 };
+      return advancing.has(index) ? forward : supporting;
+    }),
   };
 };
 
