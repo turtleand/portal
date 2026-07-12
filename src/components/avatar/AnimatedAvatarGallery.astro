@@ -45,7 +45,8 @@ const progress = t('avatar.evolution.progress')
         role="img"
         aria-label={`${firstStage.version}: ${firstTitle}. ${firstDescription}`}
       >
-        <div class="absolute inset-0 flex items-center justify-center" data-evolution-stage></div>
+        <span class="evolution-walk-shadow" data-evolution-walk-shadow aria-hidden="true" hidden></span>
+        <div class="absolute inset-0 z-[1] flex items-center justify-center" data-evolution-stage></div>
         <div
           class="pointer-events-none absolute inset-0 z-[3] overflow-hidden"
           data-evolution-effects
@@ -213,6 +214,30 @@ const progress = t('avatar.evolution.progress')
     will-change: transform, opacity;
   }
 
+  .evolution-walk-shadow {
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    bottom: 5%;
+    width: min(68%, 30rem);
+    height: 7%;
+    border-radius: 9999px;
+    background: radial-gradient(ellipse, rgb(0 0 0 / 0.8), rgb(3 12 20 / 0.3) 52%, transparent 76%);
+    filter: blur(7px);
+    opacity: 0;
+    transform: translateX(-50%);
+    transform-origin: center;
+    will-change: opacity, transform;
+  }
+
+  @media (min-width: 640px) {
+    .evolution-walk-shadow {
+      bottom: 4%;
+      width: min(58%, 31rem);
+      height: 8%;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .evolution-control,
     [data-evolution-marker-bar] {
@@ -220,6 +245,10 @@ const progress = t('avatar.evolution.progress')
     }
 
     [data-evolution-effects] {
+      display: none !important;
+    }
+
+    .evolution-walk-shadow {
       display: none !important;
     }
   }

@@ -1,7 +1,17 @@
 // @ts-check
 
 const TRANSITION_DURATION = 1600;
-const STAGE_HOLD_DURATION = 1000;
+const WALK_DURATION = 1800;
+const POST_WALK_HOLD_DURATION = 650;
+
+/** @typedef {'rest' | 'contact-a' | 'passing' | 'contact-b'} WalkPose */
+
+/**
+ * @typedef {Object} AvatarWalkPoses
+ * @property {string} contactA
+ * @property {string} passing
+ * @property {string} contactB
+ */
 
 /**
  * @typedef {Object} AvatarEvolutionStage
@@ -14,12 +24,33 @@ const STAGE_HOLD_DURATION = 1000;
  * @property {string} descriptionEs
  * @property {string} vectorImage
  * @property {string} fallbackImage
+ * @property {AvatarWalkPoses=} walkPoses
  */
 
 /**
  * @typedef {Object} TransitionState
  * @property {number} targetIndex
  * @property {boolean} continueAutoplay
+ * @property {Animation[]} animations
+ */
+
+/**
+ * @typedef {Object} WalkState
+ * @property {'walk'} type
+ * @property {number} stageIndex
+ * @property {number} visitId
+ * @property {Animation} avatarAnimation
+ * @property {Animation | null} shadowAnimation
+ * @property {number} frameId
+ */
+
+/** @typedef {({ type: 'transition' } & TransitionState) | WalkState} MotionState */
+
+/**
+ * @typedef {Object} WalkPoseLayers
+ * @property {HTMLImageElement} contactA
+ * @property {HTMLImageElement} passing
+ * @property {HTMLImageElement} contactB
  */
 
 class AvatarEvolutionController {
@@ -32,20 +63,28 @@ class AvatarEvolutionController {
     this.svgStages = [];
     /** @type {(HTMLElement | null)[]} */
     this.stageLayers = [];
-    /** @type {Animation[]} */
-    this.detailAnimations = [];
-    /** @type {TransitionState | null} */
-    this.transition = null;
+    /** @type {(WalkPoseLayers | null | undefined)[]} */
+    this.walkPoseLayers = [];
+    /** @type {(Promise<WalkPoseLayers | null> | undefined)[]} */
+    this.walkPosePromises = [];
+    /** @type {MotionState | null} */
+    this.motion = null;
     this.index = 0;
     this.active = false;
     this.loaded = false;
     this.loading = false;
     this.fallbackMode = false;
     this.autoplay = false;
+    this.resumeAutoplay = false;
     this.paused = false;
     this.activatedThisOpen = false;
     this.completed = false;
     this.holdId = 0;
+    this.holdDeadline = 0;
+    this.holdRemaining = 0;
+    this.visitId = 0;
+    /** @type {'idle' | 'loading' | 'walking' | 'complete' | 'skipped'} */
+    this.visitWalkState = 'idle';
     this.locale = this.detectLocale();
     this.reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -65,6 +104,7 @@ class AvatarEvolutionController {
     this.scanNode = this.root.querySelector('[data-evolution-scan]');
     this.haloNode = this.root.querySelector('[data-evolution-halo]');
     this.particles = Array.from(this.root.querySelectorAll('[data-evolution-particle]'));
+    this.walkShadow = this.root.querySelector('[data-evolution-walk-shadow]');
     this.previousButton = this.getButton('previous');
     this.playButton = this.getButton('play');
     this.nextButton = this.getButton('next');
@@ -107,7 +147,7 @@ class AvatarEvolutionController {
     });
     this.root.addEventListener('avatar-gallery:deactivate', () => {
       this.active = false;
-      this.pause();
+      this.stopForInactivity();
     });
 
     const modal = this.root.closest('[data-avatar-modal]');
@@ -117,14 +157,12 @@ class AvatarEvolutionController {
     });
 
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) this.pause();
+      if (document.hidden) this.stopForInactivity();
     });
 
     const handleMotionChange = () => {
       if (this.reducedMotionQuery.matches) {
-        this.cancelTransition();
-        this.autoplay = false;
-        this.paused = false;
+        this.stopForInactivity();
         this.showStableStage(this.index);
       }
       this.render(false);
@@ -152,9 +190,11 @@ class AvatarEvolutionController {
 
     if (!this.activatedThisOpen) {
       this.activatedThisOpen = true;
-      this.showStableStage(0);
       if (!this.reducedMotionQuery.matches && !this.fallbackMode) {
+        this.enterStableStage(0, false);
         this.startAutoplay();
+      } else {
+        this.showStableStage(0);
       }
     }
     this.render(false);
@@ -183,7 +223,8 @@ class AvatarEvolutionController {
           layer.setAttribute('aria-hidden', 'true');
 
           svg.dataset.evolutionSvg = String(index);
-          svg.classList.add('h-full', 'w-full', 'object-contain', 'p-1', 'sm:p-3');
+          svg.dataset.walkPose = 'rest';
+          svg.classList.add('absolute', 'inset-0', 'h-full', 'w-full', 'object-contain', 'p-1', 'sm:p-3');
           svg.setAttribute('aria-hidden', 'true');
           svg.removeAttribute('role');
           layer.append(svg);
@@ -226,80 +267,163 @@ class AvatarEvolutionController {
 
   startAutoplay() {
     if (!this.active || this.reducedMotionQuery.matches || this.fallbackMode || this.loading) return;
-    if (this.index >= this.stages.length - 1) {
-      this.showStableStage(0);
+    if (
+      this.index >= this.stages.length - 1 &&
+      !this.motion &&
+      (this.completed || this.visitWalkState === 'complete' || this.visitWalkState === 'skipped')
+    ) {
+      this.enterStableStage(0, false);
     }
     this.autoplay = true;
+    this.resumeAutoplay = true;
     this.paused = false;
     this.completed = false;
-    if (this.transition) {
-      this.resumeTransition();
-    } else {
+
+    if (this.motion) {
+      this.resumeMotion();
+    } else if (this.holdRemaining > 0) {
+      this.resumeHold();
+    } else if (this.visitWalkState === 'idle') {
+      this.beginWalkVisit(this.index, this.visitId);
+    } else if (this.visitWalkState === 'complete' || this.visitWalkState === 'skipped') {
       this.scheduleAdvance();
     }
     this.render(false);
   }
 
-  pause() {
+  pausePlayback() {
+    this.resumeAutoplay = this.autoplay;
     this.autoplay = false;
-    this.clearHold();
-    if (this.transition) {
+    this.pauseHold();
+    if (this.motion) {
       this.paused = true;
-      this.detailAnimations.forEach((animation) => animation.pause());
+      this.motionAnimations(this.motion).forEach((animation) => animation.pause());
+      if (this.motion.type === 'walk' && this.motion.frameId) {
+        window.cancelAnimationFrame(this.motion.frameId);
+        this.motion.frameId = 0;
+      }
+    } else if (this.visitWalkState === 'loading' || this.holdRemaining > 0) {
+      this.paused = true;
     }
     this.render(false);
   }
 
   togglePlayback() {
     if (this.reducedMotionQuery.matches || this.fallbackMode || this.loading) return;
-    const isRunning = this.autoplay || (Boolean(this.transition) && !this.paused);
+    const isRunning = !this.paused && (
+      this.autoplay ||
+      Boolean(this.motion) ||
+      Boolean(this.holdId) ||
+      this.visitWalkState === 'loading'
+    );
     if (isRunning) {
-      this.pause();
+      this.pausePlayback();
+      return;
+    }
+    if (this.paused && (
+      this.motion ||
+      this.holdRemaining > 0 ||
+      this.visitWalkState === 'idle' ||
+      this.visitWalkState === 'loading'
+    )) {
+      this.resumePlayback();
       return;
     }
     this.startAutoplay();
   }
 
+  resumePlayback() {
+    this.autoplay = this.resumeAutoplay;
+    this.paused = false;
+    if (this.motion) {
+      this.resumeMotion();
+    } else if (this.holdRemaining > 0) {
+      this.resumeHold();
+    } else if (this.visitWalkState === 'idle') {
+      this.beginWalkVisit(this.index, this.visitId);
+    }
+    this.render(false);
+  }
+
   restart() {
-    this.cancelTransition();
-    this.showStableStage(0);
+    this.clearHold();
+    this.cancelMotion();
+    this.visitId += 1;
+    this.visitWalkState = 'idle';
+    this.paused = false;
+    this.resumeAutoplay = false;
     if (this.reducedMotionQuery.matches || this.fallbackMode) {
       this.autoplay = false;
+      this.showStableStage(0);
+      this.completed = false;
       this.render(true);
       return;
     }
+    this.enterStableStage(0, true);
     this.startAutoplay();
   }
 
   /** @param {number} delta */
   navigate(delta) {
-    if (this.transition || this.loading) return;
+    if (this.motion?.type === 'transition' || this.loading) return;
     const target = Math.max(0, Math.min(this.stages.length - 1, this.index + delta));
     if (target === this.index) return;
     this.autoplay = false;
     this.clearHold();
+    this.cancelMotion();
+    this.visitId += 1;
+    this.visitWalkState = 'idle';
+    this.paused = false;
+    this.resumeAutoplay = false;
     this.completed = false;
 
     if (this.reducedMotionQuery.matches || this.fallbackMode) {
       this.showStableStage(target);
+      this.completed = target === this.stages.length - 1;
       this.render(true);
       return;
     }
     this.startTransition(target, false);
   }
 
-  scheduleAdvance() {
+  /** @param {number} [duration] */
+  scheduleAdvance(duration = POST_WALK_HOLD_DURATION) {
     this.clearHold();
-    if (!this.autoplay || !this.active || this.index >= this.stages.length - 1) return;
+    this.holdRemaining = duration;
+    this.resumeHold();
+  }
+
+  resumeHold() {
+    if (
+      !this.autoplay ||
+      !this.active ||
+      this.holdId ||
+      this.holdRemaining <= 0 ||
+      this.index >= this.stages.length - 1
+    ) return;
+    const duration = this.holdRemaining;
+    this.holdDeadline = performance.now() + duration;
     this.holdId = window.setTimeout(() => {
       this.holdId = 0;
+      this.holdDeadline = 0;
+      this.holdRemaining = 0;
       if (this.autoplay && this.active) this.startTransition(this.index + 1, true);
-    }, STAGE_HOLD_DURATION);
+    }, duration);
+  }
+
+  pauseHold() {
+    if (!this.holdId) return;
+    window.clearTimeout(this.holdId);
+    this.holdId = 0;
+    this.holdRemaining = Math.max(0, this.holdDeadline - performance.now());
+    this.holdDeadline = 0;
   }
 
   clearHold() {
     if (this.holdId) window.clearTimeout(this.holdId);
     this.holdId = 0;
+    this.holdDeadline = 0;
+    this.holdRemaining = 0;
   }
 
   /**
@@ -307,6 +431,13 @@ class AvatarEvolutionController {
    * @param {boolean} continueAutoplay
    */
   startTransition(targetIndex, continueAutoplay) {
+    this.clearHold();
+    this.cancelMotion();
+    this.visitId += 1;
+    this.visitWalkState = 'idle';
+    this.showWalkPose(this.index, 'rest');
+    this.showWalkPose(targetIndex, 'rest');
+
     const currentLayer = this.stageLayers[this.index];
     const targetLayer = this.stageLayers[targetIndex];
     if (!currentLayer || !targetLayer) {
@@ -322,61 +453,349 @@ class AvatarEvolutionController {
     currentLayer.style.zIndex = '1';
     targetLayer.style.zIndex = '2';
 
-    const transition = { targetIndex, continueAutoplay };
-    this.transition = transition;
     this.paused = false;
-    this.detailAnimations = this.animateTransition(currentLayer, targetLayer, direction);
-    const completion = this.detailAnimations.map((animation) => animation.finished.catch(() => undefined));
+    const animations = this.animateTransition(currentLayer, targetLayer, direction);
+    const transition = { type: /** @type {const} */ ('transition'), targetIndex, continueAutoplay, animations };
+    this.motion = transition;
+    void this.ensureWalkPoses(targetIndex);
+    const completion = animations.map((animation) => animation.finished.catch(() => undefined));
     void Promise.all(completion).then(() => {
-      if (this.transition === transition) this.finishTransition();
+      if (this.motion === transition) this.finishTransition(transition);
     });
     this.render(false);
   }
 
-  resumeTransition() {
-    if (!this.transition) return;
+  resumeMotion() {
+    const motion = this.motion;
+    if (!motion) return;
     this.paused = false;
-    this.transition.continueAutoplay = true;
-    this.detailAnimations.forEach((animation) => animation.play());
+    this.motionAnimations(motion).forEach((animation) => animation.play());
+    if (motion.type === 'walk') this.syncWalkFrame(motion);
     this.render(false);
   }
 
-  finishTransition() {
-    const transition = this.transition;
-    if (!transition) return;
+  /** @param {({ type: 'transition' } & TransitionState)} transition */
+  finishTransition(transition) {
+    if (this.motion !== transition) return;
     const shouldContinue = transition.continueAutoplay && this.autoplay;
     const targetIndex = transition.targetIndex;
-    this.detailAnimations.forEach((animation) => animation.cancel());
-    this.detailAnimations = [];
-    this.transition = null;
-    this.hideEffects();
-    this.showStableStage(targetIndex);
-    this.render(true);
-
-    if (targetIndex >= this.stages.length - 1) {
-      this.autoplay = false;
-      this.completed = true;
-      this.render(false);
-    } else if (shouldContinue && this.active) {
-      this.scheduleAdvance();
-    } else {
-      this.autoplay = false;
-      this.render(false);
-    }
-  }
-
-  cancelTransition() {
-    this.clearHold();
-    this.detailAnimations.forEach((animation) => animation.cancel());
-    this.detailAnimations = [];
-    this.transition = null;
+    transition.animations.forEach((animation) => animation.cancel());
+    this.motion = null;
     this.paused = false;
     this.hideEffects();
+    this.autoplay = shouldContinue;
+    this.enterStableStage(targetIndex, true);
+    this.render(false);
+  }
+
+  cancelMotion() {
+    const motion = this.motion;
+    if (motion?.type === 'walk' && motion.frameId) window.cancelAnimationFrame(motion.frameId);
+    if (motion) this.motionAnimations(motion).forEach((animation) => animation.cancel());
+    if (motion?.type === 'walk') {
+      this.showWalkPose(motion.stageIndex, 'rest');
+      const layer = this.stageLayers[motion.stageIndex];
+      if (layer) this.resetLayerStyles(layer);
+    }
+    this.motion = null;
+    this.paused = false;
+    this.hideEffects();
+    this.hideWalkShadow();
     this.stageLayers.forEach((layer, layerIndex) => {
       if (!layer) return;
       this.resetLayerStyles(layer);
       layer.hidden = layerIndex !== this.index;
     });
+  }
+
+  /** @param {MotionState} motion */
+  motionAnimations(motion) {
+    if (motion.type === 'transition') return motion.animations;
+    return motion.shadowAnimation ? [motion.avatarAnimation, motion.shadowAnimation] : [motion.avatarAnimation];
+  }
+
+  /**
+   * @param {number} index
+   * @param {boolean} announce
+   */
+  enterStableStage(index, announce) {
+    this.clearHold();
+    this.showStableStage(index);
+    this.visitId += 1;
+    this.visitWalkState = 'idle';
+    this.completed = false;
+    this.render(announce);
+
+    if (!this.active || this.reducedMotionQuery.matches || this.fallbackMode) {
+      this.completed = index === this.stages.length - 1;
+      return;
+    }
+    this.beginWalkVisit(index, this.visitId);
+  }
+
+  /**
+   * @param {number} index
+   * @param {number} visitId
+   */
+  beginWalkVisit(index, visitId) {
+    if (
+      this.motion ||
+      !this.active ||
+      this.reducedMotionQuery.matches ||
+      this.fallbackMode ||
+      index !== this.index ||
+      visitId !== this.visitId
+    ) return;
+
+    this.visitWalkState = 'loading';
+    void this.ensureWalkPoses(index).then((poses) => {
+      if (
+        index !== this.index ||
+        visitId !== this.visitId ||
+        !this.active ||
+        this.reducedMotionQuery.matches ||
+        this.fallbackMode
+      ) return;
+
+      if (!poses) {
+        this.finishWalklessVisit(index, visitId);
+        return;
+      }
+      if (this.paused) {
+        this.visitWalkState = 'idle';
+        this.render(false);
+        return;
+      }
+      this.startWalk(index, visitId);
+    });
+  }
+
+  /** @param {number} index */
+  ensureWalkPoses(index) {
+    const cached = this.walkPoseLayers[index];
+    if (cached !== undefined) return Promise.resolve(cached);
+    const pending = this.walkPosePromises[index];
+    if (pending) return pending;
+
+    const stage = this.stages[index];
+    const layer = this.stageLayers[index];
+    const sources = stage?.walkPoses;
+    if (!sources || !layer || this.reducedMotionQuery.matches) {
+      this.walkPoseLayers[index] = null;
+      return Promise.resolve(null);
+    }
+
+    const promise = Promise.all([
+      this.createWalkPoseImage(sources.contactA, 'contact-a'),
+      this.createWalkPoseImage(sources.passing, 'passing'),
+      this.createWalkPoseImage(sources.contactB, 'contact-b'),
+    ])
+      .then(([contactA, passing, contactB]) => {
+        const poses = { contactA, passing, contactB };
+        layer.append(contactA, passing, contactB);
+        this.walkPoseLayers[index] = poses;
+        return poses;
+      })
+      .catch((error) => {
+        console.warn('[avatar-evolution] Walk poses failed to load; keeping the rest pose', {
+          stage: stage.id,
+          error,
+        });
+        this.walkPoseLayers[index] = null;
+        return null;
+      })
+      .finally(() => {
+        this.walkPosePromises[index] = undefined;
+      });
+    this.walkPosePromises[index] = promise;
+    return promise;
+  }
+
+  /**
+   * @param {string} source
+   * @param {Exclude<WalkPose, 'rest'>} pose
+   */
+  async createWalkPoseImage(source, pose) {
+    const image = new Image();
+    image.alt = '';
+    image.setAttribute('aria-hidden', 'true');
+    image.dataset.walkPose = pose;
+    image.decoding = 'async';
+    image.draggable = false;
+    image.hidden = true;
+    image.className = 'absolute inset-0 h-full w-full object-contain p-1 sm:p-3';
+
+    await new Promise((resolve, reject) => {
+      image.addEventListener('load', resolve, { once: true });
+      image.addEventListener('error', () => reject(new Error(`Unable to load ${pose}`)), { once: true });
+      image.src = source;
+    });
+    if (typeof image.decode === 'function') {
+      try {
+        await image.decode();
+      } catch (error) {
+        if (!image.complete || image.naturalWidth === 0) throw error;
+      }
+    }
+    return image;
+  }
+
+  /**
+   * @param {number} index
+   * @param {WalkPose} pose
+   */
+  showWalkPose(index, pose) {
+    const svg = this.svgStages[index];
+    const poses = this.walkPoseLayers[index];
+    const selected = pose === 'contact-a'
+      ? poses?.contactA
+      : pose === 'passing'
+        ? poses?.passing
+        : pose === 'contact-b'
+          ? poses?.contactB
+          : null;
+
+    if (svg) svg.style.display = selected ? 'none' : '';
+    if (!poses) return;
+    poses.contactA.hidden = selected !== poses.contactA;
+    poses.passing.hidden = selected !== poses.passing;
+    poses.contactB.hidden = selected !== poses.contactB;
+  }
+
+  /**
+   * @param {number} index
+   * @param {number} visitId
+   */
+  startWalk(index, visitId) {
+    const layer = this.stageLayers[index];
+    if (!layer || this.motion || index !== this.index || visitId !== this.visitId) return;
+
+    this.showWalkPose(index, 'rest');
+    layer.hidden = false;
+    const avatarAnimation = layer.animate(
+      [
+        { transform: 'translate3d(0,0,0) rotate(0deg)', offset: 0 },
+        { transform: 'translate3d(.4%,-.4%,0) rotate(-.35deg)', offset: 0.12 },
+        { transform: 'translate3d(1.2%,.8%,0) rotate(.25deg)', offset: 0.34 },
+        { transform: 'translate3d(2%,-.5%,0) rotate(-.3deg)', offset: 0.58 },
+        { transform: 'translate3d(1.2%,0,0) rotate(.2deg)', offset: 0.82 },
+        { transform: 'translate3d(0,0,0) rotate(0deg)', offset: 1 },
+      ],
+      { duration: WALK_DURATION, easing: 'linear', fill: 'both' },
+    );
+
+    let shadowAnimation = null;
+    if (this.walkShadow instanceof HTMLElement) {
+      this.walkShadow.hidden = false;
+      shadowAnimation = this.walkShadow.animate(
+        [
+          { opacity: 0, transform: 'translateX(-50%) scale(.88)', offset: 0 },
+          { opacity: 0.2, transform: 'translateX(-50%) scale(.92)', offset: 0.12 },
+          { opacity: 0.27, transform: 'translateX(-50%) scale(1.05)', offset: 0.34 },
+          { opacity: 0.19, transform: 'translateX(-50%) scale(.9)', offset: 0.58 },
+          { opacity: 0.24, transform: 'translateX(-50%) scale(1.02)', offset: 0.82 },
+          { opacity: 0, transform: 'translateX(-50%) scale(.88)', offset: 1 },
+        ],
+        { duration: WALK_DURATION, easing: 'linear', fill: 'both' },
+      );
+    }
+
+    const walk = {
+      type: /** @type {const} */ ('walk'),
+      stageIndex: index,
+      visitId,
+      avatarAnimation,
+      shadowAnimation,
+      frameId: 0,
+    };
+    this.motion = walk;
+    this.visitWalkState = 'walking';
+    this.paused = false;
+    this.syncWalkFrame(walk);
+    void avatarAnimation.finished.then(() => {
+      if (this.motion === walk) this.finishWalk(walk);
+    }).catch(() => undefined);
+    this.render(false);
+  }
+
+  /** @param {WalkState} walk */
+  syncWalkFrame(walk) {
+    if (this.motion !== walk || this.paused) return;
+    const elapsed = Number(walk.avatarAnimation.currentTime ?? 0);
+    const progress = Math.max(0, Math.min(1, elapsed / WALK_DURATION));
+    const pose = progress < 0.12
+      ? 'rest'
+      : progress < 0.34
+        ? 'contact-a'
+        : progress < 0.58
+          ? 'passing'
+          : progress < 0.82
+            ? 'contact-b'
+            : 'rest';
+    this.showWalkPose(walk.stageIndex, pose);
+    walk.frameId = window.requestAnimationFrame(() => this.syncWalkFrame(walk));
+  }
+
+  /** @param {WalkState} walk */
+  finishWalk(walk) {
+    if (this.motion !== walk) return;
+    if (walk.frameId) window.cancelAnimationFrame(walk.frameId);
+    this.motion = null;
+    walk.avatarAnimation.cancel();
+    walk.shadowAnimation?.cancel();
+    const layer = this.stageLayers[walk.stageIndex];
+    if (layer) this.resetLayerStyles(layer);
+    this.showWalkPose(walk.stageIndex, 'rest');
+    this.hideWalkShadow();
+    this.visitWalkState = 'complete';
+    this.paused = false;
+    this.holdRemaining = POST_WALK_HOLD_DURATION;
+
+    if (walk.stageIndex >= this.stages.length - 1) {
+      this.autoplay = false;
+      this.completed = true;
+      this.holdRemaining = 0;
+    } else if (this.autoplay && this.active) {
+      this.scheduleAdvance();
+    }
+    this.render(false);
+  }
+
+  /**
+   * @param {number} index
+   * @param {number} visitId
+   */
+  finishWalklessVisit(index, visitId) {
+    if (index !== this.index || visitId !== this.visitId) return;
+    this.visitWalkState = 'skipped';
+    this.holdRemaining = POST_WALK_HOLD_DURATION;
+    if (index >= this.stages.length - 1) {
+      this.autoplay = false;
+      this.completed = true;
+      this.holdRemaining = 0;
+    } else if (this.autoplay && this.active) {
+      this.scheduleAdvance();
+    }
+    this.render(false);
+  }
+
+  hideWalkShadow() {
+    if (!(this.walkShadow instanceof HTMLElement)) return;
+    this.walkShadow.hidden = true;
+    this.walkShadow.style.removeProperty('opacity');
+    this.walkShadow.style.removeProperty('transform');
+  }
+
+  stopForInactivity() {
+    this.autoplay = false;
+    this.clearHold();
+    this.cancelMotion();
+    this.visitId += 1;
+    this.visitWalkState = 'idle';
+    this.paused = false;
+    this.resumeAutoplay = false;
+    if (this.loaded) this.showStableStage(this.index);
+    this.render(false);
   }
 
   /**
@@ -474,13 +893,14 @@ class AvatarEvolutionController {
   /** @param {number} index */
   showStableStage(index) {
     this.index = index;
-    this.completed = index === this.stages.length - 1;
     this.stageLayers.forEach((layer, layerIndex) => {
       if (!layer) return;
       this.resetLayerStyles(layer);
+      this.showWalkPose(layerIndex, 'rest');
       layer.hidden = layerIndex !== index;
     });
     this.hideEffects();
+    this.hideWalkShadow();
 
     const activeSvg = this.svgStages[index];
     if (this.fallbackImage instanceof HTMLImageElement) {
@@ -492,10 +912,15 @@ class AvatarEvolutionController {
   }
 
   resetForNextOpen() {
-    this.cancelTransition();
+    this.clearHold();
+    this.cancelMotion();
     this.autoplay = false;
     this.activatedThisOpen = false;
     this.completed = false;
+    this.paused = false;
+    this.resumeAutoplay = false;
+    this.visitId += 1;
+    this.visitWalkState = 'idle';
     if (this.loaded) this.showStableStage(0);
     this.render(false);
   }
@@ -532,8 +957,12 @@ class AvatarEvolutionController {
       if (marker instanceof HTMLElement) marker.dataset.active = String(markerIndex === this.index);
     });
 
-    const transitionRunning = Boolean(this.transition) && !this.paused;
-    const showPause = this.autoplay || transitionRunning;
+    const showPause = !this.paused && (
+      this.autoplay ||
+      Boolean(this.motion) ||
+      Boolean(this.holdId) ||
+      this.visitWalkState === 'loading'
+    );
     if (this.playLabel) {
       this.playLabel.textContent = this.translate(showPause ? 'avatar.evolution.pause' : 'avatar.evolution.play');
     }
@@ -543,8 +972,9 @@ class AvatarEvolutionController {
       this.playButton.setAttribute('aria-label', label);
       this.playButton.disabled = this.loading || this.fallbackMode || this.reducedMotionQuery.matches;
     }
-    if (this.previousButton) this.previousButton.disabled = this.loading || Boolean(this.transition) || this.index === 0;
-    if (this.nextButton) this.nextButton.disabled = this.loading || Boolean(this.transition) || this.index === this.stages.length - 1;
+    const transitionActive = this.motion?.type === 'transition';
+    if (this.previousButton) this.previousButton.disabled = this.loading || transitionActive || this.index === 0;
+    if (this.nextButton) this.nextButton.disabled = this.loading || transitionActive || this.index === this.stages.length - 1;
     if (this.restartButton) this.restartButton.disabled = this.loading;
   }
 
