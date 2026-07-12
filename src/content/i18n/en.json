@@ -137,21 +137,19 @@
     "modal": {
       "badgeLabel": "Avatar Evolution",
       "closeLabel": "Close",
-      "ariaLabel": "Turtleand Avatar Evolution Gallery"
-    },
-    "tabs": {
-      "label": "Avatar gallery views",
-      "archive": "Evolution Archive",
-      "animated": "Animated Evolution"
+      "ariaLabel": "Turtleand Avatar Evolution Gallery",
+      "openLabel": "Open Turtleand avatar evolution gallery"
     },
     "evolution": {
       "eyebrow": "Living identity",
       "heading": "Evolution in Motion",
-      "timelineLabel": "Six avatar evolution stages",
+      "timelineLabel": "Avatar evolution stages",
       "controlsLabel": "Evolution playback controls",
-      "ready": "Select this view to load the vector evolution",
+      "ready": "Preparing the vector evolution",
       "loading": "Loading vector evolution",
-      "loadError": "Vector animation unavailable. Showing original images.",
+      "loadError": "Some vector stages could not animate. Available SVG stages remain browsable.",
+      "poseLoadError": "A walking pose could not load. The canonical SVG remains available.",
+      "stageUnavailable": "The {version} vector is unavailable.",
       "motionReduced": "Motion is reduced. Use Previous and Next to explore.",
       "play": "Play",
       "pause": "Pause",

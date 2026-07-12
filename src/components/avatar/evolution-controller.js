@@ -23,7 +23,6 @@ const POST_WALK_HOLD_DURATION = 650;
  * @property {string} titleEs
  * @property {string} descriptionEs
  * @property {string} vectorImage
- * @property {string} fallbackImage
  * @property {AvatarWalkPoses=} walkPoses
  */
 
@@ -74,6 +73,8 @@ class AvatarEvolutionController {
     this.loaded = false;
     this.loading = false;
     this.fallbackMode = false;
+    this.poseFailure = false;
+    this.unavailableStageIndex = -1;
     this.autoplay = false;
     this.resumeAutoplay = false;
     this.paused = false;
@@ -90,9 +91,12 @@ class AvatarEvolutionController {
 
     this.stageHost = this.root.querySelector('[data-evolution-stage]');
     this.canvas = this.root.querySelector('[data-evolution-canvas]');
-    this.fallbackImage = this.root.querySelector('[data-evolution-fallback]');
+    this.staticFallbackImage = this.root.querySelector('[data-evolution-static-fallback]');
     this.loadingNode = this.root.querySelector('[data-evolution-loading]');
+    this.loadingLabelNode = this.root.querySelector('[data-evolution-loading-label]');
     this.statusNode = this.root.querySelector('[data-evolution-status]');
+    this.unavailableNode = this.root.querySelector('[data-evolution-unavailable]');
+    this.unavailableLabelNode = this.root.querySelector('[data-evolution-unavailable-label]');
     this.noticeNode = this.root.querySelector('[data-evolution-notice]');
     this.titleNode = this.root.querySelector('[data-evolution-title]');
     this.descriptionNode = this.root.querySelector('[data-evolution-description]');
@@ -142,19 +146,28 @@ class AvatarEvolutionController {
     this.playButton?.addEventListener('click', () => this.togglePlayback());
     this.restartButton?.addEventListener('click', () => this.restart());
 
-    this.root.addEventListener('avatar-gallery:activate', () => {
+    const modal = this.root.closest('[data-avatar-modal]');
+    modal?.addEventListener('avatar-gallery:open', () => {
       void this.activate();
     });
-    this.root.addEventListener('avatar-gallery:deactivate', () => {
-      this.active = false;
-      this.stopForInactivity();
-    });
-
-    const modal = this.root.closest('[data-avatar-modal]');
     modal?.addEventListener('avatar-gallery:close', () => {
       this.active = false;
       this.resetForNextOpen();
     });
+
+    const staticFallbackImage = this.staticFallbackImage;
+    if (staticFallbackImage instanceof HTMLImageElement) {
+      staticFallbackImage.addEventListener('load', () => {
+        const stageIndex = Number(staticFallbackImage.dataset.evolutionFallbackIndex);
+        if (stageIndex === this.index && !this.svgStages[stageIndex]) this.hideUnavailable();
+      });
+      staticFallbackImage.addEventListener('error', () => {
+        const stageIndex = Number(staticFallbackImage.dataset.evolutionFallbackIndex);
+        if (stageIndex !== this.index || this.svgStages[stageIndex]) return;
+        this.showUnavailable(stageIndex);
+        this.render(false);
+      });
+    }
 
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) this.stopForInactivity();
@@ -174,6 +187,7 @@ class AvatarEvolutionController {
       const nextLocale = this.detectLocale();
       if (nextLocale !== this.locale) {
         this.locale = nextLocale;
+        if (this.loading) this.setLoadingStatus(this.translate('avatar.evolution.loading'));
         this.render(false);
         this.updateNotice();
       }
@@ -243,6 +257,7 @@ class AvatarEvolutionController {
     this.loaded = true;
     this.loading = false;
     if (this.loadingNode instanceof HTMLElement) this.loadingNode.hidden = true;
+    this.setLoadingStatus('');
     this.showStableStage(this.index);
     this.updateNotice();
     this.render(false);
@@ -251,6 +266,7 @@ class AvatarEvolutionController {
   /** @param {string} value */
   setLoadingStatus(value) {
     if (this.statusNode) this.statusNode.textContent = value;
+    if (this.loadingLabelNode) this.loadingLabelNode.textContent = value;
   }
 
   updateNotice() {
@@ -258,6 +274,8 @@ class AvatarEvolutionController {
     let message = '';
     if (this.fallbackMode) {
       message = this.translate('avatar.evolution.loadError');
+    } else if (this.poseFailure) {
+      message = this.translate('avatar.evolution.poseLoadError');
     } else if (this.reducedMotionQuery.matches) {
       message = this.translate('avatar.evolution.motionReduced');
     }
@@ -272,7 +290,7 @@ class AvatarEvolutionController {
       !this.motion &&
       (this.completed || this.visitWalkState === 'complete' || this.visitWalkState === 'skipped')
     ) {
-      this.enterStableStage(0, false);
+      this.enterStableStage(0, true);
     }
     this.autoplay = true;
     this.resumeAutoplay = true;
@@ -601,6 +619,8 @@ class AvatarEvolutionController {
           stage: stage.id,
           error,
         });
+        this.poseFailure = true;
+        this.updateNotice();
         this.walkPoseLayers[index] = null;
         return null;
       })
@@ -901,13 +921,46 @@ class AvatarEvolutionController {
     });
     this.hideEffects();
     this.hideWalkShadow();
+    this.hideUnavailable();
 
     const activeSvg = this.svgStages[index];
-    if (this.fallbackImage instanceof HTMLImageElement) {
+    if (this.staticFallbackImage instanceof HTMLImageElement) {
       const shouldShowFallback = !activeSvg;
-      this.fallbackImage.hidden = !shouldShowFallback;
-      this.fallbackImage.classList.toggle('hidden', !shouldShowFallback);
-      if (shouldShowFallback) this.fallbackImage.src = this.stages[index].fallbackImage;
+      this.staticFallbackImage.hidden = !shouldShowFallback;
+      this.staticFallbackImage.classList.toggle('hidden', !shouldShowFallback);
+      if (shouldShowFallback) {
+        this.staticFallbackImage.dataset.evolutionFallbackIndex = String(index);
+        this.staticFallbackImage.src = this.stages[index].vectorImage;
+        if (this.staticFallbackImage.complete && this.staticFallbackImage.naturalWidth === 0) {
+          this.showUnavailable(index);
+        }
+      }
+    }
+  }
+
+  hideUnavailable() {
+    this.unavailableStageIndex = -1;
+    if (!(this.unavailableNode instanceof HTMLElement)) return;
+    this.unavailableNode.hidden = true;
+    this.unavailableNode.classList.add('hidden');
+    this.unavailableNode.classList.remove('flex');
+  }
+
+  /** @param {number} index */
+  showUnavailable(index) {
+    this.unavailableStageIndex = index;
+    if (this.staticFallbackImage instanceof HTMLImageElement) {
+      this.staticFallbackImage.hidden = true;
+      this.staticFallbackImage.classList.add('hidden');
+    }
+    if (this.unavailableLabelNode) {
+      this.unavailableLabelNode.textContent = this.translate('avatar.evolution.stageUnavailable')
+        .replace('{version}', this.stages[index]?.version ?? '');
+    }
+    if (this.unavailableNode instanceof HTMLElement) {
+      this.unavailableNode.hidden = false;
+      this.unavailableNode.classList.remove('hidden');
+      this.unavailableNode.classList.add('flex');
     }
   }
 
@@ -921,6 +974,7 @@ class AvatarEvolutionController {
     this.resumeAutoplay = false;
     this.visitId += 1;
     this.visitWalkState = 'idle';
+    if (this.announcementNode) this.announcementNode.textContent = '';
     if (this.loaded) this.showStableStage(0);
     this.render(false);
   }
@@ -943,7 +997,10 @@ class AvatarEvolutionController {
         .replace('{total}', total);
     }
     if (this.canvas) {
-      this.canvas.setAttribute('aria-label', `${stage.version}: ${title}. ${description}`);
+      const canvasLabel = this.unavailableStageIndex === this.index
+        ? this.translate('avatar.evolution.stageUnavailable').replace('{version}', stage.version)
+        : `${stage.version}: ${title}. ${description}`;
+      this.canvas.setAttribute('aria-label', canvasLabel);
     }
     if (announce && this.announcementNode) {
       this.announcementNode.textContent = this.translate('avatar.evolution.announcement')
@@ -991,7 +1048,9 @@ class AvatarEvolutionController {
 
     const fallback = {
       'avatar.evolution.loading': this.locale === 'es' ? 'Cargando la evolución vectorial' : 'Loading vector evolution',
-      'avatar.evolution.loadError': this.locale === 'es' ? 'La animación vectorial no está disponible. Se muestran las imágenes originales.' : 'Vector animation unavailable. Showing original images.',
+      'avatar.evolution.loadError': this.locale === 'es' ? 'Algunas etapas vectoriales no pudieron animarse. Las etapas SVG disponibles se pueden seguir explorando.' : 'Some vector stages could not animate. Available SVG stages remain browsable.',
+      'avatar.evolution.poseLoadError': this.locale === 'es' ? 'Una pose de caminata no se pudo cargar. El SVG canónico sigue disponible.' : 'A walking pose could not load. The canonical SVG remains available.',
+      'avatar.evolution.stageUnavailable': this.locale === 'es' ? 'El vector de {version} no está disponible.' : 'The {version} vector is unavailable.',
       'avatar.evolution.motionReduced': this.locale === 'es' ? 'El movimiento está reducido. Usa Anterior y Siguiente para explorar.' : 'Motion is reduced. Use Previous and Next to explore.',
       'avatar.evolution.play': this.locale === 'es' ? 'Reproducir' : 'Play',
       'avatar.evolution.pause': this.locale === 'es' ? 'Pausar' : 'Pause',

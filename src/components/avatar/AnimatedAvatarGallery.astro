@@ -17,6 +17,7 @@ const firstDescription = locale === 'es' ? firstStage.descriptionEs : firstStage
 const progress = t('avatar.evolution.progress')
   .replace('{current}', '1')
   .replace('{total}', String(avatarEvolutionStages.length));
+const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.length}, minmax(2rem, 1fr)); min-width: max(100%, ${avatarEvolutionStages.length * 2}rem);`;
 ---
 
 <section
@@ -61,33 +62,52 @@ const progress = t('avatar.evolution.progress')
         </div>
         <img
           class="absolute inset-0 hidden h-full w-full object-contain p-2 sm:p-4"
-          data-evolution-fallback
-          src={firstStage.fallbackImage}
+          data-evolution-static-fallback
+          src={firstStage.vectorImage}
           alt=""
           width="1024"
           height="1024"
           decoding="async"
         />
+        <div
+          class="absolute inset-5 z-[2] hidden items-center justify-center rounded-2xl border border-white/10 bg-[#071321]/90 px-6 text-center text-offWhite/70"
+          data-evolution-unavailable
+          aria-hidden="true"
+          hidden
+        >
+          <div class="space-y-3">
+            <span class="block text-4xl text-accent/60" aria-hidden="true">◇</span>
+            <p class="text-sm font-semibold uppercase tracking-[0.12em]" data-evolution-unavailable-label>
+              {t('avatar.evolution.stageUnavailable').replace('{version}', firstStage.version)}
+            </p>
+          </div>
+        </div>
         <div class="absolute inset-0 flex items-center justify-center bg-[#071321]/70" data-evolution-loading>
           <div class="flex items-center gap-3 rounded-full border border-white/10 bg-[#071321]/90 px-5 py-3 text-sm text-offWhite/80">
             <span class="h-2.5 w-2.5 rounded-full bg-accent shadow-[0_0_18px_rgba(111,225,195,0.85)] motion-safe:animate-pulse" aria-hidden="true"></span>
-            <span data-evolution-status data-i18n-key="avatar.evolution.ready">{t('avatar.evolution.ready')}</span>
+            <span data-evolution-loading-label data-i18n-key="avatar.evolution.ready">{t('avatar.evolution.ready')}</span>
           </div>
         </div>
         <div class="pointer-events-none absolute inset-x-5 bottom-4 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" aria-hidden="true"></div>
       </div>
 
+      <p class="sr-only" role="status" aria-live="polite" aria-atomic="true" data-evolution-status>
+        {t('avatar.evolution.ready')}
+      </p>
+
       <div class="border-t border-white/10 px-4 py-4 sm:px-6">
-        <ol class="grid grid-cols-6 gap-2" data-evolution-timeline aria-label={t('avatar.evolution.timelineLabel')} data-i18n-key="avatar.evolution.timelineLabel" data-i18n-attr="aria-label">
-          {avatarEvolutionStages.map((stage, index) => (
-            <li class="min-w-0" data-evolution-marker data-active={index === 0 ? 'true' : 'false'}>
-              <span class="mb-2 block h-1.5 rounded-full bg-white/15 transition-colors" data-evolution-marker-bar></span>
-              <span class="block truncate text-center text-[0.65rem] font-semibold tracking-[0.06em] text-offWhite/45 sm:text-xs">
-                {stage.version}
-              </span>
-            </li>
-          ))}
-        </ol>
+        <div class="overflow-x-auto pb-1">
+          <ol class="grid gap-2" style={timelineStyle} data-evolution-timeline aria-label={t('avatar.evolution.timelineLabel')} data-i18n-key="avatar.evolution.timelineLabel" data-i18n-attr="aria-label">
+            {avatarEvolutionStages.map((stage, index) => (
+              <li class="min-w-0" data-evolution-marker data-active={index === 0 ? 'true' : 'false'}>
+                <span class="mb-2 block h-1.5 rounded-full bg-white/15 transition-colors" data-evolution-marker-bar></span>
+                <span class="block truncate text-center text-[0.58rem] font-semibold tracking-[0.02em] text-offWhite/45 sm:text-xs sm:tracking-[0.06em]">
+                  {stage.version}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </div>
 

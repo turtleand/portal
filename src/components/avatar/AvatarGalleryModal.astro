@@ -1,8 +1,6 @@
 ---
-import AvatarGallery from './AvatarGallery.astro';
 import AnimatedAvatarGallery from './AnimatedAvatarGallery.astro';
 import modalControllerModule from './modal-controller.js?url';
-import galleryTabsControllerModule from './gallery-tabs-controller.js?url';
 import { createTranslator } from '../../utils/i18n';
 import type { Locale } from '../../utils/i18n';
 
@@ -16,9 +14,6 @@ const modalId = 'avatar-gallery-modal';
 const badgeLabel = t('avatar.modal.badgeLabel');
 const closeLabel = t('avatar.modal.closeLabel');
 const modalAriaLabel = t('avatar.modal.ariaLabel');
-const tabsLabel = t('avatar.tabs.label');
-const archiveTabLabel = t('avatar.tabs.archive');
-const animatedTabLabel = t('avatar.tabs.animated');
 ---
 
 <div
@@ -33,6 +28,7 @@ const animatedTabLabel = t('avatar.tabs.animated');
   ></div>
   <div
     class="relative z-10 flex min-h-full items-start justify-center overflow-y-auto p-4 sm:items-center sm:p-6"
+    data-avatar-modal-dismiss-surface
   >
     <div
       class="w-full max-w-6xl rounded-2xl border border-white/15 bg-gradient-to-br from-[#1b2a3f] via-[#0c1627] to-[#050b16] p-5 shadow-[0_45px_160px_rgba(2,6,15,0.85)] transition-transform duration-300 max-h-[90vh] overflow-y-auto sm:rounded-[2.5rem] sm:p-8"
@@ -60,62 +56,8 @@ const animatedTabLabel = t('avatar.tabs.animated');
           {closeLabel}
         </button>
       </div>
-      <div
-        class="mx-auto mb-5 grid w-full max-w-xl grid-cols-2 gap-1 rounded-full border border-white/15 bg-black/20 p-1.5"
-        role="tablist"
-        aria-label={tabsLabel}
-        data-i18n-key="avatar.tabs.label"
-        data-i18n-attr="aria-label"
-        data-avatar-gallery-tabs
-      >
-        <button
-          type="button"
-          id="avatar-gallery-tab-archive"
-          class="min-h-12 rounded-full border border-accent/50 bg-accent/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-offWhite transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:text-sm"
-          role="tab"
-          aria-selected="true"
-          aria-controls="avatar-gallery-panel-archive"
-          tabindex="0"
-          data-gallery-tab="archive"
-          data-i18n-key="avatar.tabs.archive"
-        >
-          {archiveTabLabel}
-        </button>
-        <button
-          type="button"
-          id="avatar-gallery-tab-animated"
-          class="min-h-12 rounded-full border border-transparent px-4 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-offWhite/60 transition hover:bg-white/5 hover:text-offWhite focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:text-sm"
-          role="tab"
-          aria-selected="false"
-          aria-controls="avatar-gallery-panel-animated"
-          tabindex="-1"
-          data-gallery-tab="animated"
-          data-i18n-key="avatar.tabs.animated"
-        >
-          {animatedTabLabel}
-        </button>
-      </div>
-
-      <div
-        id="avatar-gallery-panel-archive"
-        role="tabpanel"
-        aria-labelledby="avatar-gallery-tab-archive"
-        data-gallery-panel="archive"
-      >
-        <AvatarGallery locale={locale} />
-      </div>
-      <div
-        id="avatar-gallery-panel-animated"
-        role="tabpanel"
-        aria-labelledby="avatar-gallery-tab-animated"
-        data-gallery-panel="animated"
-        hidden
-        inert
-      >
-        <AnimatedAvatarGallery locale={locale} />
-      </div>
+      <AnimatedAvatarGallery locale={locale} />
     </div>
   </div>
 </div>
 <script type="module" src={modalControllerModule}></script>
-<script type="module" src={galleryTabsControllerModule}></script>

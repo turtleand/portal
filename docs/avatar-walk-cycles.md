@@ -8,6 +8,8 @@ The animated evolution gallery keeps each canonical SVG as its untouched resting
 
 Run `npm run generate:avatar-walk-poses` after intentionally changing a canonical vector or its limb-boundary configuration, then run `npm run validate:avatar-evolution`.
 
+For the complete static-concept, canonical-SVG, metadata, and release workflow, see `docs/avatar-versioning.md`.
+
 ## Why the poses use layered articulation
 
 The traced avatar vectors contain many anonymous paths, and several foundational paths combine the shell, body, and multiple legs into one contour. Literal path interpolation or moving those paths independently would distort the canonical avatar and recreate the duplicated-leg artifacts this gallery is designed to avoid.

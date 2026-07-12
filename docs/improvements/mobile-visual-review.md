@@ -28,17 +28,8 @@
 - **Suggested visual improvement:** Keep a subdued version of the border glow or add a persistent accent marker on mobile so each card still looks interactive without hover.
 
 ## Mobile Avatar Gallery Modal
-- **Location:** src/components/avatar/AvatarGalleryModal.astro & src/components/avatar/AvatarGallery.astro
-- **Issue:** The modal panel keeps 2.5rem corner radii and 2rem padding while the gallery stage enforces a 360px height, so on smaller phones the image, metadata, and controls extend past 90vh and require immediate scrolling inside the dialog.
-- **Suggested visual improvement:** Move to a condensed mobile layout (smaller padding/radius plus a shorter stage height) so the hero image and actions fit within a single viewport.
-
-- **Location:** src/components/avatar/AvatarGallery.astro
-- **Issue:** Metadata (`text-sm` uppercase with `tracking-[0.18em]`) rendered in muted emerald tones becomes hard to read when the modal scales down because the letters are both tiny and widely spaced.
-- **Suggested visual improvement:** Increase the mobile font size/contrast for the version/date line so users can parse it without squinting.
-
-- **Location:** src/components/avatar/AvatarGallery.astro
-- **Issue:** Prev/Next buttons share that tightly tracked uppercase style and stretch edge to edge, so their labels feel thin and low-contrast against the glowing background on touch screens.
-- **Suggested visual improvement:** Use a heavier weight, reduced tracking, or a clearer solid fill on mobile so the control labels are as legible as the icons.
+- **Current implementation:** `src/components/avatar/AvatarGalleryModal.astro` now contains only `src/components/avatar/AnimatedAvatarGallery.astro`. The former raster gallery and view tabs were retired by the SVG-first migration.
+- **Review focus:** Recheck the fixed canvas, internally scrollable dialog, timeline, metadata contrast, and two-column controls at 320px and 390px whenever the animated gallery changes. The modal must keep one visible SVG stage, avoid page-level horizontal overflow, and preserve access to every control through dialog scrolling.
 
 ## Mobile About Page
 - **Location:** src/pages/about.astro
