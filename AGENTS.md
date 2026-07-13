@@ -16,7 +16,7 @@ Applies only to `portal/`.
 
 ## Project summary
 
-- Stack: Astro, multilingual (`en` at `/`, `es` at `/es/`)
+- Stack: Astro, multilingual (`en` at `/`, `es` through `?lang=es`)
 - Status: Active
 - Primary function: brand architecture, ecosystem framing, and traffic routing
 
@@ -26,6 +26,15 @@ Applies only to `portal/`.
 2. Keep routing and content parity between English and Spanish when relevant.
 3. Prefer source edits under `src/`.
 4. Avoid changing generated output in `dist/`, `coverage/`, or other incidental artifacts unless explicitly asked.
+
+## Avatar source of truth
+
+- Canonical production avatars are the resting SVGs in `src/images/avatar/evolution/`.
+- Walking poses in `src/images/avatar/evolution/walking/` are generated derivatives. Never replace or reconstruct a canonical rest SVG with pose geometry.
+- Static concept images belong only in `src/images/avatar/archive/raster/` as historical visual references. Production components and data must not import them.
+- `src/data/avatarVersions.json` is the chronological metadata manifest. Every version requires matching English and Spanish copy, one canonical SVG, one archived concept reference, and three generated walking poses.
+- Follow `docs/avatar-versioning.md` for the complete creation, continuity, registration, and validation protocol. Do not recreate the removed raster gallery or `src/data/avatarGallery.ts`.
+- A new avatar version is incomplete until pose generation, avatar validation, the production build, browser interaction tests, reduced-motion tests, and desktop/mobile visual comparison all pass.
 
 ## Public-safety review
 

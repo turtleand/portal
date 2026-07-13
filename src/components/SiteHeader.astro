@@ -22,6 +22,7 @@ interface Props {
   locale: Locale;
   localeGroupLabel: string;
   localeMetadata: Record<string, LocaleCopy>;
+  avatarGalleryLabel: string;
 }
 
 const {
@@ -29,6 +30,7 @@ const {
   locale,
   localeGroupLabel,
   localeMetadata,
+  avatarGalleryLabel,
 }: Props = Astro.props;
 const placeholderOrigin = "http://placeholder.internal";
 const currentUrl = Astro.url ?? new URL(placeholderOrigin);
@@ -54,12 +56,15 @@ const inactiveToggleClasses =
         class="flex items-center gap-4 transition-transform hover:scale-105 focus-visible:scale-105 focus-visible:outline-none"
         data-open-avatar-gallery
         aria-haspopup="dialog"
+        aria-controls="avatar-gallery-modal"
         aria-expanded="false"
-        aria-pressed="false"
+        aria-label={avatarGalleryLabel}
+        data-i18n-key="avatar.modal.openLabel"
+        data-i18n-attr="aria-label"
       >
         <img
           src="/logo.svg"
-          alt="Open Turtleand avatar gallery"
+          alt=""
           width="940"
           height="548"
           class="h-12 w-auto sm:h-14 md:h-24"

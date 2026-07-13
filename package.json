@@ -8,6 +8,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "generate:avatar-walk-poses": "node scripts/generate-avatar-walk-poses.mjs",
+    "validate:avatar-evolution": "node scripts/validate-avatar-evolution.mjs",
     "astro": "astro"
   },
   "dependencies": {

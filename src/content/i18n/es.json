@@ -142,7 +142,27 @@
     "modal": {
       "badgeLabel": "Evolución del avatar",
       "closeLabel": "Cerrar",
-      "ariaLabel": "Galería de Evolución del Avatar de Turtleand"
+      "ariaLabel": "Galería de Evolución del Avatar de Turtleand",
+      "openLabel": "Abrir la galería de evolución del avatar de Turtleand"
+    },
+    "evolution": {
+      "eyebrow": "Identidad viva",
+      "heading": "Evolución en Movimiento",
+      "timelineLabel": "Etapas de evolución del avatar",
+      "controlsLabel": "Controles de reproducción de la evolución",
+      "ready": "Preparando la evolución vectorial",
+      "loading": "Cargando la evolución vectorial",
+      "loadError": "Algunas etapas vectoriales no pudieron animarse. Las etapas SVG disponibles se pueden seguir explorando.",
+      "poseLoadError": "Una pose de caminata no se pudo cargar. El SVG canónico sigue disponible.",
+      "stageUnavailable": "El vector de {version} no está disponible.",
+      "motionReduced": "El movimiento está reducido. Usa Anterior y Siguiente para explorar.",
+      "play": "Reproducir",
+      "pause": "Pausar",
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "restart": "Reiniciar",
+      "progress": "Etapa {current} de {total}",
+      "announcement": "Mostrando {version}, {title}. Etapa {current} de {total}."
     }
   },
   "feeds": {

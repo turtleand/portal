@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * @typedef {HTMLButtonElement | HTMLAnchorElement} TriggerButton
  */
@@ -9,11 +11,18 @@ class AvatarGalleryModalController {
   constructor(modal) {
     this.modal = modal;
     this.overlay = modal.querySelector('[data-avatar-modal-overlay]');
-    this.panel = modal.querySelector('[data-avatar-modal-panel]');
+    const dismissSurface = modal.querySelector('[data-avatar-modal-dismiss-surface]');
+    this.dismissSurface = dismissSurface instanceof HTMLElement ? dismissSurface : null;
+    const panel = modal.querySelector('[data-avatar-modal-panel]');
+    this.panel = panel instanceof HTMLElement ? panel : null;
     /** @type {TriggerButton[]} */
     this.triggers = [];
     /** @type {HTMLButtonElement[]} */
-    this.closeButtons = Array.from(modal.querySelectorAll('[data-avatar-modal-close]'));
+    this.closeButtons = /** @type {HTMLButtonElement[]} */ (
+      Array.from(modal.querySelectorAll('[data-avatar-modal-close]')).filter(
+        (node) => node instanceof HTMLButtonElement,
+      )
+    );
     this.active = false;
     /** @type {TriggerButton | null} */
     this.lastTrigger = null;
@@ -24,8 +33,10 @@ class AvatarGalleryModalController {
   }
 
   collectTriggers() {
-    this.triggers = Array.from(
-      document.querySelectorAll('[data-open-avatar-gallery]'),
+    this.triggers = /** @type {TriggerButton[]} */ (
+      Array.from(document.querySelectorAll('[data-open-avatar-gallery]')).filter(
+        (node) => node instanceof HTMLButtonElement || node instanceof HTMLAnchorElement,
+      )
     );
   }
 
@@ -40,6 +51,9 @@ class AvatarGalleryModalController {
       button.addEventListener('click', () => this.close());
     });
     this.overlay?.addEventListener('click', () => this.close());
+    this.dismissSurface?.addEventListener('click', (event) => {
+      if (event.target === event.currentTarget) this.close();
+    });
     document.addEventListener('keydown', (event) => {
       if (!this.active) return;
       if (event.key === 'Escape') {
@@ -95,8 +109,10 @@ class AvatarGalleryModalController {
   }
 
   disableBackground() {
-    this.backgroundNodes = Array.from(document.body.children).filter(
-      (node) => node !== this.modal && node instanceof HTMLElement,
+    this.backgroundNodes = /** @type {HTMLElement[]} */ (
+      Array.from(document.body.children).filter(
+        (node) => node !== this.modal && node instanceof HTMLElement,
+      )
     );
     this.backgroundNodes.forEach((node) => {
       node.setAttribute('aria-hidden', 'true');
@@ -121,8 +137,15 @@ class AvatarGalleryModalController {
     if (!this.panel) return;
     const focusableSelectors =
       'a[href], button:not([disabled]), textarea, input:not([disabled]), select, [tabindex]:not([tabindex="-1"])';
-    const focusable = Array.from(this.panel.querySelectorAll(focusableSelectors)).filter(
-      (node) => !node.hasAttribute('disabled'),
+    const focusable = /** @type {HTMLElement[]} */ (
+      Array.from(this.panel.querySelectorAll(focusableSelectors)).filter(
+        (node) =>
+          node instanceof HTMLElement &&
+          !node.hasAttribute('disabled') &&
+          !node.closest('[hidden]') &&
+          !node.closest('[inert]') &&
+          node.getAttribute('aria-hidden') !== 'true',
+      )
     );
     if (!focusable.length) return;
     const first = focusable[0];
@@ -142,7 +165,6 @@ class AvatarGalleryModalController {
 
   updateTriggerState(expanded) {
     this.triggers.forEach((trigger) => {
-      trigger.setAttribute('aria-pressed', String(expanded));
       trigger.setAttribute('aria-expanded', String(expanded));
     });
   }

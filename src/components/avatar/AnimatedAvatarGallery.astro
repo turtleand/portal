@@ -1,0 +1,282 @@
+---
+import { avatarEvolutionStages } from '../../data/avatarEvolution';
+import { createTranslator } from '../../utils/i18n';
+import type { Locale } from '../../utils/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale = 'en' }: Partial<Props> = Astro.props;
+const t = createTranslator(locale);
+const firstStage = avatarEvolutionStages[0];
+const firstTitle = locale === 'es' ? firstStage.titleEs : firstStage.title;
+const firstDescription = locale === 'es' ? firstStage.descriptionEs : firstStage.description;
+const progress = t('avatar.evolution.progress')
+  .replace('{current}', '1')
+  .replace('{total}', String(avatarEvolutionStages.length));
+const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.length}, minmax(2rem, 1fr)); min-width: max(100%, ${avatarEvolutionStages.length * 2}rem);`;
+---
+
+<section
+  class="relative isolate overflow-hidden rounded-3xl border border-white/10 bg-deepBlue/80 p-4 shadow-[0_20px_60px_rgba(4,10,25,0.55)] backdrop-blur sm:p-6"
+  data-avatar-evolution
+>
+  <div class="space-y-5">
+    <header class="space-y-1 text-center">
+      <p
+        class="text-xs font-semibold uppercase tracking-[0.18em] text-accent/80"
+        data-i18n-key="avatar.evolution.eyebrow"
+      >
+        {t('avatar.evolution.eyebrow')}
+      </p>
+      <h2 class="text-2xl font-heading text-offWhite sm:text-3xl" data-i18n-key="avatar.evolution.heading">
+        {t('avatar.evolution.heading')}
+      </h2>
+    </header>
+
+    <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-[radial-gradient(circle_at_50%_42%,rgba(32,159,142,0.22),rgba(5,15,29,0.96)_67%)] sm:rounded-[28px]">
+      <div
+        class="relative mx-auto flex h-[272px] w-full max-w-3xl items-center justify-center sm:h-[360px] lg:h-[410px]"
+        data-evolution-canvas
+        role="img"
+        aria-label={`${firstStage.version}: ${firstTitle}. ${firstDescription}`}
+      >
+        <span class="evolution-walk-shadow" data-evolution-walk-shadow aria-hidden="true" hidden></span>
+        <div class="absolute inset-0 z-[1] flex items-center justify-center" data-evolution-stage></div>
+        <div
+          class="pointer-events-none absolute inset-0 z-[3] overflow-hidden"
+          data-evolution-effects
+          aria-hidden="true"
+          hidden
+        >
+          <span class="evolution-halo" data-evolution-halo></span>
+          <span class="evolution-scan" data-evolution-scan></span>
+          <span class="evolution-particle" data-evolution-particle style="--particle-x: 34%; --particle-y: 34%;"></span>
+          <span class="evolution-particle" data-evolution-particle style="--particle-x: 48%; --particle-y: 57%;"></span>
+          <span class="evolution-particle" data-evolution-particle style="--particle-x: 61%; --particle-y: 39%;"></span>
+        </div>
+        <img
+          class="absolute inset-0 hidden h-full w-full object-contain p-2 sm:p-4"
+          data-evolution-static-fallback
+          src={firstStage.vectorImage}
+          alt=""
+          width="1024"
+          height="1024"
+          decoding="async"
+        />
+        <div
+          class="absolute inset-5 z-[2] hidden items-center justify-center rounded-2xl border border-white/10 bg-[#071321]/90 px-6 text-center text-offWhite/70"
+          data-evolution-unavailable
+          aria-hidden="true"
+          hidden
+        >
+          <div class="space-y-3">
+            <span class="block text-4xl text-accent/60" aria-hidden="true">◇</span>
+            <p class="text-sm font-semibold uppercase tracking-[0.12em]" data-evolution-unavailable-label>
+              {t('avatar.evolution.stageUnavailable').replace('{version}', firstStage.version)}
+            </p>
+          </div>
+        </div>
+        <div class="absolute inset-0 flex items-center justify-center bg-[#071321]/70" data-evolution-loading>
+          <div class="flex items-center gap-3 rounded-full border border-white/10 bg-[#071321]/90 px-5 py-3 text-sm text-offWhite/80">
+            <span class="h-2.5 w-2.5 rounded-full bg-accent shadow-[0_0_18px_rgba(111,225,195,0.85)] motion-safe:animate-pulse" aria-hidden="true"></span>
+            <span data-evolution-loading-label data-i18n-key="avatar.evolution.ready">{t('avatar.evolution.ready')}</span>
+          </div>
+        </div>
+        <div class="pointer-events-none absolute inset-x-5 bottom-4 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" aria-hidden="true"></div>
+      </div>
+
+      <p class="sr-only" role="status" aria-live="polite" aria-atomic="true" data-evolution-status>
+        {t('avatar.evolution.ready')}
+      </p>
+
+      <div class="border-t border-white/10 px-4 py-4 sm:px-6">
+        <div class="overflow-x-auto pb-1">
+          <ol class="grid gap-2" style={timelineStyle} data-evolution-timeline aria-label={t('avatar.evolution.timelineLabel')} data-i18n-key="avatar.evolution.timelineLabel" data-i18n-attr="aria-label">
+            {avatarEvolutionStages.map((stage, index) => (
+              <li class="min-w-0" data-evolution-marker data-active={index === 0 ? 'true' : 'false'}>
+                <span class="mb-2 block h-1.5 rounded-full bg-white/15 transition-colors" data-evolution-marker-bar></span>
+                <span class="block truncate text-center text-[0.58rem] font-semibold tracking-[0.02em] text-offWhite/45 sm:text-xs sm:tracking-[0.06em]">
+                  {stage.version}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <p
+      class="mx-auto max-w-2xl rounded-xl border border-amber-200/20 bg-amber-100/5 px-4 py-3 text-center text-sm text-amber-50/85"
+      data-evolution-notice
+      role="status"
+      hidden
+    ></p>
+
+    <div class="min-h-[7.5rem] space-y-1.5 text-center">
+      <p class="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-100/80 sm:text-sm">
+        <span data-evolution-meta>{firstStage.version} • {firstStage.date}</span>
+        <span aria-hidden="true"> · </span>
+        <span data-evolution-progress>{progress}</span>
+      </p>
+      <h3 class="text-2xl font-heading text-offWhite" data-evolution-title>{firstTitle}</h3>
+      <p class="mx-auto max-w-2xl text-sm leading-relaxed text-offWhite/70 sm:text-base" data-evolution-description>{firstDescription}</p>
+      <p class="sr-only" aria-live="polite" aria-atomic="true" data-evolution-announcement></p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-3" role="group" aria-label={t('avatar.evolution.controlsLabel')} data-i18n-key="avatar.evolution.controlsLabel" data-i18n-attr="aria-label">
+      <button type="button" class="evolution-control" data-evolution-action="previous" aria-label={t('avatar.evolution.previous')} data-i18n-key="avatar.evolution.previous" data-i18n-attr="aria-label">
+        <span aria-hidden="true">←</span><span data-i18n-key="avatar.evolution.previous">{t('avatar.evolution.previous')}</span>
+      </button>
+      <button type="button" class="evolution-control evolution-control-primary" data-evolution-action="play" aria-label={t('avatar.evolution.play')}>
+        <span aria-hidden="true" data-evolution-play-icon>▶</span><span data-evolution-play-label>{t('avatar.evolution.play')}</span>
+      </button>
+      <button type="button" class="evolution-control" data-evolution-action="next" aria-label={t('avatar.evolution.next')} data-i18n-key="avatar.evolution.next" data-i18n-attr="aria-label">
+        <span data-i18n-key="avatar.evolution.next">{t('avatar.evolution.next')}</span><span aria-hidden="true">→</span>
+      </button>
+      <button type="button" class="evolution-control" data-evolution-action="restart" aria-label={t('avatar.evolution.restart')} data-i18n-key="avatar.evolution.restart" data-i18n-attr="aria-label">
+        <span aria-hidden="true">↺</span><span data-i18n-key="avatar.evolution.restart">{t('avatar.evolution.restart')}</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { avatarEvolutionStages } from '../../data/avatarEvolution';
+  import { initAvatarEvolution } from './evolution-controller.js';
+
+  const initializeAvatarEvolution = () => initAvatarEvolution(avatarEvolutionStages);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeAvatarEvolution, { once: true });
+  } else {
+    initializeAvatarEvolution();
+  }
+</script>
+
+<style>
+  .evolution-control {
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    border: 1px solid rgb(255 255 255 / 0.18);
+    border-radius: 9999px;
+    padding: 0.7rem 1rem;
+    background: rgb(255 255 255 / 0.05);
+    color: rgb(244 244 244 / 0.82);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease, transform 180ms ease;
+  }
+
+  .evolution-control:hover:not(:disabled) {
+    border-color: rgb(111 225 195 / 0.65);
+    background: rgb(111 225 195 / 0.1);
+    color: #f4f4f4;
+    transform: translateY(-1px);
+  }
+
+  .evolution-control:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  .evolution-control:disabled {
+    cursor: not-allowed;
+    opacity: 0.38;
+  }
+
+  .evolution-control-primary {
+    border-color: rgb(111 225 195 / 0.55);
+    background: rgb(46 131 115 / 0.34);
+    color: #f4f4f4;
+  }
+
+  [data-evolution-marker][data-active='true'] [data-evolution-marker-bar] {
+    background: var(--color-accent);
+    box-shadow: 0 0 18px rgb(111 225 195 / 0.7);
+  }
+
+  [data-evolution-marker][data-active='true'] span:last-child {
+    color: #f4f4f4;
+  }
+
+  .evolution-halo {
+    position: absolute;
+    inset: 8% 12%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(111 225 195 / 0.2), rgb(38 211 199 / 0.08) 42%, transparent 72%);
+    filter: blur(12px);
+    opacity: 0;
+  }
+
+  .evolution-scan {
+    position: absolute;
+    top: 7%;
+    bottom: 7%;
+    left: 0;
+    width: 2px;
+    background: linear-gradient(180deg, transparent, rgb(194 255 239 / 0.85) 16%, rgb(111 225 195 / 0.95) 50%, rgb(194 255 239 / 0.85) 84%, transparent);
+    box-shadow: 0 0 12px 3px rgb(111 225 195 / 0.42), 0 0 30px 9px rgb(48 238 218 / 0.14);
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+
+  .evolution-particle {
+    position: absolute;
+    left: var(--particle-x);
+    top: var(--particle-y);
+    width: 5px;
+    height: 5px;
+    border: 1px solid rgb(202 255 241 / 0.9);
+    border-radius: 9999px;
+    background: rgb(111 225 195 / 0.9);
+    box-shadow: 0 0 12px rgb(111 225 195 / 0.8);
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+
+  .evolution-walk-shadow {
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    bottom: 5%;
+    width: min(68%, 30rem);
+    height: 7%;
+    border-radius: 9999px;
+    background: radial-gradient(ellipse, rgb(0 0 0 / 0.8), rgb(3 12 20 / 0.3) 52%, transparent 76%);
+    filter: blur(7px);
+    opacity: 0;
+    transform: translateX(-50%);
+    transform-origin: center;
+    will-change: opacity, transform;
+  }
+
+  @media (min-width: 640px) {
+    .evolution-walk-shadow {
+      bottom: 4%;
+      width: min(58%, 31rem);
+      height: 8%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .evolution-control,
+    [data-evolution-marker-bar] {
+      transition: none;
+    }
+
+    [data-evolution-effects] {
+      display: none !important;
+    }
+
+    .evolution-walk-shadow {
+      display: none !important;
+    }
+  }
+</style>

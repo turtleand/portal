@@ -1,0 +1,56 @@
+[
+  {
+    "id": "genesis-shell",
+    "version": "v0.0.1",
+    "date": "2025-03-10",
+    "title": "The Genesis Shell",
+    "description": "The beginning of the journey with innocence and wonder.",
+    "titleEs": "Caparazón Génesis",
+    "descriptionEs": "El inicio del viaje con inocencia y asombro."
+  },
+  {
+    "id": "quantum-shell",
+    "version": "v0.0.2",
+    "date": "2025-04-21",
+    "title": "The Quantum Shell",
+    "description": "Glowing lines hint inner transformation.",
+    "titleEs": "Caparazón Cuántico",
+    "descriptionEs": "Líneas brillantes insinúan la transformación interior."
+  },
+  {
+    "id": "tech-nomad",
+    "version": "v0.0.3",
+    "date": "2025-05-17",
+    "title": "The Tech Nomad",
+    "description": "A digital adventurer on the move, wearing its interface.",
+    "titleEs": "El Nómada Tecno",
+    "descriptionEs": "Un aventurero digital en movimiento que viste su interfaz."
+  },
+  {
+    "id": "network-visitor",
+    "version": "v0.0.4",
+    "date": "2025-06-29",
+    "title": "The Network Visitor",
+    "description": "Uplink node transmission: From observer to participant.",
+    "titleEs": "El Visitante de la Red",
+    "descriptionEs": "Transmisión de nodo: de observador a participante."
+  },
+  {
+    "id": "hydraulic-brace",
+    "version": "v0.1.0",
+    "date": "2026-02-07",
+    "title": "The Hydraulic Brace",
+    "description": "From organic to industrial. Enhanced output.",
+    "titleEs": "El Exoesqueleto Hidráulico",
+    "descriptionEs": "De orgánico a industrial. Salida mejorada."
+  },
+  {
+    "id": "frontier-cartographer",
+    "version": "v0.1.1",
+    "date": "2026-06-25",
+    "title": "The Frontier Cartographer",
+    "description": "Maps the frontier and turns changing terrain into direction.",
+    "titleEs": "El Cartógrafo de la Frontera",
+    "descriptionEs": "Mapea la frontera y convierte el terreno cambiante en dirección."
+  }
+]
