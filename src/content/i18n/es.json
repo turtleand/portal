@@ -99,9 +99,14 @@
         "source": "AI Atlas"
       },
       {
-        "title": "OpenClaw Lab — Construyendo con Agentes de IA",
-        "url": "https://openclaw.turtleand.com/",
-        "source": "OpenClaw Lab"
+        "title": "Energy: Aprendizaje de electricidad y sistemas físicos",
+        "url": "https://energy.turtleand.com",
+        "source": "Energy"
+      },
+      {
+        "title": "Turtleand Hermes Lab: Notas de campo y flujos de trabajo de agentes",
+        "url": "https://hermes.turtleand.com/",
+        "source": "Hermes Lab"
       }
     ],
     "valuesTitle": "Valores y Carácter",
@@ -159,5 +164,16 @@
       "progress": "Etapa {current} de {total}",
       "announcement": "Mostrando {version}, {title}. Etapa {current} de {total}."
     }
+  },
+  "feeds": {
+    "pageTitle": "Feeds de Turtleand",
+    "pageDescription": "Suscríbete a los feeds públicos de Turtleand en Growth, Build, AI Lab, OpenClaw, Hermes, Handbook, Energy y Chain Lab.",
+    "kicker": "Suscribirse",
+    "title": "Feeds de Turtleand",
+    "intro": "Turtleand es un ecosistema de conocimiento federado. Estos feeds hacen que sus artefactos públicos sean más fáciles de seguir desde lectores RSS, buscadores, servicios de indexación y sistemas de IA.",
+    "jsonRegistry": "Registro JSON",
+    "opmlExport": "Exportar OPML",
+    "rssLabel": "RSS",
+    "surfaceLabel": "Superficie"
   }
 }
