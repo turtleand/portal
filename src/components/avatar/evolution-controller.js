@@ -53,11 +53,14 @@ const POST_WALK_HOLD_DURATION = 650;
  */
 
 class AvatarEvolutionController {
-  /** @param {HTMLElement} root */
-  constructor(root) {
+  /**
+   * @param {HTMLElement} root
+   * @param {AvatarEvolutionStage[]} stages
+   */
+  constructor(root, stages) {
     this.root = root;
     /** @type {AvatarEvolutionStage[]} */
-    this.stages = this.parseStages();
+    this.stages = Array.isArray(stages) ? stages : [];
     /** @type {(SVGSVGElement | null)[]} */
     this.svgStages = [];
     /** @type {(HTMLElement | null)[]} */
@@ -119,19 +122,6 @@ class AvatarEvolutionController {
     if (!this.stages.length || !(this.stageHost instanceof HTMLElement)) return;
     this.bindEvents();
     this.render(false);
-  }
-
-  /** @returns {AvatarEvolutionStage[]} */
-  parseStages() {
-    const node = this.root.querySelector('[data-avatar-evolution-data]');
-    if (!node?.textContent) return [];
-    try {
-      const parsed = JSON.parse(node.textContent);
-      return Array.isArray(parsed) ? parsed : [];
-    } catch (error) {
-      console.error('[avatar-evolution] Unable to parse stage data', error);
-      return [];
-    }
   }
 
   /** @param {string} action */
@@ -1061,16 +1051,11 @@ class AvatarEvolutionController {
   }
 }
 
-const initAvatarEvolution = () => {
+/** @param {AvatarEvolutionStage[]} stages */
+const initAvatarEvolution = (stages) => {
   document.querySelectorAll('[data-avatar-evolution]').forEach((node) => {
-    if (node instanceof HTMLElement) new AvatarEvolutionController(node);
+    if (node instanceof HTMLElement) new AvatarEvolutionController(node, stages);
   });
 };
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initAvatarEvolution, { once: true });
-} else {
-  initAvatarEvolution();
-}
-
-export { AvatarEvolutionController };
+export { AvatarEvolutionController, initAvatarEvolution };

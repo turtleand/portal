@@ -1,6 +1,5 @@
 ---
 import { avatarEvolutionStages } from '../../data/avatarEvolution';
-import evolutionControllerModule from './evolution-controller.js?url';
 import { createTranslator } from '../../utils/i18n';
 import type { Locale } from '../../utils/i18n';
 
@@ -10,7 +9,6 @@ interface Props {
 
 const { locale = 'en' }: Partial<Props> = Astro.props;
 const t = createTranslator(locale);
-const stagesJson = JSON.stringify(avatarEvolutionStages).replace(/</g, '\\u003c');
 const firstStage = avatarEvolutionStages[0];
 const firstTitle = locale === 'es' ? firstStage.titleEs : firstStage.title;
 const firstDescription = locale === 'es' ? firstStage.descriptionEs : firstStage.description;
@@ -24,8 +22,6 @@ const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.len
   class="relative isolate overflow-hidden rounded-3xl border border-white/10 bg-deepBlue/80 p-4 shadow-[0_20px_60px_rgba(4,10,25,0.55)] backdrop-blur sm:p-6"
   data-avatar-evolution
 >
-  <script type="application/json" data-avatar-evolution-data set:html={stagesJson} />
-
   <div class="space-y-5">
     <header class="space-y-1 text-center">
       <p
@@ -146,7 +142,18 @@ const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.len
   </div>
 </section>
 
-<script type="module" src={evolutionControllerModule}></script>
+<script>
+  import { avatarEvolutionStages } from '../../data/avatarEvolution';
+  import { initAvatarEvolution } from './evolution-controller.js';
+
+  const initializeAvatarEvolution = () => initAvatarEvolution(avatarEvolutionStages);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeAvatarEvolution, { once: true });
+  } else {
+    initializeAvatarEvolution();
+  }
+</script>
 
 <style>
   .evolution-control {
