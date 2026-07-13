@@ -95,6 +95,17 @@ versions.forEach((version) => {
     gait.animatedLimbs.forEach((index) => {
       assert(Number.isInteger(index) && gait.behindBody.includes(index), `v${version}: animated limb ${index} must be a behind-body limb`);
     });
+    assert.deepEqual(
+      [...gait.animatedLimbs].sort((a, b) => a - b),
+      [...gait.behindBody].sort((a, b) => a - b),
+      `v${version}: every behind-body limb must participate in the articulated gait`,
+    );
+    assert.equal(
+      gait.pairA.filter((index) => gait.animatedLimbs.includes(index)).length,
+      1,
+      `v${version}: pairA must contain exactly one animated behind-body limb`,
+    );
+    assert.equal(gait.coherentPassing, true, `v${version}: animated limbs require a coherent passing pose`);
   }
 });
 
