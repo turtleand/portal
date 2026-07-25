@@ -58,8 +58,8 @@ export const turtleandFeeds: TurtleandFeed[] = [
   },
   {
     surface: 'Chain Lab',
-    url: 'https://chain.turtleand.com/rss.xml',
-    siteUrl: 'https://chain.turtleand.com/',
+    url: 'https://decentralized.turtleand.com/rss.xml',
+    siteUrl: 'https://decentralized.turtleand.com/',
     description: 'Blockchain systems literacy and protocol trade-offs.',
     type: 'rss',
   },
