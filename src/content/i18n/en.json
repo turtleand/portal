@@ -84,6 +84,12 @@
     "writingTitle": "Featured Work",
     "writingItems": [
       {
+        "title": "Chronicle: A Living Story of Humans and AI",
+        "url": "https://chronicle.turtleand.com/",
+        "description": "Compact interactive scenes trace human agency and our evolving path toward AI.",
+        "source": "Chronicle"
+      },
+      {
         "title": "Human-AI Collaboration Handbook — Principles for Working with AI",
         "url": "https://handbook.turtleand.com",
         "source": "Handbook"

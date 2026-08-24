@@ -8,6 +8,7 @@
 - [Build](https://build.turtleand.com/llms.txt): Engineering fundamentals, software craft, and deep technical understanding
 - [Blockchain](https://decentralized.turtleand.com/llms.txt): Decentralized systems, identity, and ownership infrastructure
 - [Hermes Lab](https://hermes.turtleand.com/llms.txt): Hermes Agent field notes, troubleshooting guides, and voice-first workflows
+- [Chronicle](https://chronicle.turtleand.com/llms.txt): A living, web-native story of human agency and our evolving path toward AI
 
 ## Secondary Learning Surfaces
 - [Energy](https://energy.turtleand.com/llms.txt): Electricity, circuits, power, storage, grids, and physical energy systems
