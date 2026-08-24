@@ -18,7 +18,13 @@ const traitItems = traits.map((trait: string, index: number) => ({
 const summary = makeCopyToken('about.summary', t);
 const philosophy = makeCopyToken('about.philosophy', t);
 const writingTitle = makeCopyToken('about.writingTitle', t);
-const writingItems: { title: string; url: string }[] = dictionary.about.writingItems ?? [];
+type FeaturedWorkItem = {
+  title: string;
+  url: string;
+  description?: string;
+  source?: string;
+};
+const writingItems: FeaturedWorkItem[] = dictionary.about.writingItems ?? [];
 const valuesTitle = makeCopyToken('about.valuesTitle', t);
 const connectTitle = makeCopyToken('about.connectTitle', t);
 const connectCta = makeCopyToken('about.connectCta', t);
@@ -66,7 +72,7 @@ const connectCta = makeCopyToken('about.connectCta', t);
           {writingTitle.text}
         </h2>
         <div class="flex flex-col gap-3">
-          {writingItems.map((item: { title: string; url: string; source?: string }, i: number) => (
+          {writingItems.map((item, i: number) => (
             <a
               href={item.url}
               target="_blank"
@@ -77,6 +83,11 @@ const connectCta = makeCopyToken('about.connectCta', t);
                 <span class="text-offWhite/80 group-hover:text-offWhite transition-colors" data-i18n-key={`about.writingItems.${i}.title`}>
                   {item.title}
                 </span>
+                {item.description && (
+                  <span class="text-sm leading-relaxed text-offWhite/60" data-i18n-key={`about.writingItems.${i}.description`}>
+                    {item.description}
+                  </span>
+                )}
                 {item.source && (
                   <span class="text-xs text-offWhite/40" data-i18n-key={`about.writingItems.${i}.source`}>
                     {item.source}

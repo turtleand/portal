@@ -84,6 +84,12 @@
     "writingTitle": "Trabajo Destacado",
     "writingItems": [
       {
+        "title": "Chronicle: Una historia viva de los humanos y la IA",
+        "url": "https://chronicle.turtleand.com/",
+        "description": "Escenas interactivas breves trazan la agencia humana y nuestro camino hacia la IA.",
+        "source": "Chronicle"
+      },
+      {
         "title": "Manual de Colaboración Humano-IA — Principios para Trabajar con IA",
         "url": "https://handbook.turtleand.com",
         "source": "Handbook"
