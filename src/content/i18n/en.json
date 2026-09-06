@@ -169,6 +169,32 @@
       "restart": "Restart",
       "progress": "Stage {current} of {total}",
       "announcement": "Now showing {version}, {title}. Stage {current} of {total}."
+    },
+    "threeD": {
+      "representation": "Avatar representation",
+      "original": "2D original",
+      "dimensional": "3D view",
+      "help": "Drag to turn. Use the arrow controls for a precise view.",
+      "controls": "3D view controls",
+      "left": "Turn left",
+      "right": "Turn right",
+      "rotate": "Rotate",
+      "stopRotation": "Stop rotation",
+      "reset": "Reset view",
+      "retry": "Retry 3D",
+      "loading": "Preparing the 3D view. The original stays visible.",
+      "slow": "Still loading. You can switch to the 2D original.",
+      "error": "3D is unavailable. The 2D original remains available.",
+      "ready": "3D view ready.",
+      "viewer": "Interactive 3D avatar: {title}",
+      "reduced": "Motion is reduced. Turn the avatar with the arrow controls.",
+      "viewPosition": "View from {direction}.",
+      "viewAbove": "View from above, {direction}.",
+      "viewBelow": "View from below, {direction}.",
+      "cameraFront": "the front",
+      "cameraRight": "the right",
+      "cameraBack": "the back",
+      "cameraLeft": "the left"
     }
   },
   "feeds": {

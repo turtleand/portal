@@ -1,0 +1,3428 @@
+{
+  "at": "2026-09-06T20:31:56.504Z",
+  "base": "http://127.0.0.1:4395",
+  "label": "warm-presence/final",
+  "sourceHashes": {
+    "src/components/avatar/three-d-controller.js": "16036871316991ec7c56aa1c4103a913b5f5a98a737744d1c69f2df2077d5a38",
+    "src/components/avatar/evolution-controller.js": "3c5cce5788a44a33f9518f387ec916a8d9950886b4e4d5dd87f8b1d4bebd7501",
+    "src/components/avatar/AnimatedAvatarGallery.astro": "ce64d08caccb15c1a7d595d5cdfad11be232db08e51230b48dc90f3b71385c5a",
+    "src/components/avatar/modal-controller.js": "ba5e1c3595cc5fe1a4f8a936ba06c2cc8a5240b4f9b00cf59d991ec06282c253",
+    "src/data/avatar3d.ts": "5442022e9bdffb64b404043f4da48a8b7668a2e1a8a9b47a62274b3c52123588",
+    "package-lock.json": "b927b8f5811e9359091fda75975b07e65830aabce78121ad50fe435ecf01d9c0",
+    "src/images/avatar/3d/turtleand-0.0.1.glb": "d6df9d643bba41f347df27eb95c24c85d5dcf39227bc978de7774d2992216d98",
+    "src/images/avatar/3d/turtleand-0.0.2.glb": "33adedcb606fcc886315bad660d750a3cbe3557d48da6a948a1cea136341521f",
+    "src/images/avatar/3d/turtleand-0.0.3.glb": "1f0697bdac446952c40854254f69af7afb18006e11e584727f17ea7a76f4ba38",
+    "src/images/avatar/3d/turtleand-0.0.4.glb": "1a59f6154f155e24fa13c5230a5242dd377fa2d86a55d35eb5df305c71db7bb1",
+    "src/images/avatar/3d/turtleand-0.1.0.glb": "e88b509ebc0c29f9e5632e0858b9396614dd64c2f5e9a1bc51aecf1e6f2b41e0",
+    "src/images/avatar/3d/turtleand-0.1.1.glb": "7c142cad9c46b67a441d035a6590406c453885ec684a7e1170213ac8f62866bd",
+    "src/images/avatar/3d/warm.hdr": "0b581db8051611ae155b0ba387ac3758d8ef610e2866224078f627a63806b352"
+  },
+  "browser": "152.0.7977.82",
+  "method": "Fresh browser contexts with actual production client build and local gzip responses. Selected heaviest/latest model; no OS/GPU cache flush. UI-ready event follows model load, component update and two rAF. WebGL calls establish drawing but not native GPU completion or first screen-presentation timestamp.",
+  "profiles": [
+    {
+      "profile": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000,
+        "dpr": 1
+      },
+      "rows": [
+        {
+          "run": 1,
+          "before3DRequests": [],
+          "readyMs": 672.3000000007451,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 1034,
+            "height": 410
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 98.10000000149012
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 85.89999999850988
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 205
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 306
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 406.29999999701977
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 103.40000000223517
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 128.40000000223517
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 309
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 206.89999999850988
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 308.5
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 137.09999999776483
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 5.599999997764826
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 2.400000002235174
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 20.099999997764826
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 62.900000002235174
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 35.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 102.5
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 148.40000000223517
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 12.599999997764826
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 64.5
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 136.19999999925494
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 2,
+          "before3DRequests": [],
+          "readyMs": 617,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 1034,
+            "height": 410
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 87.59999999776483
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 66.10000000149012
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 147.80000000074506
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 251.80000000074506
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 68.5
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 375.80000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 174.69999999925494
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 178.5
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 255.30000000074506
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 255.80000000074506
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 106.39999999850988
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 5
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 1.800000000745058
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 14.899999998509884
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 47
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 27.300000000745058
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 127
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 87.5
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 8
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 56.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 136.20000000298023
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 3,
+          "before3DRequests": [],
+          "readyMs": 654.1000000014901,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 1034,
+            "height": 410
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 85.60000000149012
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 69.40000000223517
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 169.89999999850988
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 291.5999999977648
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 73.5
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 398.4000000022352
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 180.40000000223517
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 183.79999999701977
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 296.6000000014901
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 296.8999999985099
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 153.80000000074506
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 6.599999997764826
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 1.6000000014901161
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 12.599999997764826
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 52.70000000298023
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 27.099999997764826
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 86.79999999701977
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 133.19999999925494
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 10.399999998509884
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 63.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 139.59999999776483
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 4,
+          "before3DRequests": [],
+          "readyMs": 621.5999999977648,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 1034,
+            "height": 410
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 95.89999999850988
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 70.69999999925494
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 161.80000000074506
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 225.09999999776483
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 305.4000000022352
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 72.89999999850988
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 83
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 165
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 229.30000000074506
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 229.60000000149012
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 69.60000000149012
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 7.400000002235174
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 1.5
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 14.599999997764826
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 49.600000001490116
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 25.599999997764826
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 71
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 114.09999999776483
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 9.699999999254942
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 60.69999999925494
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 139.69999999925494
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 5,
+          "before3DRequests": [],
+          "readyMs": 657.8000000007451,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 1034,
+            "height": 410
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 89.5
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 62.400000002235174
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 126
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 194.30000000074506
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 64.19999999925494
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 268.3999999985099
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 133.39999999850988
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 135.5
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 197.09999999776483
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 196.80000000074506
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 48.69999999925494
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 4.200000002980232
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 1.3999999985098839
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 11.199999999254942
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 34.900000002235174
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 66.10000000149012
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 57.19999999925494
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 105.19999999925494
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 10.699999999254942
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 61
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 135.09999999776483
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 6,
+          "before3DRequests": [],
+          "readyMs": 629.2000000029802,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 1034,
+            "height": 410
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 87.69999999925494
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 64.80000000074506
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 130.80000000074506
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 205.09999999776483
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 282.9000000022352
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 66.69999999925494
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 134.70000000298023
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 137
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 207.40000000223517
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 207.59999999776483
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 59.399999998509884
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 4.5
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 1.4000000022351742
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 15.899999998509884
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 52.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 28.400000002235174
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 120.69999999925494
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 93.10000000149012
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 12
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 62.69999999925494
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 127.90000000223517
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 7,
+          "before3DRequests": [],
+          "readyMs": 631,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 1034,
+            "height": 410
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 85.59999999776483
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 68.19999999925494
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 142.5
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 198.09999999776483
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 280
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 67.89999999850988
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 74.19999999925494
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 77.30000000074506
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 200.69999999925494
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 201
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 48.5
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 11.900000002235174
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 2.5
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 16.299999997019768
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 51.099999997764826
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 29.300000000745058
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 76.29999999701977
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 118.40000000223517
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 11.5
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 68.40000000223517
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 135.60000000149012
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 8,
+          "before3DRequests": [],
+          "readyMs": 935.1999999992549,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 1034,
+            "height": 410
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 83.69999999925494
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 71.10000000149012
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 155.60000000149012
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 215.5
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 288.5
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 74.5
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 87.30000000074506
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 89.39999999850988
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 220
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 220.30000000074506
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 74.89999999850988
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 5
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 1.800000000745058
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 14
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 44.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 24.300000000745058
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 66.09999999776483
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 108.10000000149012
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 12.199999999254942
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 71.89999999850988
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 219.29999999701977
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 9,
+          "before3DRequests": [],
+          "readyMs": 649,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 1034,
+            "height": 410
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 90.90000000223517
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 66.5
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 153
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 270.80000000074506
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 371.1000000014901
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 69.29999999701977
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 76.19999999925494
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 78.80000000074506
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 267.5999999977648
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 273.79999999701977
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 113.60000000149012
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 9.199999999254942
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 3
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 15.600000001490116
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 38.599999997764826
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 49.399999998509884
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 79.80000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 136.30000000074506
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 13.399999998509884
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 75.10000000149012
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 131.60000000149012
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 10,
+          "before3DRequests": [],
+          "readyMs": 590.7000000029802,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 1034,
+            "height": 410
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 91.10000000149012
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 62.400000002235174
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 149.89999999850988
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 240.69999999925494
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 65.39999999850988
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 324.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 157.30000000074506
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 160.60000000149012
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 247.09999999776483
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 246.19999999925494
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 79.5
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 4
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 1.8999999985098839
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 11.800000000745058
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 44
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 22.699999999254942
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 67
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 108.89999999850988
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 9
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 51.5
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 128.5
+            }
+          ],
+          "errors": []
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "narrow-lab",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "downloadMbit": 10,
+        "rttMs": 80,
+        "cpuSlowdown": 4
+      },
+      "rows": [
+        {
+          "run": 1,
+          "before3DRequests": [],
+          "readyMs": 2718.400000002235,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 560,
+            "height": 544
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 140.20000000298023
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 3259.39999999851
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 3280.5
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 3391.89999999851
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 3564.89999999851
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 120.19999999925494
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 203.59999999776483
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 147.59999999776483
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 207
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 235
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 140.09999999776483
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 92.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 0.9000000022351742
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 241.20000000298023
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 324.1000000014901
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 234
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 344.4000000022352
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 379.20000000298023
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 185.5
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 365.8999999985099
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 1382.699999999255
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 2,
+          "before3DRequests": [],
+          "readyMs": 2508.199999999255,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 560,
+            "height": 544
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 135.40000000223517
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 3283.10000000149
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 3286.10000000149
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 3385.60000000149
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 3562.89999999851
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 122.79999999701977
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 200.80000000074506
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 143.19999999925494
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 208.59999999776483
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 230.89999999850988
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 141.69999999925494
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 90.5
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 0.9000000022351742
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 238.09999999776483
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 323.19999999925494
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 235.19999999925494
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 344.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 379.5
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 178.19999999925494
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 363.0999999977648
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 1254.7000000029802
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 3,
+          "before3DRequests": [],
+          "readyMs": 2391.800000000745,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 560,
+            "height": 544
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 138.5
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 3242.5
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 3280.099999997765
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 3401.699999999255
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 3560.2000000029802
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 118.20000000298023
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 178.59999999776483
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 129.40000000223517
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 200.19999999925494
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 216.30000000074506
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 140.19999999925494
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 92
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 2.7000000029802322
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 234.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 317.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 232.60000000149012
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 341.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 376.30000000074506
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 183
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 365.69999999925494
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 1247.4000000022352
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 4,
+          "before3DRequests": [],
+          "readyMs": 2488.699999999255,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 560,
+            "height": 544
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 140.40000000223517
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 3280.099999997765
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 3281.900000002235
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 3388.5
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 3562.39999999851
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 125.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 199.30000000074506
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 142.09999999776483
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 211.30000000074506
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 229.30000000074506
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 140
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 92.89999999850988
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 1.1000000014901161
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 230.80000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 321
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 234.10000000149012
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 342.1000000014901
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 376.30000000074506
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 183.30000000074506
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 366
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 1248.3999999985099
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 5,
+          "before3DRequests": [],
+          "readyMs": 2459.199999999255,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 560,
+            "height": 544
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 138.89999999850988
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 3265.7000000029802
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 3290.900000002235
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 3390.599999997765
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 3564.599999997765
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 128
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 206
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 146.39999999850988
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 213.80000000074506
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 194.90000000223517
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 140.19999999925494
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 89.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 0.8000000007450581
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 235.5
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 321.4000000022352
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 233.59999999776483
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 342.69999999925494
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 377.30000000074506
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 176.40000000223517
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 361
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 1247.300000000745
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 6,
+          "before3DRequests": [],
+          "readyMs": 3488.89999999851,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 560,
+            "height": 544
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 138.60000000149012
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 3242.800000000745
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 3264.699999999255
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 3402
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 3576.199999999255
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 114.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 196.19999999925494
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 148
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 202
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 235.80000000074506
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 139.89999999850988
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 96.80000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 1.6000000014901161
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 195.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 305.19999999925494
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 216.69999999925494
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 325.5
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 366.3999999985099
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 165.89999999850988
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 365.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 1321
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 7,
+          "before3DRequests": [],
+          "readyMs": 3298.60000000149,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 560,
+            "height": 544
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 141.89999999850988
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 3092.199999999255
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 3259.900000002235
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 3408
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 3559
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 107.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 225.30000000074506
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 327.5
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 298.1000000014901
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 368.30000000074506
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 140.10000000149012
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 93.19999999925494
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 1.199999999254942
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 180.59999999776483
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 252.10000000149012
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 176.60000000149012
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 319.30000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 387.80000000074506
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 163.59999999776483
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 351.4000000022352
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 1331.8999999985099
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 8,
+          "before3DRequests": [],
+          "readyMs": 2649.099999997765,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 560,
+            "height": 544
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 137.5
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 3194.7999999970198
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 3279.10000000149
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 3401.5
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 3561.60000000149
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 107.89999999850988
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 228.5
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 171.5
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 196.30000000074506
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 257.6000000014901
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 139.80000000074506
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 93.60000000149012
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 1.8999999985098839
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 233.60000000149012
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 318.80000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 232.69999999925494
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 341.8999999985099
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 375.8999999985099
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 179.80000000074506
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 363.80000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 1263.199999999255
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 9,
+          "before3DRequests": [],
+          "readyMs": 2653.300000000745,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 560,
+            "height": 544
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 140
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 3222.699999999255
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 3276.39999999851
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 3404.300000000745
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 3564.699999999255
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 107.10000000149012
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 218.30000000074506
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 151
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 191.69999999925494
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 237.10000000149012
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 141.19999999925494
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 92.39999999850988
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 1.0999999977648258
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 233.90000000223517
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 320.5
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 232.80000000074506
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 340.6000000014901
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 375.5
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 178
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 362.0999999977648
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 1255.7000000029802
+            }
+          ],
+          "errors": []
+        },
+        {
+          "run": 10,
+          "before3DRequests": [],
+          "readyMs": 2582.5,
+          "loaded": true,
+          "geometry": {
+            "x": 2.232379913330078,
+            "y": 2.015341281890869,
+            "z": 3.4605695009231567
+          },
+          "rootReady": "true",
+          "hostVisibility": "visible",
+          "canvasSize": {
+            "width": 560,
+            "height": 544
+          },
+          "drawCalls": 81,
+          "gpu": "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)",
+          "resources": [
+            {
+              "path": "/css2",
+              "encoded": 799,
+              "decoded": 8338,
+              "transfer": 1099,
+              "duration": 140.5
+            },
+            {
+              "path": "/_astro/ai.DaW1XGv_.png",
+              "encoded": 1002617,
+              "decoded": 1002289,
+              "transfer": 1002917,
+              "duration": 3250.900000002235
+            },
+            {
+              "path": "/_astro/growth.BeiiA4R5.png",
+              "encoded": 996254,
+              "decoded": 995931,
+              "transfer": 996554,
+              "duration": 3275.39999999851
+            },
+            {
+              "path": "/_astro/build.BP1zNVxU.png",
+              "encoded": 1053996,
+              "decoded": 1053653,
+              "transfer": 1054296,
+              "duration": 3388.900000002235
+            },
+            {
+              "path": "/_astro/blockchain.DoHPkkCI.png",
+              "encoded": 1216644,
+              "decoded": 1216251,
+              "transfer": 1216944,
+              "duration": 3563.39999999851
+            },
+            {
+              "path": "/_astro/Layout.9TYlB-TI.css",
+              "encoded": 9426,
+              "decoded": 51119,
+              "transfer": 9726,
+              "duration": 124.5
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 31538,
+              "duration": 213.5
+            },
+            {
+              "path": "/_astro/AnimatedAvatarGallery.astro_astro_type_script_index_0_lang.D8qh3hAD.js",
+              "encoded": 11785,
+              "decoded": 42899,
+              "transfer": 12085,
+              "duration": 150.60000000149012
+            },
+            {
+              "path": "/_astro/modal-controller._OO7yd8B.js",
+              "encoded": 1473,
+              "decoded": 5580,
+              "transfer": 1773,
+              "duration": 212.89999999850988
+            },
+            {
+              "path": "/_astro/locale-client.D3ARZv9n.js",
+              "encoded": 2463,
+              "decoded": 8705,
+              "transfer": 2763,
+              "duration": 239
+            },
+            {
+              "path": "/logo.svg",
+              "encoded": 14328,
+              "decoded": 38232,
+              "transfer": 14628,
+              "duration": 141.19999999925494
+            },
+            {
+              "path": "/favicon.svg",
+              "encoded": 8866,
+              "decoded": 19541,
+              "transfer": 9166,
+              "duration": 91.39999999850988
+            },
+            {
+              "path": "/_astro/turtleand-0.0.1.B79ywKM1.svg",
+              "encoded": 31238,
+              "decoded": 87424,
+              "transfer": 0,
+              "duration": 1
+            },
+            {
+              "path": "/_astro/turtleand-0.0.2.CIz5mbqn.svg",
+              "encoded": 38888,
+              "decoded": 110879,
+              "transfer": 39188,
+              "duration": 236.59999999776483
+            },
+            {
+              "path": "/_astro/turtleand-0.0.3.BJh9xoKb.svg",
+              "encoded": 74094,
+              "decoded": 211153,
+              "transfer": 74394,
+              "duration": 322.6000000014901
+            },
+            {
+              "path": "/_astro/turtleand-0.0.4.DHWubMIy.svg",
+              "encoded": 38265,
+              "decoded": 118095,
+              "transfer": 38565,
+              "duration": 234.89999999850988
+            },
+            {
+              "path": "/_astro/turtleand-0.1.0.BBfG5iCj.svg",
+              "encoded": 86822,
+              "decoded": 243856,
+              "transfer": 87122,
+              "duration": 343.5999999977648
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.BSc4seGL.svg",
+              "encoded": 129548,
+              "decoded": 361071,
+              "transfer": 129848,
+              "duration": 377.8999999985099
+            },
+            {
+              "path": "/_astro/warm.BvoYfyt4.hdr",
+              "encoded": 62020,
+              "decoded": 131121,
+              "transfer": 62320,
+              "duration": 182.10000000149012
+            },
+            {
+              "path": "/_astro/model-viewer.min.DjP7aMzC.js",
+              "encoded": 291816,
+              "decoded": 1068903,
+              "transfer": 292116,
+              "duration": 364.5
+            },
+            {
+              "path": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+              "encoded": 1455007,
+              "decoded": 2519012,
+              "transfer": 1455307,
+              "duration": 1251.9000000022352
+            }
+          ],
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

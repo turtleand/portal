@@ -169,6 +169,32 @@
       "restart": "Reiniciar",
       "progress": "Etapa {current} de {total}",
       "announcement": "Mostrando {version}, {title}. Etapa {current} de {total}."
+    },
+    "threeD": {
+      "representation": "Representación del avatar",
+      "original": "Original 2D",
+      "dimensional": "Vista 3D",
+      "help": "Arrastra para girar. Usa las flechas para ajustar la vista.",
+      "controls": "Controles de la vista 3D",
+      "left": "Girar a la izquierda",
+      "right": "Girar a la derecha",
+      "rotate": "Girar",
+      "stopRotation": "Detener giro",
+      "reset": "Restablecer vista",
+      "retry": "Reintentar 3D",
+      "loading": "Preparando la vista 3D. El original sigue visible.",
+      "slow": "La carga continúa. Puedes volver al original 2D.",
+      "error": "La vista 3D no está disponible. Puedes ver el original 2D.",
+      "ready": "Vista 3D lista.",
+      "viewer": "Avatar 3D interactivo: {title}",
+      "reduced": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+      "viewPosition": "Vista desde {direction}.",
+      "viewAbove": "Vista desde arriba, {direction}.",
+      "viewBelow": "Vista desde abajo, {direction}.",
+      "cameraFront": "el frente",
+      "cameraRight": "la derecha",
+      "cameraBack": "atrás",
+      "cameraLeft": "la izquierda"
     }
   },
   "feeds": {

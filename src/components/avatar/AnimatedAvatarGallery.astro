@@ -15,7 +15,7 @@ const firstDescription = locale === 'es' ? firstStage.descriptionEs : firstStage
 const progress = t('avatar.evolution.progress')
   .replace('{current}', '1')
   .replace('{total}', String(avatarEvolutionStages.length));
-const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.length}, minmax(2rem, 1fr)); min-width: max(100%, ${avatarEvolutionStages.length * 2}rem);`;
+const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.length}, minmax(44px, 1fr)); min-width: max(100%, ${avatarEvolutionStages.length * 44 + (avatarEvolutionStages.length - 1) * 8}px);`;
 ---
 
 <section
@@ -35,6 +35,11 @@ const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.len
       </h2>
     </header>
 
+    <div class="evolution-representation" role="group" aria-label={t('avatar.threeD.representation')} data-i18n-key="avatar.threeD.representation" data-i18n-attr="aria-label">
+      <button type="button" data-evolution-mode="2d" aria-pressed="true" data-i18n-key="avatar.threeD.original">{t('avatar.threeD.original')}</button>
+      <button type="button" data-evolution-mode="3d" aria-pressed="false" data-i18n-key="avatar.threeD.dimensional">{t('avatar.threeD.dimensional')}</button>
+    </div>
+
     <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-[radial-gradient(circle_at_50%_42%,rgba(32,159,142,0.22),rgba(5,15,29,0.96)_67%)] sm:rounded-[28px]">
       <div
         class="relative mx-auto flex h-[272px] w-full max-w-3xl items-center justify-center sm:h-[360px] lg:h-[410px]"
@@ -44,6 +49,7 @@ const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.len
       >
         <span class="evolution-walk-shadow" data-evolution-walk-shadow aria-hidden="true" hidden></span>
         <div class="absolute inset-0 z-[1] flex items-center justify-center" data-evolution-stage></div>
+        <div class="evolution-model-host" data-evolution-model-host aria-hidden="true"></div>
         <div
           class="pointer-events-none absolute inset-0 z-[3] overflow-hidden"
           data-evolution-effects
@@ -87,6 +93,20 @@ const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.len
         <div class="pointer-events-none absolute inset-x-5 bottom-4 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" aria-hidden="true"></div>
       </div>
 
+      <div class="evolution-3d-tools" data-evolution-3d-tools hidden>
+        <p class="evolution-3d-help" data-i18n-key="avatar.threeD.help">{t('avatar.threeD.help')}</p>
+        <div class="evolution-3d-buttons" role="group" aria-label={t('avatar.threeD.controls')} data-i18n-key="avatar.threeD.controls" data-i18n-attr="aria-label">
+          <button type="button" data-evolution-3d-action="left" aria-label={t('avatar.threeD.left')} data-i18n-key="avatar.threeD.left" data-i18n-attr="aria-label">↶</button>
+          <button type="button" data-evolution-3d-action="right" aria-label={t('avatar.threeD.right')} data-i18n-key="avatar.threeD.right" data-i18n-attr="aria-label">↷</button>
+          <button type="button" data-evolution-3d-action="rotation" aria-pressed="false">{t('avatar.threeD.rotate')}</button>
+          <button type="button" data-evolution-3d-action="reset" data-i18n-key="avatar.threeD.reset">{t('avatar.threeD.reset')}</button>
+        </div>
+        <div class="evolution-3d-status" role="status" aria-live="polite" aria-atomic="true">
+          <span data-evolution-3d-status></span>
+          <button type="button" data-evolution-3d-action="retry" data-i18n-key="avatar.threeD.retry" hidden>{t('avatar.threeD.retry')}</button>
+        </div>
+      </div>
+
       <p class="sr-only" role="status" aria-live="polite" aria-atomic="true" data-evolution-status>
         {t('avatar.evolution.ready')}
       </p>
@@ -96,10 +116,10 @@ const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.len
           <ol class="grid gap-2" style={timelineStyle} data-evolution-timeline aria-label={t('avatar.evolution.timelineLabel')} data-i18n-key="avatar.evolution.timelineLabel" data-i18n-attr="aria-label">
             {avatarEvolutionStages.map((stage, index) => (
               <li class="min-w-0" data-evolution-marker data-active={index === 0 ? 'true' : 'false'}>
-                <span class="mb-2 block h-1.5 rounded-full bg-white/15 transition-colors" data-evolution-marker-bar></span>
-                <span class="block truncate text-center text-[0.58rem] font-semibold tracking-[0.02em] text-offWhite/45 sm:text-xs sm:tracking-[0.06em]">
-                  {stage.version}
-                </span>
+                <button type="button" class="evolution-timeline-button" data-evolution-select={index} aria-current={index === 0 ? 'step' : undefined} aria-label={`${stage.version}: ${locale === 'es' ? stage.titleEs : stage.title}`}>
+                  <span class="mb-2 block h-1.5 rounded-full bg-white/15 transition-colors" data-evolution-marker-bar></span>
+                  <span class="block truncate text-center text-[0.58rem] font-semibold tracking-[0.02em] text-offWhite/45 sm:text-xs sm:tracking-[0.06em]">{stage.version}</span>
+                </button>
               </li>
             ))}
           </ol>
@@ -144,9 +164,10 @@ const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.len
 
 <script>
   import { avatarEvolutionStages } from '../../data/avatarEvolution';
+  import { avatar3dById, avatar3dEnvironmentUrl } from '../../data/avatar3d';
   import { initAvatarEvolution } from './evolution-controller.js';
 
-  const initializeAvatarEvolution = () => initAvatarEvolution(avatarEvolutionStages);
+  const initializeAvatarEvolution = () => initAvatarEvolution(avatarEvolutionStages, avatar3dById, avatar3dEnvironmentUrl);
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeAvatarEvolution, { once: true });
@@ -156,6 +177,28 @@ const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.len
 </script>
 
 <style>
+  .evolution-representation { display: flex; width: max-content; margin: 0 auto; padding: 4px; gap: 4px; border: 1px solid rgb(255 255 255 / .18); border-radius: 999px; background: #081321; }
+  .evolution-representation button { min-width: 100px; min-height: 44px; padding: .5rem 1rem; border-radius: 999px; color: #c6cfd1; font-size: .85rem; font-weight: 600; }
+  .evolution-representation button[aria-pressed='true'] { color: #182321; background: #e8d9bb; }
+  .evolution-representation button:focus-visible, .evolution-timeline-button:focus-visible, .evolution-3d-buttons button:focus-visible, .evolution-3d-status button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+  .evolution-timeline-button { min-height: 44px; width: 100%; padding: .35rem 0; border-radius: 5px; }
+  .evolution-model-host { position: absolute; inset: 0; z-index: 2; visibility: hidden; pointer-events: none; }
+  .evolution-model-host :global(model-viewer) { width: 100%; height: 100%; --poster-color: transparent; --progress-bar-height: 0px; }
+  [data-avatar-evolution][data-representation='3d'] [data-evolution-canvas] { background: radial-gradient(ellipse at 50% 35%, #eadcc4, #c5b799 85%); }
+  [data-avatar-evolution][data-representation='3d'] [data-evolution-canvas] { max-width: none; }
+  [data-model-ready='true'] .evolution-model-host { visibility: visible; pointer-events: auto; }
+  [data-model-ready='true'] [data-evolution-stage], [data-model-ready='true'] [data-evolution-static-fallback], [data-model-ready='true'] [data-evolution-unavailable] { visibility: hidden; }
+  .evolution-3d-tools { padding: .5rem .75rem .25rem; border-top: 1px solid rgb(255 255 255 / .1); }
+  .evolution-3d-tools[hidden] { display: none; }
+  .evolution-3d-help { text-align: center; font-size: .75rem; line-height: 1.5; color: #bdc9ca; }
+  .evolution-3d-buttons { display: grid; grid-template-columns: 44px 44px minmax(0, 1fr) minmax(0, 1.5fr); gap: .35rem; max-width: 360px; margin: .4rem auto 0; }
+  .evolution-3d-buttons button, .evolution-3d-status button { min-height: 44px; min-width: 44px; padding: .5rem .65rem; border: 1px solid rgb(255 255 255 / .2); border-radius: 10px; font-size: .75rem; color: #e6eeee; }
+  .evolution-3d-buttons button:hover:not(:disabled), .evolution-3d-status button:hover { background: rgb(255 255 255 / .1); }
+  .evolution-3d-buttons button:disabled { opacity: .4; }
+  .evolution-3d-buttons button[data-evolution-3d-action='left'], .evolution-3d-buttons button[data-evolution-3d-action='right'] { font-size: 1.2rem; }
+  .evolution-3d-status { min-height: 48px; display: flex; align-items: center; justify-content: center; gap: .5rem; color: #d9ddce; font-size: .75rem; line-height: 1.35; }
+  .evolution-3d-status button[hidden] { display: none; }
+
   .evolution-control {
     min-height: 48px;
     display: inline-flex;

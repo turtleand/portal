@@ -1,0 +1,216 @@
+{
+  "at": "2026-09-06T20:22:41.882Z",
+  "base": "http://127.0.0.1:4395",
+  "label": "warm-presence/final",
+  "sourceHashes": {
+    "src/components/avatar/three-d-controller.js": "16036871316991ec7c56aa1c4103a913b5f5a98a737744d1c69f2df2077d5a38",
+    "src/components/avatar/evolution-controller.js": "3c5cce5788a44a33f9518f387ec916a8d9950886b4e4d5dd87f8b1d4bebd7501",
+    "src/components/avatar/AnimatedAvatarGallery.astro": "ce64d08caccb15c1a7d595d5cdfad11be232db08e51230b48dc90f3b71385c5a",
+    "src/components/avatar/modal-controller.js": "ba5e1c3595cc5fe1a4f8a936ba06c2cc8a5240b4f9b00cf59d991ec06282c253",
+    "src/data/avatar3d.ts": "5442022e9bdffb64b404043f4da48a8b7668a2e1a8a9b47a62274b3c52123588",
+    "package-lock.json": "b927b8f5811e9359091fda75975b07e65830aabce78121ad50fe435ecf01d9c0",
+    "src/images/avatar/3d/turtleand-0.0.1.glb": "d6df9d643bba41f347df27eb95c24c85d5dcf39227bc978de7774d2992216d98",
+    "src/images/avatar/3d/turtleand-0.0.2.glb": "33adedcb606fcc886315bad660d750a3cbe3557d48da6a948a1cea136341521f",
+    "src/images/avatar/3d/turtleand-0.0.3.glb": "1f0697bdac446952c40854254f69af7afb18006e11e584727f17ea7a76f4ba38",
+    "src/images/avatar/3d/turtleand-0.0.4.glb": "1a59f6154f155e24fa13c5230a5242dd377fa2d86a55d35eb5df305c71db7bb1",
+    "src/images/avatar/3d/turtleand-0.1.0.glb": "e88b509ebc0c29f9e5632e0858b9396614dd64c2f5e9a1bc51aecf1e6f2b41e0",
+    "src/images/avatar/3d/turtleand-0.1.1.glb": "7c142cad9c46b67a441d035a6590406c453885ec684a7e1170213ac8f62866bd",
+    "src/images/avatar/3d/warm.hdr": "0b581db8051611ae155b0ba387ac3758d8ef610e2866224078f627a63806b352"
+  },
+  "scope": "Production client recovery when canonical SVG fetch and image fallback both fail. Covers ready 3D, return to 2D, failed GLB and explicit retry in English and Spanish.",
+  "checks": [
+    {
+      "name": "en missing canonical SVG exposes unavailable 2D state",
+      "pass": true,
+      "unavailableVisible": true,
+      "canvasLabel": "The v0.0.1 vector is unavailable."
+    },
+    {
+      "name": "en ready 3D clears unavailable overlay and label",
+      "pass": true,
+      "unavailableVisible": false,
+      "canvasLabel": "v0.0.1: The Genesis Shell. The beginning of the journey with innocence and wonder.",
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.1.CAYKp1Rf.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "en return to 2D restores unavailable overlay and label",
+      "pass": true,
+      "unavailableVisible": true,
+      "canvasLabel": "The v0.0.1 vector is unavailable."
+    },
+    {
+      "name": "en failed GLB preserves unavailable canonical fallback",
+      "pass": true,
+      "unavailableVisible": true,
+      "canvasLabel": "The v0.0.2 vector is unavailable.",
+      "state": {
+        "mode": "3d",
+        "ready": "false",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "The Quantum Shell",
+        "description": "Glowing lines hint inner transformation.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "3D is unavailable. The 2D original remains available.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "en successful retry restores visible model and metadata label",
+      "pass": true,
+      "unavailableVisible": false,
+      "canvasLabel": "v0.0.2: The Quantum Shell. Glowing lines hint inner transformation.",
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "The Quantum Shell",
+        "description": "Glowing lines hint inner transformation.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.2.CqVtSjTo.glb?retry=1",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "en canonical and GLB recovery has no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "es missing canonical SVG exposes unavailable 2D state",
+      "pass": true,
+      "unavailableVisible": true,
+      "canvasLabel": "El vector de v0.0.1 no está disponible."
+    },
+    {
+      "name": "es ready 3D clears unavailable overlay and label",
+      "pass": true,
+      "unavailableVisible": false,
+      "canvasLabel": "v0.0.1: Caparazón Génesis. El inicio del viaje con inocencia y asombro.",
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "Caparazón Génesis",
+        "description": "El inicio del viaje con inocencia y asombro.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.1.CAYKp1Rf.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "es return to 2D restores unavailable overlay and label",
+      "pass": true,
+      "unavailableVisible": true,
+      "canvasLabel": "El vector de v0.0.1 no está disponible."
+    },
+    {
+      "name": "es failed GLB preserves unavailable canonical fallback",
+      "pass": true,
+      "unavailableVisible": true,
+      "canvasLabel": "El vector de v0.0.2 no está disponible.",
+      "state": {
+        "mode": "3d",
+        "ready": "false",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "Caparazón Cuántico",
+        "description": "Líneas brillantes insinúan la transformación interior.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "La vista 3D no está disponible. Puedes ver el original 2D.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "es successful retry restores visible model and metadata label",
+      "pass": true,
+      "unavailableVisible": false,
+      "canvasLabel": "v0.0.2: Caparazón Cuántico. Líneas brillantes insinúan la transformación interior.",
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "Caparazón Cuántico",
+        "description": "Líneas brillantes insinúan la transformación interior.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.2.CqVtSjTo.glb?retry=1",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "es canonical and GLB recovery has no unhandled page errors",
+      "pass": true,
+      "errors": []
+    }
+  ],
+  "errors": [],
+  "screens": [
+    "warm-presence/final-en-canonical-failure-3d-ready.png",
+    "warm-presence/final-es-canonical-failure-3d-ready.png"
+  ]
+}

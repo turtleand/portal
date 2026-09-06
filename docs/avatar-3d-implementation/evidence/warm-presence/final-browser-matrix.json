@@ -1,0 +1,4777 @@
+{
+  "at": "2026-09-06T20:23:03.922Z",
+  "base": "http://127.0.0.1:4395",
+  "label": "warm-presence/final",
+  "sourceHashes": {
+    "src/components/avatar/three-d-controller.js": "16036871316991ec7c56aa1c4103a913b5f5a98a737744d1c69f2df2077d5a38",
+    "src/components/avatar/evolution-controller.js": "3c5cce5788a44a33f9518f387ec916a8d9950886b4e4d5dd87f8b1d4bebd7501",
+    "src/components/avatar/AnimatedAvatarGallery.astro": "ce64d08caccb15c1a7d595d5cdfad11be232db08e51230b48dc90f3b71385c5a",
+    "src/components/avatar/modal-controller.js": "ba5e1c3595cc5fe1a4f8a936ba06c2cc8a5240b4f9b00cf59d991ec06282c253",
+    "src/data/avatar3d.ts": "5442022e9bdffb64b404043f4da48a8b7668a2e1a8a9b47a62274b3c52123588",
+    "package-lock.json": "b927b8f5811e9359091fda75975b07e65830aabce78121ad50fe435ecf01d9c0",
+    "src/images/avatar/3d/turtleand-0.0.1.glb": "d6df9d643bba41f347df27eb95c24c85d5dcf39227bc978de7774d2992216d98",
+    "src/images/avatar/3d/turtleand-0.0.2.glb": "33adedcb606fcc886315bad660d750a3cbe3557d48da6a948a1cea136341521f",
+    "src/images/avatar/3d/turtleand-0.0.3.glb": "1f0697bdac446952c40854254f69af7afb18006e11e584727f17ea7a76f4ba38",
+    "src/images/avatar/3d/turtleand-0.0.4.glb": "1a59f6154f155e24fa13c5230a5242dd377fa2d86a55d35eb5df305c71db7bb1",
+    "src/images/avatar/3d/turtleand-0.1.0.glb": "e88b509ebc0c29f9e5632e0858b9396614dd64c2f5e9a1bc51aecf1e6f2b41e0",
+    "src/images/avatar/3d/turtleand-0.1.1.glb": "7c142cad9c46b67a441d035a6590406c453885ec684a7e1170213ac8f62866bd",
+    "src/images/avatar/3d/warm.hdr": "0b581db8051611ae155b0ba387ac3758d8ef610e2866224078f627a63806b352"
+  },
+  "scope": "Production-optimized static client QA build. Not Netlify SSR emulation or physical-device validation.",
+  "normalChronologyIncluded": false,
+  "allVersionContactSheets": true,
+  "checks": [
+    {
+      "name": "chromium/desktop/en unopened gallery requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/en language matches route",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/en opened 2D requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/en 2D v0.0.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/en 2D v0.0.2 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "The Quantum Shell",
+        "description": "Glowing lines hint inner transformation.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "1",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/en 2D v0.0.3 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "The Tech Nomad",
+        "description": "A digital adventurer on the move, wearing its interface.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "2",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/en 2D v0.0.4 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "The Network Visitor",
+        "description": "Uplink node transmission: From observer to participant.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "3",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/en 2D v0.1.0 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "The Hydraulic Brace",
+        "description": "From organic to industrial. Enhanced output.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "4",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/en 2D v0.1.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "5",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/en reduced 2D has no walking image requests",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/en previous navigates",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/en restart returns to first",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/en keyboard focus stays in modal",
+      "pass": true,
+      "key": "Tab"
+    },
+    {
+      "name": "chromium/desktop/en Escape restores trigger focus",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/en reopen resets first version",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/en 3D v0.0.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.1.CAYKp1Rf.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/en 3D v0.0.2 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "The Quantum Shell",
+        "description": "Glowing lines hint inner transformation.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.2.CqVtSjTo.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/en 3D v0.0.3 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "The Tech Nomad",
+        "description": "A digital adventurer on the move, wearing its interface.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.3.DmBOSKfs.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/en 3D v0.0.4 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "The Network Visitor",
+        "description": "Uplink node transmission: From observer to participant.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.4.dwTdcXdM.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/en 3D v0.1.0 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "The Hydraulic Brace",
+        "description": "From organic to industrial. Enhanced output.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.0.Cc8269xl.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/en 3D v0.1.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/en reduced 3D automatic motion disabled",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/en accessible camera controls and reset",
+      "pass": true,
+      "before": -0.4886921905584123,
+      "after": -0.05235987755982988,
+      "reset": -0.4886921905584123
+    },
+    {
+      "name": "chromium/desktop/en return to 2D keeps selection and canonical",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/en return to 3D remains usable",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/en document and modal have no horizontal overflow",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/en close clears viewer and restores focus",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/en no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "chromium/desktop/es unopened gallery requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/es language matches route",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/es opened 2D requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/es 2D v0.0.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "Caparazón Génesis",
+        "description": "El inicio del viaje con inocencia y asombro.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/es 2D v0.0.2 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "Caparazón Cuántico",
+        "description": "Líneas brillantes insinúan la transformación interior.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "1",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/es 2D v0.0.3 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "El Nómada Tecno",
+        "description": "Un aventurero digital en movimiento que viste su interfaz.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "2",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/es 2D v0.0.4 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "El Visitante de la Red",
+        "description": "Transmisión de nodo: de observador a participante.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "3",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/es 2D v0.1.0 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "El Exoesqueleto Hidráulico",
+        "description": "De orgánico a industrial. Salida mejorada.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "4",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/es 2D v0.1.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "5",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/es reduced 2D has no walking image requests",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/es previous navigates",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/es restart returns to first",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/es keyboard focus stays in modal",
+      "pass": true,
+      "key": "Tab"
+    },
+    {
+      "name": "chromium/desktop/es Escape restores trigger focus",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/es reopen resets first version",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/es 3D v0.0.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "Caparazón Génesis",
+        "description": "El inicio del viaje con inocencia y asombro.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.1.CAYKp1Rf.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/es 3D v0.0.2 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "Caparazón Cuántico",
+        "description": "Líneas brillantes insinúan la transformación interior.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.2.CqVtSjTo.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/es 3D v0.0.3 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "El Nómada Tecno",
+        "description": "Un aventurero digital en movimiento que viste su interfaz.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.3.DmBOSKfs.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/es 3D v0.0.4 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "El Visitante de la Red",
+        "description": "Transmisión de nodo: de observador a participante.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.4.dwTdcXdM.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/es 3D v0.1.0 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "El Exoesqueleto Hidráulico",
+        "description": "De orgánico a industrial. Salida mejorada.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.0.Cc8269xl.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/es 3D v0.1.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/es reduced 3D automatic motion disabled",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/es accessible camera controls and reset",
+      "pass": true,
+      "before": -0.4886921905584123,
+      "after": -0.05235987755982988,
+      "reset": -0.4886921905584123
+    },
+    {
+      "name": "chromium/desktop/es return to 2D keeps selection and canonical",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/es return to 3D remains usable",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/es document and modal have no horizontal overflow",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/desktop/es close clears viewer and restores focus",
+      "pass": true
+    },
+    {
+      "name": "chromium/desktop/es no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "chromium/narrow/en unopened gallery requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/en language matches route",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/en opened 2D requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/en 2D v0.0.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/en 2D v0.0.2 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "The Quantum Shell",
+        "description": "Glowing lines hint inner transformation.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "1",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/en 2D v0.0.3 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "The Tech Nomad",
+        "description": "A digital adventurer on the move, wearing its interface.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "2",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/en 2D v0.0.4 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "The Network Visitor",
+        "description": "Uplink node transmission: From observer to participant.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "3",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/en 2D v0.1.0 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "The Hydraulic Brace",
+        "description": "From organic to industrial. Enhanced output.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "4",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/en 2D v0.1.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "5",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/en reduced 2D has no walking image requests",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/en previous navigates",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/en restart returns to first",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/en keyboard focus stays in modal",
+      "pass": true,
+      "key": "Tab"
+    },
+    {
+      "name": "chromium/narrow/en Escape restores trigger focus",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/en reopen resets first version",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/en 3D v0.0.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.1.CAYKp1Rf.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/en 3D v0.0.2 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "The Quantum Shell",
+        "description": "Glowing lines hint inner transformation.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.2.CqVtSjTo.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/en 3D v0.0.3 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "The Tech Nomad",
+        "description": "A digital adventurer on the move, wearing its interface.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.3.DmBOSKfs.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/en 3D v0.0.4 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "The Network Visitor",
+        "description": "Uplink node transmission: From observer to participant.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.4.dwTdcXdM.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/en 3D v0.1.0 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "The Hydraulic Brace",
+        "description": "From organic to industrial. Enhanced output.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.0.Cc8269xl.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/en 3D v0.1.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/en reduced 3D automatic motion disabled",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/en accessible camera controls and reset",
+      "pass": true,
+      "before": -0.4886921905584123,
+      "after": -0.05235987755982988,
+      "reset": -0.4886921905584123
+    },
+    {
+      "name": "chromium/narrow/en return to 2D keeps selection and canonical",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/en return to 3D remains usable",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/en document and modal have no horizontal overflow",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/en close clears viewer and restores focus",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/en no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "chromium/narrow/es unopened gallery requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/es language matches route",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/es opened 2D requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/es 2D v0.0.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "Caparazón Génesis",
+        "description": "El inicio del viaje con inocencia y asombro.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/es 2D v0.0.2 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "Caparazón Cuántico",
+        "description": "Líneas brillantes insinúan la transformación interior.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "1",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/es 2D v0.0.3 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "El Nómada Tecno",
+        "description": "Un aventurero digital en movimiento que viste su interfaz.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "2",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/es 2D v0.0.4 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "El Visitante de la Red",
+        "description": "Transmisión de nodo: de observador a participante.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "3",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/es 2D v0.1.0 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "El Exoesqueleto Hidráulico",
+        "description": "De orgánico a industrial. Salida mejorada.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "4",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/es 2D v0.1.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "5",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/es reduced 2D has no walking image requests",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/es previous navigates",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/es restart returns to first",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/es keyboard focus stays in modal",
+      "pass": true,
+      "key": "Tab"
+    },
+    {
+      "name": "chromium/narrow/es Escape restores trigger focus",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/es reopen resets first version",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/es 3D v0.0.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "Caparazón Génesis",
+        "description": "El inicio del viaje con inocencia y asombro.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.1.CAYKp1Rf.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/es 3D v0.0.2 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "Caparazón Cuántico",
+        "description": "Líneas brillantes insinúan la transformación interior.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.2.CqVtSjTo.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/es 3D v0.0.3 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "El Nómada Tecno",
+        "description": "Un aventurero digital en movimiento que viste su interfaz.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.3.DmBOSKfs.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/es 3D v0.0.4 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "El Visitante de la Red",
+        "description": "Transmisión de nodo: de observador a participante.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.4.dwTdcXdM.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/es 3D v0.1.0 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "El Exoesqueleto Hidráulico",
+        "description": "De orgánico a industrial. Salida mejorada.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.0.Cc8269xl.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/es 3D v0.1.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/es reduced 3D automatic motion disabled",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/es accessible camera controls and reset",
+      "pass": true,
+      "before": -0.4886921905584123,
+      "after": -0.05235987755982988,
+      "reset": -0.4886921905584123
+    },
+    {
+      "name": "chromium/narrow/es return to 2D keeps selection and canonical",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/es return to 3D remains usable",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/es document and modal have no horizontal overflow",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "chromium/narrow/es close clears viewer and restores focus",
+      "pass": true
+    },
+    {
+      "name": "chromium/narrow/es no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "firefox/desktop/en unopened gallery requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/en language matches route",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/en opened 2D requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/en 2D v0.0.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/en 2D v0.0.2 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "The Quantum Shell",
+        "description": "Glowing lines hint inner transformation.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "1",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/en 2D v0.0.3 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "The Tech Nomad",
+        "description": "A digital adventurer on the move, wearing its interface.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "2",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/en 2D v0.0.4 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "The Network Visitor",
+        "description": "Uplink node transmission: From observer to participant.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "3",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/en 2D v0.1.0 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "The Hydraulic Brace",
+        "description": "From organic to industrial. Enhanced output.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "4",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/en 2D v0.1.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "5",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/en reduced 2D has no walking image requests",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/en previous navigates",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/en restart returns to first",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/en keyboard focus stays in modal",
+      "pass": true,
+      "key": "Tab"
+    },
+    {
+      "name": "firefox/desktop/en Escape restores trigger focus",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/en reopen resets first version",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/en 3D v0.0.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.1.CAYKp1Rf.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/en 3D v0.0.2 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "The Quantum Shell",
+        "description": "Glowing lines hint inner transformation.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.2.CqVtSjTo.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/en 3D v0.0.3 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "The Tech Nomad",
+        "description": "A digital adventurer on the move, wearing its interface.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.3.DmBOSKfs.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/en 3D v0.0.4 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "The Network Visitor",
+        "description": "Uplink node transmission: From observer to participant.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.4.dwTdcXdM.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/en 3D v0.1.0 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "The Hydraulic Brace",
+        "description": "From organic to industrial. Enhanced output.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.0.Cc8269xl.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/en 3D v0.1.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/en reduced 3D automatic motion disabled",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/en accessible camera controls and reset",
+      "pass": true,
+      "before": -0.4886921905584123,
+      "after": -0.05235987755982988,
+      "reset": -0.4886921905584123
+    },
+    {
+      "name": "firefox/desktop/en return to 2D keeps selection and canonical",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/en return to 3D remains usable",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/en document and modal have no horizontal overflow",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/en close clears viewer and restores focus",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/en no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "firefox/desktop/es unopened gallery requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/es language matches route",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/es opened 2D requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/es 2D v0.0.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "Caparazón Génesis",
+        "description": "El inicio del viaje con inocencia y asombro.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/es 2D v0.0.2 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "Caparazón Cuántico",
+        "description": "Líneas brillantes insinúan la transformación interior.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "1",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/es 2D v0.0.3 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "El Nómada Tecno",
+        "description": "Un aventurero digital en movimiento que viste su interfaz.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "2",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/es 2D v0.0.4 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "El Visitante de la Red",
+        "description": "Transmisión de nodo: de observador a participante.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "3",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/es 2D v0.1.0 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "El Exoesqueleto Hidráulico",
+        "description": "De orgánico a industrial. Salida mejorada.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "4",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/es 2D v0.1.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "5",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/es reduced 2D has no walking image requests",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/es previous navigates",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/es restart returns to first",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/es keyboard focus stays in modal",
+      "pass": true,
+      "key": "Tab"
+    },
+    {
+      "name": "firefox/desktop/es Escape restores trigger focus",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/es reopen resets first version",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/es 3D v0.0.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "Caparazón Génesis",
+        "description": "El inicio del viaje con inocencia y asombro.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.1.CAYKp1Rf.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/es 3D v0.0.2 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "Caparazón Cuántico",
+        "description": "Líneas brillantes insinúan la transformación interior.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.2.CqVtSjTo.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/es 3D v0.0.3 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "El Nómada Tecno",
+        "description": "Un aventurero digital en movimiento que viste su interfaz.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.3.DmBOSKfs.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/es 3D v0.0.4 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "El Visitante de la Red",
+        "description": "Transmisión de nodo: de observador a participante.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.4.dwTdcXdM.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/es 3D v0.1.0 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "El Exoesqueleto Hidráulico",
+        "description": "De orgánico a industrial. Salida mejorada.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.0.Cc8269xl.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/es 3D v0.1.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/es reduced 3D automatic motion disabled",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/es accessible camera controls and reset",
+      "pass": true,
+      "before": -0.4886921905584123,
+      "after": -0.05235987755982988,
+      "reset": -0.4886921905584123
+    },
+    {
+      "name": "firefox/desktop/es return to 2D keeps selection and canonical",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/es return to 3D remains usable",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/es document and modal have no horizontal overflow",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/desktop/es close clears viewer and restores focus",
+      "pass": true
+    },
+    {
+      "name": "firefox/desktop/es no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "firefox/narrow/en unopened gallery requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/en language matches route",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/en opened 2D requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/en 2D v0.0.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/en 2D v0.0.2 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "The Quantum Shell",
+        "description": "Glowing lines hint inner transformation.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "1",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/en 2D v0.0.3 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "The Tech Nomad",
+        "description": "A digital adventurer on the move, wearing its interface.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "2",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/en 2D v0.0.4 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "The Network Visitor",
+        "description": "Uplink node transmission: From observer to participant.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "3",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/en 2D v0.1.0 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "The Hydraulic Brace",
+        "description": "From organic to industrial. Enhanced output.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "4",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/en 2D v0.1.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "5",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/en reduced 2D has no walking image requests",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/en previous navigates",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/en restart returns to first",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/en keyboard focus stays in modal",
+      "pass": true,
+      "key": "Tab"
+    },
+    {
+      "name": "firefox/narrow/en Escape restores trigger focus",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/en reopen resets first version",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/en 3D v0.0.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.1.CAYKp1Rf.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/en 3D v0.0.2 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "The Quantum Shell",
+        "description": "Glowing lines hint inner transformation.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.2.CqVtSjTo.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/en 3D v0.0.3 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "The Tech Nomad",
+        "description": "A digital adventurer on the move, wearing its interface.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.3.DmBOSKfs.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/en 3D v0.0.4 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "The Network Visitor",
+        "description": "Uplink node transmission: From observer to participant.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.4.dwTdcXdM.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/en 3D v0.1.0 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "The Hydraulic Brace",
+        "description": "From organic to industrial. Enhanced output.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.0.Cc8269xl.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/en 3D v0.1.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/en reduced 3D automatic motion disabled",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/en accessible camera controls and reset",
+      "pass": true,
+      "before": -0.4886921905584123,
+      "after": -0.05235987755982988,
+      "reset": -0.4886921905584123
+    },
+    {
+      "name": "firefox/narrow/en return to 2D keeps selection and canonical",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/en return to 3D remains usable",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/en document and modal have no horizontal overflow",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/en close clears viewer and restores focus",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/en no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "firefox/narrow/es unopened gallery requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/es language matches route",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/es opened 2D requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/es 2D v0.0.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "Caparazón Génesis",
+        "description": "El inicio del viaje con inocencia y asombro.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/es 2D v0.0.2 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "Caparazón Cuántico",
+        "description": "Líneas brillantes insinúan la transformación interior.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "1",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/es 2D v0.0.3 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "El Nómada Tecno",
+        "description": "Un aventurero digital en movimiento que viste su interfaz.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "2",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/es 2D v0.0.4 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "El Visitante de la Red",
+        "description": "Transmisión de nodo: de observador a participante.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "3",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/es 2D v0.1.0 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "El Exoesqueleto Hidráulico",
+        "description": "De orgánico a industrial. Salida mejorada.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "4",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/es 2D v0.1.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "5",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/es reduced 2D has no walking image requests",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/es previous navigates",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/es restart returns to first",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/es keyboard focus stays in modal",
+      "pass": true,
+      "key": "Tab"
+    },
+    {
+      "name": "firefox/narrow/es Escape restores trigger focus",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/es reopen resets first version",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/es 3D v0.0.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "Caparazón Génesis",
+        "description": "El inicio del viaje con inocencia y asombro.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.1.CAYKp1Rf.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/es 3D v0.0.2 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "Caparazón Cuántico",
+        "description": "Líneas brillantes insinúan la transformación interior.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.2.CqVtSjTo.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/es 3D v0.0.3 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "El Nómada Tecno",
+        "description": "Un aventurero digital en movimiento que viste su interfaz.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.3.DmBOSKfs.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/es 3D v0.0.4 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "El Visitante de la Red",
+        "description": "Transmisión de nodo: de observador a participante.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.4.dwTdcXdM.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/es 3D v0.1.0 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "El Exoesqueleto Hidráulico",
+        "description": "De orgánico a industrial. Salida mejorada.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.0.Cc8269xl.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/es 3D v0.1.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/es reduced 3D automatic motion disabled",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/es accessible camera controls and reset",
+      "pass": true,
+      "before": -0.4886921905584123,
+      "after": -0.05235987755982988,
+      "reset": -0.4886921905584123
+    },
+    {
+      "name": "firefox/narrow/es return to 2D keeps selection and canonical",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/es return to 3D remains usable",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/es document and modal have no horizontal overflow",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "firefox/narrow/es close clears viewer and restores focus",
+      "pass": true
+    },
+    {
+      "name": "firefox/narrow/es no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "webkit/desktop/en unopened gallery requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/en language matches route",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/en opened 2D requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/en 2D v0.0.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/en 2D v0.0.2 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "The Quantum Shell",
+        "description": "Glowing lines hint inner transformation.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "1",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/en 2D v0.0.3 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "The Tech Nomad",
+        "description": "A digital adventurer on the move, wearing its interface.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "2",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/en 2D v0.0.4 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "The Network Visitor",
+        "description": "Uplink node transmission: From observer to participant.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "3",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/en 2D v0.1.0 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "The Hydraulic Brace",
+        "description": "From organic to industrial. Enhanced output.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "4",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/en 2D v0.1.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "5",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/en reduced 2D has no walking image requests",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/en previous navigates",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/en restart returns to first",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/en keyboard focus stays in modal",
+      "pass": true,
+      "key": "Alt+Tab",
+      "note": "WebKit on this macOS host requires Option+Tab for all-controls navigation. Plain Tab skips buttons identically in baseline and candidate; separate comparison evidence retained."
+    },
+    {
+      "name": "webkit/desktop/en Escape restores trigger focus",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/en reopen resets first version",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/en 3D v0.0.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.1.CAYKp1Rf.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/en 3D v0.0.2 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "The Quantum Shell",
+        "description": "Glowing lines hint inner transformation.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.2.CqVtSjTo.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/en 3D v0.0.3 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "The Tech Nomad",
+        "description": "A digital adventurer on the move, wearing its interface.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.3.DmBOSKfs.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/en 3D v0.0.4 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "The Network Visitor",
+        "description": "Uplink node transmission: From observer to participant.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.4.dwTdcXdM.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/en 3D v0.1.0 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "The Hydraulic Brace",
+        "description": "From organic to industrial. Enhanced output.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.0.Cc8269xl.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/en 3D v0.1.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/en reduced 3D automatic motion disabled",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/en accessible camera controls and reset",
+      "pass": true,
+      "before": -0.4886921905584123,
+      "after": -0.05235987755982988,
+      "reset": -0.4886921905584123
+    },
+    {
+      "name": "webkit/desktop/en return to 2D keeps selection and canonical",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/en return to 3D remains usable",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/en document and modal have no horizontal overflow",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/en close clears viewer and restores focus",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/en no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "webkit/desktop/es unopened gallery requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/es language matches route",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/es opened 2D requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/es 2D v0.0.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "Caparazón Génesis",
+        "description": "El inicio del viaje con inocencia y asombro.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/es 2D v0.0.2 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "Caparazón Cuántico",
+        "description": "Líneas brillantes insinúan la transformación interior.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "1",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/es 2D v0.0.3 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "El Nómada Tecno",
+        "description": "Un aventurero digital en movimiento que viste su interfaz.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "2",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/es 2D v0.0.4 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "El Visitante de la Red",
+        "description": "Transmisión de nodo: de observador a participante.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "3",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/es 2D v0.1.0 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "El Exoesqueleto Hidráulico",
+        "description": "De orgánico a industrial. Salida mejorada.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "4",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/es 2D v0.1.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "5",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/es reduced 2D has no walking image requests",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/es previous navigates",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/es restart returns to first",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/es keyboard focus stays in modal",
+      "pass": true,
+      "key": "Alt+Tab",
+      "note": "WebKit on this macOS host requires Option+Tab for all-controls navigation. Plain Tab skips buttons identically in baseline and candidate; separate comparison evidence retained."
+    },
+    {
+      "name": "webkit/desktop/es Escape restores trigger focus",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/es reopen resets first version",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/es 3D v0.0.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "Caparazón Génesis",
+        "description": "El inicio del viaje con inocencia y asombro.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.1.CAYKp1Rf.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/es 3D v0.0.2 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "Caparazón Cuántico",
+        "description": "Líneas brillantes insinúan la transformación interior.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.2.CqVtSjTo.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/es 3D v0.0.3 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "El Nómada Tecno",
+        "description": "Un aventurero digital en movimiento que viste su interfaz.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.3.DmBOSKfs.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/es 3D v0.0.4 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "El Visitante de la Red",
+        "description": "Transmisión de nodo: de observador a participante.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.4.dwTdcXdM.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/es 3D v0.1.0 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "El Exoesqueleto Hidráulico",
+        "description": "De orgánico a industrial. Salida mejorada.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.0.Cc8269xl.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/es 3D v0.1.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/es reduced 3D automatic motion disabled",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/es accessible camera controls and reset",
+      "pass": true,
+      "before": -0.4886921905584123,
+      "after": -0.05235987755982988,
+      "reset": -0.4886921905584123
+    },
+    {
+      "name": "webkit/desktop/es return to 2D keeps selection and canonical",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/es return to 3D remains usable",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/es document and modal have no horizontal overflow",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/desktop/es close clears viewer and restores focus",
+      "pass": true
+    },
+    {
+      "name": "webkit/desktop/es no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "webkit/narrow/en unopened gallery requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/en language matches route",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/en opened 2D requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/en 2D v0.0.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/en 2D v0.0.2 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "The Quantum Shell",
+        "description": "Glowing lines hint inner transformation.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "1",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/en 2D v0.0.3 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "The Tech Nomad",
+        "description": "A digital adventurer on the move, wearing its interface.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "2",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/en 2D v0.0.4 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "The Network Visitor",
+        "description": "Uplink node transmission: From observer to participant.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "3",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/en 2D v0.1.0 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "The Hydraulic Brace",
+        "description": "From organic to industrial. Enhanced output.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "4",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/en 2D v0.1.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "5",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/en reduced 2D has no walking image requests",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/en previous navigates",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/en restart returns to first",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/en keyboard focus stays in modal",
+      "pass": true,
+      "key": "Alt+Tab",
+      "note": "WebKit on this macOS host requires Option+Tab for all-controls navigation. Plain Tab skips buttons identically in baseline and candidate; separate comparison evidence retained."
+    },
+    {
+      "name": "webkit/narrow/en Escape restores trigger focus",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/en reopen resets first version",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/en 3D v0.0.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.1.CAYKp1Rf.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/en 3D v0.0.2 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "The Quantum Shell",
+        "description": "Glowing lines hint inner transformation.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.2.CqVtSjTo.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/en 3D v0.0.3 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "The Tech Nomad",
+        "description": "A digital adventurer on the move, wearing its interface.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.3.DmBOSKfs.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/en 3D v0.0.4 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "The Network Visitor",
+        "description": "Uplink node transmission: From observer to participant.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.4.dwTdcXdM.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/en 3D v0.1.0 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "The Hydraulic Brace",
+        "description": "From organic to industrial. Enhanced output.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.0.Cc8269xl.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/en 3D v0.1.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/en reduced 3D automatic motion disabled",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/en accessible camera controls and reset",
+      "pass": true,
+      "before": -0.4886921905584123,
+      "after": -0.05235987755982988,
+      "reset": -0.4886921905584123
+    },
+    {
+      "name": "webkit/narrow/en return to 2D keeps selection and canonical",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/en return to 3D remains usable",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/en document and modal have no horizontal overflow",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/en close clears viewer and restores focus",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/en no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "webkit/narrow/es unopened gallery requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/es language matches route",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/es opened 2D requests no 3D resources",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/es 2D v0.0.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "Caparazón Génesis",
+        "description": "El inicio del viaje con inocencia y asombro.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/es 2D v0.0.2 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "Caparazón Cuántico",
+        "description": "Líneas brillantes insinúan la transformación interior.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "1",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/es 2D v0.0.3 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "El Nómada Tecno",
+        "description": "Un aventurero digital en movimiento que viste su interfaz.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "2",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/es 2D v0.0.4 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "El Visitante de la Red",
+        "description": "Transmisión de nodo: de observador a participante.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "3",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/es 2D v0.1.0 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "El Exoesqueleto Hidráulico",
+        "description": "De orgánico a industrial. Salida mejorada.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "4",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/es 2D v0.1.1 canonical and text",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "5",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/es reduced 2D has no walking image requests",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/es previous navigates",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/es restart returns to first",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/es keyboard focus stays in modal",
+      "pass": true,
+      "key": "Alt+Tab",
+      "note": "WebKit on this macOS host requires Option+Tab for all-controls navigation. Plain Tab skips buttons identically in baseline and candidate; separate comparison evidence retained."
+    },
+    {
+      "name": "webkit/narrow/es Escape restores trigger focus",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/es reopen resets first version",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/es 3D v0.0.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "Caparazón Génesis",
+        "description": "El inicio del viaje con inocencia y asombro.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.1.CAYKp1Rf.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/es 3D v0.0.2 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.2 • 2025-04-21",
+        "title": "Caparazón Cuántico",
+        "description": "Líneas brillantes insinúan la transformación interior.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.2.CqVtSjTo.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/es 3D v0.0.3 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.3 • 2025-05-17",
+        "title": "El Nómada Tecno",
+        "description": "Un aventurero digital en movimiento que viste su interfaz.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.3.DmBOSKfs.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 1.9848482608795166,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/es 3D v0.0.4 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.0.4 • 2025-06-29",
+        "title": "El Visitante de la Red",
+        "description": "Transmisión de nodo: de observador a participante.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.0.4.dwTdcXdM.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/es 3D v0.1.0 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.0 • 2026-02-07",
+        "title": "El Exoesqueleto Hidráulico",
+        "description": "De orgánico a industrial. Salida mejorada.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.0.Cc8269xl.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/es 3D v0.1.1 geometry, text, one viewer",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/es reduced 3D automatic motion disabled",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/es accessible camera controls and reset",
+      "pass": true,
+      "before": -0.4886921905584123,
+      "after": -0.05235987755982988,
+      "reset": -0.4886921905584123
+    },
+    {
+      "name": "webkit/narrow/es return to 2D keeps selection and canonical",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/es return to 3D remains usable",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/es document and modal have no horizontal overflow",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "El Cartógrafo de la Frontera",
+        "description": "Mapea la frontera y convierte el terreno cambiante en dirección.",
+        "lang": "es",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.015341281890869,
+          "z": 3.4605695009231567
+        },
+        "rotating": false,
+        "status": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "webkit/narrow/es close clears viewer and restores focus",
+      "pass": true
+    },
+    {
+      "name": "webkit/narrow/es no unhandled page errors",
+      "pass": true,
+      "errors": []
+    }
+  ],
+  "browsers": [
+    {
+      "engine": "chromium",
+      "version": "152.0.7977.82",
+      "available": true
+    },
+    {
+      "engine": "firefox",
+      "version": "153.0",
+      "available": true
+    },
+    {
+      "engine": "webkit",
+      "version": "26.5",
+      "available": true
+    }
+  ],
+  "screens": [
+    "warm-presence/final-chromium-desktop-en-2d-lineage.png",
+    "warm-presence/final-chromium-desktop-en-3d-lineage.png",
+    "warm-presence/final-chromium-desktop-en-gallery.png",
+    "warm-presence/final-chromium-desktop-es-2d-lineage.png",
+    "warm-presence/final-chromium-desktop-es-3d-lineage.png",
+    "warm-presence/final-chromium-desktop-es-gallery.png",
+    "warm-presence/final-chromium-narrow-en-2d-lineage.png",
+    "warm-presence/final-chromium-narrow-en-3d-lineage.png",
+    "warm-presence/final-chromium-narrow-en-gallery.png",
+    "warm-presence/final-chromium-narrow-es-2d-lineage.png",
+    "warm-presence/final-chromium-narrow-es-3d-lineage.png",
+    "warm-presence/final-chromium-narrow-es-gallery.png",
+    "warm-presence/final-firefox-desktop-en-2d-lineage.png",
+    "warm-presence/final-firefox-desktop-en-3d-lineage.png",
+    "warm-presence/final-firefox-desktop-en-gallery.png",
+    "warm-presence/final-firefox-desktop-es-2d-lineage.png",
+    "warm-presence/final-firefox-desktop-es-3d-lineage.png",
+    "warm-presence/final-firefox-desktop-es-gallery.png",
+    "warm-presence/final-firefox-narrow-en-2d-lineage.png",
+    "warm-presence/final-firefox-narrow-en-3d-lineage.png",
+    "warm-presence/final-firefox-narrow-en-gallery.png",
+    "warm-presence/final-firefox-narrow-es-2d-lineage.png",
+    "warm-presence/final-firefox-narrow-es-3d-lineage.png",
+    "warm-presence/final-firefox-narrow-es-gallery.png",
+    "warm-presence/final-webkit-desktop-en-2d-lineage.png",
+    "warm-presence/final-webkit-desktop-en-3d-lineage.png",
+    "warm-presence/final-webkit-desktop-en-gallery.png",
+    "warm-presence/final-webkit-desktop-es-2d-lineage.png",
+    "warm-presence/final-webkit-desktop-es-3d-lineage.png",
+    "warm-presence/final-webkit-desktop-es-gallery.png",
+    "warm-presence/final-webkit-narrow-en-2d-lineage.png",
+    "warm-presence/final-webkit-narrow-en-3d-lineage.png",
+    "warm-presence/final-webkit-narrow-en-gallery.png",
+    "warm-presence/final-webkit-narrow-es-2d-lineage.png",
+    "warm-presence/final-webkit-narrow-es-3d-lineage.png",
+    "warm-presence/final-webkit-narrow-es-gallery.png"
+  ],
+  "errors": []
+}

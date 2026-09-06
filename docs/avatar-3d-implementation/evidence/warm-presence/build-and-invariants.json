@@ -1,0 +1,46 @@
+{
+  "selection": "Warm Presence",
+  "branch": "codex/avatar-sculpted-warmth",
+  "baseCommit": "972fb641b75ea48c8aa2f93049debe6c0b361d9c",
+  "validation": {
+    "canonicalVersions": 6,
+    "walkingPoses": 18,
+    "archivedReferences": 6,
+    "productionModels": 6,
+    "assetRegressionTestsPassed": 7,
+    "normalNetlifyBuild": "passed with SSR function emitted",
+    "optimizedStaticClientBuild": "passed; does not emulate Netlify SSR",
+    "syntaxChecks": "passed",
+    "diffWhitespace": "passed"
+  },
+  "sourceHashes": {
+    "src/components/avatar/three-d-controller.js": "16036871316991ec7c56aa1c4103a913b5f5a98a737744d1c69f2df2077d5a38",
+    "src/components/avatar/evolution-controller.js": "3c5cce5788a44a33f9518f387ec916a8d9950886b4e4d5dd87f8b1d4bebd7501",
+    "src/components/avatar/AnimatedAvatarGallery.astro": "ce64d08caccb15c1a7d595d5cdfad11be232db08e51230b48dc90f3b71385c5a",
+    "src/components/avatar/modal-controller.js": "ba5e1c3595cc5fe1a4f8a936ba06c2cc8a5240b4f9b00cf59d991ec06282c253",
+    "src/data/avatar3d.ts": "5442022e9bdffb64b404043f4da48a8b7668a2e1a8a9b47a62274b3c52123588",
+    "src/data/avatarVersions.json": "b785aee16ce899cfa7621ebce46e7a05d4c1448944818898983bc80485221458",
+    "package.json": "60920ffadb8962208417fd62c46546ef972e9b84143b177dfe2ded04a3dac1f6",
+    "package-lock.json": "b927b8f5811e9359091fda75975b07e65830aabce78121ad50fe435ecf01d9c0",
+    "scripts/avatar-3d/build-models.cjs": "a7eee839a810e3c119f02d4dfbfa4e9579002686ac405e13e4d1f1613d3668b3",
+    "scripts/avatar-3d/build-environments.cjs": "f6fd8d63ffc485daa28652f3644c1976d469bae65235df174bec93ceeea4eb49",
+    "src/images/avatar/3d/turtleand-0.0.1.glb": "d6df9d643bba41f347df27eb95c24c85d5dcf39227bc978de7774d2992216d98",
+    "src/images/avatar/3d/turtleand-0.0.2.glb": "33adedcb606fcc886315bad660d750a3cbe3557d48da6a948a1cea136341521f",
+    "src/images/avatar/3d/turtleand-0.0.3.glb": "1f0697bdac446952c40854254f69af7afb18006e11e584727f17ea7a76f4ba38",
+    "src/images/avatar/3d/turtleand-0.0.4.glb": "1a59f6154f155e24fa13c5230a5242dd377fa2d86a55d35eb5df305c71db7bb1",
+    "src/images/avatar/3d/turtleand-0.1.0.glb": "e88b509ebc0c29f9e5632e0858b9396614dd64c2f5e9a1bc51aecf1e6f2b41e0",
+    "src/images/avatar/3d/turtleand-0.1.1.glb": "7c142cad9c46b67a441d035a6590406c453885ec684a7e1170213ac8f62866bd",
+    "src/images/avatar/3d/warm.hdr": "0b581db8051611ae155b0ba387ac3758d8ef610e2866224078f627a63806b352"
+  },
+  "preservedSourceAreas": [
+    "canonical SVGs and walking poses",
+    "avatar identity manifest",
+    "modal controller",
+    "routes and layouts",
+    "public discovery/bot files"
+  ],
+  "notes": [
+    "A narrow fallback fix prevents a failed canonical SVG notice from covering a ready 3D model; targeted browser proof is recorded separately.",
+    "Existing Rollup optional peer lock entries were retained; pre-existing dependency versions are unchanged."
+  ]
+}
