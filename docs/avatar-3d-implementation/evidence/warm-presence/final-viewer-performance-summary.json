@@ -1,0 +1,143 @@
+{
+  "at": "2026-09-06T20:31:56.504Z",
+  "rawReport": "final-viewer-performance.json",
+  "rawReportSha256": "e0a14b3986b22919d0d52e2aaae0fdba7f7bdc2d2bf74ba68e26f40aaffb98a9",
+  "sourceHashes": {
+    "src/components/avatar/three-d-controller.js": "16036871316991ec7c56aa1c4103a913b5f5a98a737744d1c69f2df2077d5a38",
+    "src/components/avatar/evolution-controller.js": "3c5cce5788a44a33f9518f387ec916a8d9950886b4e4d5dd87f8b1d4bebd7501",
+    "src/components/avatar/AnimatedAvatarGallery.astro": "ce64d08caccb15c1a7d595d5cdfad11be232db08e51230b48dc90f3b71385c5a",
+    "src/components/avatar/modal-controller.js": "ba5e1c3595cc5fe1a4f8a936ba06c2cc8a5240b4f9b00cf59d991ec06282c253",
+    "src/data/avatar3d.ts": "5442022e9bdffb64b404043f4da48a8b7668a2e1a8a9b47a62274b3c52123588",
+    "package-lock.json": "b927b8f5811e9359091fda75975b07e65830aabce78121ad50fe435ecf01d9c0",
+    "src/images/avatar/3d/turtleand-0.0.1.glb": "d6df9d643bba41f347df27eb95c24c85d5dcf39227bc978de7774d2992216d98",
+    "src/images/avatar/3d/turtleand-0.0.2.glb": "33adedcb606fcc886315bad660d750a3cbe3557d48da6a948a1cea136341521f",
+    "src/images/avatar/3d/turtleand-0.0.3.glb": "1f0697bdac446952c40854254f69af7afb18006e11e584727f17ea7a76f4ba38",
+    "src/images/avatar/3d/turtleand-0.0.4.glb": "1a59f6154f155e24fa13c5230a5242dd377fa2d86a55d35eb5df305c71db7bb1",
+    "src/images/avatar/3d/turtleand-0.1.0.glb": "e88b509ebc0c29f9e5632e0858b9396614dd64c2f5e9a1bc51aecf1e6f2b41e0",
+    "src/images/avatar/3d/turtleand-0.1.1.glb": "7c142cad9c46b67a441d035a6590406c453885ec684a7e1170213ac8f62866bd",
+    "src/images/avatar/3d/warm.hdr": "0b581db8051611ae155b0ba387ac3758d8ef610e2866224078f627a63806b352"
+  },
+  "browser": "152.0.7977.82",
+  "selectedModel": {
+    "id": "frontier-cartographer",
+    "version": "v0.1.1",
+    "expression": "Warm Presence",
+    "source": "src/images/avatar/3d/turtleand-0.1.1.glb"
+  },
+  "method": "Fresh browser contexts with actual production client build and local gzip responses. Selected heaviest/latest model; no OS/GPU cache flush. UI-ready event follows model load, component update and two rAF. WebGL calls establish drawing but not native GPU completion or first screen-presentation timestamp.",
+  "statistics": "Median of ten runs per profile; p95 uses nearest rank and therefore is the maximum of ten samples.",
+  "scope": "Final selected heaviest/latest model readiness only. This report does not rerun or replace the prior unopened-Portal baseline or motion measurements.",
+  "limitations": [
+    "UI readiness is a proxy corroborated by actual WebGL draw calls, not a native GPU-completion or first screen-presentation timestamp.",
+    "The 390px profile is a controlled desktop-browser simulation, not measured physical-phone performance.",
+    "Each run uses a fresh browser context; OS and GPU caches are not flushed."
+  ],
+  "profiles": [
+    {
+      "profile": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000,
+        "dpr": 1
+      },
+      "runs": 10,
+      "allModelsLoaded": true,
+      "allViewersReadyAndVisible": true,
+      "allCanvasDimensionsPositive": true,
+      "beforeOptIn3DRequests": 0,
+      "pageErrors": 0,
+      "uiReadyMs": {
+        "n": 10,
+        "min": 590.7000000029802,
+        "median": 640,
+        "p95": 935.1999999992549,
+        "max": 935.1999999992549
+      },
+      "medianBudgetMs": 2500,
+      "medianWithinProvisionalBudget": true,
+      "actualDrawCalls": {
+        "n": 10,
+        "min": 81,
+        "median": 81,
+        "p95": 81,
+        "max": 81
+      },
+      "rendererJavaScriptGzipBytes": {
+        "n": 10,
+        "min": 291816,
+        "median": 291816,
+        "p95": 291816,
+        "max": 291816
+      },
+      "rendererBudgetBytes": 460800,
+      "rendererWithinProvisionalBudget": true,
+      "total3DResourcesGzipBytes": {
+        "n": 10,
+        "min": 1808843,
+        "median": 1808843,
+        "p95": 1808843,
+        "max": 1808843
+      },
+      "totalOptInBudgetBytes": 3670016,
+      "totalWithinProvisionalBudget": true,
+      "renderer": [
+        "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)"
+      ]
+    },
+    {
+      "profile": {
+        "name": "narrow-lab",
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "downloadMbit": 10,
+        "rttMs": 80,
+        "cpuSlowdown": 4
+      },
+      "runs": 10,
+      "allModelsLoaded": true,
+      "allViewersReadyAndVisible": true,
+      "allCanvasDimensionsPositive": true,
+      "beforeOptIn3DRequests": 0,
+      "pageErrors": 0,
+      "uiReadyMs": {
+        "n": 10,
+        "min": 2391.800000000745,
+        "median": 2615.7999999988824,
+        "p95": 3488.89999999851,
+        "max": 3488.89999999851
+      },
+      "medianBudgetMs": 5000,
+      "medianWithinProvisionalBudget": true,
+      "actualDrawCalls": {
+        "n": 10,
+        "min": 81,
+        "median": 81,
+        "p95": 81,
+        "max": 81
+      },
+      "rendererJavaScriptGzipBytes": {
+        "n": 10,
+        "min": 291816,
+        "median": 291816,
+        "p95": 291816,
+        "max": 291816
+      },
+      "rendererBudgetBytes": 460800,
+      "rendererWithinProvisionalBudget": true,
+      "total3DResourcesGzipBytes": {
+        "n": 10,
+        "min": 1808843,
+        "median": 1808843,
+        "p95": 1808843,
+        "max": 1808843
+      },
+      "totalOptInBudgetBytes": 3670016,
+      "totalWithinProvisionalBudget": true,
+      "renderer": [
+        "ANGLE (AMD, ANGLE Metal Renderer: AMD Radeon Pro 5500M, Unspecified Version)"
+      ]
+    }
+  ],
+  "errors": []
+}

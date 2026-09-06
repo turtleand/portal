@@ -1,0 +1,234 @@
+{
+  "at": "2026-09-06T20:30:01.955Z",
+  "base": "http://127.0.0.1:4395",
+  "label": "warm-presence/final",
+  "sourceHashes": {
+    "src/components/avatar/three-d-controller.js": "16036871316991ec7c56aa1c4103a913b5f5a98a737744d1c69f2df2077d5a38",
+    "src/components/avatar/evolution-controller.js": "3c5cce5788a44a33f9518f387ec916a8d9950886b4e4d5dd87f8b1d4bebd7501",
+    "src/components/avatar/AnimatedAvatarGallery.astro": "ce64d08caccb15c1a7d595d5cdfad11be232db08e51230b48dc90f3b71385c5a",
+    "src/components/avatar/modal-controller.js": "ba5e1c3595cc5fe1a4f8a936ba06c2cc8a5240b4f9b00cf59d991ec06282c253",
+    "src/data/avatar3d.ts": "5442022e9bdffb64b404043f4da48a8b7668a2e1a8a9b47a62274b3c52123588",
+    "package-lock.json": "b927b8f5811e9359091fda75975b07e65830aabce78121ad50fe435ecf01d9c0",
+    "src/images/avatar/3d/turtleand-0.0.1.glb": "d6df9d643bba41f347df27eb95c24c85d5dcf39227bc978de7774d2992216d98",
+    "src/images/avatar/3d/turtleand-0.0.2.glb": "33adedcb606fcc886315bad660d750a3cbe3557d48da6a948a1cea136341521f",
+    "src/images/avatar/3d/turtleand-0.0.3.glb": "1f0697bdac446952c40854254f69af7afb18006e11e584727f17ea7a76f4ba38",
+    "src/images/avatar/3d/turtleand-0.0.4.glb": "1a59f6154f155e24fa13c5230a5242dd377fa2d86a55d35eb5df305c71db7bb1",
+    "src/images/avatar/3d/turtleand-0.1.0.glb": "e88b509ebc0c29f9e5632e0858b9396614dd64c2f5e9a1bc51aecf1e6f2b41e0",
+    "src/images/avatar/3d/turtleand-0.1.1.glb": "7c142cad9c46b67a441d035a6590406c453885ec684a7e1170213ac8f62866bd",
+    "src/images/avatar/3d/warm.hdr": "0b581db8051611ae155b0ba387ac3758d8ef610e2866224078f627a63806b352"
+  },
+  "scope": "Targeted 390px horizontal timeline reveal and vertical-scroll preservation. Programmatic activation isolates controller scrolling from browser focus/action auto-scroll.",
+  "checks": [
+    {
+      "name": "en 2d v0.1.1 reveals marker without vertical scroll",
+      "pass": true,
+      "initial": 100,
+      "scrollTop": 100,
+      "selectedVisible": true,
+      "buttonLeft": 275,
+      "buttonRight": 319,
+      "railLeft": 71,
+      "railRight": 319,
+      "scrollLeft": 56
+    },
+    {
+      "name": "en 2d v0.0.1 reveals marker without vertical scroll",
+      "pass": true,
+      "initial": 100,
+      "scrollTop": 100,
+      "selectedVisible": true,
+      "buttonLeft": 71,
+      "buttonRight": 115,
+      "railLeft": 71,
+      "railRight": 319,
+      "scrollLeft": 0
+    },
+    {
+      "name": "en 2d v0.1.1 reveals marker without vertical scroll",
+      "pass": true,
+      "initial": 100,
+      "scrollTop": 100,
+      "selectedVisible": true,
+      "buttonLeft": 275,
+      "buttonRight": 319,
+      "railLeft": 71,
+      "railRight": 319,
+      "scrollLeft": 56
+    },
+    {
+      "name": "en 2d v0.0.1 reveals marker without vertical scroll",
+      "pass": true,
+      "initial": 100,
+      "scrollTop": 100,
+      "selectedVisible": true,
+      "buttonLeft": 71,
+      "buttonRight": 115,
+      "railLeft": 71,
+      "railRight": 319,
+      "scrollLeft": 0
+    },
+    {
+      "name": "en 3d v0.1.1 reveals marker without vertical scroll",
+      "pass": true,
+      "initial": 100,
+      "scrollTop": 100,
+      "selectedVisible": true,
+      "buttonLeft": 275,
+      "buttonRight": 319,
+      "railLeft": 71,
+      "railRight": 319,
+      "scrollLeft": 56
+    },
+    {
+      "name": "en 3d v0.0.1 reveals marker without vertical scroll",
+      "pass": true,
+      "initial": 100,
+      "scrollTop": 100,
+      "selectedVisible": true,
+      "buttonLeft": 71,
+      "buttonRight": 115,
+      "railLeft": 71,
+      "railRight": 319,
+      "scrollLeft": 0
+    },
+    {
+      "name": "en 3d v0.1.1 reveals marker without vertical scroll",
+      "pass": true,
+      "initial": 100,
+      "scrollTop": 100,
+      "selectedVisible": true,
+      "buttonLeft": 275,
+      "buttonRight": 319,
+      "railLeft": 71,
+      "railRight": 319,
+      "scrollLeft": 56
+    },
+    {
+      "name": "en 3d v0.0.1 reveals marker without vertical scroll",
+      "pass": true,
+      "initial": 100,
+      "scrollTop": 100,
+      "selectedVisible": true,
+      "buttonLeft": 71,
+      "buttonRight": 115,
+      "railLeft": 71,
+      "railRight": 319,
+      "scrollLeft": 0
+    },
+    {
+      "name": "en reopen reveals first marker",
+      "pass": true
+    },
+    {
+      "name": "en timeline changes have no page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "es 2d v0.1.1 reveals marker without vertical scroll",
+      "pass": true,
+      "initial": 100,
+      "scrollTop": 100,
+      "selectedVisible": true,
+      "buttonLeft": 275,
+      "buttonRight": 319,
+      "railLeft": 71,
+      "railRight": 319,
+      "scrollLeft": 56
+    },
+    {
+      "name": "es 2d v0.0.1 reveals marker without vertical scroll",
+      "pass": true,
+      "initial": 100,
+      "scrollTop": 100,
+      "selectedVisible": true,
+      "buttonLeft": 71,
+      "buttonRight": 115,
+      "railLeft": 71,
+      "railRight": 319,
+      "scrollLeft": 0
+    },
+    {
+      "name": "es 2d v0.1.1 reveals marker without vertical scroll",
+      "pass": true,
+      "initial": 100,
+      "scrollTop": 100,
+      "selectedVisible": true,
+      "buttonLeft": 275,
+      "buttonRight": 319,
+      "railLeft": 71,
+      "railRight": 319,
+      "scrollLeft": 56
+    },
+    {
+      "name": "es 2d v0.0.1 reveals marker without vertical scroll",
+      "pass": true,
+      "initial": 100,
+      "scrollTop": 100,
+      "selectedVisible": true,
+      "buttonLeft": 71,
+      "buttonRight": 115,
+      "railLeft": 71,
+      "railRight": 319,
+      "scrollLeft": 0
+    },
+    {
+      "name": "es 3d v0.1.1 reveals marker without vertical scroll",
+      "pass": true,
+      "initial": 100,
+      "scrollTop": 100,
+      "selectedVisible": true,
+      "buttonLeft": 275,
+      "buttonRight": 319,
+      "railLeft": 71,
+      "railRight": 319,
+      "scrollLeft": 56
+    },
+    {
+      "name": "es 3d v0.0.1 reveals marker without vertical scroll",
+      "pass": true,
+      "initial": 100,
+      "scrollTop": 100,
+      "selectedVisible": true,
+      "buttonLeft": 71,
+      "buttonRight": 115,
+      "railLeft": 71,
+      "railRight": 319,
+      "scrollLeft": 0
+    },
+    {
+      "name": "es 3d v0.1.1 reveals marker without vertical scroll",
+      "pass": true,
+      "initial": 100,
+      "scrollTop": 100,
+      "selectedVisible": true,
+      "buttonLeft": 275,
+      "buttonRight": 319,
+      "railLeft": 71,
+      "railRight": 319,
+      "scrollLeft": 56
+    },
+    {
+      "name": "es 3d v0.0.1 reveals marker without vertical scroll",
+      "pass": true,
+      "initial": 100,
+      "scrollTop": 100,
+      "selectedVisible": true,
+      "buttonLeft": 71,
+      "buttonRight": 115,
+      "railLeft": 71,
+      "railRight": 319,
+      "scrollLeft": 0
+    },
+    {
+      "name": "es reopen reveals first marker",
+      "pass": true
+    },
+    {
+      "name": "es timeline changes have no page errors",
+      "pass": true,
+      "errors": []
+    }
+  ],
+  "errors": []
+}

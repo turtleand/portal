@@ -1,0 +1,50 @@
+[
+  {
+    "look": "warm",
+    "version": "0.0.1",
+    "file": "turtleand-0.0.1.glb",
+    "bytes": 1619540,
+    "triangles": 86126,
+    "meshes": 15
+  },
+  {
+    "look": "warm",
+    "version": "0.0.2",
+    "file": "turtleand-0.0.2.glb",
+    "bytes": 1971380,
+    "triangles": 104942,
+    "meshes": 17
+  },
+  {
+    "look": "warm",
+    "version": "0.0.3",
+    "file": "turtleand-0.0.3.glb",
+    "bytes": 1990152,
+    "triangles": 105878,
+    "meshes": 18
+  },
+  {
+    "look": "warm",
+    "version": "0.0.4",
+    "file": "turtleand-0.0.4.glb",
+    "bytes": 2089932,
+    "triangles": 111350,
+    "meshes": 19
+  },
+  {
+    "look": "warm",
+    "version": "0.1.0",
+    "file": "turtleand-0.1.0.glb",
+    "bytes": 2326776,
+    "triangles": 124174,
+    "meshes": 19
+  },
+  {
+    "look": "warm",
+    "version": "0.1.1",
+    "file": "turtleand-0.1.1.glb",
+    "bytes": 2519012,
+    "triangles": 134602,
+    "meshes": 20
+  }
+]
