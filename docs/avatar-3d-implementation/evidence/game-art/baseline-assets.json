@@ -1,0 +1,75 @@
+{
+  "models": [
+    {
+      "id": "genesis-shell",
+      "version": "v0.0.1",
+      "filename": "turtleand-0.0.1.glb",
+      "rawBytes": 1619540,
+      "gzipBytes": 942305,
+      "sha256": "d6df9d643bba41f347df27eb95c24c85d5dcf39227bc978de7774d2992216d98",
+      "meshes": 15,
+      "materials": 15,
+      "embeddedImages": 0
+    },
+    {
+      "id": "quantum-shell",
+      "version": "v0.0.2",
+      "filename": "turtleand-0.0.2.glb",
+      "rawBytes": 1971380,
+      "gzipBytes": 1179634,
+      "sha256": "33adedcb606fcc886315bad660d750a3cbe3557d48da6a948a1cea136341521f",
+      "meshes": 17,
+      "materials": 17,
+      "embeddedImages": 0
+    },
+    {
+      "id": "tech-nomad",
+      "version": "v0.0.3",
+      "filename": "turtleand-0.0.3.glb",
+      "rawBytes": 1990152,
+      "gzipBytes": 1189065,
+      "sha256": "1f0697bdac446952c40854254f69af7afb18006e11e584727f17ea7a76f4ba38",
+      "meshes": 18,
+      "materials": 18,
+      "embeddedImages": 0
+    },
+    {
+      "id": "network-visitor",
+      "version": "v0.0.4",
+      "filename": "turtleand-0.0.4.glb",
+      "rawBytes": 2089932,
+      "gzipBytes": 1243970,
+      "sha256": "1a59f6154f155e24fa13c5230a5242dd377fa2d86a55d35eb5df305c71db7bb1",
+      "meshes": 19,
+      "materials": 19,
+      "embeddedImages": 0
+    },
+    {
+      "id": "hydraulic-brace",
+      "version": "v0.1.0",
+      "filename": "turtleand-0.1.0.glb",
+      "rawBytes": 2326776,
+      "gzipBytes": 1343017,
+      "sha256": "e88b509ebc0c29f9e5632e0858b9396614dd64c2f5e9a1bc51aecf1e6f2b41e0",
+      "meshes": 19,
+      "materials": 19,
+      "embeddedImages": 0
+    },
+    {
+      "id": "frontier-cartographer",
+      "version": "v0.1.1",
+      "filename": "turtleand-0.1.1.glb",
+      "rawBytes": 2519012,
+      "gzipBytes": 1455007,
+      "sha256": "7c142cad9c46b67a441d035a6590406c453885ec684a7e1170213ac8f62866bd",
+      "meshes": 20,
+      "materials": 20,
+      "embeddedImages": 0
+    }
+  ],
+  "environment": {
+    "filename": "warm.hdr",
+    "rawBytes": 131121,
+    "gzipBytes": 62020
+  }
+}

@@ -1,8 +1,9 @@
 import viewerRuntimeUrl from '@google/model-viewer/dist/model-viewer.min.js?url';
 
-const OPENING_ORBIT = '-28deg 78deg 100%';
+const OPENING_ORBIT = '-28deg 76deg 92%';
 const DWELL_MS = 6500;
-const DEPENDENCY_TIMEOUT_MS = 30000;
+const DEPENDENCY_TIMEOUT_MS = 20000;
+const MODEL_TIMEOUT_MS = 30000;
 let runtimeImport;
 let runtimeAttempt = 0;
 let graphicsVerified = false;
@@ -67,6 +68,20 @@ function loadStudioEnvironment(source) {
     .finally(() => clearTimeout(timeout));
   studioEnvironment = request;
   return request;
+}
+
+async function downloadModel(source, signal) {
+  const response = await fetch(source, {credentials: 'same-origin', signal});
+  if (!response.ok) throw new Error('3D model unavailable');
+  const buffer = await response.arrayBuffer();
+  // Reject an HTML error response or truncated transfer before the renderer
+  // allocates a scene. Production validation checks the complete glTF structure.
+  if (buffer.byteLength < 12) throw new Error('3D model is invalid');
+  const header = new DataView(buffer, 0, 12);
+  if (header.getUint32(0, true) !== 0x46546c67 || header.getUint32(4, true) !== 2 || header.getUint32(8, true) !== buffer.byteLength) {
+    throw new Error('3D model is invalid');
+  }
+  return new Blob([buffer], {type: 'model/gltf-binary'});
 }
 
 /** Optional 3D presentation. The evolution controller retains version and modal ownership. */
@@ -215,13 +230,11 @@ export class AvatarThreeDController {
   }
 
   invalidate() {
-    if (this.pendingAssetId) {
-      // A cancelled in-flight loader promise can remain cached after disconnect.
-      // Only interrupted assets get a fresh URL; completed models stay reusable.
-      this.attempts.set(this.pendingAssetId, (this.attempts.get(this.pendingAssetId) || 0) + 1);
-      this.pendingAssetId = null;
-    }
+    this.pendingAssetId = null;
     ++this.generation;
+    this.downloadAbort?.abort();
+    this.downloadAbort = null;
+    this.releaseModelUrl();
     this.events?.abort();
     this.events = null;
     clearTimeout(this.slowTimer);
@@ -229,11 +242,17 @@ export class AvatarThreeDController {
     cancelAnimationFrame(this.frame);
     this.clearDwell();
     this.ready = this.failed = false;
+    this.viewer?.pause();
     this.viewer?.removeAttribute('auto-rotate');
     this.viewer?.setAttribute('aria-hidden', 'true');
     this.viewer?.setAttribute('tabindex', '-1');
     this.root.dataset.modelReady = 'false';
     this.host.setAttribute('aria-hidden', 'true');
+  }
+
+  releaseModelUrl() {
+    if (this.modelObjectUrl) URL.revokeObjectURL(this.modelObjectUrl);
+    this.modelObjectUrl = null;
   }
 
   dispose() {
@@ -272,26 +291,37 @@ export class AvatarThreeDController {
     this.pendingAssetId = id;
     const source = `${this.assets[id].modelUrl}${attempt ? `?retry=${attempt}` : ''}`;
     const current = () => token === this.generation && this.active && this.stage.id === id;
-    const matches = url => url && new URL(url, location.href).href === new URL(source, location.href).href;
-    this.slowTimer = setTimeout(() => { if (current()) { this.message = 'slow'; this.update(); } }, 12000);
-    this.failureTimer = setTimeout(() => { if (current()) this.fail(id, attempt); }, 45000);
+    let modelSource;
+    const matches = url => url && modelSource && new URL(url, location.href).href === new URL(modelSource, location.href).href;
+    this.slowTimer = setTimeout(() => { if (current()) { this.message = 'slow'; this.update(); } }, 4000);
+    this.failureTimer = setTimeout(() => { if (current()) this.fail(id, attempt); }, MODEL_TIMEOUT_MS);
     this.update();
     try {
       verifyGraphics();
-      // The separate runtime and studio map are requested only after 3D opt-in.
-      const [, environment] = await Promise.all([loadViewerRuntime(), loadStudioEnvironment(this.environmentUrl)]);
+      this.downloadAbort = new AbortController();
+      // Start only the selected model at opt-in, alongside runtime and lighting.
+      // Owning the transfer removes the download waterfall and lets navigation
+      // cancel stale requests before they decode or allocate a GPU scene.
+      const [, environment, model] = await Promise.all([
+        loadViewerRuntime(), loadStudioEnvironment(this.environmentUrl),
+        downloadModel(source, this.downloadAbort.signal),
+      ]);
       await customElements.whenDefined('model-viewer');
       if (!this.viewer && this.idleViewer) await this.idleReady;
       if (!current()) return;
+      this.downloadAbort = null;
+      this.modelObjectUrl = URL.createObjectURL(model);
+      modelSource = `${this.modelObjectUrl}#model.glb`;
       customElements.get('model-viewer').modelCacheSize = 1;
       const element = this.viewer || this.idleViewer || document.createElement('model-viewer');
       this.idleViewer = null;
       this.viewer = element;
       const attributes = {
+        loading: 'eager', reveal: 'auto',
         'camera-controls': '', 'disable-pan': '', 'touch-action': 'pan-y',
         'interaction-prompt': 'none', 'min-camera-orbit': 'auto 40deg 78%',
         'max-camera-orbit': 'auto 100deg 135%', 'field-of-view': '30deg',
-        'shadow-intensity': '.55', 'shadow-softness': '.9', exposure: '.95',
+        'shadow-intensity': '.8', 'shadow-softness': '.85', exposure: '1.05',
         'environment-image': environment, 'rotation-per-second': '6deg',
         'auto-rotate-delay': '500', 'aria-hidden': 'true', tabindex: '-1',
         'interpolation-decay': this.owner.reducedMotionQuery.matches ? '0' : '65',
@@ -310,9 +340,16 @@ export class AvatarThreeDController {
             clearTimeout(this.slowTimer);
             clearTimeout(this.failureTimer);
             element.resetTurntableRotation();
+            const animations = element.availableAnimations;
+            element.animationName = animations.find(name => /^idle$/i.test(name)) || animations[0];
+            element.animationCrossfadeDuration = 0;
+            element.currentTime = 0;
             this.ready = true;
             this.pendingAssetId = null;
             this.message = this.owner.reducedMotionQuery.matches ? 'reduced' : 'ready';
+            // All GLB buffers are embedded and consumed at this point. Release
+            // the transfer bytes; the renderer owns the decoded scene from here.
+            this.releaseModelUrl();
             element.removeAttribute('aria-hidden');
             element.removeAttribute('tabindex');
             this.root.dataset.modelReady = 'true';
@@ -327,7 +364,8 @@ export class AvatarThreeDController {
       element.addEventListener('camera-change', event => {
         if (event.detail?.source === 'user-interaction') this.pause();
       }, {signal});
-      element.src = source;
+      element.dataset.modelSource = source;
+      element.src = modelSource;
       if (!element.isConnected) this.host.append(element);
       this.update();
     } catch {
@@ -369,6 +407,10 @@ export class AvatarThreeDController {
     const rotating = this.ready && this.active && this.rotating && this.visible && !document.hidden && !this.owner.reducedMotionQuery.matches;
     this.viewer?.toggleAttribute('auto-rotate', rotating);
     if (this.viewer) {
+      const animating = this.ready && this.active && this.playing && this.visible && !document.hidden && !this.owner.reducedMotionQuery.matches;
+      if (animating && this.viewer.availableAnimations.length) {
+        if (this.viewer.paused) this.viewer.play();
+      } else this.viewer.pause();
       this.viewer.alt = this.t('viewer').replace('{title}', this.owner.locale === 'es' ? this.stage.titleEs : this.stage.title);
       if (this.viewer.dataset.locale !== this.owner.locale) {
         const a11y = {'interaction-prompt': this.t('help')};

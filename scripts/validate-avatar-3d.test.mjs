@@ -10,8 +10,7 @@ const manifest = [
   { id: 'second-avatar', version: 'v0.0.2' },
 ];
 
-const makeGlb = (name, mutate = () => {}) => {
-  const binary = Buffer.alloc(36);
+const makeGlb = (name, mutate = () => {}, binary = Buffer.alloc(36)) => {
   [0, 0, 0, 1, 0, 0, 0, 1, 1].forEach((value, index) => binary.writeFloatLE(value, index * 4));
   const gltf = {
     asset: { version: '2.0' },
@@ -24,7 +23,7 @@ const makeGlb = (name, mutate = () => {}) => {
     scenes: [{ nodes: [0] }],
     scene: 0,
   };
-  mutate(gltf);
+  mutate(gltf, binary);
   const json = Buffer.from(JSON.stringify(gltf));
   const paddedJson = Buffer.alloc(Math.ceil(json.length / 4) * 4, 0x20);
   json.copy(paddedJson);
@@ -39,6 +38,31 @@ const makeGlb = (name, mutate = () => {}) => {
   binChunk.writeUInt32LE(binary.length, 0);
   binChunk.writeUInt32LE(0x004e4942, 4);
   return Buffer.concat([header, jsonChunk, paddedJson, binChunk, binary]);
+};
+
+const makeAnimatedGlb = (mutate = () => {}, interpolation = 'LINEAR') => {
+  const outputCount = interpolation === 'CUBICSPLINE' ? 6 : 2;
+  const binary = Buffer.alloc(44 + outputCount * 12);
+  binary.writeFloatLE(0, 36);
+  binary.writeFloatLE(1, 40);
+  for (let index = 0; index < outputCount; index++) binary.writeFloatLE(index / outputCount, 44 + index * 12);
+  return makeGlb('animated', (gltf, bytes) => {
+    gltf.bufferViews[0].byteLength = 36;
+    gltf.bufferViews.push(
+      { buffer: 0, byteOffset: 36, byteLength: 8 },
+      { buffer: 0, byteOffset: 44, byteLength: outputCount * 12 },
+    );
+    gltf.accessors.push(
+      { bufferView: 1, componentType: 5126, count: 2, type: 'SCALAR', min: [0], max: [1] },
+      { bufferView: 2, componentType: 5126, count: outputCount, type: 'VEC3' },
+    );
+    gltf.animations = [{
+      name: 'Idle',
+      samplers: [{ input: 1, output: 2, interpolation }],
+      channels: [{ sampler: 0, target: { node: 0, path: 'translation' } }],
+    }];
+    mutate(gltf, bytes);
+  }, binary);
 };
 
 const fixture = async (t) => {
@@ -110,4 +134,50 @@ test('a valid model assigned to the wrong identity or direction fails', () => {
   assert.throws(() => validateGlb(makeGlb('second-avatar'), 'renamed-model.glb', manifest[0]), /stable ID does not match/);
   assert.throws(() => validateGlb(makeGlb('first-avatar', (gltf) => { gltf.nodes[0].extras.avatarVersion = 'v9.9.9'; }), 'wrong-version.glb', manifest[0]), /embedded version does not match/);
   assert.throws(() => validateGlb(makeGlb('first-avatar', (gltf) => { gltf.nodes[0].extras.direction = 'Quiet Circuitry'; }), 'wrong-look.glb', manifest[0]), /selected art direction/);
+});
+
+test('optional idle clips accept core linear, step, and cubic-spline samples', () => {
+  assert.equal(validateGlb(makeGlb('static')).animations, 0);
+  for (const interpolation of ['LINEAR', 'STEP', 'CUBICSPLINE']) {
+    const report = validateGlb(makeAnimatedGlb(() => {}, interpolation));
+    assert.equal(report.animations, 1);
+    assert.equal(report.animationChannels, 1);
+  }
+});
+
+test('idle clips reject broken sampler, accessor, node, and property references', () => {
+  const cases = [
+    [(gltf) => { gltf.animations[0].channels[0].sampler = 2; }, /channel 0 sampler references a missing entry/],
+    [(gltf) => { gltf.animations[0].samplers[0].input = 9; }, /sampler 0 input references a missing entry/],
+    [(gltf) => { gltf.animations[0].samplers[0].output = 9; }, /sampler 0 output references a missing entry/],
+    [(gltf) => { gltf.animations[0].channels[0].target.node = 9; }, /target node references a missing entry/],
+    [(gltf) => { gltf.animations[0].channels[0].target.path = 'opacity'; }, /unsupported target path/],
+    [(gltf) => { gltf.animations[0].channels.push(structuredClone(gltf.animations[0].channels[0])); }, /duplicates an animated node property/],
+  ];
+  for (const [mutate, expected] of cases) assert.throws(() => validateGlb(makeAnimatedGlb(mutate)), expected);
+});
+
+test('idle times reject reversed, duplicate, negative, and nonfinite values', () => {
+  for (const times of [[1, 0], [0, 0], [-1, 1], [0, Infinity], [0, NaN]]) {
+    assert.throws(() => validateGlb(makeAnimatedGlb((_gltf, binary) => {
+      binary.writeFloatLE(times[0], 36);
+      binary.writeFloatLE(times[1], 40);
+    })), /times must be nonnegative and strictly increasing|nonfinite sample/);
+  }
+});
+
+test('idle clips reject mismatched output shapes, counts, interpolation, and byte ranges', () => {
+  const cases = [
+    [(gltf) => { gltf.accessors[1].componentType = 5123; }, /input must use FLOAT/],
+    [(gltf) => { gltf.accessors[2].count = 1; }, /output count must match time keys and interpolation/],
+    [(gltf) => { gltf.animations[0].channels[0].target.path = 'rotation'; }, /output must be VEC4/],
+    [(gltf) => { gltf.animations[0].samplers[0].interpolation = 'BEZIER'; }, /unsupported interpolation/],
+    [(gltf) => { gltf.bufferViews[1].byteLength = 4; }, /input samples exceed buffer view/],
+    [(gltf) => { gltf.accessors[2].byteOffset = 2; }, /output offset must align FLOAT/],
+    [(_gltf, binary) => { binary.writeFloatLE(NaN, 44); }, /output has a nonfinite sample/],
+  ];
+  for (const [mutate, expected] of cases) assert.throws(() => validateGlb(makeAnimatedGlb(mutate)), expected);
+  assert.throws(() => validateGlb(makeAnimatedGlb((gltf) => {
+    gltf.accessors[2].count = 2;
+  }, 'CUBICSPLINE')), /output count must match time keys and interpolation/);
 });

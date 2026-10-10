@@ -1,0 +1,200 @@
+{
+  "label": "baseline",
+  "browser": "154.0.8037.57",
+  "renderer": "headless Chromium, SwiftShader software WebGL",
+  "method": "Same production client build config and gzip localhost server. Fresh contexts; measured click to gallery ready, not physical-device or GPU presentation timing.",
+  "runs": [
+    {
+      "profile": "desktop",
+      "run": 0,
+      "before": [],
+      "errors": [],
+      "readyMs": 1991.6999999999825,
+      "clips": [],
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4390/_astro/warm.BvoYfyt4.hdr",
+          "start": 3713,
+          "duration": 7.199999999982538,
+          "encoded": 62020,
+          "decoded": 131121
+        },
+        {
+          "name": "http://127.0.0.1:4390/_astro/model-viewer.min.DjP7aMzC.js",
+          "start": 3713.899999999994,
+          "duration": 33,
+          "encoded": 291816,
+          "decoded": 1068903
+        },
+        {
+          "name": "http://127.0.0.1:4390/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+          "start": 4382.600000000006,
+          "duration": 100.59999999997672,
+          "encoded": 1455007,
+          "decoded": 2519012
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "profile": "desktop",
+      "run": 1,
+      "before": [],
+      "errors": [],
+      "readyMs": 1935.1000000000058,
+      "clips": [],
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4390/_astro/warm.BvoYfyt4.hdr",
+          "start": 1886.2000000000116,
+          "duration": 5.899999999994179,
+          "encoded": 62020,
+          "decoded": 131121
+        },
+        {
+          "name": "http://127.0.0.1:4390/_astro/model-viewer.min.DjP7aMzC.js",
+          "start": 1886.8000000000175,
+          "duration": 44.10000000000582,
+          "encoded": 291816,
+          "decoded": 1068903
+        },
+        {
+          "name": "http://127.0.0.1:4390/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+          "start": 2389.5,
+          "duration": 78.5,
+          "encoded": 1455007,
+          "decoded": 2519012
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "profile": "desktop",
+      "run": 2,
+      "before": [],
+      "errors": [],
+      "readyMs": 2105.399999999994,
+      "clips": [],
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4390/_astro/warm.BvoYfyt4.hdr",
+          "start": 2703.5,
+          "duration": 5.099999999976717,
+          "encoded": 62020,
+          "decoded": 131121
+        },
+        {
+          "name": "http://127.0.0.1:4390/_astro/model-viewer.min.DjP7aMzC.js",
+          "start": 2704,
+          "duration": 38.79999999998836,
+          "encoded": 291816,
+          "decoded": 1068903
+        },
+        {
+          "name": "http://127.0.0.1:4390/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+          "start": 3314.2999999999884,
+          "duration": 83.20000000001164,
+          "encoded": 1455007,
+          "decoded": 2519012
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "profile": "mobile",
+      "run": 0,
+      "before": [],
+      "errors": [],
+      "readyMs": 2641.399999999965,
+      "clips": [],
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4390/_astro/warm.BvoYfyt4.hdr",
+          "start": 5455.899999999994,
+          "duration": 179.20000000001164,
+          "encoded": 62020,
+          "decoded": 131121
+        },
+        {
+          "name": "http://127.0.0.1:4390/_astro/model-viewer.min.DjP7aMzC.js",
+          "start": 5459.399999999994,
+          "duration": 370.5999999999767,
+          "encoded": 291816,
+          "decoded": 1068903
+        },
+        {
+          "name": "http://127.0.0.1:4390/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+          "start": 6058.899999999994,
+          "duration": 1254.7999999999884,
+          "encoded": 1455007,
+          "decoded": 2519012
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "profile": "mobile",
+      "run": 1,
+      "before": [],
+      "errors": [],
+      "readyMs": 2780.7999999999884,
+      "clips": [],
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4390/_astro/warm.BvoYfyt4.hdr",
+          "start": 5473.099999999977,
+          "duration": 182.5,
+          "encoded": 62020,
+          "decoded": 131121
+        },
+        {
+          "name": "http://127.0.0.1:4390/_astro/model-viewer.min.DjP7aMzC.js",
+          "start": 5477.599999999977,
+          "duration": 367.0999999999767,
+          "encoded": 291816,
+          "decoded": 1068903
+        },
+        {
+          "name": "http://127.0.0.1:4390/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+          "start": 6120.399999999965,
+          "duration": 1269.9000000000233,
+          "encoded": 1455007,
+          "decoded": 2519012
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "profile": "mobile",
+      "run": 2,
+      "before": [],
+      "errors": [],
+      "readyMs": 2691.4000000000233,
+      "clips": [],
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4390/_astro/warm.BvoYfyt4.hdr",
+          "start": 5332.700000000012,
+          "duration": 178.79999999998836,
+          "encoded": 62020,
+          "decoded": 131121
+        },
+        {
+          "name": "http://127.0.0.1:4390/_astro/model-viewer.min.DjP7aMzC.js",
+          "start": 5335.600000000035,
+          "duration": 366.79999999998836,
+          "encoded": 291816,
+          "decoded": 1068903
+        },
+        {
+          "name": "http://127.0.0.1:4390/_astro/turtleand-0.1.1.CAfE1XA4.glb",
+          "start": 5946.900000000023,
+          "duration": 1265.7000000000116,
+          "encoded": 1455007,
+          "decoded": 2519012
+        }
+      ],
+      "overflow": false
+    }
+  ]
+}

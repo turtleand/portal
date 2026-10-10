@@ -1,4 +1,4 @@
-# Sculpted Warmth with Warm Presence
+# Sculpted Warmth game art and animated presence
 
 The existing avatar gallery now offers an optional 3D view of all six Turtleand identities. Visitors can switch between the canonical SVG and a real dimensional model while keeping the selected version and its localized story. Warm Presence is the selected expression: rounded hazel eyes, softened upper lids and a gentle closed smile, carried consistently through the entire lineage.
 
@@ -14,15 +14,19 @@ The gallery uses one lazily imported `@google/model-viewer` 4.3.1 runtime inside
 
 The gallery opens in 2D. Runtime and model downloads begin only after explicit 3D selection. The selected canonical SVG covers loading and failures. Version switching, localized metadata, chronological play, pause, manual orbit, reset and slow rotation share the existing modal. Reduced motion keeps a stable view with manual controls available. One viewer shell is reused, inactive scenes stop drawing, and late loads are guarded against replacing a newer selection.
 
-## Selected model verification
+## Current game art pass
 
-All six production models match the chosen Warm Presence review models' binary geometry, vertex colors and materials exactly. Only their wrapper names and identity metadata differ. See [production equivalence](evidence/warm-presence/production-equivalence.json). The body, equipment, canonical SVGs, walking poses and studio light remain unchanged.
+The current derivatives retain Warm Presence and all six canonical identities. A slightly taller head/neck, larger hazel irises, rounded terminal edges and restrained vertex shading improve the character read. Shell scutes carry growth relief in their normals and darker edges; metallic braces and pistons use distinct PBR surfaces. A dark studio stage, warm key and cool rim replace the flat tan presentation.
 
-All six models remain below the 2.5 MiB raw asset budget. The final export inventory is `scripts/avatar-3d/inventory.json`. Structural checks validate complete manifest coverage, distinct self-contained models, matching embedded identities and valid shared lighting. The seven asset regression tests include missing, orphaned, duplicated, corrupt, externally referenced and mismatched resources.
+The former static GLBs now contain an eight-second `Idle` clip with breathing, a small head attention movement and two blinks. Named anatomy pivots preserve equipment attachment and planted feet. Main play/pause, reduced motion, manual camera inspection, document visibility and modal closure govern clip playback. Rotation remains independently controlled.
 
-The final selected-model [browser matrix](evidence/warm-presence/final-browser-matrix.json) passes Chrome, Firefox and WebKit in English and Spanish at desktop and 390px widths, with all six versions rendered in each profile. The [canonical failure regression](evidence/warm-presence/final-canonical-failure.json) verifies that a missing SVG does not cover a ready 3D model and that returning to 2D or retrying a failed model keeps accurate fallback state. The [final validation summary](evidence/warm-presence/README.md) records 389 passing browser assertions, motion and timeline behavior, and the representative desktop/mobile captures. Earlier local study images and performance reports outside that directory describe previous face geometry. They are historical evidence and are not measurements of the selected final models.
+Selected model, runtime and HDR transfers now start together after opt-in. An abortable GLB fetch cancels stale downloads; explicit eager loading avoids waiting for visibility inside the hidden loading host. The canonical SVG stays visible until the selected model is usable. One decoded viewer scene and the browser HTTP cache keep resource retention bounded.
 
-The production adapter is validated with the normal `npm run build`. Browser checks use a separate production-optimized static build of the same client sources because the Netlify adapter does not support `astro preview`; this browser harness does not emulate request-time SSR. Narrow-screen checks are browser emulation, not physical-phone measurements.
+The new [repository art skill](../../.agents/skills/avatar-game-art/SKILL.md) records the reusable workflow. The [current evidence](evidence/game-art/README.md) includes baseline/candidate payload and readiness results, all-version and orbit captures, actual idle rig transforms, browser interaction and failure checks. All six current models fit the 1.3 MiB / 65,000-triangle authoring targets.
+
+Evidence under `evidence/warm-presence/` describes the preceding implementation. Its production-equivalence hashes, screenshots and performance results do not describe these regenerated models. No canonical SVG, walking pose, avatar version or localized story changes in this pass.
+
+The normal `npm run build` validates the Netlify adapter. Browser checks use the documented production-optimized static build of the same client sources because the adapter does not support preview. This harness does not emulate Netlify request-time SSR. Narrow-screen checks are desktop-browser emulation, not physical-phone measurements.
 
 ## Reproduce
 
