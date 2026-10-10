@@ -25,15 +25,21 @@ export async function playwright() { return import(process.env.PLAYWRIGHT_MODULE
 export async function launch(name, performance = false) {
   const api = await playwright();
   const options = { headless: true };
-  if (name === 'chromium' && (performance || process.env.PORTAL_QA_CHROME === '1')) {
+  if (name === 'chromium' && process.env.PORTAL_QA_CHROMIUM) {
+    options.executablePath = process.env.PORTAL_QA_CHROMIUM;
+    options.args = ['--no-sandbox'];
+  } else if (name === 'chromium' && (performance || process.env.PORTAL_QA_CHROME === '1')) {
     options.channel = 'chrome';
     options.args = ['--use-angle=metal'];
+  }
+  if (name === 'chromium' && process.env.PORTAL_QA_SOFTWARE_GL === '1') {
+    options.args = [...(options.args || []), '--use-angle=swiftshader', '--enable-unsafe-swiftshader'];
   }
   return api[name].launch(options);
 }
 export async function sourceHashes() {
   const sourceRoot=process.env.PORTAL_QA_SOURCE_ROOT || repo;
-  const files = ['src/components/avatar/three-d-controller.js', 'src/components/avatar/evolution-controller.js', 'src/components/avatar/AnimatedAvatarGallery.astro', 'src/components/avatar/modal-controller.js', 'src/data/avatar3d.ts', 'package-lock.json', ...manifest.map(stage=>`src/images/avatar/3d/turtleand-${stage.version.replace(/^v/,'')}.glb`), 'src/images/avatar/3d/warm.hdr'];
+  const files = ['scripts/avatar-3d/build-models.cjs', 'scripts/avatar-3d/build-environments.cjs', 'scripts/avatar-3d/art-surfaces.cjs', 'src/components/avatar/three-d-controller.js', 'src/components/avatar/evolution-controller.js', 'src/components/avatar/AnimatedAvatarGallery.astro', 'src/components/avatar/modal-controller.js', 'src/data/avatar3d.ts', 'package-lock.json', ...manifest.map(stage=>`src/images/avatar/3d/turtleand-${stage.version.replace(/^v/,'')}.glb`), 'src/images/avatar/3d/warm.hdr'];
   return Object.fromEntries(await Promise.all(files.map(async file => {
     try { return [file, createHash('sha256').update(await fs.readFile(path.join(sourceRoot, file))).digest('hex')]; }
     catch { return [file, null]; }
@@ -68,7 +74,7 @@ export async function state(page) {
     const visible = element => { if (!element) return false; const style=getComputedStyle(element), bounds=element.getBoundingClientRect(); return style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity)>0 && bounds.width>0 && bounds.height>0; };
     const canonical = [...document.querySelectorAll('[data-evolution-layer]')].filter(visible).map(layer=>({index:layer.dataset.evolutionLayer, svg:visible(layer.querySelector('svg')), pose:layer.querySelector('svg')?.dataset.walkPose}));
     const dimensions=viewer?.loaded?viewer.getDimensions():null;
-    return { mode:root?.dataset.representation, ready:root?.dataset.modelReady, open:modal?.getAttribute('aria-hidden')==='false', version:document.querySelector(S.meta)?.textContent, title:document.querySelector(S.title)?.textContent, description:document.querySelector(S.description)?.textContent, lang:document.documentElement.lang, viewers:document.querySelectorAll('model-viewer').length, modelSrc:viewer?.src, loaded:viewer?.loaded, dimensions:dimensions?{x:dimensions.x,y:dimensions.y,z:dimensions.z}:null, rotating:viewer?.hasAttribute('auto-rotate'), status:document.querySelector(S.status)?.textContent, canonical, overflow:document.documentElement.scrollWidth>innerWidth, panelOverflow:document.querySelector(S.panel)?.scrollWidth>document.querySelector(S.panel)?.clientWidth };
+    return { mode:root?.dataset.representation, ready:root?.dataset.modelReady, open:modal?.getAttribute('aria-hidden')==='false', version:document.querySelector(S.meta)?.textContent, title:document.querySelector(S.title)?.textContent, description:document.querySelector(S.description)?.textContent, lang:document.documentElement.lang, viewers:document.querySelectorAll('model-viewer').length, modelSrc:viewer?.dataset.modelSource || viewer?.src, loaded:viewer?.loaded, dimensions:dimensions?{x:dimensions.x,y:dimensions.y,z:dimensions.z}:null, rotating:viewer?.hasAttribute('auto-rotate'), status:document.querySelector(S.status)?.textContent, canonical, overflow:document.documentElement.scrollWidth>innerWidth, panelOverflow:document.querySelector(S.panel)?.scrollWidth>document.querySelector(S.panel)?.clientWidth };
   }, Object.fromEntries(Object.entries(S).filter(([,value])=>typeof value==='string')));
 }
 

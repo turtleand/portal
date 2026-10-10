@@ -6,6 +6,7 @@ const THREE = require("three");
 const fs = require("node:fs");
 const path = require("node:path");
 const { pathToFileURL } = require("node:url");
+const { applySurfaceDetail } = require('./art-surfaces.cjs');
 class FileReaderPolyfill {
   readAsArrayBuffer(blob) {
     blob.arrayBuffer().then((x) => {
@@ -27,18 +28,18 @@ const out = path.resolve(__dirname, "../../src/images/avatar/3d");
 const versions = ["0.0.1", "0.0.2", "0.0.3", "0.0.4", "0.1.0", "0.1.1"];
 const looks = {
   warm: {
-    skin: "#888d38",
-    young: "#b79a4c",
-    shell: "#68472c",
-    plate: "#926039",
-    belly: "#b08d3c",
-    metal: "#9facaa",
-    rough: 0.57,
-    coat: 0.1,
-    emission: 0.32,
+    skin: "#919c4b",
+    young: "#c6a55e",
+    shell: "#443021",
+    plate: "#98633b",
+    belly: "#b69a57",
+    metal: "#b6c4cc",
+    rough: 0.48,
+    coat: 0.16,
+    emission: 0.24,
   },
 };
-let root, mat, stats, headGeometry;
+let root, mat, headGeometry, RoundedBoxGeometry;
 function material(color, rough = 0.6, metal = 0, extra = {}) {
   return new THREE.MeshPhysicalMaterial({
     color,
@@ -55,9 +56,10 @@ function mesh(name, g, m, pos = [0, 0, 0], scale = [1, 1, 1]) {
   root.add(o);
   return o;
 }
-const sphere = new THREE.SphereGeometry(1, 24, 16);
+const sphere = new THREE.SphereGeometry(1, 20, 12);
+const detailSphere = new THREE.SphereGeometry(1, 12, 8);
 function ell(name, m, p, s) {
-  return mesh(name, sphere, m, p, s);
+  return mesh(name, Math.max(...s) < .14 ? detailSphere : sphere, m, p, s);
 }
 function tube(name, points, r, m) {
   const c = new THREE.CatmullRomCurve3(points.map((p) => new V(...p)));
@@ -65,9 +67,9 @@ function tube(name, points, r, m) {
     name,
     new THREE.TubeGeometry(
       c,
-      Math.min(144, Math.max(12, points.length * 6)),
+      Math.min(56, Math.max(6, points.length * 3)),
       r,
-      7,
+      5,
       false,
     ),
     m,
@@ -86,9 +88,20 @@ function rod(name, a, b, r, m, r2 = r) {
   return o;
 }
 function ring(name, p, r, th, m, rot = [Math.PI / 2, 0, 0], scale = [1, 1, 1]) {
-  const o = mesh(name, new THREE.TorusGeometry(r, th, 8, 36), m, p, scale);
+  const o = mesh(name, new THREE.TorusGeometry(r, th, 6, 28), m, p, scale);
   o.rotation.set(...rot);
   return o;
+}
+// Rigid anatomical pivots keep eyes and equipment together. The idle is tiny
+// enough that planted feet and the shell/neck overlap remain stable.
+function rigParts(name, pivot, parts) {
+  const rig = new THREE.Group();
+  rig.name = name;
+  rig.position.set(...pivot);
+  root.add(rig);
+  root.updateMatrixWorld(true);
+  for (const part of parts) rig.attach(part);
+  return rig;
 }
 function clip(poly, nx, nz, k) {
   let o = [];
@@ -127,14 +140,14 @@ function plate(poly, m, name) {
       border.push(
         rr > 0.987
           ? [(px / rr) * 0.9997, (pz / rr) * 0.9997]
-          : [(px - cx) * 0.977 + cx, (pz - cz) * 0.977 + cz],
+          : [(px - cx) * 0.963 + cx, (pz - cz) * 0.963 + cz],
       );
     }
   }
   const n = border.length,
     positions = [],
     indices = [],
-    rings = 7;
+    rings = 5;
   positions.push(...surface(cx, cz, 0.019));
   for (let r = 1; r <= rings; r++) {
     const t = r / rings;
@@ -166,7 +179,8 @@ function plate(poly, m, name) {
     ns.push(n.x, n.y, n.z);
   }
   g.setAttribute("normal", new THREE.Float32BufferAttribute(ns, 3));
-  mesh(name, g, m);
+  const scute = mesh(name, g, m);
+  scute.userData.scuteCenter = [cx, cz];
   return [cx, cz];
 }
 function projectedRoute(name, points, r, m) {
@@ -179,7 +193,7 @@ function projectedRoute(name, points, r, m) {
 function shell(idx, look) {
   mesh(
     "carapace dark recessed seams",
-    new THREE.SphereGeometry(1, 64, 36, 0, Math.PI * 2, 0, Math.PI / 2),
+    new THREE.SphereGeometry(1, 40, 24, 0, Math.PI * 2, 0, Math.PI / 2),
     mat.shell,
     [0, 0.77, -0.12],
     [1.036, 1.027, 1.174],
@@ -216,14 +230,7 @@ function shell(idx, look) {
       p = clip(p, nx, nz, k);
     });
     if (p.length < 3) return;
-    const c = new THREE.Color(look.plate);
-    c.offsetHSL(0, 0, ((i % 4) - 1.5) * 0.014);
-    mat.scutes ??= [];
-    const pm = (mat.scutes[i % 4] ??= material(c, look.rough, 0.02, {
-      clearcoat: look.coat,
-      clearcoatRoughness: 0.5,
-    }));
-    pm.name = "shell scutes " + (i % 4);
+    const pm = mat.plate;
     plate(p, pm, "scute " + i);
     // Inlaid circuit lines follow the curved scute surface, never flat decals.
     if (idx > 0) {
@@ -290,9 +297,9 @@ function shell(idx, look) {
           "inlaid shell circuit " + i + " segment " + j,
           new THREE.TubeGeometry(
             path,
-            20,
-            idx === 1 ? 0.0065 : 0.0085,
-            6,
+            10,
+            idx === 1 ? 0.0055 : 0.0065,
+            4,
             false,
           ),
           mat.light,
@@ -464,8 +471,8 @@ function limb(x, z, idx, front) {
 }
 // Selected Warm Presence expression across the lineage. Genesis keeps a slightly softer gaze.
 const warmPresence = {
-  width: .176, top: .105, lower: .141, tilt: -.004,
-  iris: .135, pupil: .078, gazeY: .005, hood: .072,
+  width: .193, top: .117, lower: .147, tilt: -.004,
+  iris: .155, pupil: .077, gazeY: .005, hood: .072,
   smile: .042, mouthWidth: .36, mouthY: 1.206,
 };
 function headSdf(p) {
@@ -547,9 +554,9 @@ function fanSurface(name, polygon, project, m, rings = 5) {
   return mesh(name, g, m);
 }
 function clippedCircle(radius, cx, cy, boundary) {
-  let poly = Array.from({ length: 64 }, (_, i) => [
-    cx + radius * Math.cos((-i / 64) * Math.PI * 2),
-    cy + radius * Math.sin((-i / 64) * Math.PI * 2),
+  let poly = Array.from({ length: 40 }, (_, i) => [
+    cx + radius * Math.cos((-i / 40) * Math.PI * 2),
+    cy + radius * Math.sin((-i / 40) * Math.PI * 2),
   ]);
   for (let i = 0; i < boundary.length; i++) {
     const a = boundary[i],
@@ -565,6 +572,7 @@ function face(idx) {
   const ex = warmPresence;
   for (const s of [-1, 1]) {
     const cx = s * .288, cy = 1.66, w = ex.width;
+    const eyeStart = root.children.length;
     const border = [];
     for (let i = 0; i <= 40; i++) {
       const u = -1 + i / 20;
@@ -590,8 +598,8 @@ function face(idx) {
     }
     center.z += lift;
     const eyePoint = (offset=0)=>(x,y)=>rawPoint(x,y,offset).toArray();
-    fanSurface("rounded warm ivory eye",border,eyePoint(),mat.sclera,10);
-    const iris = fanSurface("hazel iris with quiet radial depth",clippedCircle(ex.iris,0,ex.gazeY,border),eyePoint(.0018),mat.iris,12);
+    fanSurface("rounded warm ivory eye",border,eyePoint(),mat.sclera,4);
+    const iris = fanSurface("hazel iris with quiet radial depth",clippedCircle(ex.iris,0,ex.gazeY,border),eyePoint(.0018),mat.iris,5);
     // Subtle authored iris color variation remains geometry-native and embedded.
     const colors=[], ap=iris.geometry.getAttribute("position");
     const dark=new THREE.Color("#635333"), honey=new THREE.Color("#9b844d"), centerGold=new THREE.Color("#baa168");
@@ -603,9 +611,9 @@ function face(idx) {
       col.multiplyScalar(1+fiber);colors.push(col.r,col.g,col.b);
     }
     iris.geometry.setAttribute("color",new THREE.Float32BufferAttribute(colors,3));
-    fanSurface("rounded attentive pupil",clippedCircle(ex.pupil,0,ex.gazeY,border),eyePoint(.0035),mat.pupil,9);
+    fanSurface("rounded attentive pupil",clippedCircle(ex.pupil,0,ex.gazeY,border),eyePoint(.0035),mat.pupil,4);
     const glint=Array.from({length:32},(_,i)=>[-.023+.008*Math.cos(i/32*Math.PI*2),ex.gazeY+.036+.011*Math.sin(i/32*Math.PI*2)]);
-    fanSurface("small soft studio catchlight",glint,eyePoint(.0049),mat.white,4);
+    fanSurface("small soft studio catchlight",glint,eyePoint(.0049),mat.white,2);
     // Skin band connects the aperture to the real head surface. The upper
     // band is a broad sculpted hood, not a detached eyebrow strip.
     const positions = [], indices = [], n = border.length;
@@ -653,6 +661,7 @@ function face(idx) {
         hn.setXYZ(i, normal.x, normal.y, normal.z);
       }
     mesh("integrated soft upper lid and lower rim", hood, mat.skin);
+    rigParts(s < 0 ? 'EyeRig_L' : 'EyeRig_R', [cx, cy, center.z], root.children.slice(eyeStart));
     for (const [x, y, rx, ry] of [
       [s * 0.448, 1.407, 0.033, 0.063],
       [s * 0.453, 1.291, 0.025, 0.043],
@@ -677,7 +686,7 @@ function face(idx) {
     smile.push([x,y,headFront(x,y)+.0035]);
   }
   const smileCurve=new THREE.CatmullRomCurve3(smile.map(p=>new V(...p)));
-  const segments=96, radial=8;
+  const segments=40, radial=5;
   const mouthGeometry=new THREE.TubeGeometry(smileCurve,segments,.007,radial,false);
   const mouthPositions=mouthGeometry.getAttribute("position");
   for(let i=0;i<=segments;i++){
@@ -738,13 +747,13 @@ function accessories(idx) {
     );
     const b = mesh(
       "wrist terminal case",
-      new THREE.BoxGeometry(0.31, 0.26, 0.11, 1, 1, 1),
-      mat.dark,
+      new RoundedBoxGeometry(0.31, 0.26, 0.11, 2, 0.023),
+      mat.metal,
       [x, 0.4, z + 0.288],
     );
     const screen = mesh(
       "teal wrist display",
-      new THREE.BoxGeometry(0.235, 0.172, 0.012),
+      new RoundedBoxGeometry(0.235, 0.172, 0.018, 2, 0.012),
       mat.screen,
       [x, 0.4, z + 0.35],
     );
@@ -821,21 +830,25 @@ function make(idx, look) {
   mat = {
     skin: material(sk, look.rough + 0.1, 0, {
       clearcoat: look.coat * 0.4,
-      specularIntensity: 0.4,
+      specularIntensity: 0.35,
+      vertexColors: true,
     }),
     shell: material(look.shell, 0.62),
-    edge: material(look.plate, 0.5),
-    belly: material(look.belly, 0.65),
+    plate: material(look.plate, look.rough, 0.015, {
+      vertexColors: true, clearcoat: look.coat, clearcoatRoughness: .4,
+    }),
+    edge: material(look.plate, 0.42, .015),
+    belly: material(look.belly, 0.65, 0, {vertexColors:true}),
     spot: material(new THREE.Color(sk).multiplyScalar(0.62), 0.8),
     nail: material("#ccae58", 0.5),
-    sclera: material("#c7c7aa", .57, 0, {specularIntensity:.23}),
-    iris: material("#ffffff", .28, 0, {vertexColors:true, specularIntensity:.35, clearcoat:.18, clearcoatRoughness:.25}),
-    pupil: material("#1a2117", .24, 0, {specularIntensity:.35, clearcoat:.18, clearcoatRoughness:.25}),
+    sclera: material("#cfccb0", .38, 0, {specularIntensity:.3}),
+    iris: material("#ffffff", .2, 0, {vertexColors:true, specularIntensity:.45, clearcoat:.35, clearcoatRoughness:.18}),
+    pupil: material("#131c17", .17, 0, {specularIntensity:.4, clearcoat:.4, clearcoatRoughness:.18}),
     white: material("#dfdac8", .6, 0, {specularIntensity:0}),
     mouth: material("#4b482c", .8),
-    metal: material(look.metal, 0.33, 0.62),
-    chrome: material("#c7d8cd", 0.19, 0.86),
-    dark: material("#21382f", 0.51, 0.18),
+    metal: material(look.metal, 0.27, 0.78),
+    chrome: material("#d0dae1", 0.16, 0.9),
+    dark: material("#172624", 0.58, 0.1),
     light: material(idx === 1 ? "#70d477" : "#33dcc5", 0.26, 0.18, {
       emissive: idx === 1 ? "#45d05b" : "#19cbb2",
       emissiveIntensity: look.emission,
@@ -853,6 +866,7 @@ function make(idx, look) {
           emissiveIntensity: 0.32,
         })
       : mat.light;
+  for (const [name, surface] of Object.entries(mat)) surface.name ||= name;
   ell("body underside", mat.belly, [0, 0.53, -0.015], [0.89, 0.42, 1.09]);
   for (let i = -2; i <= 2; i++) {
     const z = i * 0.31;
@@ -888,13 +902,43 @@ function make(idx, look) {
     mat.skin,
     0.001,
   );
+  const shellStart = root.children.length;
   shell(idx, look);
+  rigParts('ShellRig', [0,.77,-.12], root.children.slice(shellStart));
+  const headStart = root.children.length;
   face(idx);
+  const headParts = root.children.slice(headStart);
+  const accessoryStart = root.children.length;
   accessories(idx);
+  headParts.push(...root.children.slice(accessoryStart).filter(part => /headset/.test(part.name)));
+  const head = rigParts('HeadRig', [0,.86,1.05], headParts);
+  head.scale.set(1.035, 1.09, 1.015);
   root.updateMatrixWorld(true);
   return root;
 }
+function idleClip() {
+  const duration = 8, times = [], shell = [], head = [], gaze = [];
+  // Sample smooth loop curves offline; no procedural animation work at runtime.
+  for(let i=0;i<=64;i++) {
+    const t=duration*i/64, phase=t/duration*Math.PI*2;
+    times.push(t);
+    shell.push(0, .77 + .014*(1-Math.cos(phase*2)), -.12);
+    head.push(0, .86 + .008*(1-Math.cos(phase*2)), 1.05);
+    const q=new THREE.Quaternion().setFromEuler(new THREE.Euler(.012*Math.sin(phase*2),.038*Math.sin(phase),.012*Math.sin(phase)));
+    gaze.push(q.x,q.y,q.z,q.w);
+  }
+  const blinkTimes=[0,2.7,2.82,2.94,3.12,6.5,6.62,6.74,6.92,8];
+  const blink=blinkTimes.flatMap((_,i)=>[1, i===2||i===6 ? .07 : 1, 1]);
+  return new THREE.AnimationClip('Idle',duration,[
+    new THREE.VectorKeyframeTrack('ShellRig.position',times,shell),
+    new THREE.VectorKeyframeTrack('HeadRig.position',times,head),
+    new THREE.QuaternionKeyframeTrack('HeadRig.quaternion',times,gaze),
+    new THREE.VectorKeyframeTrack('EyeRig_L.scale',blinkTimes,blink),
+    new THREE.VectorKeyframeTrack('EyeRig_R.scale',blinkTimes,blink),
+  ]);
+}
 (async () => {
+  ({RoundedBoxGeometry}=await import(pathToFileURL(require.resolve('three/addons/geometries/RoundedBoxGeometry.js')).href));
   const { GLTFExporter } = await import(
     pathToFileURL(require.resolve("three/addons/exporters/GLTFExporter.js"))
       .href
@@ -902,7 +946,7 @@ function make(idx, look) {
   const { MarchingCubes } = await import(
     pathToFileURL(require.resolve("three/addons/objects/MarchingCubes.js")).href
   );
-  const size = 68,
+  const size = 46,
     mc = new MarchingCubes(
       size,
       new THREE.MeshBasicMaterial(),
@@ -968,25 +1012,60 @@ function make(idx, look) {
         group = new THREE.Group();
       group.name = authored.name;
       group.userData = authored.userData;
-      const batches = new Map();
-      authored.traverse((o) => {
-        if (!o.isMesh) return;
-        let g = o.geometry.clone().applyMatrix4(o.matrixWorld);
-        for (const a of Object.keys(g.attributes))
-          if (a !== "position" && a !== "normal" && a !== "color") g.deleteAttribute(a);
-        if (g.index) g = g.toNonIndexed();
-        if (!batches.has(o.material)) batches.set(o.material, []);
-        batches.get(o.material).push(g);
-      });
-      for (const [material, geometries] of batches) {
-        const geometry = mergeVertices(
-          mergeGeometries(geometries, false),
-          1e-5,
-        );
-        const part = new THREE.Mesh(geometry, material);
-        part.name = material.name || "Sculpted Warmth surface";
-        group.add(part);
+      // Eye pigmentation shares one glossy surface per blinking aperture.
+      // It retains authored iris fibers while avoiding four draw calls per eye.
+      const eyeMaterial = mat.iris.clone();
+      eyeMaterial.name = 'glossy layered eye';
+      const eyePigments = new Set([mat.sclera, mat.iris, mat.pupil, mat.white]);
+      // Batch within animated anatomy instead of flattening the whole character.
+      // Detail is baked in world space; the merged result returns to its pivot.
+      function batchNode(source, target) {
+        const batches = new Map();
+        for (const object of source.children) {
+          if (!object.isMesh) {
+            const child = new THREE.Group();
+            child.name = object.name;
+            child.position.copy(object.position);
+            child.quaternion.copy(object.quaternion);
+            child.scale.copy(object.scale);
+            target.add(child);
+            batchNode(object, child);
+            continue;
+          }
+          let g = object.geometry.clone().applyMatrix4(object.matrixWorld);
+          const batchMaterial = eyePigments.has(object.material) ? eyeMaterial : object.material;
+          if (eyePigments.has(object.material) && !g.hasAttribute('color')) {
+            const color = object.material.color, values = [];
+            for(let j=0;j<g.getAttribute('position').count;j++) values.push(color.r,color.g,color.b);
+            g.setAttribute('color',new THREE.Float32BufferAttribute(values,3));
+          }
+          const kind = object.material === mat.skin ? 'skin'
+            : object.material === mat.plate ? 'shell'
+            : object.material === mat.belly ? 'belly' : 'metal';
+          applySurfaceDetail({geometry:g, userData:object.userData}, kind);
+          g.applyMatrix4(source.matrixWorld.clone().invert());
+          for (const attribute of Object.keys(g.attributes))
+            if (!['position','normal','color'].includes(attribute)) g.deleteAttribute(attribute);
+          if (g.index) g = g.toNonIndexed();
+          if (!batches.has(batchMaterial)) batches.set(batchMaterial, []);
+          batches.get(batchMaterial).push(g);
+        }
+        for (const [material, geometries] of batches) {
+          const geometry = mergeVertices(mergeGeometries(geometries, false), 1e-5);
+          const colors = geometry.getAttribute('color');
+          if (colors) {
+            // glTF permits normalized byte vertex colors. Save nine bytes per
+            // vertex while keeping continuous baked shading and iris fibers.
+            const packed = new Uint8Array(colors.count * 3);
+            for(let j=0;j<packed.length;j++) packed[j]=Math.round(Math.max(0,Math.min(1,colors.array[j]))*255);
+            geometry.setAttribute('color', new THREE.BufferAttribute(packed,3,true));
+          }
+          const part = new THREE.Mesh(geometry, material);
+          part.name = target.name + ' ' + material.name;
+          target.add(part);
+        }
       }
+      batchNode(authored, group);
       let tris = 0,
         meshes = 0;
       group.traverse((o) => {
@@ -1000,6 +1079,7 @@ function make(idx, look) {
       const buf = await new GLTFExporter().parseAsync(group, {
         binary: true,
         onlyVisible: true,
+        animations: [idleClip()],
       });
       const filename = "turtleand-" + versions[i] + ".glb";
       fs.writeFileSync(path.join(out, filename), Buffer.from(buf));
@@ -1010,6 +1090,7 @@ function make(idx, look) {
         bytes: buf.byteLength,
         triangles: tris,
         meshes,
+        animations: ["Idle"],
       });
       console.log(filename, buf.byteLength, tris);
     }

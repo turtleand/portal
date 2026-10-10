@@ -1,0 +1,17 @@
+[
+  {
+    "engine": "chromium",
+    "available": true,
+    "version": "154.0.8037.57"
+  },
+  {
+    "engine": "firefox",
+    "available": false,
+    "error": "Playwright browser executable not installed"
+  },
+  {
+    "engine": "webkit",
+    "available": false,
+    "error": "Playwright browser executable not installed"
+  }
+]

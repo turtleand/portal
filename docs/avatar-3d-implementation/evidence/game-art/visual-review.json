@@ -1,0 +1,498 @@
+{
+  "browser": "154.0.8037.57",
+  "renderer": "SwiftShader software WebGL",
+  "views": [
+    {
+      "version": "v0.0.1",
+      "name": "opening",
+      "orbit": "-28deg 76deg 92%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.1",
+      "name": "front",
+      "orbit": "0deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.1",
+      "name": "right",
+      "orbit": "90deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.1",
+      "name": "rear",
+      "orbit": "180deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.1",
+      "name": "left",
+      "orbit": "270deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.1",
+      "name": "above",
+      "orbit": "-28deg 40deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.1",
+      "name": "low",
+      "orbit": "-28deg 100deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.2",
+      "name": "opening",
+      "orbit": "-28deg 76deg 92%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.2",
+      "name": "front",
+      "orbit": "0deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.2",
+      "name": "right",
+      "orbit": "90deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.2",
+      "name": "rear",
+      "orbit": "180deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.2",
+      "name": "left",
+      "orbit": "270deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.2",
+      "name": "above",
+      "orbit": "-28deg 40deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.2",
+      "name": "low",
+      "orbit": "-28deg 100deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.3",
+      "name": "opening",
+      "orbit": "-28deg 76deg 92%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.3",
+      "name": "front",
+      "orbit": "0deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.3",
+      "name": "right",
+      "orbit": "90deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.3",
+      "name": "rear",
+      "orbit": "180deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.3",
+      "name": "left",
+      "orbit": "270deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.3",
+      "name": "above",
+      "orbit": "-28deg 40deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.3",
+      "name": "low",
+      "orbit": "-28deg 100deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.4",
+      "name": "opening",
+      "orbit": "-28deg 76deg 92%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.4",
+      "name": "front",
+      "orbit": "0deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.4",
+      "name": "right",
+      "orbit": "90deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.4",
+      "name": "rear",
+      "orbit": "180deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.4",
+      "name": "left",
+      "orbit": "270deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.4",
+      "name": "above",
+      "orbit": "-28deg 40deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.0.4",
+      "name": "low",
+      "orbit": "-28deg 100deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.1.0",
+      "name": "opening",
+      "orbit": "-28deg 76deg 92%",
+      "ready": true
+    },
+    {
+      "version": "v0.1.0",
+      "name": "front",
+      "orbit": "0deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.1.0",
+      "name": "right",
+      "orbit": "90deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.1.0",
+      "name": "rear",
+      "orbit": "180deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.1.0",
+      "name": "left",
+      "orbit": "270deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.1.0",
+      "name": "above",
+      "orbit": "-28deg 40deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.1.0",
+      "name": "low",
+      "orbit": "-28deg 100deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.1.1",
+      "name": "opening",
+      "orbit": "-28deg 76deg 92%",
+      "ready": true
+    },
+    {
+      "version": "v0.1.1",
+      "name": "front",
+      "orbit": "0deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.1.1",
+      "name": "right",
+      "orbit": "90deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.1.1",
+      "name": "rear",
+      "orbit": "180deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.1.1",
+      "name": "left",
+      "orbit": "270deg 78deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.1.1",
+      "name": "above",
+      "orbit": "-28deg 40deg 100%",
+      "ready": true
+    },
+    {
+      "version": "v0.1.1",
+      "name": "low",
+      "orbit": "-28deg 100deg 100%",
+      "ready": true
+    }
+  ],
+  "motion": {
+    "neutral": {
+      "ShellRig": {
+        "position": [
+          0,
+          0.7699999809265137,
+          -0.11999999731779099
+        ],
+        "quaternion": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "HeadRig": {
+        "position": [
+          0,
+          0.8600000143051147,
+          1.0499999523162842
+        ],
+        "quaternion": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "scale": [
+          1.035,
+          1.09,
+          1.015
+        ]
+      },
+      "EyeRig_L": {
+        "position": [
+          -0.288,
+          0.7999999999999999,
+          0.761303576512967
+        ],
+        "quaternion": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "EyeRig_R": {
+        "position": [
+          0.288,
+          0.7999999999999999,
+          0.761303576512967
+        ],
+        "quaternion": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    "blink": {
+      "ShellRig": {
+        "position": [
+          0,
+          0.787886815071106,
+          -0.11999999731779099
+        ],
+        "quaternion": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "HeadRig": {
+        "position": [
+          0,
+          0.8702210378646851,
+          1.0499999523162842
+        ],
+        "quaternion": [
+          -0.005660903867716516,
+          0.015202360086287585,
+          0.004704816953852994,
+          0.9998573433808635
+        ],
+        "scale": [
+          1.035,
+          1.09,
+          1.015
+        ]
+      },
+      "EyeRig_L": {
+        "position": [
+          -0.288,
+          0.7999999999999999,
+          0.761303576512967
+        ],
+        "quaternion": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "scale": [
+          1,
+          0.07000051766580395,
+          1
+        ]
+      },
+      "EyeRig_R": {
+        "position": [
+          0.288,
+          0.7999999999999999,
+          0.761303576512967
+        ],
+        "quaternion": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "scale": [
+          1,
+          0.07000051766580395,
+          1
+        ]
+      }
+    },
+    "breath": {
+      "ShellRig": {
+        "position": [
+          0,
+          0.7839999794960022,
+          -0.11999999731779099
+        ],
+        "quaternion": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "HeadRig": {
+        "position": [
+          0,
+          0.8679999709129333,
+          1.0499999523162842
+        ],
+        "quaternion": [
+          0.006056365629665899,
+          0.013408809129810644,
+          0.004322775225787465,
+          0.9998824120302484
+        ],
+        "scale": [
+          1.035,
+          1.09,
+          1.015
+        ]
+      },
+      "EyeRig_L": {
+        "position": [
+          -0.288,
+          0.7999999999999999,
+          0.761303576512967
+        ],
+        "quaternion": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "EyeRig_R": {
+        "position": [
+          0.288,
+          0.7999999999999999,
+          0.761303576512967
+        ],
+        "quaternion": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    }
+  },
+  "sourceHashes": {
+    "src/components/avatar/three-d-controller.js": "54099632b0980f59558a386a4dac504aa167bc21d788d7d14c54f7dcf7cfdea3",
+    "src/components/avatar/evolution-controller.js": "3c5cce5788a44a33f9518f387ec916a8d9950886b4e4d5dd87f8b1d4bebd7501",
+    "src/components/avatar/AnimatedAvatarGallery.astro": "0af87f5b337de45ef4f0b8f6b304d5d7505d39afe7bf9ecb40dc1cfcb52766df",
+    "src/components/avatar/modal-controller.js": "ba5e1c3595cc5fe1a4f8a936ba06c2cc8a5240b4f9b00cf59d991ec06282c253",
+    "src/data/avatar3d.ts": "5442022e9bdffb64b404043f4da48a8b7668a2e1a8a9b47a62274b3c52123588",
+    "package-lock.json": "b927b8f5811e9359091fda75975b07e65830aabce78121ad50fe435ecf01d9c0",
+    "src/images/avatar/3d/turtleand-0.0.1.glb": "98156a923b159ff5787081fdf502332911727fb73cb442e2d5e5a586efeabcff",
+    "src/images/avatar/3d/turtleand-0.0.2.glb": "cbd3a48a7d7bc3806d514795842ad761ff78af252c504396b4810fc3a61efc1d",
+    "src/images/avatar/3d/turtleand-0.0.3.glb": "4195fab50f6daa2ac7f14eea72e75b2935bc67c3cc1e14e0b3249458133105d8",
+    "src/images/avatar/3d/turtleand-0.0.4.glb": "99d08af72ea1afbad7f125efb88b8ca0012345371d92a7278863e033f08e1163",
+    "src/images/avatar/3d/turtleand-0.1.0.glb": "4e94dd452fc8e40956ab990f9beb92b9ca7a06a5cb8dd6d072f50bc3845f40fd",
+    "src/images/avatar/3d/turtleand-0.1.1.glb": "ea2b52a12ceb06fe1391b0c776ad64ecea1f36998ccb81e9599556c529bb3201",
+    "src/images/avatar/3d/warm.hdr": "a4244c1b6983bb1fe2a5e0f381dc3f3f56ae815524bc28c4c26aef9e802c603e"
+  },
+  "review": "All six identities at opening, front, right, rear, left, above and low orbits. No clipping observed. Warm Presence expression and equipment lineage retained; blink and breath use actual rig transform assertions at a fixed camera."
+}
