@@ -26,7 +26,7 @@
     "autoprefixer": "^10.5.4",
     "postcss": "^8.5.22",
     "tailwindcss": "^4.3.3",
-    "three": "0.183.2"
+    "three": "0.185.1"
   },
   "overrides": {
     "esbuild": "^0.28.1",
