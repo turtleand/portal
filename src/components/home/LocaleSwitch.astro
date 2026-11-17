@@ -1,0 +1,18 @@
+---
+import { createTranslator, SUPPORTED_LOCALES, type Locale } from '../../utils/i18n';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = createTranslator(locale);
+---
+<div class="language" role="group" aria-label={t('navigation.localeGroupLabel')} data-i18n-key="navigation.localeGroupLabel" data-i18n-attr="aria-label">
+  {SUPPORTED_LOCALES.map((code) => (
+    <button type="button" lang={code} data-locale-button data-locale={code}
+      data-active={String(locale === code)} aria-pressed={locale === code}
+      aria-current={locale === code ? 'true' : undefined}
+      data-current-aria-key={`navigation.locales.${code}.currentAria`}
+      data-inactive-aria-key={`navigation.locales.${code}.aria`}
+      aria-label={t(`navigation.locales.${code}.${locale === code ? 'currentAria' : 'aria'}`)}>
+      <span data-i18n-key={`navigation.locales.${code}.label`}>{t(`navigation.locales.${code}.label`)}</span>
+    </button>
+  ))}
+</div>
