@@ -1,34 +1,25 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Hero from '../components/Hero.astro';
-import QuadrantGrid from '../components/QuadrantGrid.astro';
-import Footer from '../components/Footer.astro';
-import { initI18n, makeCopyToken } from '../utils/i18n';
-
+import SharedLandscape from '../components/home/SharedLandscape.astro';
+import { destinations } from '../data/destinations';
+import { initI18n } from '../utils/i18n';
 const { locale, dictionary, t } = initI18n(Astro);
-
-const heroTitleSegments = {
-  before: makeCopyToken('hero.title.before', t),
-  highlight: makeCopyToken('hero.title.highlight', t),
-  after: makeCopyToken('hero.title.after', t),
+const routingSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'WebSite', '@id': 'https://turtleand.com/#website', name: 'Turtleand', url: 'https://turtleand.com/', description: t('home.description'), inLanguage: ['en', 'es'] },
+    { '@type': 'WebPage', '@id': 'https://turtleand.com/#webpage', url: 'https://turtleand.com/', name: t('home.title'), description: t('home.description'), isPartOf: { '@id': 'https://turtleand.com/#website' }, mainEntity: { '@id': 'https://turtleand.com/#spaces' } },
+    {
+      '@type': 'ItemList', '@id': 'https://turtleand.com/#spaces', name: t('home.allSpaces'),
+      itemListElement: destinations.map((space, index) => ({
+        '@type': 'ListItem', position: index + 1,
+        item: { '@type': 'WebSite', name: space.name, url: space.href, description: t(`home.destinations.${space.id}.description`) },
+      })),
+    },
+  ],
 };
-const heroDescription = makeCopyToken('hero.description', t);
-const quadrantLabels = {
-  ai: makeCopyToken('quadrants.ai.label', t),
-  growth: makeCopyToken('quadrants.growth.label', t),
-  build: makeCopyToken('quadrants.build.label', t),
-  blockchain: makeCopyToken('quadrants.blockchain.label', t),
-};
-const quadrantTaglines = {
-  ai: makeCopyToken('quadrants.ai.tagline', t),
-  growth: makeCopyToken('quadrants.growth.tagline', t),
-  build: makeCopyToken('quadrants.build.tagline', t),
-  blockchain: makeCopyToken('quadrants.blockchain.tagline', t),
-};
-const footerRightsCopy = makeCopyToken('footer.rights', t);
 ---
-<Layout locale={locale} dictionary={dictionary}>
-  <Hero titleSegments={heroTitleSegments} description={heroDescription} />
-  <QuadrantGrid labels={quadrantLabels} taglines={quadrantTaglines} />
-  <Footer slot="footer" rightsCopy={footerRightsCopy} />
+<Layout locale={locale} dictionary={dictionary} variant="landscape" title={t('home.title')} description={t('home.description')} titleKey="home.title" descriptionKey="home.description">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(routingSchema).replace(/</g, '\\u003c')} />
+  <SharedLandscape locale={locale} />
 </Layout>

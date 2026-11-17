@@ -1,0 +1,126 @@
+---
+import '../../styles/landscape.css';
+import LandscapeArt from './LandscapeArt.astro';
+import DestinationArt from './DestinationArt.astro';
+import LocaleSwitch from './LocaleSwitch.astro';
+import { principalDestinations, technicalDestinations } from '../../data/destinations';
+import turtuan from '../../images/avatar/evolution/turtleand-0.1.1.svg';
+import { createTranslator, type Locale } from '../../utils/i18n';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = createTranslator(locale);
+const directoryGroups = [{ id: 'principal', spaces: principalDestinations }, { id: 'technical', spaces: technicalDestinations }];
+const localHref = (path: string) => locale === 'es' ? `${path}?lang=es` : path;
+---
+<div class="landscape-home">
+  <a class="skip" href="#main" data-i18n-key="home.skip">{t('home.skip')}</a>
+  <div class="page">
+    <header class="header shell">
+      <div class="identity">
+        <button type="button" class="avatar-opener header-avatar identity-control" data-open-avatar-gallery
+          aria-haspopup="dialog" aria-controls="avatar-gallery-modal" aria-expanded="false"
+          aria-label={t('avatar.modal.openLabel')} title={t('avatar.modal.openLabel')}
+          data-i18n-key="avatar.modal.openLabel" data-i18n-attr="aria-label title">
+          <img src={turtuan.src} width="44" height="44" alt="" decoding="async" />
+          <span class="brand">turtleand</span>
+        </button>
+      </div>
+      <nav class="navigation" aria-label={t('home.navigationLabel')} data-i18n-key="home.navigationLabel" data-i18n-attr="aria-label">
+        <button type="button" class="directory-trigger" id="all-spaces" aria-haspopup="dialog" aria-controls="directory" aria-expanded="false"><span data-i18n-key="home.allSpaces">{t('home.allSpaces')}</span><span aria-hidden="true">+</span></button>
+        <a class="about" href={localHref('/about')} data-base-href="/about" data-locale-link data-i18n-key="navigation.about">{t('navigation.about')}</a>
+        <LocaleSwitch locale={locale} />
+      </nav>
+    </header>
+    <main id="main" tabindex="-1">
+      <h1 data-i18n-key="home.headline">{t('home.headline')}</h1>
+      <div class="landscape">
+        <LandscapeArt />
+        <nav class="entrances" aria-label={t('home.exploreLabel')} data-i18n-key="home.exploreLabel" data-i18n-attr="aria-label">
+          {principalDestinations.map((space) => (
+            <a class={`destination-link destination-${space.id}`} data-destination={space.id} href={space.href}>
+              <DestinationArt destination={space.id} />
+              <div class={`entrance ${space.id}`}>
+              <h2>{space.name} <span class="arrow" aria-hidden="true">↗</span></h2>
+              <p><span data-i18n-key={`home.destinations.${space.id}.clarifier`}>{t(`home.destinations.${space.id}.clarifier`)}</span></p>
+              </div>
+            </a>
+          ))}
+        </nav>
+        <button type="button" class="avatar-opener scene-avatar" data-open-avatar-gallery
+          aria-haspopup="dialog" aria-controls="avatar-gallery-modal" aria-expanded="false"
+          aria-label={t('avatar.modal.openLabel')} title={t('avatar.modal.openLabel')}
+          data-i18n-key="avatar.modal.openLabel" data-i18n-attr="aria-label title">
+          <img src={turtuan.src} width="88" height="88" alt="" decoding="async" />
+        </button>
+      </div>
+    </main>
+    <footer class="footer shell">
+      <div class="footer-links"><a href="https://github.com/turtleand">GitHub <span aria-hidden="true">&nbsp;↗</span></a><a href="mailto:hello@turtleand.com">hello@turtleand.com</a></div>
+    </footer>
+  </div>
+  <dialog id="directory" aria-labelledby="directory-title">
+    <div class="dialog-head">
+      <h2 id="directory-title" data-i18n-key="home.allSpaces">{t('home.allSpaces')}</h2>
+      <button type="button" class="close" aria-label={t('home.closeDirectory')} data-i18n-key="home.closeDirectory" data-i18n-attr="aria-label" autofocus>×</button>
+    </div>
+    <p class="directory-intro" data-i18n-key="home.directoryIntro">{t('home.directoryIntro')}</p>
+    {directoryGroups.map((group) => (
+    <section class={`directory-group directory-${group.id}`} aria-labelledby={group.id === 'technical' ? 'technical-title' : undefined}>
+      {group.id === 'technical' && <h3 id="technical-title" data-i18n-key="home.technicalTitle">{t('home.technicalTitle')}</h3>}
+      <ul class="directory-list">
+      {group.spaces.map((space) => (
+        <li>
+          <a class="space-link" href={space.href}>
+            <strong>{space.name} <span aria-hidden="true">↗</span></strong>
+            <small data-i18n-key={`home.destinations.${space.id}.description`}>{t(`home.destinations.${space.id}.description`)}</small>
+          </a>
+          {space.source && <a class="repo-link" href={space.source} aria-label={t(`home.destinations.${space.id}.sourceLabel`)} data-i18n-key={`home.destinations.${space.id}.sourceLabel`} data-i18n-attr="aria-label"><span data-i18n-key="home.source">{t('home.source')}</span><span aria-hidden="true">↗</span></a>}
+        </li>
+      ))}
+      </ul>
+    </section>
+    ))}
+    <div class="directory-bottom">
+      <a href={localHref('/feeds/')} data-base-href="/feeds/" data-locale-link data-i18n-key="home.feeds">{t('home.feeds')}</a>
+      <a href="https://github.com/turtleand" data-i18n-key="home.ecosystemSource">{t('home.ecosystemSource')}</a>
+    </div>
+  </dialog>
+</div>
+<script>
+  const directory = document.querySelector<HTMLDialogElement>('#directory');
+  const trigger = document.querySelector<HTMLButtonElement>('#all-spaces');
+  if (directory && trigger) {
+    let previousOverflow = '';
+    trigger.addEventListener('click', () => {
+      previousOverflow = document.body.style.overflow;
+      directory.showModal();
+      directory.scrollTop = 0;
+      trigger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    });
+    directory.querySelector('.close')?.addEventListener('click', () => directory.close());
+    directory.addEventListener('close', () => {
+      document.body.style.overflow = previousOverflow;
+      trigger.setAttribute('aria-expanded', 'false');
+      if (document.activeElement === document.body || directory.contains(document.activeElement)) trigger.focus();
+    });
+    directory.addEventListener('keydown', (event) => {
+      if (event.key !== 'Tab') return;
+      const controls = directory.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    });
+    directory.addEventListener('click', (event) => {
+      if (event.target !== directory) return;
+      const rect = directory.getBoundingClientRect();
+      if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) directory.close();
+    });
+  }
+</script>

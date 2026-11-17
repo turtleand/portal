@@ -206,6 +206,76 @@
     "jsonRegistry": "Registro JSON",
     "opmlExport": "Exportar OPML",
     "rssLabel": "RSS",
-    "surfaceLabel": "Superficie"
+    "surfaceLabel": "Superficie",
+    "descriptions": {
+      "growth": "Ensayos sobre IA, tecnología, crecimiento y autonomía humana.",
+      "handbook": "Principios prácticos para la colaboración entre humanos e IA.",
+      "build": "Ingeniería de software, notas de implementación y razonamiento sobre sistemas.",
+      "lab": "Temas de IA, patrones de agentes y módulos de aprendizaje práctico."
+    }
+  },
+  "home": {
+    "title": "Turtleand | Un poco más de comprensión",
+    "description": "Ideas, historias y herramientas para comprender un poco más. Explora Growth, Handbook, Chronicle, AI Atlas y el ecosistema de Turtleand.",
+    "headline": "Un poco más de comprensión.",
+    "skip": "Ir al contenido",
+    "homeLabel": "Inicio de Turtleand",
+    "navigationLabel": "Navegación principal",
+    "exploreLabel": "Explora Turtleand",
+    "allSpaces": "Todos los espacios",
+    "closeDirectory": "Cerrar directorio",
+    "directoryIntro": "Cada espacio tiene su propio hogar.",
+    "source": "Código",
+    "portalSource": "Código de Portal ↗",
+    "mcpSource": "Servidor MCP ↗",
+    "feeds": "Suscribirse a los escritos ↗",
+    "destinations": {
+      "growth": {
+        "clarifier": "Ideas para pensar con claridad",
+        "description": "Ideas para pensar con claridad",
+        "sourceLabel": "Código fuente de Growth"
+      },
+      "handbook": {
+        "clarifier": "Colaboración entre humanos e IA",
+        "description": "Colaboración entre humanos e IA",
+        "sourceLabel": "Código fuente de Handbook"
+      },
+      "chronicle": {
+        "clarifier": "Historias de autonomía humana",
+        "description": "Historias de autonomía humana",
+        "sourceLabel": "Código fuente de Chronicle"
+      },
+      "atlas": {
+        "clarifier": "Explora el mundo de IA",
+        "description": "Explora el mundo de IA",
+        "sourceLabel": "Código fuente de AI Atlas"
+      },
+      "lab": {
+        "description": "Artículos técnicos y aprendizaje práctico de IA",
+        "sourceLabel": "Código fuente de AI Lab"
+      },
+      "build": {
+        "description": "Artículos técnicos sobre software y sistemas",
+        "sourceLabel": "Código fuente de Build"
+      },
+      "hermes": {
+        "description": "Notas sobre agentes",
+        "sourceLabel": "Código fuente de Hermes Lab"
+      },
+      "chain": {
+        "description": "Sistemas descentralizados",
+        "sourceLabel": "Código fuente de Chain Lab"
+      },
+      "energy": {
+        "description": "Electricidad y sistemas físicos",
+        "sourceLabel": "Código fuente de Energy"
+      },
+      "openclaw": {
+        "description": "Histórico · código archivado",
+        "sourceLabel": "Código fuente de OpenClaw"
+      }
+    },
+    "technicalTitle": "Artículos técnicos",
+    "ecosystemSource": "Explora Turtleand en GitHub ↗"
   }
 }

@@ -1,4 +1,7 @@
+import en from '../content/i18n/en.json';
+
 export type TurtleandFeed = {
+  id: keyof typeof en.feeds.descriptions;
   surface: string;
   url: string;
   siteUrl: string;
@@ -8,59 +11,35 @@ export type TurtleandFeed = {
 
 export const turtleandFeeds: TurtleandFeed[] = [
   {
+    id: 'growth',
     surface: 'Growth',
     url: 'https://growth.turtleand.com/rss.xml',
     siteUrl: 'https://growth.turtleand.com/',
-    description: 'Reflective essays on AI, technology, growth, and human agency.',
+    description: en.feeds.descriptions.growth,
     type: 'rss',
   },
   {
-    surface: 'Build',
-    url: 'https://build.turtleand.com/rss.xml',
-    siteUrl: 'https://build.turtleand.com/',
-    description: 'Engineering craft, implementation notes, and software reasoning.',
-    type: 'rss',
-  },
-  {
-    surface: 'AI Lab',
-    url: 'https://lab.turtleand.com/rss.xml',
-    siteUrl: 'https://lab.turtleand.com/',
-    description: 'AI learning topics, agent patterns, and capability-building modules.',
-    type: 'rss',
-  },
-  {
-    surface: 'OpenClaw Lab',
-    url: 'https://openclaw.turtleand.com/rss.xml',
-    siteUrl: 'https://openclaw.turtleand.com/',
-    description: 'Applied agent-systems notes and operational trade-offs.',
-    type: 'rss',
-  },
-  {
-    surface: 'Hermes Lab',
-    url: 'https://hermes.turtleand.com/rss.xml',
-    siteUrl: 'https://hermes.turtleand.com/',
-    description: 'Hermes Agent field notes, troubleshooting guides, and voice workflows.',
-    type: 'rss',
-  },
-  {
+    id: 'handbook',
     surface: 'Handbook',
     url: 'https://handbook.turtleand.com/rss.xml',
     siteUrl: 'https://handbook.turtleand.com/',
-    description: 'Compressed operating principles for human-AI collaboration.',
+    description: en.feeds.descriptions.handbook,
     type: 'rss',
   },
   {
-    surface: 'Energy',
-    url: 'https://energy.turtleand.com/rss.xml',
-    siteUrl: 'https://energy.turtleand.com/',
-    description: 'Electricity and physical-systems learning articles.',
+    id: 'build',
+    surface: 'Build',
+    url: 'https://build.turtleand.com/rss.xml',
+    siteUrl: 'https://build.turtleand.com/',
+    description: en.feeds.descriptions.build,
     type: 'rss',
   },
   {
-    surface: 'Chain Lab',
-    url: 'https://decentralized.turtleand.com/rss.xml',
-    siteUrl: 'https://decentralized.turtleand.com/',
-    description: 'Blockchain systems literacy and protocol trade-offs.',
+    id: 'lab',
+    surface: 'AI Lab',
+    url: 'https://lab.turtleand.com/rss.xml',
+    siteUrl: 'https://lab.turtleand.com/',
+    description: en.feeds.descriptions.lab,
     type: 'rss',
   },
 ];

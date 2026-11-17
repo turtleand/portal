@@ -146,7 +146,7 @@ if (!bootstrap) {
       const value = getValue(locale, key);
       if (typeof value !== 'string') return;
       if (attr) {
-        node.setAttribute(attr, value);
+        attr.split(/\s+/).filter(Boolean).forEach((name) => node.setAttribute(name, value));
       } else {
         node.textContent = value;
       }
@@ -181,12 +181,12 @@ if (!bootstrap) {
     });
 
     const fallbackTitle = document.title;
-    const translatedTitle = getValue(locale, 'site.title');
+    const translatedTitle = getValue(locale, document.querySelector('title')?.getAttribute('data-i18n-key') || 'site.title');
     document.title =
       typeof translatedTitle === 'string' ? translatedTitle : fallbackTitle;
 
     const descriptionMeta = document.querySelector('meta[name="description"]');
-    const descriptionValue = getValue(locale, 'site.description');
+    const descriptionValue = getValue(locale, descriptionMeta?.getAttribute('data-i18n-key') || 'site.description');
     if (descriptionMeta && typeof descriptionValue === 'string') {
       descriptionMeta.setAttribute('content', descriptionValue);
     }
