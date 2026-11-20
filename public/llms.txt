@@ -15,7 +15,7 @@
 ## Portal
 - [Home](https://turtleand.com/): Four principal destinations and an All spaces directory with a technical writing section and public source links
 - [About Turtleand](https://turtleand.com/about): The pseudonymous identity and approach behind the ecosystem
-- Avatar Evolution Gallery: Open the combined Turtuan image and wordmark in the home header, or Turtuan in the landscape, or the logo on other pages, to explore six chronological canonical SVG versions, playback and manual navigation; optional 3D inspection loads on request
+- Turtleand Avatar Evolution Gallery. Select the Turtleand avatar in the home header or landscape, or the logo on other pages. The gallery offers six chronological SVG versions with playback, manual navigation and an optional 3D view.
 - [Turtleand Feeds](https://turtleand.com/feeds/): Subscribe to public written-content surfaces for Growth, Handbook, Build and AI Lab
 - [Feed registry](https://turtleand.com/feeds.json): Machine-readable feed discovery
 - English is available at the root; Spanish uses `?lang=es`

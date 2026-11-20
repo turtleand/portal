@@ -592,7 +592,7 @@ animation:none!important;
   top: 64.754098%;
   width: 6.875%;
   min-width: 56px;
-  /* Grow upward so Turtuan stays grounded on the path. */
+  /* Grow upward so Turtleand stays grounded on the path. */
   transform: translateY(-20%);
   aspect-ratio: 1;
   padding: 0;

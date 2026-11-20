@@ -26,7 +26,7 @@ PORTAL_QA_LABEL=candidate node scripts/avatar-3d/qa/summarize-performance.mjs
 
 The page measurement script takes ten fresh-context samples for each EN/ES and desktop/390px combination, records supported LCP/CLS/long-task metrics, and records all resource requests. Chrome with ANGLE Metal is used for these measurements on this host; viewport and DPR settings are laboratory conditions, not a physical phone claim. Keep both raw reports when comparing medians. The baseline uses its own build output and candidate uses its own build output.
 
-Reports are written to `docs/avatar-3d-implementation/evidence/`. Set `PORTAL_QA_SOURCE_ROOT` to the baseline checkout during baseline measurements so source hashes refer to the tested snapshot. It defaults to the candidate repository. Record the baseline commit and same-toolchain build separately, and freeze/rebuild the candidate before final evidence collection. Unavailable engines or metrics must be reported explicitly.
+Reports are written to `docs/avatar-3d-implementation/evidence/` by default. Use `PORTAL_QA_EVIDENCE` with an isolated absolute output directory for new reviews. Set `PORTAL_QA_SOURCE_ROOT` to the baseline checkout during baseline measurements so source hashes refer to the tested snapshot. It defaults to the candidate repository. Record the baseline commit and same-toolchain build separately, and freeze/rebuild the candidate before final evidence collection. Unavailable engines or metrics must be reported explicitly.
 
 The shared WebGL probe wraps actual WebGL drawing methods for optional idle/visibility checks. It counts draw submissions, not rAF callback cadence, GPU execution time, or GPU memory. It runs only in QA browser contexts and is never bundled into Portal.
 
@@ -36,7 +36,7 @@ On this macOS WebKit host, Option+Tab enables navigation through all controls. P
 
 The motion script separately records CPU draw-submission duration, animation-frame cadence and GPU draw-batch elapsed time if `EXT_disjoint_timer_query_webgl2` is available. Those metrics are not interchangeable, and none is native screen-presentation latency. Run performance scripts serially with other local browser/heavy workloads idle.
 
-`review-game-art.mjs` captures all six models at seven camera angles, plus fixed-camera neutral, blink and breath poses. It checks actual named rig transforms and saves contact sheets under `evidence/game-art/`. The rig inspection uses model-viewer internals only in the QA harness.
+`review-game-art.mjs` captures a contact sheet for each model's six manual camera angles, a sheet of all six default opening views, and fixed-camera neutral, blink and breath poses. It checks actual named rig transforms and saves its results under `game-art/` in the evidence directory. The rig inspection uses model-viewer internals only in the QA harness.
 
 `measure-game-art.mjs` compares the selected latest model in fresh desktop and 390px/DPR2 contexts. The narrow profile simulates 10 Mbit/s, 80 ms latency and 4x CPU throttling. Set `PORTAL_QA_RUNS` (default 3), `PORTAL_QA_LABEL` and `PORTAL_QA_BASE_URL` for each build. It records click-to-ready timing and compressed resource bytes. Use the same renderer, server and build config for baseline and candidate; keep browsers and other heavy work idle while measuring. Software WebGL measurements describe this lab, not a physical phone or hardware GPU.
 
