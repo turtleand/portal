@@ -146,7 +146,7 @@
   },
   "avatar": {
     "modal": {
-      "badgeLabel": "Avatar Evolution",
+      "badgeLabel": "Turtleand",
       "closeLabel": "Close",
       "ariaLabel": "Turtleand Avatar Evolution Gallery",
       "openLabel": "Open Turtleand avatar evolution gallery"
@@ -186,7 +186,7 @@
       "slow": "Still loading. You can switch to the 2D original.",
       "error": "3D is unavailable. The 2D original remains available.",
       "ready": "3D view ready.",
-      "viewer": "Interactive 3D avatar: {title}",
+      "viewer": "Turtleand in 3D, {title}",
       "reduced": "Motion is reduced. Turn the avatar with the arrow controls.",
       "viewPosition": "View from {direction}.",
       "viewAbove": "View from above, {direction}.",

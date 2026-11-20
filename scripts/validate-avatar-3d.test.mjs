@@ -6,8 +6,8 @@ import test from 'node:test';
 import { validateAvatar3dAssets, validateGlb } from './validate-avatar-3d.mjs';
 
 const manifest = [
-  { id: 'first-avatar', version: 'v0.0.1' },
-  { id: 'second-avatar', version: 'v0.0.2' },
+  { id: 'first-avatar', version: 'v0.0.1', direction: 'Living Shell' },
+  { id: 'second-avatar', version: 'v0.0.2', direction: 'Illustrated Sculpt' },
 ];
 
 const makeGlb = (name, mutate = () => {}, binary = Buffer.alloc(36)) => {
@@ -19,7 +19,7 @@ const makeGlb = (name, mutate = () => {}, binary = Buffer.alloc(36)) => {
     accessors: [{ bufferView: 0, componentType: 5126, count: 3, type: 'VEC3', min: [0, 0, 0], max: [1, 1, 1] }],
     materials: [{ name: 'Skin', pbrMetallicRoughness: { metallicFactor: 0, roughnessFactor: 0.6 } }],
     meshes: [{ primitives: [{ attributes: { POSITION: 0 }, material: 0 }] }],
-    nodes: [{ name, mesh: 0, extras: { avatarId: name, avatarVersion: manifest.find((entry) => entry.id === name)?.version ?? 'v0.0.1', direction: 'Sculpted Warmth' } }],
+    nodes: [{ name, mesh: 0, extras: { avatarId: name, avatarVersion: manifest.find((entry) => entry.id === name)?.version ?? 'v0.0.1', direction: manifest.find((entry) => entry.id === name)?.direction ?? 'Living Shell' } }],
     scenes: [{ nodes: [0] }],
     scene: 0,
   };
@@ -73,6 +73,9 @@ const fixture = async (t) => {
   await mkdir(directory, { recursive: true });
   await mkdir(path.dirname(manifestPath), { recursive: true });
   await writeFile(manifestPath, JSON.stringify(manifest));
+  const authoring = path.join(root, 'scripts/avatar-3d');
+  await mkdir(authoring, { recursive: true });
+  await writeFile(path.join(authoring, 'directions.json'), JSON.stringify(Object.fromEntries(manifest.map(({ id, direction }) => [id, direction]))));
   for (const entry of manifest) await writeFile(path.join(directory, `turtleand-${entry.version.slice(1)}.glb`), makeGlb(entry.id));
   await writeFile(path.join(directory, 'warm.hdr'), Buffer.concat([
     Buffer.from('#?RADIANCE\nFORMAT=32-bit_rle_rgbe\n\n-Y 1 +X 1\n'),
@@ -84,7 +87,7 @@ const fixture = async (t) => {
 test('manifest IDs map to distinct self-contained models and one environment', async (t) => {
   const { root } = await fixture(t);
   const result = await validateAvatar3dAssets(root);
-  assert.deepEqual(result.models.map(({ id, version }) => ({ id, version })), manifest);
+  assert.deepEqual(result.models.map(({ id, version, direction }) => ({ id, version, direction })), manifest);
   assert(result.models.every((model) => model.rawBytes > 0 && model.gzipBytes > 0));
 });
 

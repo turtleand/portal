@@ -4,7 +4,7 @@ import LandscapeArt from './LandscapeArt.astro';
 import DestinationArt from './DestinationArt.astro';
 import LocaleSwitch from './LocaleSwitch.astro';
 import { principalDestinations, technicalDestinations } from '../../data/destinations';
-import turtuan from '../../images/avatar/evolution/turtleand-0.1.1.svg';
+import turtleandAvatar from '../../images/avatar/evolution/turtleand-0.1.1.svg';
 import { createTranslator, type Locale } from '../../utils/i18n';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
@@ -21,7 +21,7 @@ const localHref = (path: string) => locale === 'es' ? `${path}?lang=es` : path;
           aria-haspopup="dialog" aria-controls="avatar-gallery-modal" aria-expanded="false"
           aria-label={t('avatar.modal.openLabel')} title={t('avatar.modal.openLabel')}
           data-i18n-key="avatar.modal.openLabel" data-i18n-attr="aria-label title">
-          <img src={turtuan.src} width="44" height="44" alt="" decoding="async" />
+          <img src={turtleandAvatar.src} width="44" height="44" alt="" decoding="async" />
           <span class="brand">turtleand</span>
         </button>
       </div>
@@ -50,7 +50,7 @@ const localHref = (path: string) => locale === 'es' ? `${path}?lang=es` : path;
           aria-haspopup="dialog" aria-controls="avatar-gallery-modal" aria-expanded="false"
           aria-label={t('avatar.modal.openLabel')} title={t('avatar.modal.openLabel')}
           data-i18n-key="avatar.modal.openLabel" data-i18n-attr="aria-label title">
-          <img src={turtuan.src} width="88" height="88" alt="" decoding="async" />
+          <img src={turtleandAvatar.src} width="88" height="88" alt="" decoding="async" />
         </button>
       </div>
     </main>

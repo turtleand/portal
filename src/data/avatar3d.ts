@@ -39,7 +39,7 @@ for (const entry of avatarVersions) {
 }
 
 if (entries.length === 0) throw new Error('[avatar-3d] Avatar manifest must not be empty.');
-if (!assets[environmentPath]) throw new Error('[avatar-3d] Missing Sculpted Warmth lighting environment.');
+if (!assets[environmentPath]) throw new Error('[avatar-3d] Missing shared studio HDR environment.');
 
 for (const assetPath of Object.keys(assets)) {
   if (!expectedPaths.has(assetPath)) throw new Error(`[avatar-3d] Orphan derivative asset: ${assetPath}`);

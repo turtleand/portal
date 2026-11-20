@@ -184,14 +184,19 @@ const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.len
   .evolution-timeline-button { min-height: 44px; width: 100%; padding: .35rem 0; border-radius: 5px; }
   .evolution-model-host { position: absolute; inset: 0; z-index: 2; visibility: hidden; pointer-events: none; }
   .evolution-model-host :global(model-viewer) { width: 100%; height: 100%; --poster-color: transparent; --progress-bar-height: 0px; }
-  [data-avatar-evolution][data-representation='3d'] [data-evolution-canvas] { background: radial-gradient(ellipse at 50% 22%, #354844 0%, #172c2e 50%, #0a171e 100%); }
-  [data-avatar-evolution][data-representation='3d'] [data-evolution-canvas] { max-width: none; }
+  [data-avatar-evolution][data-representation='3d'] [data-evolution-canvas] {
+    max-width: none;
+    background: radial-gradient(ellipse at 49% 48%, #5a4d42 0%, #403a35 49%, #252a2a 100%);
+  }
   [data-model-ready='true'] .evolution-model-host { visibility: visible; pointer-events: auto; }
   [data-model-ready='true'] [data-evolution-stage], [data-model-ready='true'] [data-evolution-static-fallback], [data-model-ready='true'] [data-evolution-unavailable] { visibility: hidden; }
   .evolution-3d-tools { padding: .5rem .75rem .25rem; border-top: 1px solid rgb(255 255 255 / .1); }
   .evolution-3d-tools[hidden] { display: none; }
   .evolution-3d-help { text-align: center; font-size: .75rem; line-height: 1.5; color: #bdc9ca; }
   .evolution-3d-buttons { display: grid; grid-template-columns: 44px 44px minmax(0, 1fr) minmax(0, 1.5fr); gap: .35rem; max-width: 360px; margin: .4rem auto 0; }
+  @media (max-width: 359px) {
+    .evolution-3d-buttons { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
   .evolution-3d-buttons button, .evolution-3d-status button { min-height: 44px; min-width: 44px; padding: .5rem .65rem; border: 1px solid rgb(255 255 255 / .2); border-radius: 10px; font-size: .75rem; color: #e6eeee; }
   .evolution-3d-buttons button:hover:not(:disabled), .evolution-3d-status button:hover { background: rgb(255 255 255 / .1); }
   .evolution-3d-buttons button:disabled { opacity: .4; }

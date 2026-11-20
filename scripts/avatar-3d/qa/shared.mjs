@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 
 export const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
-export const evidence = path.join(repo, 'docs/avatar-3d-implementation/evidence');
+export const evidence = process.env.PORTAL_QA_EVIDENCE || path.join(repo, 'docs/avatar-3d-implementation/evidence');
 export const base = process.env.PORTAL_QA_BASE_URL || 'http://127.0.0.1:4391';
 export const label = process.env.PORTAL_QA_LABEL || 'candidate';
 export const engines = (process.env.PORTAL_QA_ENGINES || 'chromium,firefox,webkit').split(',');
@@ -39,7 +39,7 @@ export async function launch(name, performance = false) {
 }
 export async function sourceHashes() {
   const sourceRoot=process.env.PORTAL_QA_SOURCE_ROOT || repo;
-  const files = ['scripts/avatar-3d/build-models.cjs', 'scripts/avatar-3d/build-environments.cjs', 'scripts/avatar-3d/art-surfaces.cjs', 'src/components/avatar/three-d-controller.js', 'src/components/avatar/evolution-controller.js', 'src/components/avatar/AnimatedAvatarGallery.astro', 'src/components/avatar/modal-controller.js', 'src/data/avatar3d.ts', 'package-lock.json', ...manifest.map(stage=>`src/images/avatar/3d/turtleand-${stage.version.replace(/^v/,'')}.glb`), 'src/images/avatar/3d/warm.hdr'];
+  const files = ['scripts/avatar-3d/build-models.cjs', 'scripts/avatar-3d/build-environments.cjs', 'scripts/avatar-3d/art-surfaces.cjs', 'scripts/avatar-3d/art-anatomy.cjs', 'scripts/avatar-3d/art-shell.cjs', 'scripts/avatar-3d/art-hardware.cjs', 'scripts/avatar-3d/directions.json', 'src/components/avatar/three-d-controller.js', 'src/components/avatar/evolution-controller.js', 'src/components/avatar/AnimatedAvatarGallery.astro', 'src/components/avatar/modal-controller.js', 'src/data/avatar3d.ts', 'package-lock.json', ...manifest.map(stage=>`src/images/avatar/3d/turtleand-${stage.version.replace(/^v/,'')}.glb`), 'src/images/avatar/3d/warm.hdr'];
   return Object.fromEntries(await Promise.all(files.map(async file => {
     try { return [file, createHash('sha256').update(await fs.readFile(path.join(sourceRoot, file))).digest('hex')]; }
     catch { return [file, null]; }

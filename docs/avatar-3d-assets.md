@@ -1,4 +1,4 @@
-# Sculpted Warmth avatar derivatives
+# Turtleand 3D avatar derivatives
 
 The avatar gallery offers a dimensional view of each existing Turtleand identity. It uses a lazily imported `@google/model-viewer` element inside the Astro gallery, self-contained GLB models, and one shared warm studio environment. The canonical resting SVGs remain the identity source. There is no new avatar version, separate experience, gameplay, or change to the 2D walk assets.
 
@@ -9,7 +9,11 @@ The avatar gallery offers a dimensional view of each existing Turtleand identity
 | Chronology, stable IDs, and English/Spanish copy | `src/data/avatarVersions.json` |
 | Canonical identity artwork | `src/images/avatar/evolution/turtleand-<version>.svg` |
 | Editable procedural model source and exporter | `scripts/avatar-3d/build-models.cjs` |
-| Baked organic shading and shell growth detail | `scripts/avatar-3d/art-surfaces.cjs` |
+| Stage-specific art direction | `scripts/avatar-3d/directions.json` |
+| Organic shapes, face, and planted stance | `scripts/avatar-3d/art-anatomy.cjs` |
+| Scute geometry, circuits, and route map | `scripts/avatar-3d/art-shell.cjs` |
+| Wearable equipment | `scripts/avatar-3d/art-hardware.cjs` |
+| Baked shading and Living Shell skin relief | `scripts/avatar-3d/art-surfaces.cjs` |
 | Reusable character art and animation skill | `.agents/skills/avatar-game-art/SKILL.md` |
 | Editable procedural HDR source | `scripts/avatar-3d/build-environments.cjs` |
 | Export inventory | `scripts/avatar-3d/inventory.json` |
@@ -24,20 +28,18 @@ The asset directory contains exactly one model per manifest entry and `warm.hdr`
 
 ## Identity and expression
 
-Warm Presence is the selected expression for all six dimensional avatars. It uses softly rounded eyes, warm hazel irises, smaller pupils, resting upper lids and a smooth closed smile. The expression is deliberately calmer than the original 2D brow treatment: the selected 3D direction prioritizes a natural fit with the sculpted body while retaining canonical eye placement, cheek markings, muzzle proportions and overall identity.
+The six models interpret the canonical SVG expressions with inset, upward-curving lids, quiet catchlights, cheek pigment, broad muzzles, and closed smiles. Genesis has an olive-gold brow and amber iris. Later stages have darker irises. Check the eye opening, spot placement, and smile corners in the front and opening views at gallery size.
 
-Keep the treatment stylized, with integrated eyelid transitions and restrained highlights. Avoid full pale eye rings, prominent bulging lenses, inward-scowling lids, exaggerated creases, sharp smile hooks or a wavy smirk. Compare front, opening three-quarter and side views at the gallery's actual display size. A technically valid model is insufficient evidence of a successful expression.
+| Manifest ID | Selected direction | Version-specific identity |
+| --- | --- | --- |
+| `genesis-shell` | Living Shell | Golden organic skin, olive brow, chestnut shell, spotted legs, and gold nails. |
+| `quantum-shell` | Illustrated Sculpt | Olive skin, green shell circuitry, and a separate cyan underside panel. |
+| `tech-nomad` | Illustrated Sculpt | Turquoise angular inlays and the wrist terminal. |
+| `network-visitor` | Living Shell | Ear module and wrist terminal with organic legs. |
+| `hydraulic-brace` | Carved Patina | Lower stance, broader face and scute bevels, silver pistons, cyan joints, and exposed gold nails. |
+| `frontier-cartographer` | Living Shell | Hydraulic braces with fine routes and waypoints layered over the main circuits, plus one compass badge. |
 
-| Manifest ID | Version-specific identity |
-| --- | --- |
-| `genesis-shell` | Golden organic skin, brown segmented shell, gentle closed smile, spotted legs and yellow toes. No technology. |
-| `quantum-shell` | Olive skin, green shell circuitry, separate cyan underside light, Warm Presence expression. No wearable equipment. |
-| `tech-nomad` | Turquoise circuitry and the wrist terminal. No headset. |
-| `network-visitor` | Headset and wrist terminal, with organic legs. |
-| `hydraulic-brace` | Hydraulic lineage with silver braces, cyan circular joints, and exposed organic toes. |
-| `frontier-cartographer` | Hydraulic lineage plus the fine shell network/map, nodes, and circular compass badge. |
-
-Shared geometry is appropriate where canonical proportions actually agree. Equipment, palette, and shell detail retain their version-specific treatment; the selected expression stays consistent across the lineage. For rear and underside surfaces absent from the SVG, continue the visible shell curvature and material language, mirror ordinary anatomy conservatively, and avoid inventing prominent equipment. Review these interpretations from every allowed orbit angle.
+Shared anatomy maintains the lineage. Illustrated Sculpt emphasizes clean planes and quiet finishes. Living Shell adds fine skin relief and keratin-like growth shading. Carved Patina emphasizes the wider stance, contoured metal, and warm bevels. For unseen surfaces, continue the shell curvature and material language and mirror ordinary anatomy conservatively.
 
 ## Authoring and export
 
@@ -45,7 +47,7 @@ The editable asset source is JavaScript geometry and material construction using
 
 Models use glTF's right-handed coordinate system with positive Y up and the face toward positive Z. Keep all versions at the same visual scale, with feet on the shared ground plane and the model centered consistently. Coordinates are normalized character units rather than claims about a physical turtle's size. Preserve that framing contract when replacing geometry so switching versions does not jump or crop the face.
 
-Sculpted Warmth uses satin skin, brown shell scutes, clearly separated silver equipment, restrained cyan emission, and a soft grounded studio shadow. The game art pass adds a taller head/neck silhouette, larger hazel irises, rounded terminal edges, baked skin gradients, scute edge shading and growth relief. A warm key and cool fill/rim separate materials against a dark studio stage. PBR colors are authored in linear space and exported through Three.js; use roughness and metalness to separate surfaces before raising light intensity. Normalized byte vertex colors carry detail without texture requests or additional triangles. Runtime GLBs embed all resources. Do not link remote textures, decoders, or buffers from an individual model.
+The shared studio uses a warm key, cool rim, and contact shadow. The opening camera favors the visible shell and face. The minimum orbit radius increases as the stage narrows to give the model clearance through rotation. PBR roughness and metalness separate skin, keratin, silver, and dark housings. Normalized byte vertex colors carry head pigments and scute shading. Living Shell variants embed one small procedural normal tile shared by the head and skin materials. All resources are self-contained in the GLBs.
 
 Each derivative now exports one eight-second `Idle` clip. Named shell and head pivots add small breathing and attention movements; eye pivots close briefly for two blinks per loop. Feet stay planted and attached equipment follows its anatomical owner. The exporter batches geometry by material **within each pivot**, retaining animation instead of flattening the entire character. Eye pigmentation shares one glossy material per eye. Main play/pause controls the character clip; camera rotation has its existing independent control. Reduced motion, manual camera inspection, hidden documents and closed galleries stop automatic character motion.
 
@@ -53,7 +55,7 @@ The controller starts the selected GLB, runtime and shared HDR downloads togethe
 
 The current geometry and studio lighting are procedural work authored for this project. No external character mesh, stock HDR photograph, or raster avatar reference is embedded in the runtime derivatives. Three.js is MIT-licensed; model-viewer is Apache-2.0-licensed. Record attribution and license details here before introducing third-party geometry, textures, or lighting.
 
-To regenerate, use `generate:avatar-3d`, which runs the model exporter and shared environment generator in `scripts/avatar-3d/`, then validate the resulting files. Each exported model carries its existing stable ID, `v`-prefixed version, and `Sculpted Warmth` direction in the root node's glTF extras:
+To regenerate, use `generate:avatar-3d`, which runs the model exporter and shared environment generator in `scripts/avatar-3d/`, then validate the resulting files. Each exported model carries its existing stable ID, `v`-prefixed version, and the stage selection from `directions.json` in its root node's glTF extras.
 
 ```bash
 npm run generate:avatar-3d
@@ -87,4 +89,4 @@ Verify the production build in Chromium, Firefox, and WebKit, English and Spanis
 - Hide, close, and reopen the gallery. Confirm render scheduling stops when inactive and resource retention remains bounded through at least 20 full-lineage/open-close cycles.
 - Compare unopened-Portal performance and layout against a production baseline. Record actual payload, first usable frame, animation cadence/render telemetry, and lifecycle measurements with their device and browser conditions.
 
-Target fewer than 65,000 triangles, 50 meshes and 1.3 MiB raw per model; retain the 2.5 MiB raw ceiling. Load no 3D resources before opt-in and verify responsive controls and stable layout on the actual production build. Record payload and device conditions with every performance result. See the [current implementation record](avatar-3d-implementation/README.md) for measured outcomes and final-model evidence. Earlier Warm Presence captures describe the previous models.
+Target fewer than 65,000 triangles, 50 meshes and 1.3 MiB raw per model; retain the 2.5 MiB raw ceiling. Load no 3D resources before opt-in and verify responsive controls and stable layout on the actual production build. Record payload and device conditions with every performance result. See the [current implementation record](avatar-3d-implementation/README.md) for measured outcomes and final-model evidence. The Warm Presence and game-art evidence directories record earlier models.
