@@ -1,6 +1,6 @@
 import viewerRuntimeUrl from '@google/model-viewer/dist/model-viewer.min.js?url';
 
-const OPENING_ORBIT = '-28deg 76deg 92%';
+const OPENING_ANGLE = '-43deg 81deg';
 const DWELL_MS = 6500;
 const DEPENDENCY_TIMEOUT_MS = 20000;
 const MODEL_TIMEOUT_MS = 30000;
@@ -123,6 +123,9 @@ export class AvatarThreeDController {
       this.update();
       if (this.visible) this.scheduleDwell();
     }, {threshold: .05}).observe(owner.canvas);
+    new ResizeObserver(() => {
+      if (this.viewer) this.viewer.minCameraOrbit = this.viewFraming().minimum;
+    }).observe(owner.canvas);
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
         this.pause();
@@ -143,6 +146,16 @@ export class AvatarThreeDController {
   get active() { return this.mode === '3d' && this.owner.active; }
   get stage() { return this.owner.stages[this.owner.index]; }
   t(key) { return this.owner.translate(`avatar.threeD.${key}`); }
+
+  viewFraming() {
+    const aspect = this.host.clientWidth / Math.max(1, this.host.clientHeight);
+    // Leave enough horizontal room for the full shell and muzzle as they orbit.
+    const minimum = Math.min(130, Math.max(78, Math.ceil(101 / aspect)));
+    return {
+      minimum: `auto 40deg ${minimum}%`,
+      opening: `${OPENING_ANGLE} ${Math.max(84, minimum + 5)}%`,
+    };
+  }
 
   setMode(next) {
     if (!['2d', '3d'].includes(next) || next === this.mode || !this.owner.active || this.owner.loading) return;
@@ -316,18 +329,19 @@ export class AvatarThreeDController {
       const element = this.viewer || this.idleViewer || document.createElement('model-viewer');
       this.idleViewer = null;
       this.viewer = element;
+      const framing = this.viewFraming();
       const attributes = {
         loading: 'eager', reveal: 'auto',
         'camera-controls': '', 'disable-pan': '', 'touch-action': 'pan-y',
-        'interaction-prompt': 'none', 'min-camera-orbit': 'auto 40deg 78%',
+        'interaction-prompt': 'none', 'min-camera-orbit': framing.minimum,
         'max-camera-orbit': 'auto 100deg 135%', 'field-of-view': '30deg',
-        'shadow-intensity': '.8', 'shadow-softness': '.85', exposure: '1.05',
+        'shadow-intensity': '1.15', 'shadow-softness': '.82', exposure: '1.05',
         'environment-image': environment, 'rotation-per-second': '6deg',
         'auto-rotate-delay': '500', 'aria-hidden': 'true', tabindex: '-1',
         'interpolation-decay': this.owner.reducedMotionQuery.matches ? '0' : '65',
       };
       for (const [key, value] of Object.entries(attributes)) element.setAttribute(key, value);
-      element.cameraOrbit = OPENING_ORBIT;
+      element.cameraOrbit = framing.opening;
       this.events = new AbortController();
       const signal = this.events.signal;
       element.addEventListener('load', async event => {
@@ -393,7 +407,7 @@ export class AvatarThreeDController {
 
   resetView() {
     if (!this.ready || !this.viewer) return;
-    this.viewer.cameraOrbit = OPENING_ORBIT;
+    this.viewer.cameraOrbit = this.viewFraming().opening;
     this.viewer.fieldOfView = '30deg';
     this.viewer.resetTurntableRotation();
     if (this.owner.reducedMotionQuery.matches) this.viewer.jumpCameraToGoal();

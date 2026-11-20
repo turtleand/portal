@@ -108,7 +108,7 @@ export function validateGlb(bytes, label = 'GLB', expectedIdentity) {
     assert.equal(identities.length, 1, `${label}: expected one model identity node`);
     assert.equal(identities[0].extras.avatarId, expectedIdentity.id, `${label}: embedded stable ID does not match the manifest`);
     assert.equal(identities[0].extras.avatarVersion, expectedIdentity.version, `${label}: embedded version does not match the manifest`);
-    assert.equal(identities[0].extras.direction, 'Sculpted Warmth', `${label}: model does not use the selected art direction`);
+    assert.equal(identities[0].extras.direction, expectedIdentity.direction, `${label}: model does not use the selected art direction`);
   }
   gltf.nodes.forEach((node, index) => {
     if (node.mesh !== undefined) reference(node.mesh, gltf.meshes, `node ${index} mesh`);
@@ -193,7 +193,10 @@ export function validateGlb(bytes, label = 'GLB', expectedIdentity) {
 }
 
 export async function validateAvatar3dAssets(root = repositoryRoot) {
-  const manifest = JSON.parse(await readFile(path.join(root, 'src/data/avatarVersions.json'), 'utf8'));
+  const [manifest, directions] = await Promise.all([
+    readFile(path.join(root, 'src/data/avatarVersions.json'), 'utf8').then(JSON.parse),
+    readFile(path.join(root, 'scripts/avatar-3d/directions.json'), 'utf8').then(JSON.parse),
+  ]);
   assert(Array.isArray(manifest) && manifest.length > 0, 'Avatar manifest must be a nonempty array');
   const ids = new Set();
   const versions = new Set();
@@ -206,6 +209,10 @@ export async function validateAvatar3dAssets(root = repositoryRoot) {
     versions.add(entry.version);
     return `turtleand-${entry.version.slice(1)}.glb`;
   });
+  assert.deepEqual(Object.keys(directions).sort(), [...ids].sort(), '3D art directions must match the manifest IDs exactly');
+  for (const [id, direction] of Object.entries(directions)) {
+    assert(typeof direction === 'string' && direction.trim(), `${id}: missing selected art direction`);
+  }
   const directory = path.join(root, 'src/images/avatar/3d');
   assert.deepEqual(await listFiles(directory), [...expectedModels, 'warm.hdr'].sort(), '3D assets must match the manifest exactly, with one shared warm.hdr and no missing or orphan files');
 
@@ -217,7 +224,9 @@ export async function validateAvatar3dAssets(root = repositoryRoot) {
     const sha256 = createHash('sha256').update(bytes).digest('hex');
     assert(!hashes.has(sha256), `${filename}: duplicates ${hashes.get(sha256)}; versions need distinct derivatives`);
     hashes.set(sha256, filename);
-    models.push({ id: manifest[index].id, version: manifest[index].version, filename, rawBytes: bytes.length, gzipBytes: gzipSync(bytes).length, sha256, ...validateGlb(bytes, filename, manifest[index]) });
+    const { id, version } = manifest[index];
+    const identity = { id, version, direction: directions[id] };
+    models.push({ ...identity, filename, rawBytes: bytes.length, gzipBytes: gzipSync(bytes).length, sha256, ...validateGlb(bytes, filename, identity) });
   }
   const environment = await readFile(path.join(directory, 'warm.hdr'));
   const header = environment.subarray(0, 1024).toString('ascii');
@@ -230,5 +239,5 @@ export async function validateAvatar3dAssets(root = repositoryRoot) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const report = await validateAvatar3dAssets();
   if (process.argv.includes('--json')) console.log(JSON.stringify(report, null, 2));
-  else console.log(`Validated ${report.models.length} distinct, self-contained 3D avatar derivatives and the shared Sculpted Warmth HDR environment.`);
+  else console.log(`Validated ${report.models.length} distinct, self-contained 3D avatar derivatives and the shared studio HDR environment.`);
 }

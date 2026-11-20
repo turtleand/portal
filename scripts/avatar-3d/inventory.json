@@ -1,66 +1,66 @@
 [
   {
-    "look": "warm",
-    "version": "0.0.1",
+    "direction": "Living Shell",
+    "version": "v0.0.1",
     "file": "turtleand-0.0.1.glb",
-    "bytes": 783548,
-    "triangles": 37548,
-    "meshes": 15,
+    "bytes": 1077160,
+    "triangles": 44948,
+    "meshes": 14,
     "animations": [
       "Idle"
     ]
   },
   {
-    "look": "warm",
-    "version": "0.0.2",
+    "direction": "Illustrated Sculpt",
+    "version": "v0.0.2",
     "file": "turtleand-0.0.2.glb",
-    "bytes": 908588,
-    "triangles": 43964,
+    "bytes": 1031620,
+    "triangles": 48144,
     "meshes": 17,
     "animations": [
       "Idle"
     ]
   },
   {
-    "look": "warm",
-    "version": "0.0.3",
+    "direction": "Illustrated Sculpt",
+    "version": "v0.0.3",
     "file": "turtleand-0.0.3.glb",
-    "bytes": 929988,
-    "triangles": 45020,
-    "meshes": 20,
+    "bytes": 1072336,
+    "triangles": 50232,
+    "meshes": 21,
     "animations": [
       "Idle"
     ]
   },
   {
-    "look": "warm",
-    "version": "0.0.4",
+    "direction": "Living Shell",
+    "version": "v0.0.4",
     "file": "turtleand-0.0.4.glb",
-    "bytes": 970560,
-    "triangles": 47132,
-    "meshes": 23,
-    "animations": [
-      "Idle"
-    ]
-  },
-  {
-    "look": "warm",
-    "version": "0.1.0",
-    "file": "turtleand-0.1.0.glb",
-    "bytes": 1072320,
-    "triangles": 52380,
-    "meshes": 23,
-    "animations": [
-      "Idle"
-    ]
-  },
-  {
-    "look": "warm",
-    "version": "0.1.1",
-    "file": "turtleand-0.1.1.glb",
-    "bytes": 1128992,
-    "triangles": 55240,
+    "bytes": 1230664,
+    "triangles": 50876,
     "meshes": 25,
+    "animations": [
+      "Idle"
+    ]
+  },
+  {
+    "direction": "Carved Patina",
+    "version": "v0.1.0",
+    "file": "turtleand-0.1.0.glb",
+    "bytes": 1140088,
+    "triangles": 52128,
+    "meshes": 25,
+    "animations": [
+      "Idle"
+    ]
+  },
+  {
+    "direction": "Living Shell",
+    "version": "v0.1.1",
+    "file": "turtleand-0.1.1.glb",
+    "bytes": 1325496,
+    "triangles": 53794,
+    "meshes": 27,
     "animations": [
       "Idle"
     ]

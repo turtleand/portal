@@ -146,7 +146,7 @@
   },
   "avatar": {
     "modal": {
-      "badgeLabel": "Evolución del avatar",
+      "badgeLabel": "Turtleand",
       "closeLabel": "Cerrar",
       "ariaLabel": "Galería de Evolución del Avatar de Turtleand",
       "openLabel": "Abrir la galería de evolución del avatar de Turtleand"
@@ -186,7 +186,7 @@
       "slow": "La carga continúa. Puedes volver al original 2D.",
       "error": "La vista 3D no está disponible. Puedes ver el original 2D.",
       "ready": "Vista 3D lista.",
-      "viewer": "Avatar 3D interactivo: {title}",
+      "viewer": "Turtleand en 3D, {title}",
       "reduced": "El movimiento está reducido. Usa las flechas para girar el avatar.",
       "viewPosition": "Vista desde {direction}.",
       "viewAbove": "Vista desde arriba, {direction}.",
