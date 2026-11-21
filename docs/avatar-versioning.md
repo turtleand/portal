@@ -14,6 +14,7 @@ Turtleand's canonical avatars live in Portal as vectors. A raster image may begi
 | Pose generator | `scripts/generate-avatar-walk-poses.mjs` | Generated poses must derive from the canonical SVG. |
 | Contract validator | `scripts/validate-avatar-evolution.mjs` | Enforces manifest, archive, SVG, pose, safety, and localization parity. |
 | Optional dimensional derivatives | `src/images/avatar/3d/turtleand-<version>.glb` | One self-contained model for every manifest version. Canonical SVGs remain authoritative. |
+| 3D filmstrip thumbnail | `src/images/avatar/3d-thumbnails/turtleand-<version>.webp` | One preview rendered from each production GLB. |
 | Shared 3D studio light | `src/images/avatar/3d/warm.hdr` | One shared studio lighting environment, loaded only after 3D opt-in. |
 | 3D asset registry and validator | `src/data/avatar3d.ts`, `scripts/validate-avatar-3d.mjs` | Derive stable-ID mappings from the manifest and reject incomplete, duplicate, or orphan assets. |
 
@@ -32,7 +33,7 @@ Turtleand's canonical avatars live in Portal as vectors. A raster image may begi
 7. Add four carefully bounded limb regions and natural pivots to `avatarRegions` in `scripts/avatar-walk-config.mjs`. Add the diagonal gait pair, behind-body limbs, and organic or mechanical behavior to `avatarGaits`. Exclude the face, head, shell, circuits, map, shadows, and accessories from moving regions.
 8. Run `npm run generate:avatar-walk-poses`. Never hand-edit generated pose files. The generator embeds the canonical artwork unchanged and articulates clipped limb copies around the configured pivots.
 9. Compare the raster concept, canonical rest SVG, and all three poses. Reject duplicated feet, detached geometry, curved background fragments, clipped accessories, changed shell or face details, implausible occlusion, or a rest SVG altered to accommodate motion.
-10. Create the matching 3D derivative using [the dimensional asset workflow](avatar-3d-assets.md). Preserve the canonical identity and equipment progression. Register the selected treatment in the 3D directions file. Compare the front, opening three-quarter, side, and rear views; interpret unseen surfaces conservatively. The representation upgrade itself never justifies a manifest version bump.
+10. Create the matching 3D derivative and filmstrip thumbnail using [the dimensional asset workflow](avatar-3d-assets.md). Preserve the canonical identity and equipment progression. Register the selected treatment in the 3D directions file. Compare the front, opening three-quarter, side, and rear views. Interpret unseen surfaces conservatively. The representation upgrade itself never justifies a manifest version bump.
 11. Run the complete validation loop below. A version is not complete until every gate passes.
 
 ## Validation loop
@@ -59,7 +60,7 @@ Then test the real gallery in English and Spanish:
 - With `prefers-reduced-motion: reduce`, confirm only canonical rests render, navigation is immediate, effects remain off, and walking-pose assets are not requested.
 - Capture desktop and 390px mobile screenshots for every rest and walking pose. Check visual fidelity, modal scrolling, focus visibility, horizontal overflow, and layout stability.
 - Inspect browser resources and production source to confirm archived raster references are never requested or imported.
-- Run the [3D gallery checks](avatar-3d-assets.md#gallery-validation). Verify version and localized metadata survive representation changes, the canonical SVG covers loading/failure, and no 3D resources are requested before opt-in.
+- Run the [3D gallery checks](avatar-3d-assets.md#gallery-validation). Verify version and localized metadata survive representation changes, the canonical SVG covers initial loading and recovery, and 3D resources are requested only after opt-in. Confirm the tour resumes after model interaction and advances from a selected thumbnail.
 - Review the final diff for generated build output, unrelated changes, private paths, credentials, internal notes, or unsafe operational details.
 
 If any gate or visual comparison fails, correct the canonical SVG, gait boundaries, metadata, or runtime behavior and repeat the affected checks. Stop only when the full contract is proven and further changes would be subjective rather than corrective.

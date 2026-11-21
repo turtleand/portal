@@ -19,6 +19,7 @@ The avatar gallery offers a dimensional view of each existing Turtleand identity
 | Export inventory | `scripts/avatar-3d/inventory.json` |
 | Runtime dimensional models | `src/images/avatar/3d/turtleand-<version>.glb` |
 | Shared runtime lighting | `src/images/avatar/3d/warm.hdr` |
+| 3D filmstrip previews | `src/images/avatar/3d-thumbnails/turtleand-<version>.webp` |
 | Typed stable-ID URL mapping | `src/data/avatar3d.ts` |
 | Structural and coverage checks | `scripts/validate-avatar-3d.mjs` |
 
@@ -49,9 +50,11 @@ Models use glTF's right-handed coordinate system with positive Y up and the face
 
 The shared studio uses a warm key, cool rim, and contact shadow. The opening camera favors the visible shell and face. The minimum orbit radius increases as the stage narrows to give the model clearance through rotation. PBR roughness and metalness separate skin, keratin, silver, and dark housings. Normalized byte vertex colors carry head pigments and scute shading. Living Shell variants embed one small procedural normal tile shared by the head and skin materials. All resources are self-contained in the GLBs.
 
-Each derivative now exports one eight-second `Idle` clip. Named shell and head pivots add small breathing and attention movements; eye pivots close briefly for two blinks per loop. Feet stay planted and attached equipment follows its anatomical owner. The exporter batches geometry by material **within each pivot**, retaining animation instead of flattening the entire character. Eye pigmentation shares one glossy material per eye. Main play/pause controls the character clip; camera rotation has its existing independent control. Reduced motion, manual camera inspection, hidden documents and closed galleries stop automatic character motion.
+Each derivative exports one eight-second `Idle` clip. Named shell and head pivots add small breathing and attention movements, and eye pivots close briefly for two blinks per loop. Feet stay planted and attached equipment follows its anatomical owner. The exporter batches geometry by material **within each pivot**, retaining animation instead of flattening the entire character. Eye pigmentation shares one glossy material per eye. During the guided tour, the character plays Idle while the camera stays at the opening angle. Inspecting the model holds the tour until about one second after interaction ends. Choosing a filmstrip thumbnail gives the selected stage a fresh dwell. The final stage rests until another thumbnail is selected. Reduced motion uses manual selection and cuts without character animation.
 
-The controller starts the selected GLB, runtime and shared HDR downloads together after 3D opt-in. It validates the GLB header, cancels obsolete model transfers, and passes an owned blob URL to an explicitly eager viewer. That URL is released after decode or cancellation. Browser HTTP caching reuses model transfers; only one decoded viewer scene is retained. No other avatar model is prefetched. Slow feedback starts at four seconds, dependency failure is bounded at twenty seconds, and the whole load at thirty seconds. The canonical SVG remains visible during loading and errors.
+The controller starts the selected GLB, runtime and shared HDR downloads together after 3D opt-in. It validates the GLB header, cancels obsolete model transfers, and passes an owned blob URL to an explicitly eager viewer. That URL is released after decode or cancellation. Once the current stage is ready, the running tour can buffer one adjacent GLB during its 2.6-second dwell. The gallery keeps one viewer and holds a frame of the outgoing model through the next decode, then fades to the new model in 225 milliseconds. Slow feedback starts at four seconds, dependency failure is bounded at twenty seconds, and the whole load at thirty seconds. The canonical SVG covers initial loading and recovery.
+
+Render one compact, transparent WebP per GLB from the opening three-quarter view, with warm lighting and consistent framing. Render the production model at rest, with its full face and shell in view. The filmstrip reads these previews after 3D opt-in. The SVG evolution validator checks version coverage and keeps historical reference rasters outside production.
 
 The current geometry and studio lighting are procedural work authored for this project. No external character mesh, stock HDR photograph, or raster avatar reference is embedded in the runtime derivatives. Three.js is MIT-licensed; model-viewer is Apache-2.0-licensed. Record attribution and license details here before introducing third-party geometry, textures, or lighting.
 
@@ -79,12 +82,12 @@ Keep the existing `validate:avatar-evolution` gate unchanged. It continues to en
 
 Verify the production build in Chromium, Firefox, and WebKit, English and Spanish, desktop and 390px layouts:
 
-- Open in 2D and confirm no 3D runtime, model, environment, decoder, preload, or prefetch request before explicit opt-in. Only the selected model should load afterward.
+- Open in 2D and confirm no 3D runtime, model, environment, thumbnail, decoder, preload, or prefetch request before explicit opt-in. After opt-in the current model loads first. During a running tour, only the following model can buffer in advance.
 - Inspect every version's front, opening three-quarter, side, and rear against its canonical SVG. Capture desktop and mobile comparisons, with particular attention to the face, equipment sequence, shading, ground contact, and clipping.
-- Switch representations and navigate rapidly while loads are delayed. The selected version's SVG must remain visible until its own model is usable; stale completions must not replace a newer selection.
-- Exercise chronological play, main pause, independent rotation, manual orbit, reset, previous/next, restart, final-stage rest, and the existing 2D one-shot walk behavior. Main pause stops automatic movement; manual inspection pauses chronology.
+- Switch representations and navigate rapidly while loads are delayed. Check the initial SVG, then verify that 3D-to-3D handoffs retain the outgoing model until the incoming one is ready. Stale completions must never replace a newer selection.
+- Exercise automatic tour entry, direct thumbnail selection, manual orbit, final-stage rest, and the existing 2D one-shot walk behavior. Hold a pointer on the model past the dwell deadline, release it, and check that the tour resumes. Check that a manually selected stage advances after its own dwell.
 - Exercise keyboard and touch controls, visible focus, target sizes, modal focus containment, Escape, focus return, and comfortable vertical scrolling.
-- Under reduced motion, keep both representations stable with no automatic movement, transition effects, or walking-image requests. Manual camera controls remain available.
+- Under reduced motion, keep both representations stable at entry. Verify that visitors can orbit and select thumbnails with cuts and without Idle motion. Check that 2D does not request walking images.
 - Block or corrupt the runtime and GLB, simulate graphics unavailability/context loss, and close while loading. The localized failure state retains the canonical SVG and usable navigation, retry, and 2D recovery.
 - Hide, close, and reopen the gallery. Confirm render scheduling stops when inactive and resource retention remains bounded through at least 20 full-lineage/open-close cycles.
 - Compare unopened-Portal performance and layout against a production baseline. Record actual payload, first usable frame, animation cadence/render telemetry, and lifecycle measurements with their device and browser conditions.

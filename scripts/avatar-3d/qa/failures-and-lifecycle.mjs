@@ -90,7 +90,7 @@ await runCase('Initial canonical loading race',async page=>{
   await openGallery(page);await page.waitForTimeout(200);
   const modeEnabled=await page.locator(S.mode('3d')).isEnabled();
   let selectedWhileLoading=false;
-  if(modeEnabled){await page.locator(S.mode('3d')).click();if(await page.locator(S.version(5)).isEnabled()){await page.locator(S.version(5)).click();selectedWhileLoading=true;}}
+  if(modeEnabled){await page.locator(S.mode('3d')).click();if(await page.locator(S.threeDVersion(5)).isEnabled()){await page.locator(S.threeDVersion(5)).click();selectedWhileLoading=true;}}
   release();await page.unroute(/turtleand-[^/]+\.svg(?:\?|$)/);await page.waitForFunction(()=>document.querySelectorAll('[data-evolution-svg]').length===6);
   if(modeEnabled)await ready(page);
   const found=await state(page);
@@ -120,16 +120,19 @@ await runCase('Real WebGL context loss',async page=>{
 // with real draws instrumented, not an assertion based only on DOM removal.
 await runCase('Draw work and twenty lifecycle cycles',async(page,context)=>{
   await page.emulateMedia({reducedMotion:'no-preference'});await enter(page);
-  await page.locator(S.play).click(); // Stop initial 2D autoplay before opt-in.
   await page.locator(S.mode('3d')).click();await ready(page);await page.locator(S.model).scrollIntoViewIfNeeded();
   const drawTotal=()=>page.evaluate(()=>window.__avatarDrawProbe.draws.reduce((a,b)=>a+b,0));
-  await page.waitForTimeout(800);let first=await drawTotal();await page.waitForTimeout(600);let last=await drawTotal();
-  check(report,'Paused settled viewer submits no WebGL draws',last===first,{draws:last-first});
-  await page.locator(S.action('rotation')).click();await page.waitForTimeout(700);first=await drawTotal();await page.waitForTimeout(600);last=await drawTotal();
-  check(report,'Active turntable submits WebGL draws',last>first,{draws:last-first});
-  await page.locator(S.play).click();await page.waitForTimeout(900);first=await drawTotal();await page.waitForTimeout(600);last=await drawTotal();
-  check(report,'Main pause stops turntable WebGL draw work',last===first,{draws:last-first});
-  await page.locator(S.action('rotation')).click();await page.waitForTimeout(500);
+  await page.waitForTimeout(400);
+  let first=await drawTotal();await page.waitForTimeout(500);let last=await drawTotal();
+  check(report,'Automatic tour submits WebGL draws for character animation',last>first,{draws:last-first});
+  const box=await page.locator(S.model).boundingBox();
+  await page.mouse.move(box.x+box.width/2,box.y+box.height/2);await page.mouse.down();
+  await page.waitForTimeout(650);first=await drawTotal();await page.waitForTimeout(400);last=await drawTotal();
+  check(report,'A settled viewer held by pointer interaction pauses WebGL draw work',last===first,{draws:last-first});
+  await page.mouse.up();
+  await page.waitForFunction(selector=>!document.querySelector(selector)?.paused,S.model,{timeout:3500});
+  first=await drawTotal();await page.waitForTimeout(400);last=await drawTotal();
+  check(report,'Releasing the pointer resumes automatic character draw work',last>first,{draws:last-first});
   const other=await context.newPage();await other.goto('about:blank');await other.bringToFront();await page.waitForTimeout(600);
   const actualHidden=await page.evaluate(()=>document.hidden);
   if(actualHidden){first=await drawTotal();await page.waitForTimeout(600);last=await drawTotal();check(report,'Actually hidden tab stops WebGL draws',first===last,{draws:last-first});}
@@ -138,8 +141,9 @@ await runCase('Draw work and twenty lifecycle cycles',async(page,context)=>{
   check(report,'Closed gallery submits no WebGL draws',last===first,{draws:last-first});
   // Probe retains WebGL context references so it cannot establish GPU disposal.
   const cdp=await context.newCDPSession(page);await cdp.send('Performance.enable');const cycles=[];
+  await page.emulateMedia({reducedMotion:'reduce'});
   for(let cycle=1;cycle<=20;cycle++){
-    await openGallery(page);await page.locator(S.play).click();await page.locator(S.mode('3d')).click();await ready(page);
+    await openGallery(page);await page.locator(S.mode('3d')).click();await ready(page);
     for(let index=0;index<manifest.length;index++){await version(page,index);await ready(page);}
     await page.locator(S.close).click();await page.waitForTimeout(500);await cdp.send('HeapProfiler.collectGarbage');
     const metrics=await cdp.send('Performance.getMetrics'),dom=await cdp.send('Memory.getDOMCounters');

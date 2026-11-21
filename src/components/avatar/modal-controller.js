@@ -144,6 +144,7 @@ class AvatarGalleryModalController {
           !node.hasAttribute('disabled') &&
           !node.closest('[hidden]') &&
           !node.closest('[inert]') &&
+          node.getClientRects().length > 0 &&
           node.getAttribute('aria-hidden') !== 'true',
       )
     );
