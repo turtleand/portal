@@ -15,7 +15,11 @@ export const S = {
   close: '[data-avatar-modal-close]', play: '[data-evolution-action="play"]',
   previous: '[data-evolution-action="previous"]', next: '[data-evolution-action="next"]',
   restart: '[data-evolution-action="restart"]', model: '[data-evolution-model-host] model-viewer',
+  threeDMeta: '[data-evolution-3d-meta]', threeDTitle: '[data-evolution-3d-title]',
+  threeDDescription: '[data-evolution-3d-description]', tour: '[data-evolution-3d-action="tour"]',
+  snapshot: '[data-evolution-3d-snapshot]',
   mode: value => `[data-evolution-mode="${value}"]`, version: index => `[data-evolution-select="${index}"]`,
+  threeDVersion: index => `[data-evolution-3d-select="${index}"]`,
   action: value => `[data-evolution-3d-action="${value}"]`, status: '[data-evolution-3d-status]',
 };
 export const manifest = JSON.parse(await fs.readFile(path.join(repo, 'src/data/avatarVersions.json'), 'utf8'));
@@ -39,7 +43,11 @@ export async function launch(name, performance = false) {
 }
 export async function sourceHashes() {
   const sourceRoot=process.env.PORTAL_QA_SOURCE_ROOT || repo;
-  const files = ['scripts/avatar-3d/build-models.cjs', 'scripts/avatar-3d/build-environments.cjs', 'scripts/avatar-3d/art-surfaces.cjs', 'scripts/avatar-3d/art-anatomy.cjs', 'scripts/avatar-3d/art-shell.cjs', 'scripts/avatar-3d/art-hardware.cjs', 'scripts/avatar-3d/directions.json', 'src/components/avatar/three-d-controller.js', 'src/components/avatar/evolution-controller.js', 'src/components/avatar/AnimatedAvatarGallery.astro', 'src/components/avatar/modal-controller.js', 'src/data/avatar3d.ts', 'package-lock.json', ...manifest.map(stage=>`src/images/avatar/3d/turtleand-${stage.version.replace(/^v/,'')}.glb`), 'src/images/avatar/3d/warm.hdr'];
+  const files = ['scripts/avatar-3d/build-models.cjs', 'scripts/avatar-3d/build-environments.cjs', 'scripts/avatar-3d/art-surfaces.cjs', 'scripts/avatar-3d/art-anatomy.cjs', 'scripts/avatar-3d/art-shell.cjs', 'scripts/avatar-3d/art-hardware.cjs', 'scripts/avatar-3d/directions.json', 'src/components/avatar/three-d-controller.js', 'src/components/avatar/evolution-controller.js', 'src/components/avatar/AnimatedAvatarGallery.astro', 'src/components/avatar/modal-controller.js', 'src/data/avatar3d.ts', 'src/data/avatarVersions.json', 'src/content/i18n/en.json', 'src/content/i18n/es.json', 'package-lock.json', 'src/images/avatar/3d/warm.hdr'];
+  for (const stage of manifest) {
+    const filename = `turtleand-${stage.version.slice(1)}`;
+    files.push(`src/images/avatar/3d/${filename}.glb`, `src/images/avatar/3d-thumbnails/${filename}.webp`);
+  }
   return Object.fromEntries(await Promise.all(files.map(async file => {
     try { return [file, createHash('sha256').update(await fs.readFile(path.join(sourceRoot, file))).digest('hex')]; }
     catch { return [file, null]; }
@@ -62,19 +70,30 @@ export async function openGallery(page) {
   await page.waitForFunction(selector => document.activeElement === document.querySelector(selector), S.panel);
 }
 export async function ready(page, timeout = 45000) {
-  await page.waitForFunction(selector => document.querySelector(selector)?.dataset.modelReady === 'true', S.root, { timeout });
+  await page.waitForFunction(selector => {
+    const root = document.querySelector(selector);
+    return root?.dataset.modelReady === 'true' && root.dataset.modelPending === undefined;
+  }, S.root, { timeout });
 }
 export async function version(page, index) {
-  await page.locator(S.version(index)).click();
-  await page.waitForFunction(({selector, expected}) => document.querySelector(selector)?.textContent.includes(expected), { selector:S.meta, expected:manifest[index].version });
+  const filmstrip = await page.locator(S.root).getAttribute('data-representation') === '3d'
+    && await page.locator(S.threeDVersion(index)).count() > 0;
+  await page.locator(filmstrip ? S.threeDVersion(index) : S.version(index)).click();
+  await page.waitForFunction(({selector, expected}) => document.querySelector(selector)?.textContent.includes(expected), {
+    selector: filmstrip ? S.threeDMeta : S.meta,
+    expected: manifest[index].version,
+  });
 }
 export async function state(page) {
   return page.evaluate(S => {
     const root = document.querySelector(S.root), modal = document.querySelector(S.modal), viewer = document.querySelector(S.model);
+    const caption = (threeD, twoD) => (
+      (root?.dataset.representation === '3d' && document.querySelector(threeD)) || document.querySelector(twoD)
+    )?.textContent;
     const visible = element => { if (!element) return false; const style=getComputedStyle(element), bounds=element.getBoundingClientRect(); return style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity)>0 && bounds.width>0 && bounds.height>0; };
     const canonical = [...document.querySelectorAll('[data-evolution-layer]')].filter(visible).map(layer=>({index:layer.dataset.evolutionLayer, svg:visible(layer.querySelector('svg')), pose:layer.querySelector('svg')?.dataset.walkPose}));
     const dimensions=viewer?.loaded?viewer.getDimensions():null;
-    return { mode:root?.dataset.representation, ready:root?.dataset.modelReady, open:modal?.getAttribute('aria-hidden')==='false', version:document.querySelector(S.meta)?.textContent, title:document.querySelector(S.title)?.textContent, description:document.querySelector(S.description)?.textContent, lang:document.documentElement.lang, viewers:document.querySelectorAll('model-viewer').length, modelSrc:viewer?.dataset.modelSource || viewer?.src, loaded:viewer?.loaded, dimensions:dimensions?{x:dimensions.x,y:dimensions.y,z:dimensions.z}:null, rotating:viewer?.hasAttribute('auto-rotate'), status:document.querySelector(S.status)?.textContent, canonical, overflow:document.documentElement.scrollWidth>innerWidth, panelOverflow:document.querySelector(S.panel)?.scrollWidth>document.querySelector(S.panel)?.clientWidth };
+    return { mode:root?.dataset.representation, ready:root?.dataset.modelReady, open:modal?.getAttribute('aria-hidden')==='false', version:caption(S.threeDMeta,S.meta), title:caption(S.threeDTitle,S.title), description:caption(S.threeDDescription,S.description), lang:document.documentElement.lang, viewers:document.querySelectorAll('model-viewer').length, modelSrc:viewer?.dataset.modelSource || viewer?.src, loaded:viewer?.loaded, dimensions:dimensions?{x:dimensions.x,y:dimensions.y,z:dimensions.z}:null, rotating:viewer?.hasAttribute('auto-rotate'), status:document.querySelector(S.status)?.textContent, canonical, overflow:document.documentElement.scrollWidth>innerWidth, panelOverflow:document.querySelector(S.panel)?.scrollWidth>document.querySelector(S.panel)?.clientWidth };
   }, Object.fromEntries(Object.entries(S).filter(([,value])=>typeof value==='string')));
 }
 

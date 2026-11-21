@@ -16,16 +16,21 @@ const progress = t('avatar.evolution.progress')
   .replace('{current}', '1')
   .replace('{total}', String(avatarEvolutionStages.length));
 const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.length}, minmax(44px, 1fr)); min-width: max(100%, ${avatarEvolutionStages.length * 44 + (avatarEvolutionStages.length - 1) * 8}px);`;
+const thumbnails = import.meta.glob<string>('../../images/avatar/3d-thumbnails/turtleand-*.webp', {
+  eager: true,
+  query: '?url&no-inline',
+  import: 'default',
+});
 ---
 
 <section
-  class="relative isolate overflow-hidden rounded-3xl border border-white/10 bg-deepBlue/80 p-4 shadow-[0_20px_60px_rgba(4,10,25,0.55)] backdrop-blur sm:p-6"
+  class="evolution-gallery relative isolate overflow-hidden rounded-3xl border border-white/10 bg-deepBlue/80 p-4 shadow-[0_20px_60px_rgba(4,10,25,0.55)] backdrop-blur sm:p-6"
   data-avatar-evolution
 >
-  <div class="space-y-5">
+  <div class="evolution-content space-y-5">
     <header class="space-y-1 text-center">
       <p
-        class="text-xs font-semibold uppercase tracking-[0.18em] text-accent/80"
+        class="evolution-2d-only text-xs font-semibold uppercase tracking-[0.18em] text-accent/80"
         data-i18n-key="avatar.evolution.eyebrow"
       >
         {t('avatar.evolution.eyebrow')}
@@ -40,7 +45,7 @@ const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.len
       <button type="button" data-evolution-mode="3d" aria-pressed="false" data-i18n-key="avatar.threeD.dimensional">{t('avatar.threeD.dimensional')}</button>
     </div>
 
-    <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-[radial-gradient(circle_at_50%_42%,rgba(32,159,142,0.22),rgba(5,15,29,0.96)_67%)] sm:rounded-[28px]">
+    <div class="evolution-frame relative overflow-hidden rounded-2xl border border-white/10 bg-[radial-gradient(circle_at_50%_42%,rgba(32,159,142,0.22),rgba(5,15,29,0.96)_67%)] sm:rounded-[28px]">
       <div
         class="relative mx-auto flex h-[272px] w-full max-w-3xl items-center justify-center sm:h-[360px] lg:h-[410px]"
         data-evolution-canvas
@@ -90,28 +95,53 @@ const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.len
             <span data-evolution-loading-label data-i18n-key="avatar.evolution.ready">{t('avatar.evolution.ready')}</span>
           </div>
         </div>
-        <div class="pointer-events-none absolute inset-x-5 bottom-4 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" aria-hidden="true"></div>
+        <div class="evolution-2d-only pointer-events-none absolute inset-x-5 bottom-4 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" aria-hidden="true"></div>
+        <p class="evolution-3d-help" data-i18n-key="avatar.threeD.help">{t('avatar.threeD.help')}</p>
       </div>
 
       <div class="evolution-3d-tools" data-evolution-3d-tools hidden>
-        <p class="evolution-3d-help" data-i18n-key="avatar.threeD.help">{t('avatar.threeD.help')}</p>
-        <div class="evolution-3d-buttons" role="group" aria-label={t('avatar.threeD.controls')} data-i18n-key="avatar.threeD.controls" data-i18n-attr="aria-label">
-          <button type="button" data-evolution-3d-action="left" aria-label={t('avatar.threeD.left')} data-i18n-key="avatar.threeD.left" data-i18n-attr="aria-label">↶</button>
-          <button type="button" data-evolution-3d-action="right" aria-label={t('avatar.threeD.right')} data-i18n-key="avatar.threeD.right" data-i18n-attr="aria-label">↷</button>
-          <button type="button" data-evolution-3d-action="rotation" aria-pressed="false">{t('avatar.threeD.rotate')}</button>
-          <button type="button" data-evolution-3d-action="reset" data-i18n-key="avatar.threeD.reset">{t('avatar.threeD.reset')}</button>
-        </div>
-        <div class="evolution-3d-status" role="status" aria-live="polite" aria-atomic="true">
-          <span data-evolution-3d-status></span>
+        <p class="evolution-3d-count" aria-label={progress} data-evolution-3d-progress>1 / {avatarEvolutionStages.length}</p>
+        <div class="evolution-3d-feedback">
+          <span role="status" aria-live="polite" aria-atomic="true" data-evolution-3d-status></span>
           <button type="button" data-evolution-3d-action="retry" data-i18n-key="avatar.threeD.retry" hidden>{t('avatar.threeD.retry')}</button>
         </div>
+        <div class="evolution-3d-caption">
+          <div class="evolution-3d-copy">
+            <p data-evolution-3d-meta>{firstStage.version} • {firstStage.date}</p>
+            <h3 class="font-heading" data-evolution-3d-title>{firstTitle}</h3>
+            <p data-evolution-3d-description>{firstDescription}</p>
+          </div>
+          <button type="button" class="evolution-tour-button" data-evolution-3d-action="tour">
+            <span aria-hidden="true" data-evolution-3d-play-icon>▶</span>
+            <span data-evolution-3d-play-label>{t('avatar.threeD.playTour')}</span>
+          </button>
+        </div>
+        <div class="evolution-tour-track" aria-hidden="true"></div>
+        <ol class="evolution-filmstrip" data-evolution-3d-filmstrip aria-label={t('avatar.threeD.filmstrip')} data-i18n-key="avatar.threeD.filmstrip" data-i18n-attr="aria-label">
+          {avatarEvolutionStages.map((stage, index) => (
+            <li data-evolution-3d-marker data-active={index === 0 ? 'true' : 'false'}>
+              <button type="button" data-evolution-3d-select={index} aria-current={index === 0 ? 'step' : undefined}>
+                <img
+                  data-evolution-3d-thumbnail
+                  data-src={thumbnails[`../../images/avatar/3d-thumbnails/turtleand-${stage.version.slice(1)}.webp`] ?? stage.vectorImage}
+                  alt=""
+                  width="248"
+                  height="208"
+                  decoding="async"
+                  fetchpriority="low"
+                />
+                <span data-evolution-3d-thumbnail-title>{locale === 'es' ? stage.titleEs : stage.title}</span>
+              </button>
+            </li>
+          ))}
+        </ol>
       </div>
 
       <p class="sr-only" role="status" aria-live="polite" aria-atomic="true" data-evolution-status>
         {t('avatar.evolution.ready')}
       </p>
 
-      <div class="border-t border-white/10 px-4 py-4 sm:px-6">
+      <div class="evolution-2d-only border-t border-white/10 px-4 py-4 sm:px-6">
         <div class="overflow-x-auto pb-1">
           <ol class="grid gap-2" style={timelineStyle} data-evolution-timeline aria-label={t('avatar.evolution.timelineLabel')} data-i18n-key="avatar.evolution.timelineLabel" data-i18n-attr="aria-label">
             {avatarEvolutionStages.map((stage, index) => (
@@ -128,13 +158,15 @@ const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.len
     </div>
 
     <p
-      class="mx-auto max-w-2xl rounded-xl border border-amber-200/20 bg-amber-100/5 px-4 py-3 text-center text-sm text-amber-50/85"
+      class="evolution-2d-only mx-auto max-w-2xl rounded-xl border border-amber-200/20 bg-amber-100/5 px-4 py-3 text-center text-sm text-amber-50/85"
       data-evolution-notice
       role="status"
       hidden
     ></p>
 
-    <div class="min-h-[7.5rem] space-y-1.5 text-center">
+    <p class="sr-only" aria-live="polite" aria-atomic="true" data-evolution-announcement></p>
+
+    <div class="evolution-2d-only min-h-[7.5rem] space-y-1.5 text-center">
       <p class="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-100/80 sm:text-sm">
         <span data-evolution-meta>{firstStage.version} • {firstStage.date}</span>
         <span aria-hidden="true"> · </span>
@@ -142,10 +174,9 @@ const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.len
       </p>
       <h3 class="text-2xl font-heading text-offWhite" data-evolution-title>{firstTitle}</h3>
       <p class="mx-auto max-w-2xl text-sm leading-relaxed text-offWhite/70 sm:text-base" data-evolution-description>{firstDescription}</p>
-      <p class="sr-only" aria-live="polite" aria-atomic="true" data-evolution-announcement></p>
     </div>
 
-    <div class="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-3" role="group" aria-label={t('avatar.evolution.controlsLabel')} data-i18n-key="avatar.evolution.controlsLabel" data-i18n-attr="aria-label">
+    <div class="evolution-2d-only grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-3" role="group" aria-label={t('avatar.evolution.controlsLabel')} data-i18n-key="avatar.evolution.controlsLabel" data-i18n-attr="aria-label">
       <button type="button" class="evolution-control" data-evolution-action="previous" aria-label={t('avatar.evolution.previous')} data-i18n-key="avatar.evolution.previous" data-i18n-attr="aria-label">
         <span aria-hidden="true">←</span><span data-i18n-key="avatar.evolution.previous">{t('avatar.evolution.previous')}</span>
       </button>
@@ -177,32 +208,333 @@ const timelineStyle = `grid-template-columns: repeat(${avatarEvolutionStages.len
 </script>
 
 <style>
-  .evolution-representation { display: flex; width: max-content; margin: 0 auto; padding: 4px; gap: 4px; border: 1px solid rgb(255 255 255 / .18); border-radius: 999px; background: #081321; }
-  .evolution-representation button { min-width: 100px; min-height: 44px; padding: .5rem 1rem; border-radius: 999px; color: #c6cfd1; font-size: .85rem; font-weight: 600; }
-  .evolution-representation button[aria-pressed='true'] { color: #182321; background: #e8d9bb; }
-  .evolution-representation button:focus-visible, .evolution-timeline-button:focus-visible, .evolution-3d-buttons button:focus-visible, .evolution-3d-status button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+  .evolution-representation {
+    display: flex;
+    width: max-content;
+    max-width: 100%;
+    margin-inline: auto;
+    padding: 3px;
+    gap: 3px;
+    border: 1px solid rgb(255 255 255 / 0.18);
+    border-radius: 999px;
+    background: #081321;
+  }
+
+  .evolution-representation button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: .4rem .85rem;
+    border-radius: 999px;
+    color: #c6cfd1;
+    font-size: .8125rem;
+    font-weight: 600;
+  }
+
+  .evolution-representation button[aria-pressed='true'] {
+    color: #e1f5ec;
+    background: #253c36;
+  }
+
+  .evolution-representation button:focus-visible,
+  .evolution-timeline-button:focus-visible,
+  .evolution-tour-button:focus-visible,
+  .evolution-3d-feedback button:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
   .evolution-timeline-button { min-height: 44px; width: 100%; padding: .35rem 0; border-radius: 5px; }
   .evolution-model-host { position: absolute; inset: 0; z-index: 2; visibility: hidden; pointer-events: none; }
   .evolution-model-host :global(model-viewer) { width: 100%; height: 100%; --poster-color: transparent; --progress-bar-height: 0px; }
-  [data-avatar-evolution][data-representation='3d'] [data-evolution-canvas] {
-    max-width: none;
-    background: radial-gradient(ellipse at 49% 48%, #5a4d42 0%, #403a35 49%, #252a2a 100%);
-  }
   [data-model-ready='true'] .evolution-model-host { visibility: visible; pointer-events: auto; }
   [data-model-ready='true'] [data-evolution-stage], [data-model-ready='true'] [data-evolution-static-fallback], [data-model-ready='true'] [data-evolution-unavailable] { visibility: hidden; }
-  .evolution-3d-tools { padding: .5rem .75rem .25rem; border-top: 1px solid rgb(255 255 255 / .1); }
-  .evolution-3d-tools[hidden] { display: none; }
-  .evolution-3d-help { text-align: center; font-size: .75rem; line-height: 1.5; color: #bdc9ca; }
-  .evolution-3d-buttons { display: grid; grid-template-columns: 44px 44px minmax(0, 1fr) minmax(0, 1.5fr); gap: .35rem; max-width: 360px; margin: .4rem auto 0; }
-  @media (max-width: 359px) {
-    .evolution-3d-buttons { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .evolution-gallery[data-representation='3d'] {
+    padding: clamp(.5rem, 2vw, 1.25rem);
   }
-  .evolution-3d-buttons button, .evolution-3d-status button { min-height: 44px; min-width: 44px; padding: .5rem .65rem; border: 1px solid rgb(255 255 255 / .2); border-radius: 10px; font-size: .75rem; color: #e6eeee; }
-  .evolution-3d-buttons button:hover:not(:disabled), .evolution-3d-status button:hover { background: rgb(255 255 255 / .1); }
-  .evolution-3d-buttons button:disabled { opacity: .4; }
-  .evolution-3d-buttons button[data-evolution-3d-action='left'], .evolution-3d-buttons button[data-evolution-3d-action='right'] { font-size: 1.2rem; }
-  .evolution-3d-status { min-height: 48px; display: flex; align-items: center; justify-content: center; gap: .5rem; color: #d9ddce; font-size: .75rem; line-height: 1.35; }
-  .evolution-3d-status button[hidden] { display: none; }
+
+  [data-representation='3d'] .evolution-content {
+    display: grid;
+    gap: .75rem;
+  }
+
+  [data-representation='3d'] .evolution-content > * {
+    margin-block: 0;
+  }
+
+  [data-representation='3d'] .evolution-2d-only {
+    display: none;
+  }
+
+  [data-representation='3d'] .evolution-frame {
+    border-color: #2d4049;
+    background: #101a25;
+  }
+
+  [data-representation='3d'] [data-evolution-canvas] {
+    max-width: none;
+    height: clamp(215px, 28vh, 270px);
+    isolation: isolate;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 49%, #29453f 0%, #172c32 42%, #101c28 76%);
+  }
+
+  [data-representation='3d'] [data-evolution-canvas]::before {
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    inset: auto 2% -42%;
+    margin-inline: auto;
+    max-width: 810px;
+    height: 105%;
+    border-radius: 50%;
+    background: repeating-radial-gradient(ellipse, transparent 0 49px, #7ca99b33 50px 51px, transparent 52px 59px);
+    mask-image: radial-gradient(ellipse, transparent 0 19%, black 42%, transparent 72%);
+    transform: rotateX(62deg);
+  }
+
+  .evolution-3d-tools,
+  .evolution-3d-help {
+    display: none;
+  }
+
+  [data-representation='3d'] .evolution-3d-tools:not([hidden]),
+  [data-representation='3d'][data-model-ready='true'] .evolution-3d-help {
+    display: block;
+  }
+
+  .evolution-3d-count,
+  .evolution-3d-help {
+    position: absolute;
+    z-index: 4;
+    border: 1px solid #40565d;
+    border-radius: 999px;
+    padding: .25rem .625rem;
+    background: #0b1722ed;
+    color: #d6e4e2;
+    font-size: .6875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    pointer-events: none;
+  }
+
+  .evolution-3d-count {
+    inset-block-start: .75rem;
+    inset-inline-end: .75rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .evolution-3d-help {
+    inset-block-end: .75rem;
+    inset-inline-start: .75rem;
+  }
+
+  .evolution-3d-feedback {
+    position: absolute;
+    z-index: 4;
+    inset-block-start: .75rem;
+    inset-inline-start: .75rem;
+    max-width: min(25rem, calc(100% - 4.5rem));
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .375rem;
+    pointer-events: none;
+  }
+
+  .evolution-3d-feedback span:not(:empty),
+  .evolution-3d-feedback button {
+    border: 1px solid #40565d;
+    border-radius: 8px;
+    padding: .375rem .625rem;
+    background: #0b1722ed;
+    color: #d6e4e2;
+    font-size: .75rem;
+    line-height: 1.35;
+  }
+
+  .evolution-3d-feedback span:empty {
+    position: absolute;
+  }
+
+  .evolution-3d-feedback button {
+    min-height: 44px;
+    color: var(--color-accent);
+    pointer-events: auto;
+  }
+
+  .evolution-3d-feedback button[hidden] {
+    display: none;
+  }
+
+  .evolution-3d-caption {
+    display: grid;
+    gap: .5rem;
+    padding: .625rem .75rem .75rem;
+    border-block-start: 1px solid #2d4049;
+  }
+
+  .evolution-3d-copy {
+    display: grid;
+    gap: .25rem;
+    min-width: 0;
+  }
+
+  .evolution-3d-copy h3 {
+    color: var(--color-off-white);
+    font-size: clamp(1.375rem, 3vw, 2rem);
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  [data-evolution-3d-meta] {
+    color: #a5b8bc;
+    font-size: .6875rem;
+    font-weight: 600;
+    letter-spacing: .035em;
+  }
+
+  [data-evolution-3d-description] {
+    color: #bdcbcd;
+    font-size: .875rem;
+    line-height: 1.4;
+  }
+
+  .evolution-tour-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: start;
+    gap: .5rem;
+    min-height: 44px;
+    padding: .375rem .75rem;
+    border: 1px solid #75bda6;
+    border-radius: 8px;
+    background: #a9e5d1;
+    color: #102823;
+    font-size: .8125rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .evolution-tour-button:hover:not(:disabled) {
+    background: #c1f0e1;
+  }
+
+  .evolution-tour-button:disabled {
+    opacity: .55;
+  }
+
+  [data-evolution-3d-play-icon] {
+    min-width: 1em;
+    text-align: center;
+  }
+
+  .evolution-tour-track {
+    height: 3px;
+    background: #293d45;
+  }
+
+  .evolution-tour-track::before {
+    content: '';
+    display: block;
+    height: 100%;
+    background: var(--color-accent);
+    transform: scaleX(var(--evolution-tour-progress, 0));
+    transform-origin: left;
+  }
+
+  .evolution-filmstrip {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: clamp(102px, 35%, 120px);
+    gap: .5rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding: .625rem .75rem .75rem;
+    scroll-padding-inline: .75rem;
+    scroll-snap-type: x proximity;
+    scrollbar-color: #4e736e transparent;
+    scrollbar-width: thin;
+  }
+
+  .evolution-filmstrip li {
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  .evolution-filmstrip button {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    align-content: start;
+    gap: .25rem;
+    padding: .25rem .4375rem .4375rem;
+    border: 1px solid #32454e;
+    border-radius: .5625rem;
+    background: #121f2a;
+    color: #becdd0;
+    text-align: start;
+    font-size: .75rem;
+    font-weight: 600;
+    line-height: 1.18;
+    overflow-wrap: anywhere;
+  }
+
+  .evolution-filmstrip button:hover {
+    background: #1b302f;
+  }
+
+  .evolution-filmstrip button:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .evolution-filmstrip [data-active='true'] button {
+    background: #253c36;
+    border-color: #77ad99;
+    color: #f1f6f4;
+  }
+
+  .evolution-filmstrip [data-pending='true']:not([data-active='true']) button {
+    border-color: #77ad99;
+    border-style: dashed;
+  }
+
+  .evolution-filmstrip img {
+    width: 100%;
+    height: 52px;
+    object-fit: contain;
+  }
+
+  .evolution-filmstrip img:not([src]) {
+    visibility: hidden;
+  }
+
+  @media (min-width: 640px) {
+    [data-representation='3d'] [data-evolution-canvas] {
+      height: clamp(280px, 36vh, 360px);
+    }
+
+    .evolution-3d-caption {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      min-height: 6rem;
+      padding-inline: 1rem;
+      gap: 1rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .evolution-filmstrip {
+      grid-auto-columns: minmax(0, 1fr);
+      padding-inline: 1rem;
+    }
+
+    .evolution-filmstrip img {
+      height: 58px;
+    }
+  }
 
   .evolution-control {
     min-height: 48px;

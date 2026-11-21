@@ -86,7 +86,7 @@ try {
     check(report, 'Newest selected version renders without waiting for the stale response', await page.locator(S.model).evaluate(element => element.dataset.modelSource.includes('turtleand-0.1.1.')));
     release();
     await page.waitForTimeout(250);
-    check(report, 'Stale completion cannot replace the ready selected model', (await page.locator(S.meta).textContent()).includes(manifest[5].version) && await page.locator(S.model).count() === 1);
+    check(report, 'Stale completion cannot replace the ready selected model', (await page.locator(S.threeDMeta).textContent()).includes(manifest[5].version) && await page.locator(S.model).count() === 1);
   });
 
   await runCase('Close cancels pending transfer', async page => {
@@ -115,28 +115,28 @@ try {
     await page.waitForFunction(selector => document.querySelector(selector).currentTime > .1, S.model);
     const started = await pose();
     check(report, 'Ready 3D character plays its Idle clip', !started.paused && started.name === 'Idle' && started.animations.includes('Idle'), {pose: started});
-    await page.locator(S.play).click();
+    await page.locator(S.tour).click();
     await page.waitForTimeout(100);
     const paused = await pose();
     await page.waitForTimeout(400);
     const settled = await pose();
-    check(report, 'Main pause freezes character animation and rotation', paused.paused && settled.time === paused.time && await page.locator(S.model).getAttribute('auto-rotate') === null, {paused, settled});
-    await page.locator(S.play).click();
+    check(report, 'Tour pause freezes character animation', paused.paused && settled.time === paused.time, {paused, settled});
+    await page.locator(S.tour).click();
     await page.waitForFunction(({selector, time}) => !document.querySelector(selector).paused && document.querySelector(selector).currentTime !== time, {selector: S.model, time: settled.time});
-    check(report, 'Main play resumes embedded animation from the held pose', !(await pose()).paused);
-    await page.locator(S.action('left')).click();
+    check(report, 'Tour play resumes embedded animation from the held pose', !(await pose()).paused);
+    await page.locator(S.model).locator('.userInput').press('ArrowLeft');
+    await page.waitForFunction(selector => document.querySelector(selector)?.paused, S.model, {timeout:1500}).catch(() => {});
     check(report, 'Manual camera inspection pauses the character', (await pose()).paused);
-    await page.locator(S.play).click();
+    await page.locator(S.tour).click();
     await page.emulateMedia({reducedMotion: 'reduce'});
     await page.waitForFunction(selector => {
       const viewer = document.querySelector(selector);
-      return matchMedia('(prefers-reduced-motion: reduce)').matches && viewer.paused && !viewer.hasAttribute('auto-rotate');
+      return matchMedia('(prefers-reduced-motion: reduce)').matches && viewer.paused;
     }, S.model);
     const reduced = await pose();
     await page.waitForTimeout(400);
     const held = await pose();
-    const rotation = await page.locator(S.model).getAttribute('auto-rotate');
-    check(report, 'Reduced motion freezes embedded animation and rotation', reduced.paused && held.time === reduced.time && rotation === null, {reduced, held, rotation});
+    check(report, 'Reduced motion freezes embedded animation', reduced.paused && held.time === reduced.time, {reduced, held});
   }, 'no-preference');
 
   await runCase('Lineage animation coverage with reduced motion', async page => {

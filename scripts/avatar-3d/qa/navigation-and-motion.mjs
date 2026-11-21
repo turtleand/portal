@@ -1,4 +1,4 @@
-import {base,label,launch,writeReport,sourceHashes,check,S,manifest,openGallery,ready,state,threeDResource} from './shared.mjs';
+import {base,label,launch,writeReport,sourceHashes,check,S,manifest,openGallery,ready,version,state,threeDResource} from './shared.mjs';
 const browser=await launch('chromium',true),report={at:new Date().toISOString(),base,label,sourceHashes:await sourceHashes(),browser:browser.version(),scope:'Production static client navigation and real-time motion/input tests; Chrome touch input is emulated, not physical mobile.',checks:[],errors:[]};
 try {
   for(const lang of ['en','es'])for(const route of ['/','/about/','/feeds/','/feeds.json','/feeds.opml']){
@@ -14,22 +14,25 @@ try {
     await context.close();
   }
   const context=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'no-preference'}),page=await context.newPage();
-  await page.goto(base,{waitUntil:'networkidle'});await openGallery(page);await page.locator(S.play).click();await page.locator(S.mode('3d')).click();await ready(page);
-  await page.locator(S.model).scrollIntoViewIfNeeded();await page.locator(S.play).click();
+  await page.goto(base,{waitUntil:'networkidle'});await openGallery(page);await page.locator(S.mode('3d')).click();await ready(page);
+  await page.locator(S.model).scrollIntoViewIfNeeded();
   await page.waitForTimeout(700);
-  await page.locator(S.play).click();const paused=await state(page);await page.waitForTimeout(1000);
-  check(report,'Main 3D pause holds version and stops rotation',!(await state(page)).rotating&&(await state(page)).version===paused.version);
-  await page.locator(S.play).click();await page.locator(S.model).scrollIntoViewIfNeeded();
+  await page.locator(S.tour).click();const paused=await state(page);await page.waitForTimeout(1000);
+  check(report,'Tour pause holds version and stops character animation',await page.locator(S.model).evaluate(el=>el.paused)&&(await state(page)).version===paused.version);
+  await page.locator(S.tour).click();await page.locator(S.model).scrollIntoViewIfNeeded();
   const before=await page.locator(S.model).evaluate(el=>el.getCameraOrbit().theta),bounds=await page.locator(S.model).boundingBox();
   const x=bounds.x+bounds.width*.5,y=bounds.y+bounds.height*.45;
   await page.mouse.move(x,y);await page.mouse.down();await page.mouse.move(x+100,y,{steps:10});await page.mouse.up();await page.waitForTimeout(400);
   const after=await page.locator(S.model).evaluate(el=>el.getCameraOrbit().theta);
-  check(report,'Pointer orbit moves camera and stops automatic motion',Math.abs(after-before)>.05&&!(await state(page)).rotating,{before,after});
-  await page.locator(S.restart).click();
+  check(report,'Pointer orbit moves camera and stops automatic motion',Math.abs(after-before)>.05&&await page.locator(S.model).evaluate(el=>el.paused),{before,after});
+  await version(page,manifest.length-1);
+  await page.locator(S.tour).click();
+  await page.waitForFunction(({selector,title})=>document.querySelector(selector)?.textContent===title,{selector:S.threeDTitle,title:manifest[0].title});
+  await ready(page);
   const seen=[];const deadline=Date.now()+55000;
-  while(Date.now()<deadline){const s=await state(page),v=s.version.match(/v\d+\.\d+\.\d+/)?.[0];if(v&&!seen.includes(v))seen.push(v);if(v===manifest.at(-1).version&&s.ready==='true'&&!s.rotating)break;await page.waitForTimeout(300);}
+  while(Date.now()<deadline){const s=await state(page),v=s.version.match(/v\d+\.\d+\.\d+/)?.[0];if(v&&!seen.includes(v))seen.push(v);if(v===manifest.at(-1).version&&s.ready==='true')break;await page.waitForTimeout(300);}
   const final=await state(page);
-  check(report,'3D restart visits all versions chronologically and stops at final rest',seen.join(',')===manifest.map(v=>v.version).join(',')&&final.ready==='true'&&!final.rotating,{seen,state:final});
+  check(report,'3D replay visits all versions chronologically and stops at final rest',seen.join(',')===manifest.map(v=>v.version).join(',')&&final.ready==='true'&&await page.locator(S.model).evaluate(el=>el.paused),{seen,state:final});
   await context.close();
 
   const touch=await browser.newContext({viewport:{width:390,height:844},hasTouch:true,isMobile:true,reducedMotion:'reduce'}),p=await touch.newPage();

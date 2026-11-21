@@ -13,6 +13,7 @@ node scripts/avatar-3d/qa/browser-inventory.mjs
 node scripts/avatar-3d/qa/browser-matrix.mjs
 node scripts/avatar-3d/qa/canonical-failure.mjs
 node scripts/avatar-3d/qa/failures-and-lifecycle.mjs
+node scripts/avatar-3d/qa/filmstrip-tour.mjs
 node scripts/avatar-3d/qa/loading-and-animation.mjs
 node scripts/avatar-3d/qa/navigation-and-motion.mjs
 node scripts/avatar-3d/qa/timeout-restart-proof.cjs
@@ -45,3 +46,5 @@ When normal production builds and static QA builds share a checkout, keep QA out
 `canonical-failure.mjs` verifies that a failed canonical SVG cannot cover a ready 3D model or leave its accessible label unavailable. It also checks return to 2D, a failed GLB and explicit retry in both languages. The unavailable state is preserved whenever neither representation can render.
 
 `loading-and-animation.mjs` holds the runtime response to verify that only the selected GLB downloads concurrently, observes cancellation during navigation and close, and checks real `Idle` animation playback, pause, resume, manual inspection and reduced motion. It also verifies each version's resting pose. `PORTAL_QA_CHROMIUM` selects a local Chromium executable; `PORTAL_QA_SOFTWARE_GL=1` explicitly enables SwiftShader for environments without hardware graphics and records that condition. `PORTAL_QA_CASES` can filter cases, but only an unfiltered run proves the full suite.
+
+`filmstrip-tour.mjs` measures the first automatic stage change and snapshot fade in real time. It verifies the 2D request boundary, one-stage warming during the tour, pointer inspection, rapid selections, recovery, and reduced motion. It captures the desktop English and narrow Spanish controls. The same `PORTAL_QA_CASES` filter can run an individual scenario.

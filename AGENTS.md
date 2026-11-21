@@ -29,9 +29,11 @@ Applies only to `portal/`.
 
 ## Avatar source of truth
 
+- Use **Turtleand** for the avatar and ecosystem name in copy, design artifacts, and agent guidance.
 - Canonical production avatars are the resting SVGs in `src/images/avatar/evolution/`.
 - Walking poses in `src/images/avatar/evolution/walking/` are generated derivatives. Never replace or reconstruct a canonical rest SVG with pose geometry.
 - Static concept images belong only in `src/images/avatar/archive/raster/` as historical visual references. Production components and data must not import them.
+- The 3D filmstrip uses one WebP thumbnail rendered from each production GLB under `src/images/avatar/3d-thumbnails/`.
 - `src/data/avatarVersions.json` is the chronological metadata manifest. Every version requires matching English and Spanish copy, one canonical SVG, one archived concept reference, and three generated walking poses.
 - Follow `docs/avatar-versioning.md` for the complete creation, continuity, registration, and validation protocol. Do not recreate the removed raster gallery or `src/data/avatarGallery.ts`.
 - A new avatar version is incomplete until pose generation, avatar validation, the production build, browser interaction tests, reduced-motion tests, and desktop/mobile visual comparison all pass.

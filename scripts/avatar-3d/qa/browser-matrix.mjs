@@ -75,11 +75,18 @@ for(const engine of engines){
           if(process.env.PORTAL_QA_CONTACT_SHEETS==='1'){await page.locator(S.model).scrollIntoViewIfNeeded();modelCaptures.push(await page.screenshot());}
         }
         if(modelCaptures.length)await contactSheet(modelCaptures,`${label}-${engine}-${size.name}-${lang}-3d-lineage.png`,size.width,size.height);
-        check(report,`${prefix} reduced 3D automatic motion disabled`,!(await state(page)).rotating&&await page.locator(S.action('rotation')).isDisabled());
+        check(report,`${prefix} reduced 3D automatic motion starts paused`,
+          await page.locator(S.model).evaluate(el=>el.paused&&!el.hasAttribute('auto-rotate'))
+          &&await page.locator(S.tour).isEnabled());
         const before=await page.locator(S.model).evaluate(el=>el.getCameraOrbit().theta);
-        if(size.name==='narrow')await page.locator(S.action('right')).tap();else await page.locator(S.action('right')).click();
+        const cameraInput=page.locator(S.model).locator('.userInput');
+        await cameraInput.press('ArrowRight');
+        await page.waitForFunction(({selector,before})=>Math.abs(document.querySelector(selector).getCameraOrbit().theta-before)>.1,
+          {selector:S.model,before},{timeout:1500}).catch(()=>{});
         const after=await page.locator(S.model).evaluate(el=>el.getCameraOrbit().theta);
-        await page.locator(S.action('reset')).click();
+        await cameraInput.press('Home');
+        await page.waitForFunction(({selector,before})=>Math.abs(document.querySelector(selector).getCameraOrbit().theta-before)<.02,
+          {selector:S.model,before},{timeout:1500}).catch(()=>{});
         const reset=await page.locator(S.model).evaluate(el=>el.getCameraOrbit().theta);
         check(report,`${prefix} accessible camera controls and reset`,Math.abs(after-before)>.1&&Math.abs(reset-before)<.02,{before,after,reset});
         await page.locator(S.mode('2d')).click();
