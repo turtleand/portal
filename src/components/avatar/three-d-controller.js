@@ -1,8 +1,10 @@
 import viewerRuntimeUrl from '@google/model-viewer/dist/model-viewer.min.js?url';
 
 const OPENING_ANGLE = '-43deg 81deg';
-const DWELL_MS = 3500;
-const FADE_MS = 300;
+const DWELL_MS = 2600;
+const FADE_MS = 225;
+const INSPECTION_IDLE_MS = 900;
+const MIN_RESUMED_DWELL_MS = 650;
 const DEPENDENCY_TIMEOUT_MS = 20000;
 const MODEL_TIMEOUT_MS = 30000;
 let runtimeImport;
@@ -105,14 +107,22 @@ export class AvatarThreeDController {
     this.pendingIndex = null;
     this.ready = false;
     this.failed = false;
-    this.playing = false;
     this.visible = false;
+    this.inspectionPointers = new Set();
+    this.resumeTimer = 0;
     this.attempts = new Map();
     this.message = '';
     this.root.querySelectorAll('[data-evolution-mode]').forEach(button => {
       button.addEventListener('click', () => this.setMode(button.dataset.evolutionMode));
     });
     this.retryButton?.addEventListener('click', () => { void this.load(this.owner.index); });
+    window.addEventListener('pointerup', event => this.releaseInspectionPointer(event), true);
+    window.addEventListener('pointercancel', event => this.releaseInspectionPointer(event), true);
+    window.addEventListener('blur', () => {
+      if (!this.inspectionPointers.size) return;
+      this.inspectionPointers.clear();
+      this.deferTour();
+    });
     new IntersectionObserver(entries => {
       this.visible = entries.some(entry => entry.isIntersecting);
       if (this.visible) this.scheduleDwell();
@@ -126,18 +136,21 @@ export class AvatarThreeDController {
       if (this.viewer) this.viewer.minCameraOrbit = this.viewFraming().minimum;
     }).observe(owner.canvas);
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden && this.active) {
-        this.playing = false;
-        this.dispose();
-      } else if (this.active && !this.viewer) {
+      if (document.hidden && this.active) this.dispose();
+      else if (this.active && !this.viewer) {
         void this.load(this.owner.index);
       }
       this.update();
     });
     owner.reducedMotionQuery.addEventListener('change', () => {
       if (owner.reducedMotionQuery.matches) {
-        this.pause();
+        this.clearInspection();
+        this.pauseDwell();
+        this.cancelPrefetch();
+        this.interruptAdvance();
         if (this.snapshotFade) this.clearSnapshot();
+      } else {
+        this.scheduleDwell();
       }
       this.viewer?.setAttribute('interpolation-decay', owner.reducedMotionQuery.matches ? '0' : '65');
       this.update();
@@ -146,6 +159,13 @@ export class AvatarThreeDController {
   }
 
   get active() { return this.mode === '3d' && this.owner.active; }
+  get tourEnabled() {
+    return this.active && !this.failed && !this.owner.reducedMotionQuery.matches && this.owner.index < this.owner.stages.length - 1;
+  }
+  get inspecting() { return this.inspectionPointers.size > 0 || this.resumeTimer !== 0; }
+  get canRunTour() {
+    return this.tourEnabled && this.visible && !document.hidden && !this.inspecting;
+  }
   get stage() { return this.owner.stages[this.owner.index]; }
   t(key) { return this.owner.translate(`avatar.threeD.${key}`); }
 
@@ -161,7 +181,7 @@ export class AvatarThreeDController {
 
   setMode(next) {
     if (!['2d', '3d'].includes(next) || next === this.mode || !this.owner.active || this.owner.loading) return;
-    const resume2d = this.playing;
+    const resume2d = this.canRunTour;
     this.owner.clearHold();
     this.owner.cancelMotion();
     this.owner.visitId++;
@@ -171,65 +191,71 @@ export class AvatarThreeDController {
     this.owner.paused = false;
     this.mode = next;
     this.owner.showStableStage(this.owner.index);
-    if (next === '3d') {
-      this.playing = !this.owner.reducedMotionQuery.matches && this.owner.index < this.owner.stages.length - 1;
-      void this.load(this.owner.index);
-    } else {
-      this.playing = false;
+    if (next === '3d') void this.load(this.owner.index);
+    else {
       this.dispose();
       if (resume2d && !this.owner.reducedMotionQuery.matches) this.owner.startAutoplay();
     }
     this.update();
   }
 
-  select(index, continuePlaying = false) {
+  select(index, automatic = false) {
     if (!this.active || !this.owner.stages[index]) return;
-    this.playing = continuePlaying;
-    this.clearDwell();
-    if (continuePlaying && index === this.owner.index + 1) this.writeDwellProgress(0);
+    if (!automatic) this.clearDwell();
     if (index === this.pendingIndex) {
       // Taking over a pending tour step makes it a manual selection without rereading the model.
-      this.pendingFromTour = continuePlaying && this.pendingFromTour;
+      this.pendingFromTour &&= automatic;
       this.update();
       return;
     }
     if (index === this.viewerIndex && this.ready) {
       this.cancelPending();
-      this.cancelPrefetch();
+      this.clearSnapshot();
       this.message = '';
       this.scheduleDwell();
       this.update();
       return;
     }
-    void this.load(index, continuePlaying);
+    void this.load(index, automatic);
   }
 
-  togglePlayback() {
-    if (this.playing) return this.pause();
-    if (this.failed) return;
-    this.playing = true;
-    if (this.owner.index === this.owner.stages.length - 1 && this.pendingIndex === null) {
-      this.select(0, true);
-    } else {
-      this.scheduleDwell();
-      this.update();
-    }
+  releaseInspectionPointer(event) {
+    if (this.inspectionPointers.delete(event.pointerId)) this.deferTour();
   }
 
-  pause() {
-    if (!this.playing) return;
-    this.playing = false;
+  deferTour() {
+    if (!this.tourEnabled) return;
     this.pauseDwell();
-    this.cancelPrefetch();
-    if (this.pendingFromTour && this.pendingIndex !== null && this.pendingIndex !== this.owner.index) {
-      this.select(this.owner.index);
-    } else {
-      this.update();
+    clearTimeout(this.resumeTimer);
+    this.resumeTimer = 0;
+    if (!this.inspectionPointers.size) {
+      this.resumeTimer = setTimeout(() => {
+        this.resumeTimer = 0;
+        this.scheduleDwell();
+        this.updateMotion();
+      }, INSPECTION_IDLE_MS);
     }
+    this.interruptAdvance();
+    this.updateMotion();
   }
 
-  restart() {
-    this.select(0, true);
+  interruptAdvance() {
+    if (!this.pendingFromTour) return;
+    // Preserve the committed stage if inspection starts as its successor loads.
+    if (this.viewerIndex === null) {
+      void this.load(this.owner.index);
+      return;
+    }
+    this.cancelPending();
+    this.clearSnapshot();
+    this.message = '';
+    this.update();
+  }
+
+  clearInspection() {
+    clearTimeout(this.resumeTimer);
+    this.resumeTimer = 0;
+    this.inspectionPointers.clear();
   }
 
   clearDwell() {
@@ -257,13 +283,14 @@ export class AvatarThreeDController {
   }
 
   scheduleDwell() {
-    if (!this.active || !this.playing || !this.visible || document.hidden || !this.ready || this.pendingIndex !== null || this.dwellTimer) return;
-    if (this.owner.index === this.owner.stages.length - 1) return;
-    const duration = this.dwellRemaining ?? DWELL_MS;
+    if (!this.canRunTour || !this.ready || this.pendingIndex !== null || this.dwellTimer) return;
+    const duration = Math.max(this.dwellRemaining ?? DWELL_MS, MIN_RESUMED_DWELL_MS);
     this.dwellDeadline = performance.now() + duration;
     this.dwellTimer = setTimeout(() => {
       this.dwellTimer = 0;
-      if (this.active && this.playing) this.select(this.owner.index + 1, true);
+      this.dwellRemaining = 0;
+      this.writeDwellProgress(0);
+      if (this.canRunTour && this.pendingIndex === null) this.select(this.owner.index + 1, true);
     }, duration);
     const tick = now => {
       this.writeDwellProgress(this.dwellDeadline - now);
@@ -390,6 +417,7 @@ export class AvatarThreeDController {
     this.cancelPending();
     this.cancelPrefetch();
     this.clearDwell();
+    this.clearInspection();
     this.clearSnapshot();
     this.ready = this.failed = false;
     if (this.viewer) {
@@ -410,7 +438,6 @@ export class AvatarThreeDController {
   }
 
   close() {
-    this.playing = false;
     this.dispose();
     this.mode = '2d';
     this.update();
@@ -440,16 +467,31 @@ export class AvatarThreeDController {
           this.fail(this.pendingIndex ?? this.owner.index);
         }
       });
+      element.addEventListener('pointerdown', event => {
+        if (event.button !== 0 || !this.tourEnabled || this.viewerIndex === null) return;
+        this.inspectionPointers.add(event.pointerId);
+        this.deferTour();
+      });
+      element.addEventListener('lostpointercapture', event => this.releaseInspectionPointer(event));
+      element.addEventListener('pointermove', event => {
+        if (event.buttons === 0) this.releaseInspectionPointer(event);
+      });
+      element.addEventListener('wheel', () => {
+        if (this.viewerIndex !== null) this.deferTour();
+      }, {passive: true});
       element.addEventListener('camera-change', event => {
-        if (event.detail?.source === 'user-interaction') this.pause();
+        // Saving the outgoing frame can emit camera changes tagged with the
+        // previous input source. Only actual input may start a new hold.
+        if (this.inspecting && this.viewerIndex !== null && event.detail?.source === 'user-interaction') this.deferTour();
       });
       element.addEventListener('focusin', () => {
-        if (element.matches(':focus-visible') || element.shadowRoot?.activeElement?.matches(':focus-visible')) this.pause();
+        if (element.matches(':focus-visible') || element.shadowRoot?.activeElement?.matches(':focus-visible')) this.deferTour();
       });
       element.addEventListener('keydown', event => {
-        if (event.key !== 'Home' || this.viewerIndex === null) return;
+        if (this.viewerIndex === null) return;
+        if (event.key.startsWith('Arrow') || event.key === 'Home') this.deferTour();
+        if (event.key !== 'Home') return;
         event.preventDefault();
-        this.pause();
         element.cameraOrbit = this.viewFraming().opening;
         element.fieldOfView = '30deg';
         element.resetTurntableRotation();
@@ -535,7 +577,6 @@ export class AvatarThreeDController {
     this.pendingFromTour = false;
     this.ready = true;
     this.message = '';
-    if (index === this.owner.stages.length - 1) this.playing = false;
     this.owner.showStableStage(index);
     this.update(announce);
     if (changed) this.revealIncoming();
@@ -548,7 +589,6 @@ export class AvatarThreeDController {
     const id = this.owner.stages[index].id;
     this.attempts.set(id, (this.attempts.get(id) || 0) + 1);
     const announce = this.owner.index !== index && !this.pendingFromTour;
-    this.playing = false;
     this.dispose();
     this.failed = true;
     this.message = 'error';
@@ -574,10 +614,6 @@ export class AvatarThreeDController {
         this.viewer.setAttribute('aria-hidden', 'true');
         this.viewer.setAttribute('tabindex', '-1');
       }
-      const animating = operable && this.playing && this.visible && !document.hidden && !this.owner.reducedMotionQuery.matches;
-      if (animating && this.viewer.availableAnimations.length) {
-        if (this.viewer.paused) this.viewer.play();
-      } else this.viewer.pause();
       this.viewer.alt = this.t('viewer').replace('{title}', this.owner.locale === 'es' ? this.stage.titleEs : this.stage.title);
       if (this.viewer.dataset.locale !== this.owner.locale) {
         const a11y = {'interaction-prompt': this.t('keyboardHelp')};
@@ -591,8 +627,16 @@ export class AvatarThreeDController {
         this.viewer.dataset.locale = this.owner.locale;
       }
     }
+    this.updateMotion();
     if (this.status) this.status.textContent = this.message ? this.t(this.message) : '';
     if (this.retryButton) this.retryButton.hidden = !this.failed;
     this.owner.render(announce);
+  }
+
+  updateMotion() {
+    if (!this.viewer) return;
+    const animating = this.ready && this.viewerIndex !== null && this.canRunTour && this.viewer.availableAnimations.length > 0;
+    if (animating && this.viewer.paused) this.viewer.play();
+    if (!animating && !this.viewer.paused) this.viewer.pause();
   }
 }

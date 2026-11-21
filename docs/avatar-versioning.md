@@ -60,7 +60,7 @@ Then test the real gallery in English and Spanish:
 - With `prefers-reduced-motion: reduce`, confirm only canonical rests render, navigation is immediate, effects remain off, and walking-pose assets are not requested.
 - Capture desktop and 390px mobile screenshots for every rest and walking pose. Check visual fidelity, modal scrolling, focus visibility, horizontal overflow, and layout stability.
 - Inspect browser resources and production source to confirm archived raster references are never requested or imported.
-- Run the [3D gallery checks](avatar-3d-assets.md#gallery-validation). Verify version and localized metadata survive representation changes, the canonical SVG covers initial loading and recovery, and 3D resources are requested only after opt-in. Confirm the tour advances and pauses on model interaction or thumbnail selection.
+- Run the [3D gallery checks](avatar-3d-assets.md#gallery-validation). Verify version and localized metadata survive representation changes, the canonical SVG covers initial loading and recovery, and 3D resources are requested only after opt-in. Confirm the tour resumes after model interaction and advances from a selected thumbnail.
 - Review the final diff for generated build output, unrelated changes, private paths, credentials, internal notes, or unsafe operational details.
 
 If any gate or visual comparison fails, correct the canonical SVG, gait boundaries, metadata, or runtime behavior and repeat the affected checks. Stop only when the full contract is proven and further changes would be subjective rather than corrective.

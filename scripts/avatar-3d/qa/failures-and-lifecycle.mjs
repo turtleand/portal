@@ -121,15 +121,18 @@ await runCase('Real WebGL context loss',async page=>{
 await runCase('Draw work and twenty lifecycle cycles',async(page,context)=>{
   await page.emulateMedia({reducedMotion:'no-preference'});await enter(page);
   await page.locator(S.mode('3d')).click();await ready(page);await page.locator(S.model).scrollIntoViewIfNeeded();
-  await page.locator(S.tour).click();
   const drawTotal=()=>page.evaluate(()=>window.__avatarDrawProbe.draws.reduce((a,b)=>a+b,0));
-  await page.waitForTimeout(800);let first=await drawTotal();await page.waitForTimeout(600);let last=await drawTotal();
-  check(report,'Paused settled viewer submits no WebGL draws',last===first,{draws:last-first});
-  await page.locator(S.tour).click();await page.waitForTimeout(700);first=await drawTotal();await page.waitForTimeout(600);last=await drawTotal();
-  check(report,'Active tour submits WebGL draws for character animation',last>first,{draws:last-first});
-  await page.locator(S.tour).click();await page.waitForTimeout(900);first=await drawTotal();await page.waitForTimeout(600);last=await drawTotal();
-  check(report,'Tour pause stops WebGL draw work',last===first,{draws:last-first});
-  await page.locator(S.tour).click();await page.waitForTimeout(500);
+  await page.waitForTimeout(400);
+  let first=await drawTotal();await page.waitForTimeout(500);let last=await drawTotal();
+  check(report,'Automatic tour submits WebGL draws for character animation',last>first,{draws:last-first});
+  const box=await page.locator(S.model).boundingBox();
+  await page.mouse.move(box.x+box.width/2,box.y+box.height/2);await page.mouse.down();
+  await page.waitForTimeout(650);first=await drawTotal();await page.waitForTimeout(400);last=await drawTotal();
+  check(report,'A settled viewer held by pointer interaction pauses WebGL draw work',last===first,{draws:last-first});
+  await page.mouse.up();
+  await page.waitForFunction(selector=>!document.querySelector(selector)?.paused,S.model,{timeout:3500});
+  first=await drawTotal();await page.waitForTimeout(400);last=await drawTotal();
+  check(report,'Releasing the pointer resumes automatic character draw work',last>first,{draws:last-first});
   const other=await context.newPage();await other.goto('about:blank');await other.bringToFront();await page.waitForTimeout(600);
   const actualHidden=await page.evaluate(()=>document.hidden);
   if(actualHidden){first=await drawTotal();await page.waitForTimeout(600);last=await drawTotal();check(report,'Actually hidden tab stops WebGL draws',first===last,{draws:last-first});}

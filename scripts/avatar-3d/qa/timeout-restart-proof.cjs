@@ -45,11 +45,11 @@ const save=()=>fs.writeFileSync(output,JSON.stringify(report,null,2));
   await page.locator('[data-evolution-action="play"]').click();await page.locator('[data-evolution-mode="3d"]').click();await page.locator('[data-model-ready="true"]').waitFor();
   await page.locator('[data-evolution-3d-select="5"]').click();
   await page.locator('[data-evolution-3d-select="5"][aria-current="step"]').waitFor();
-  await page.locator('[data-evolution-3d-action="tour"]').click();
+  await page.locator('[data-evolution-3d-select="0"]').click();
   await page.locator('[data-evolution-3d-select="0"][aria-current="step"]').waitFor();
   const seen=new Set();const started=Date.now();
   while(Date.now()-started<55000){const v=await page.locator('[data-evolution-3d-meta]').textContent();seen.add(v.split(' • ')[0]);if(v.startsWith('v0.1.1')&&await page.locator('[data-avatar-evolution]').getAttribute('data-model-ready')==='true')break;await page.waitForTimeout(200);}
   assert.equal(seen.size,6);assert.equal(await page.locator('model-viewer').evaluate(viewer=>viewer.paused),true);assert.equal(errors.length,0);
-  report.checks.push({name:'Replay returns to Genesis, completes all six stages and rests',pass:true,elapsedMs:Date.now()-started,seen:[...seen],errors});save();console.log('Tour replay PASS');
+  report.checks.push({name:'Selecting Genesis resumes all six stages and holds the finale',pass:true,elapsedMs:Date.now()-started,seen:[...seen],errors});save();console.log('Tour resumes from Genesis PASS');
   await browser.close();
 })().catch(error=>{report.error=error.stack;save();console.error(error);process.exit(1)});

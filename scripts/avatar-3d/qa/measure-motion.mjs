@@ -1,4 +1,4 @@
-import {base,label,launch,sourceHashes,writeReport,S,openGallery,ready} from './shared.mjs';
+import {base,label,launch,sourceHashes,writeReport,S,manifest,openGallery,ready} from './shared.mjs';
 
 // Query one synchronous renderer submission batch. Microtask completion follows
 // its synchronous draw calls. This is measured GPU work when the extension is
@@ -22,7 +22,7 @@ function probe(){
   setInterval(()=>{for(const [gl,info]of contexts)for(let i=info.pending.length-1;i>=0;i--){const {query,row}=info.pending[i];if(gl.getQueryParameter(query,gl.QUERY_RESULT_AVAILABLE)){row.disjoint=Boolean(gl.getParameter(info.extension.GPU_DISJOINT_EXT));if(!row.disjoint)row.gpuMs=gl.getQueryParameter(query,gl.QUERY_RESULT)/1e6;gl.deleteQuery(query);info.pending.splice(i,1);}}},100);
   window.__motionInfo=()=>[...contexts].map(([gl,info])=>{const debug=gl.getExtension('WEBGL_debug_renderer_info');return{gpuTimersAvailable:Boolean(info.extension),gpu:debug?gl.getParameter(debug.UNMASKED_RENDERER_WEBGL):null};});
 }
-const browser=await launch('chromium',true),report={at:new Date().toISOString(),base,label,sourceHashes:await sourceHashes(),browser:browser.version(),method:'Guided tour from Genesis, recording 20 seconds beginning when the first model is ready. GPU elapsed queries bracket synchronous draw batches if available. CPU submission durations and animation-frame cadence are separate measurements. Not display presentation time or physical-device evidence.',profiles:[],errors:[]};
+const browser=await launch('chromium',true),report={at:new Date().toISOString(),base,label,sourceHashes:await sourceHashes(),browser:browser.version(),method:'Automatic sequence from Genesis, recording from the first ready model through the last. GPU elapsed queries bracket synchronous draw batches if available. CPU submission durations and animation-frame cadence are separate measurements. Not display presentation time or physical-device evidence.',profiles:[],errors:[]};
 try{
   for(const profile of [{name:'desktop',width:1440,height:1000,dpr:1},{name:'narrow-lab',width:390,height:844,dpr:2,cpuSlowdown:4}]){
     const context=await browser.newContext({viewport:{width:profile.width,height:profile.height},deviceScaleFactor:profile.dpr,reducedMotion:'no-preference'});await context.addInitScript(probe);
@@ -30,8 +30,9 @@ try{
     await page.goto(base,{waitUntil:'networkidle'});await openGallery(page);await page.locator(S.play).click();
     await cdp.send('Performance.enable');await cdp.send('HeapProfiler.collectGarbage');const before=await cdp.send('Performance.getMetrics');
     await page.locator(S.mode('3d')).click();await ready(page);await page.locator(S.model).scrollIntoViewIfNeeded();
-    await page.evaluate(()=>window.__motion.enabled=true);await page.waitForTimeout(20000);await page.evaluate(()=>window.__motion.enabled=false);
-    if((await page.locator('[data-evolution-3d-play-icon]').textContent()).trim()==='Ⅱ')await page.locator(S.tour).click();
+    await page.evaluate(()=>window.__motion.enabled=true);
+    await page.locator(`${S.threeDVersion(manifest.length-1)}[aria-current="step"]`).waitFor({state:'visible',timeout:45000});
+    await page.evaluate(()=>window.__motion.enabled=false);
     await page.waitForTimeout(400);
     const result=await page.evaluate(()=>({contexts:window.__motionInfo(),records:window.__motion.records,cadence:window.__motion.cadence}));await cdp.send('HeapProfiler.collectGarbage');const after=await cdp.send('Performance.getMetrics');
     const heap=r=>r.metrics.find(item=>item.name==='JSHeapUsedSize')?.value;

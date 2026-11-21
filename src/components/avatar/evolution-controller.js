@@ -128,9 +128,6 @@ class AvatarEvolutionController {
     this.threeDDescription = this.root.querySelector('[data-evolution-3d-description]');
     this.threeDMeta = this.root.querySelector('[data-evolution-3d-meta]');
     this.threeDProgress = this.root.querySelector('[data-evolution-3d-progress]');
-    this.tourButton = this.root.querySelector('[data-evolution-3d-action="tour"]');
-    this.tourLabel = this.root.querySelector('[data-evolution-3d-play-label]');
-    this.tourIcon = this.root.querySelector('[data-evolution-3d-play-icon]');
 
     if (!this.stages.length || !(this.stageHost instanceof HTMLElement)) return;
     this.threeD = new AvatarThreeDController(this, threeDAssets, environmentUrl);
@@ -152,12 +149,11 @@ class AvatarEvolutionController {
     this.root.querySelectorAll('[data-evolution-select]').forEach(button => {
       button.addEventListener('click', () => this.navigate(Number(button.getAttribute('data-evolution-select')) - this.index));
     });
-    this.tourButton?.addEventListener('click', () => this.threeD.togglePlayback());
     this.threeDFilmstrip?.querySelectorAll('[data-evolution-3d-select]').forEach(button => {
       button.addEventListener('click', () => this.threeD.select(Number(button.getAttribute('data-evolution-3d-select'))));
     });
     this.threeDFilmstrip?.addEventListener('focusin', event => {
-      if (event.target instanceof HTMLElement && event.target.matches(':focus-visible')) this.threeD.pause();
+      if (event.target instanceof HTMLElement && event.target.matches(':focus-visible')) this.threeD.deferTour();
     });
 
     const modal = this.root.closest('[data-avatar-modal]');
@@ -349,7 +345,7 @@ class AvatarEvolutionController {
   }
 
   togglePlayback() {
-    if (this.threeD.mode === '3d') return this.threeD.togglePlayback();
+    if (this.threeD.mode === '3d') return;
     if (this.reducedMotionQuery.matches || this.fallbackMode || this.loading) return;
     const isRunning = !this.paused && (
       this.autoplay ||
@@ -387,8 +383,8 @@ class AvatarEvolutionController {
   }
 
   restart() {
+    if (this.threeD.mode === '3d') return;
     this.revealedTimelineIndex = -1;
-    if (this.threeD.mode === '3d') return this.threeD.restart();
     this.clearHold();
     this.cancelMotion();
     this.visitId += 1;
@@ -1110,13 +1106,6 @@ class AvatarEvolutionController {
       const image = marker.querySelector('img[data-src]');
       if (image instanceof HTMLImageElement && image.dataset.src && !image.hasAttribute('src')) image.src = image.dataset.src;
     });
-
-    const playing = this.threeD.playing;
-    const complete = this.index === this.stages.length - 1;
-    const action = playing ? 'pauseTour' : complete ? 'replayTour' : 'playTour';
-    if (this.tourLabel) this.tourLabel.textContent = this.translate(`avatar.threeD.${action}`);
-    if (this.tourIcon) this.tourIcon.textContent = playing ? 'Ⅱ' : complete ? '↺' : '▶';
-    if (this.tourButton instanceof HTMLButtonElement) this.tourButton.disabled = this.threeD.failed;
   }
 
   revealTimelineMarker() {

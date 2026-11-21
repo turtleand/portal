@@ -75,9 +75,9 @@ for(const engine of engines){
           if(process.env.PORTAL_QA_CONTACT_SHEETS==='1'){await page.locator(S.model).scrollIntoViewIfNeeded();modelCaptures.push(await page.screenshot());}
         }
         if(modelCaptures.length)await contactSheet(modelCaptures,`${label}-${engine}-${size.name}-${lang}-3d-lineage.png`,size.width,size.height);
-        check(report,`${prefix} reduced 3D automatic motion starts paused`,
+        check(report,`${prefix} reduced 3D automatic motion stays paused while stages remain selectable`,
           await page.locator(S.model).evaluate(el=>el.paused&&!el.hasAttribute('auto-rotate'))
-          &&await page.locator(S.tour).isEnabled());
+          &&await page.locator(S.threeDVersion(0)).isEnabled());
         const before=await page.locator(S.model).evaluate(el=>el.getCameraOrbit().theta);
         const cameraInput=page.locator(S.model).locator('.userInput');
         await cameraInput.press('ArrowRight');

@@ -16,7 +16,7 @@ export const S = {
   previous: '[data-evolution-action="previous"]', next: '[data-evolution-action="next"]',
   restart: '[data-evolution-action="restart"]', model: '[data-evolution-model-host] model-viewer',
   threeDMeta: '[data-evolution-3d-meta]', threeDTitle: '[data-evolution-3d-title]',
-  threeDDescription: '[data-evolution-3d-description]', tour: '[data-evolution-3d-action="tour"]',
+  threeDDescription: '[data-evolution-3d-description]',
   snapshot: '[data-evolution-3d-snapshot]',
   mode: value => `[data-evolution-mode="${value}"]`, version: index => `[data-evolution-select="${index}"]`,
   threeDVersion: index => `[data-evolution-3d-select="${index}"]`,

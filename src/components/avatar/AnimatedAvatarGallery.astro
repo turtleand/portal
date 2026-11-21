@@ -106,15 +106,9 @@ const thumbnails = import.meta.glob<string>('../../images/avatar/3d-thumbnails/t
           <button type="button" data-evolution-3d-action="retry" data-i18n-key="avatar.threeD.retry" hidden>{t('avatar.threeD.retry')}</button>
         </div>
         <div class="evolution-3d-caption">
-          <div class="evolution-3d-copy">
-            <p data-evolution-3d-meta>{firstStage.version} • {firstStage.date}</p>
-            <h3 class="font-heading" data-evolution-3d-title>{firstTitle}</h3>
-            <p data-evolution-3d-description>{firstDescription}</p>
-          </div>
-          <button type="button" class="evolution-tour-button" data-evolution-3d-action="tour">
-            <span aria-hidden="true" data-evolution-3d-play-icon>▶</span>
-            <span data-evolution-3d-play-label>{t('avatar.threeD.playTour')}</span>
-          </button>
+          <p data-evolution-3d-meta>{firstStage.version} • {firstStage.date}</p>
+          <h3 class="font-heading" data-evolution-3d-title>{firstTitle}</h3>
+          <p data-evolution-3d-description>{firstDescription}</p>
         </div>
         <div class="evolution-tour-track" aria-hidden="true"></div>
         <ol class="evolution-filmstrip" data-evolution-3d-filmstrip aria-label={t('avatar.threeD.filmstrip')} data-i18n-key="avatar.threeD.filmstrip" data-i18n-attr="aria-label">
@@ -237,7 +231,6 @@ const thumbnails = import.meta.glob<string>('../../images/avatar/3d-thumbnails/t
 
   .evolution-representation button:focus-visible,
   .evolution-timeline-button:focus-visible,
-  .evolution-tour-button:focus-visible,
   .evolution-3d-feedback button:focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 3px;
@@ -369,18 +362,12 @@ const thumbnails = import.meta.glob<string>('../../images/avatar/3d-thumbnails/t
 
   .evolution-3d-caption {
     display: grid;
-    gap: .5rem;
+    gap: .25rem;
     padding: .625rem .75rem .75rem;
     border-block-start: 1px solid #2d4049;
   }
 
-  .evolution-3d-copy {
-    display: grid;
-    gap: .25rem;
-    min-width: 0;
-  }
-
-  .evolution-3d-copy h3 {
+  .evolution-3d-caption h3 {
     color: var(--color-off-white);
     font-size: clamp(1.375rem, 3vw, 2rem);
     line-height: 1.15;
@@ -398,36 +385,6 @@ const thumbnails = import.meta.glob<string>('../../images/avatar/3d-thumbnails/t
     color: #bdcbcd;
     font-size: .875rem;
     line-height: 1.4;
-  }
-
-  .evolution-tour-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    justify-self: start;
-    gap: .5rem;
-    min-height: 44px;
-    padding: .375rem .75rem;
-    border: 1px solid #75bda6;
-    border-radius: 8px;
-    background: #a9e5d1;
-    color: #102823;
-    font-size: .8125rem;
-    font-weight: 700;
-    line-height: 1.2;
-  }
-
-  .evolution-tour-button:hover:not(:disabled) {
-    background: #c1f0e1;
-  }
-
-  .evolution-tour-button:disabled {
-    opacity: .55;
-  }
-
-  [data-evolution-3d-play-icon] {
-    min-width: 1em;
-    text-align: center;
   }
 
   .evolution-tour-track {
@@ -517,11 +474,9 @@ const thumbnails = import.meta.glob<string>('../../images/avatar/3d-thumbnails/t
     }
 
     .evolution-3d-caption {
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: center;
+      align-content: center;
       min-height: 6rem;
       padding-inline: 1rem;
-      gap: 1rem;
     }
   }
 

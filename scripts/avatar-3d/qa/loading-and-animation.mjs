@@ -115,19 +115,15 @@ try {
     await page.waitForFunction(selector => document.querySelector(selector).currentTime > .1, S.model);
     const started = await pose();
     check(report, 'Ready 3D character plays its Idle clip', !started.paused && started.name === 'Idle' && started.animations.includes('Idle'), {pose: started});
-    await page.locator(S.tour).click();
-    await page.waitForTimeout(100);
+    await page.locator(S.model).locator('.userInput').press('ArrowLeft');
+    await page.waitForFunction(selector => document.querySelector(selector)?.paused, S.model, {timeout:1500});
     const paused = await pose();
     await page.waitForTimeout(400);
     const settled = await pose();
-    check(report, 'Tour pause freezes character animation', paused.paused && settled.time === paused.time, {paused, settled});
-    await page.locator(S.tour).click();
+    check(report, 'Keyboard orbit temporarily freezes character animation', paused.paused && settled.time === paused.time, {paused, settled});
     await page.waitForFunction(({selector, time}) => !document.querySelector(selector).paused && document.querySelector(selector).currentTime !== time, {selector: S.model, time: settled.time});
-    check(report, 'Tour play resumes embedded animation from the held pose', !(await pose()).paused);
-    await page.locator(S.model).locator('.userInput').press('ArrowLeft');
-    await page.waitForFunction(selector => document.querySelector(selector)?.paused, S.model, {timeout:1500}).catch(() => {});
-    check(report, 'Manual camera inspection pauses the character', (await pose()).paused);
-    await page.locator(S.tour).click();
+    const resumed = await pose();
+    check(report, 'Idle resumes from the held pose without a transport control', !resumed.paused && resumed.time > settled.time, {settled, resumed});
     await page.emulateMedia({reducedMotion: 'reduce'});
     await page.waitForFunction(selector => {
       const viewer = document.querySelector(selector);
