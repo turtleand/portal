@@ -108,20 +108,95 @@ export function validateGlb(bytes, label = 'GLB', expectedIdentity) {
     assert.equal(identities.length, 1, `${label}: expected one model identity node`);
     assert.equal(identities[0].extras.avatarId, expectedIdentity.id, `${label}: embedded stable ID does not match the manifest`);
     assert.equal(identities[0].extras.avatarVersion, expectedIdentity.version, `${label}: embedded version does not match the manifest`);
-    assert.equal(identities[0].extras.direction, 'Sculpted Warmth', `${label}: model does not use the selected art direction`);
+    assert.equal(identities[0].extras.direction, expectedIdentity.direction, `${label}: model does not use the selected art direction`);
   }
   gltf.nodes.forEach((node, index) => {
     if (node.mesh !== undefined) reference(node.mesh, gltf.meshes, `node ${index} mesh`);
     for (const child of node.children ?? []) reference(child, gltf.nodes, `node ${index} child`);
   });
+  // Clips are optional, but a malformed clip must not pass merely because the
+  // static mesh renders. Read the embedded float samples to check actual time
+  // ordering and finite motion values as well as the JSON references.
+  const animationSamples = (accessorIndex, description) => {
+    reference(accessorIndex, gltf.accessors, description);
+    const accessor = gltf.accessors[accessorIndex];
+    assert.equal(accessor.componentType, 5126, `${label}: ${description} must use FLOAT components`);
+    assert.notEqual(accessor.normalized, true, `${label}: ${description} cannot normalize FLOAT components`);
+    const components = { SCALAR: 1, VEC3: 3, VEC4: 4 }[accessor.type];
+    assert(components, `${label}: ${description} has an unsupported animation accessor type`);
+    const view = gltf.bufferViews[accessor.bufferView];
+    integer(accessor.byteOffset ?? 0, `${label} ${description} offset`);
+    const elementBytes = components * 4;
+    const stride = view.byteStride ?? elementBytes;
+    integer(stride, `${label} ${description} stride`, elementBytes);
+    assert.equal(stride % 4, 0, `${label}: ${description} stride must align FLOAT components`);
+    const start = accessor.byteOffset ?? 0;
+    assert.equal(((view.byteOffset ?? 0) + start) % 4, 0, `${label}: ${description} offset must align FLOAT components`);
+    const end = start + (accessor.count - 1) * stride + elementBytes;
+    assert(Number.isSafeInteger(end) && end <= view.byteLength, `${label}: ${description} samples exceed buffer view`);
+    const values = [];
+    for (let sample = 0; sample < accessor.count; sample++) {
+      for (let component = 0; component < components; component++) {
+        const value = chunks[1].bytes.readFloatLE((view.byteOffset ?? 0) + start + sample * stride + component * 4);
+        assert(Number.isFinite(value), `${label}: ${description} has a nonfinite sample`);
+        values.push(value);
+      }
+    }
+    return { accessor, values };
+  };
+  assert(gltf.animations === undefined || Array.isArray(gltf.animations), `${label}: animations must be an array`);
+  for (const [animationIndex, animation] of (gltf.animations ?? []).entries()) {
+    const name = `animation ${animationIndex}`;
+    assert(Array.isArray(animation.samplers) && animation.samplers.length, `${label}: ${name} has no samplers`);
+    assert(Array.isArray(animation.channels) && animation.channels.length, `${label}: ${name} has no channels`);
+    const samplers = animation.samplers.map((sampler, samplerIndex) => {
+      const description = `${name} sampler ${samplerIndex}`;
+      const input = animationSamples(sampler.input, `${description} input`);
+      assert.equal(input.accessor.type, 'SCALAR', `${label}: ${description} input must be SCALAR time values`);
+      input.values.forEach((time, index) => {
+        assert(time >= 0 && (index === 0 || time > input.values[index - 1]), `${label}: ${description} times must be nonnegative and strictly increasing`);
+      });
+      const interpolation = sampler.interpolation ?? 'LINEAR';
+      assert(['LINEAR', 'STEP', 'CUBICSPLINE'].includes(interpolation), `${label}: ${description} has an unsupported interpolation`);
+      return { input: input.accessor, output: animationSamples(sampler.output, `${description} output`).accessor, factor: interpolation === 'CUBICSPLINE' ? 3 : 1 };
+    });
+    const targets = new Set();
+    animation.channels.forEach((channel, channelIndex) => {
+      const description = `${name} channel ${channelIndex}`;
+      reference(channel.sampler, animation.samplers, `${description} sampler`);
+      reference(channel.target?.node, gltf.nodes, `${description} target node`);
+      const targetPath = channel.target.path;
+      assert(['translation', 'rotation', 'scale', 'weights'].includes(targetPath), `${label}: ${description} has an unsupported target path`);
+      const targetKey = `${channel.target.node}:${targetPath}`;
+      assert(!targets.has(targetKey), `${label}: ${description} duplicates an animated node property`);
+      targets.add(targetKey);
+      const { input, output, factor } = samplers[channel.sampler];
+      let outputCount = input.count * factor;
+      let outputType = targetPath === 'rotation' ? 'VEC4' : 'VEC3';
+      if (targetPath === 'weights') {
+        const node = gltf.nodes[channel.target.node];
+        reference(node.mesh, gltf.meshes, `${description} morph mesh`);
+        const primitives = gltf.meshes[node.mesh].primitives;
+        const morphCount = primitives[0].targets?.length ?? 0;
+        assert(morphCount > 0 && primitives.every((primitive) => primitive.targets?.length === morphCount), `${label}: ${description} needs consistent morph targets`);
+        outputType = 'SCALAR';
+        outputCount *= morphCount;
+      }
+      assert.equal(output.type, outputType, `${label}: ${description} output must be ${outputType}`);
+      assert.equal(output.count, outputCount, `${label}: ${description} output count must match time keys and interpolation`);
+    });
+  }
   reference(gltf.scene ?? 0, gltf.scenes, 'default scene');
   assert(gltf.scenes[gltf.scene ?? 0].nodes?.length, `${label}: default scene is empty`);
   for (const node of gltf.scenes[gltf.scene ?? 0].nodes) reference(node, gltf.nodes, 'scene node');
-  return { meshes: gltf.meshes.length, materials: gltf.materials.length, embeddedImages: (gltf.images ?? []).length };
+  return { meshes: gltf.meshes.length, materials: gltf.materials.length, embeddedImages: (gltf.images ?? []).length, animations: (gltf.animations ?? []).length, animationChannels: (gltf.animations ?? []).reduce((count, animation) => count + animation.channels.length, 0) };
 }
 
 export async function validateAvatar3dAssets(root = repositoryRoot) {
-  const manifest = JSON.parse(await readFile(path.join(root, 'src/data/avatarVersions.json'), 'utf8'));
+  const [manifest, directions] = await Promise.all([
+    readFile(path.join(root, 'src/data/avatarVersions.json'), 'utf8').then(JSON.parse),
+    readFile(path.join(root, 'scripts/avatar-3d/directions.json'), 'utf8').then(JSON.parse),
+  ]);
   assert(Array.isArray(manifest) && manifest.length > 0, 'Avatar manifest must be a nonempty array');
   const ids = new Set();
   const versions = new Set();
@@ -134,6 +209,10 @@ export async function validateAvatar3dAssets(root = repositoryRoot) {
     versions.add(entry.version);
     return `turtleand-${entry.version.slice(1)}.glb`;
   });
+  assert.deepEqual(Object.keys(directions).sort(), [...ids].sort(), '3D art directions must match the manifest IDs exactly');
+  for (const [id, direction] of Object.entries(directions)) {
+    assert(typeof direction === 'string' && direction.trim(), `${id}: missing selected art direction`);
+  }
   const directory = path.join(root, 'src/images/avatar/3d');
   assert.deepEqual(await listFiles(directory), [...expectedModels, 'warm.hdr'].sort(), '3D assets must match the manifest exactly, with one shared warm.hdr and no missing or orphan files');
 
@@ -145,7 +224,9 @@ export async function validateAvatar3dAssets(root = repositoryRoot) {
     const sha256 = createHash('sha256').update(bytes).digest('hex');
     assert(!hashes.has(sha256), `${filename}: duplicates ${hashes.get(sha256)}; versions need distinct derivatives`);
     hashes.set(sha256, filename);
-    models.push({ id: manifest[index].id, version: manifest[index].version, filename, rawBytes: bytes.length, gzipBytes: gzipSync(bytes).length, sha256, ...validateGlb(bytes, filename, manifest[index]) });
+    const { id, version } = manifest[index];
+    const identity = { id, version, direction: directions[id] };
+    models.push({ ...identity, filename, rawBytes: bytes.length, gzipBytes: gzipSync(bytes).length, sha256, ...validateGlb(bytes, filename, identity) });
   }
   const environment = await readFile(path.join(directory, 'warm.hdr'));
   const header = environment.subarray(0, 1024).toString('ascii');
@@ -158,5 +239,5 @@ export async function validateAvatar3dAssets(root = repositoryRoot) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const report = await validateAvatar3dAssets();
   if (process.argv.includes('--json')) console.log(JSON.stringify(report, null, 2));
-  else console.log(`Validated ${report.models.length} distinct, self-contained 3D avatar derivatives and the shared Sculpted Warmth HDR environment.`);
+  else console.log(`Validated ${report.models.length} distinct, self-contained 3D avatar derivatives and the shared studio HDR environment.`);
 }

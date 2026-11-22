@@ -1,8 +1,12 @@
 import viewerRuntimeUrl from '@google/model-viewer/dist/model-viewer.min.js?url';
 
-const OPENING_ORBIT = '-28deg 78deg 100%';
-const DWELL_MS = 6500;
-const DEPENDENCY_TIMEOUT_MS = 30000;
+const OPENING_ANGLE = '-43deg 81deg';
+const DWELL_MS = 2600;
+const FADE_MS = 225;
+const INSPECTION_IDLE_MS = 900;
+const MIN_RESUMED_DWELL_MS = 650;
+const DEPENDENCY_TIMEOUT_MS = 20000;
+const MODEL_TIMEOUT_MS = 30000;
 let runtimeImport;
 let runtimeAttempt = 0;
 let graphicsVerified = false;
@@ -69,7 +73,21 @@ function loadStudioEnvironment(source) {
   return request;
 }
 
-/** Optional 3D presentation. The evolution controller retains version and modal ownership. */
+async function downloadModel(source, signal) {
+  const response = await fetch(source, {credentials: 'same-origin', signal});
+  if (!response.ok) throw new Error('3D model unavailable');
+  const buffer = await response.arrayBuffer();
+  // Reject an HTML error response or truncated transfer before the renderer
+  // allocates a scene. Production validation checks the complete glTF structure.
+  if (buffer.byteLength < 12) throw new Error('3D model is invalid');
+  const header = new DataView(buffer, 0, 12);
+  if (header.getUint32(0, true) !== 0x46546c67 || header.getUint32(4, true) !== 2 || header.getUint32(8, true) !== buffer.byteLength) {
+    throw new Error('3D model is invalid');
+  }
+  return new Blob([buffer], {type: 'model/gltf-binary'});
+}
+
+/** Optional 3D presentation. The evolution controller owns the committed chapter. */
 export class AvatarThreeDController {
   constructor(owner, assets, environmentUrl) {
     this.owner = owner;
@@ -79,46 +97,61 @@ export class AvatarThreeDController {
     this.host = this.root.querySelector('[data-evolution-model-host]');
     this.tools = this.root.querySelector('[data-evolution-3d-tools]');
     this.status = this.root.querySelector('[data-evolution-3d-status]');
-    this.buttons = [...this.root.querySelectorAll('[data-evolution-3d-action]')];
+    this.retryButton = this.root.querySelector('[data-evolution-3d-action="retry"]');
     this.mode = '2d';
     this.viewer = null;
+    this.viewerIndex = null;
     this.idleViewer = null;
     this.idleReady = Promise.resolve();
     this.generation = 0;
+    this.pendingIndex = null;
     this.ready = false;
     this.failed = false;
-    this.playing = false;
-    this.rotating = false;
     this.visible = false;
+    this.inspectionPointers = new Set();
+    this.resumeTimer = 0;
     this.attempts = new Map();
     this.message = '';
     this.root.querySelectorAll('[data-evolution-mode]').forEach(button => {
       button.addEventListener('click', () => this.setMode(button.dataset.evolutionMode));
     });
-    this.buttons.forEach(button => button.addEventListener('click', () => {
-      const action = button.getAttribute('data-evolution-3d-action');
-      if (action === 'retry') void this.load();
-      if (action === 'rotation') { this.rotating = !this.rotating; this.update(); }
-      if (action === 'left' || action === 'right') this.turn(action === 'left' ? -25 : 25);
-      if (action === 'reset') this.resetView();
-    }));
+    this.retryButton?.addEventListener('click', () => { void this.load(this.owner.index); });
+    window.addEventListener('pointerup', event => this.releaseInspectionPointer(event), true);
+    window.addEventListener('pointercancel', event => this.releaseInspectionPointer(event), true);
+    window.addEventListener('blur', () => {
+      if (!this.inspectionPointers.size) return;
+      this.inspectionPointers.clear();
+      this.deferTour();
+    });
     new IntersectionObserver(entries => {
       this.visible = entries.some(entry => entry.isIntersecting);
-      if (!this.visible) this.pauseDwell();
-      this.update();
       if (this.visible) this.scheduleDwell();
+      else {
+        this.pauseDwell();
+        this.cancelPrefetch();
+      }
+      this.update();
     }, {threshold: .05}).observe(owner.canvas);
+    new ResizeObserver(() => {
+      if (this.viewer) this.viewer.minCameraOrbit = this.viewFraming().minimum;
+    }).observe(owner.canvas);
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        this.pause();
-        if (this.active) this.dispose();
-      } else if (this.active && !this.viewer) {
-        void this.load();
+      if (document.hidden && this.active) this.dispose();
+      else if (this.active && !this.viewer) {
+        void this.load(this.owner.index);
       }
       this.update();
     });
     owner.reducedMotionQuery.addEventListener('change', () => {
-      if (owner.reducedMotionQuery.matches) this.pause();
+      if (owner.reducedMotionQuery.matches) {
+        this.clearInspection();
+        this.pauseDwell();
+        this.cancelPrefetch();
+        this.interruptAdvance();
+        if (this.snapshotFade) this.clearSnapshot();
+      } else {
+        this.scheduleDwell();
+      }
       this.viewer?.setAttribute('interpolation-decay', owner.reducedMotionQuery.matches ? '0' : '65');
       this.update();
     });
@@ -126,12 +159,29 @@ export class AvatarThreeDController {
   }
 
   get active() { return this.mode === '3d' && this.owner.active; }
+  get tourEnabled() {
+    return this.active && !this.failed && !this.owner.reducedMotionQuery.matches && this.owner.index < this.owner.stages.length - 1;
+  }
+  get inspecting() { return this.inspectionPointers.size > 0 || this.resumeTimer !== 0; }
+  get canRunTour() {
+    return this.tourEnabled && this.visible && !document.hidden && !this.inspecting;
+  }
   get stage() { return this.owner.stages[this.owner.index]; }
   t(key) { return this.owner.translate(`avatar.threeD.${key}`); }
 
+  viewFraming() {
+    const aspect = this.host.clientWidth / Math.max(1, this.host.clientHeight);
+    // Leave enough horizontal room for the full shell and muzzle as they orbit.
+    const minimum = Math.min(130, Math.max(78, Math.ceil(101 / aspect)));
+    return {
+      minimum: `auto 40deg ${minimum}%`,
+      opening: `${OPENING_ANGLE} ${Math.max(84, minimum + 5)}%`,
+    };
+  }
+
   setMode(next) {
     if (!['2d', '3d'].includes(next) || next === this.mode || !this.owner.active || this.owner.loading) return;
-    const resume = this.mode === '2d' ? this.owner.isPlaybackRunning() : this.playing;
+    const resume2d = this.canRunTour;
     this.owner.clearHold();
     this.owner.cancelMotion();
     this.owner.visitId++;
@@ -141,237 +191,432 @@ export class AvatarThreeDController {
     this.owner.paused = false;
     this.mode = next;
     this.owner.showStableStage(this.owner.index);
-    if (next === '3d') {
-      this.playing = resume && !this.owner.reducedMotionQuery.matches;
-      this.rotating = this.playing;
-      void this.load();
-    } else {
+    if (next === '3d') void this.load(this.owner.index);
+    else {
       this.dispose();
-      this.playing = this.rotating = false;
-      if (resume && !this.owner.reducedMotionQuery.matches) this.owner.startAutoplay();
+      if (resume2d && !this.owner.reducedMotionQuery.matches) this.owner.startAutoplay();
     }
     this.update();
   }
 
-  select(index, continuePlaying = false) {
-    this.clearDwell();
-    this.playing = continuePlaying && !this.owner.reducedMotionQuery.matches;
-    if (!continuePlaying) this.rotating = false;
-    if (index === this.owner.index && this.ready) {
-      this.resetView();
+  select(index, automatic = false) {
+    if (!this.active || !this.owner.stages[index]) return;
+    if (!automatic) this.clearDwell();
+    if (index === this.pendingIndex) {
+      // Taking over a pending tour step makes it a manual selection without rereading the model.
+      this.pendingFromTour &&= automatic;
       this.update();
-      this.scheduleDwell();
       return;
     }
-    this.owner.showStableStage(index);
-    this.owner.render(true);
-    void this.load();
+    if (index === this.viewerIndex && this.ready) {
+      this.cancelPending();
+      this.clearSnapshot();
+      this.message = '';
+      this.scheduleDwell();
+      this.update();
+      return;
+    }
+    void this.load(index, automatic);
   }
 
-  togglePlayback() {
-    if (this.owner.reducedMotionQuery.matches) return;
-    if (this.playing || this.rotating) return this.pause();
-    this.playing = this.rotating = true;
-    if (this.owner.index === this.owner.stages.length - 1) this.select(0, true);
-    else this.scheduleDwell();
-    this.update();
+  releaseInspectionPointer(event) {
+    if (this.inspectionPointers.delete(event.pointerId)) this.deferTour();
   }
 
-  pause() {
-    this.playing = this.rotating = false;
+  deferTour() {
+    if (!this.tourEnabled) return;
     this.pauseDwell();
+    clearTimeout(this.resumeTimer);
+    this.resumeTimer = 0;
+    if (!this.inspectionPointers.size) {
+      this.resumeTimer = setTimeout(() => {
+        this.resumeTimer = 0;
+        this.scheduleDwell();
+        this.updateMotion();
+      }, INSPECTION_IDLE_MS);
+    }
+    this.interruptAdvance();
+    this.updateMotion();
+  }
+
+  interruptAdvance() {
+    if (!this.pendingFromTour) return;
+    // Preserve the committed stage if inspection starts as its successor loads.
+    if (this.viewerIndex === null) {
+      void this.load(this.owner.index);
+      return;
+    }
+    this.cancelPending();
+    this.clearSnapshot();
+    this.message = '';
     this.update();
   }
 
-  restart() {
-    this.rotating = !this.owner.reducedMotionQuery.matches;
-    this.select(0, !this.owner.reducedMotionQuery.matches);
+  clearInspection() {
+    clearTimeout(this.resumeTimer);
+    this.resumeTimer = 0;
+    this.inspectionPointers.clear();
   }
 
   clearDwell() {
     clearTimeout(this.dwellTimer);
+    cancelAnimationFrame(this.dwellFrame);
     this.dwellTimer = 0;
-    this.dwellRemaining = 0;
+    this.dwellFrame = 0;
+    this.dwellRemaining = null;
+    this.root.style.setProperty('--evolution-tour-progress', '0');
   }
 
   pauseDwell() {
-    if (this.dwellTimer) this.dwellRemaining = Math.max(1, this.dwellDeadline - performance.now());
+    if (!this.dwellTimer) return;
+    this.dwellRemaining = Math.max(0, this.dwellDeadline - performance.now());
+    this.writeDwellProgress(this.dwellRemaining);
     clearTimeout(this.dwellTimer);
+    cancelAnimationFrame(this.dwellFrame);
     this.dwellTimer = 0;
+    this.dwellFrame = 0;
+  }
+
+  writeDwellProgress(remaining) {
+    const progress = Math.max(0, Math.min(1, 1 - remaining / DWELL_MS));
+    this.root.style.setProperty('--evolution-tour-progress', progress.toFixed(3));
   }
 
   scheduleDwell() {
-    if (!this.active || !this.playing || !this.visible || document.hidden || this.owner.reducedMotionQuery.matches || (!this.ready && !this.failed) || this.dwellTimer) return;
-    if (this.owner.index === this.owner.stages.length - 1) {
-      this.pause();
-      return;
-    }
-    const duration = this.dwellRemaining || DWELL_MS;
+    if (!this.canRunTour || !this.ready || this.pendingIndex !== null || this.dwellTimer) return;
+    const duration = Math.max(this.dwellRemaining ?? DWELL_MS, MIN_RESUMED_DWELL_MS);
     this.dwellDeadline = performance.now() + duration;
     this.dwellTimer = setTimeout(() => {
       this.dwellTimer = 0;
-      if (this.active && this.playing) this.select(this.owner.index + 1, true);
+      this.dwellRemaining = 0;
+      this.writeDwellProgress(0);
+      if (this.canRunTour && this.pendingIndex === null) this.select(this.owner.index + 1, true);
     }, duration);
+    const tick = now => {
+      this.writeDwellProgress(this.dwellDeadline - now);
+      if (this.dwellTimer) this.dwellFrame = requestAnimationFrame(tick);
+    };
+    this.dwellFrame = requestAnimationFrame(tick);
+    this.prefetchNext();
   }
 
-  invalidate() {
-    if (this.pendingAssetId) {
-      // A cancelled in-flight loader promise can remain cached after disconnect.
-      // Only interrupted assets get a fresh URL; completed models stay reusable.
-      this.attempts.set(this.pendingAssetId, (this.attempts.get(this.pendingAssetId) || 0) + 1);
-      this.pendingAssetId = null;
+  prefetchNext() {
+    const index = this.owner.index + 1;
+    if (this.prefetch?.index === index || !this.owner.stages[index]) return;
+    this.cancelPrefetch();
+    const source = this.modelSource(index);
+    const controller = new AbortController();
+    // Keep at most the next transfer, and do so only during a visible 3D tour.
+    // Parse or upload it only after the chapter is actually selected.
+    this.prefetch = {
+      index, source, controller, result: downloadModel(source, controller.signal).catch(() => null),
+    };
+  }
+
+  cancelPrefetch() {
+    this.prefetch?.controller.abort();
+    this.prefetch = null;
+  }
+
+  modelSource(index) {
+    const id = this.owner.stages[index].id;
+    const attempt = this.attempts.get(id) || 0;
+    return `${this.assets[id].modelUrl}${attempt ? `?retry=${attempt}` : ''}`;
+  }
+
+  takeModel(index, source) {
+    const prefetched = this.prefetch?.index === index && this.prefetch.source === source ? this.prefetch : null;
+    if (prefetched) {
+      this.prefetch = null;
+      this.downloadAbort = prefetched.controller;
+      return prefetched.result.then(model => model ?? downloadModel(source, prefetched.controller.signal));
     }
+    this.cancelPrefetch();
+    this.downloadAbort = new AbortController();
+    return downloadModel(source, this.downloadAbort.signal);
+  }
+
+  cancelPending() {
+    this.pendingIndex = null;
+    this.pendingFromTour = false;
     ++this.generation;
-    this.events?.abort();
-    this.events = null;
+    this.downloadAbort?.abort();
+    this.downloadAbort = null;
+    this.loadEvents?.abort();
+    this.loadEvents = null;
     clearTimeout(this.slowTimer);
     clearTimeout(this.failureTimer);
     cancelAnimationFrame(this.frame);
-    this.clearDwell();
-    this.ready = this.failed = false;
-    this.viewer?.removeAttribute('auto-rotate');
-    this.viewer?.setAttribute('aria-hidden', 'true');
-    this.viewer?.setAttribute('tabindex', '-1');
-    this.root.dataset.modelReady = 'false';
-    this.host.setAttribute('aria-hidden', 'true');
+    if (this.viewer && this.viewerIndex === null) {
+      this.viewer.src = null;
+      delete this.viewer.dataset.modelSource;
+    }
+    this.releaseModelUrl();
+  }
+
+  releaseModelUrl() {
+    if (this.modelObjectUrl) URL.revokeObjectURL(this.modelObjectUrl);
+    this.modelObjectUrl = null;
+  }
+
+  clearSnapshot() {
+    this.snapshotFade?.cancel();
+    this.incomingFade?.cancel();
+    this.snapshotFade = this.incomingFade = null;
+    if (this.snapshot) {
+      URL.revokeObjectURL(this.snapshot.src);
+      this.snapshot.remove();
+      this.snapshot = null;
+    }
+    this.viewer?.style.removeProperty('opacity');
+  }
+
+  async captureOutgoing(current) {
+    // Reuse the committed frame if a rapid selection interrupts a model decode.
+    if (this.snapshot && !this.snapshotFade) return;
+    this.clearSnapshot();
+    if (!this.viewer?.loaded || this.viewerIndex === null) return;
+    let snapshot;
+    try {
+      const frame = await this.viewer.toBlob({ mimeType: 'image/png', idealAspect: false });
+      if (!current()) return;
+      snapshot = new Image();
+      snapshot.src = URL.createObjectURL(frame);
+      await snapshot.decode();
+      if (!current()) {
+        URL.revokeObjectURL(snapshot.src);
+        return;
+      }
+      snapshot.alt = '';
+      snapshot.setAttribute('aria-hidden', 'true');
+      snapshot.setAttribute('data-evolution-3d-snapshot', '');
+      Object.assign(snapshot.style, {
+        position: 'absolute', inset: '0', width: '100%', height: '100%',
+        objectFit: 'contain', pointerEvents: 'none',
+      });
+      this.snapshot = snapshot;
+      this.host.append(snapshot);
+    } catch {
+      if (snapshot) URL.revokeObjectURL(snapshot.src);
+    }
+  }
+
+  revealIncoming() {
+    if (!this.snapshot || this.owner.reducedMotionQuery.matches) {
+      this.clearSnapshot();
+      return;
+    }
+    const timing = {duration: FADE_MS, easing: 'ease-out'};
+    this.viewer.style.removeProperty('opacity');
+    this.incomingFade = this.viewer.animate([{opacity: 0}, {opacity: 1}], timing);
+    this.snapshotFade = this.snapshot.animate([{opacity: 1}, {opacity: 0}], timing);
+    this.snapshotFade.onfinish = () => this.clearSnapshot();
   }
 
   dispose() {
-    this.invalidate();
+    this.cancelPending();
+    this.cancelPrefetch();
+    this.clearDwell();
+    this.clearInspection();
+    this.clearSnapshot();
+    this.ready = this.failed = false;
     if (this.viewer) {
       const retired = this.viewer;
       this.viewer = null;
+      this.viewerIndex = null;
+      retired.pause();
       retired.src = null;
       retired.removeAttribute('src');
       retired.removeAttribute('environment-image');
       retired.remove();
-      // Reuse one empty component shell. Disconnect releases its scene; repeatedly
-      // creating this component retained internal listener allocations in v4.3.1.
+      // Reuse one empty component shell. Repeated creation retained listener allocations in v4.3.1.
       this.idleViewer = retired;
       customElements.get('model-viewer').modelCacheSize = 0;
       this.idleReady = new Promise(resolve => setTimeout(resolve, 30));
     }
-    this.host.replaceChildren();
     this.message = '';
   }
 
   close() {
     this.dispose();
     this.mode = '2d';
-    this.playing = this.rotating = false;
     this.update();
   }
 
-  async load() {
-    this.invalidate();
+  getViewer(environment) {
+    if (this.viewer) return this.viewer;
+    const element = this.idleViewer || document.createElement('model-viewer');
+    const firstUse = !this.idleViewer;
+    this.idleViewer = null;
+    this.viewer = element;
+    const framing = this.viewFraming();
+    const attributes = {
+      loading: 'eager', reveal: 'auto',
+      'camera-controls': '', 'disable-pan': '', 'touch-action': 'pan-y',
+      'interaction-prompt': 'none', 'min-camera-orbit': framing.minimum,
+      'max-camera-orbit': 'auto 100deg 135%', 'field-of-view': '30deg',
+      'shadow-intensity': '1.15', 'shadow-softness': '.82', exposure: '1.05',
+      'environment-image': environment,
+      'interpolation-decay': this.owner.reducedMotionQuery.matches ? '0' : '65',
+    };
+    for (const [key, value] of Object.entries(attributes)) element.setAttribute(key, value);
+    if (firstUse) {
+      element.addEventListener('error', event => {
+        if (event.detail?.type === 'webglcontextlost' && this.active && this.viewer === element) {
+          graphicsVerified = false;
+          this.fail(this.pendingIndex ?? this.owner.index);
+        }
+      });
+      element.addEventListener('pointerdown', event => {
+        if (event.button !== 0 || !this.tourEnabled || this.viewerIndex === null) return;
+        this.inspectionPointers.add(event.pointerId);
+        this.deferTour();
+      });
+      element.addEventListener('lostpointercapture', event => this.releaseInspectionPointer(event));
+      element.addEventListener('pointermove', event => {
+        if (event.buttons === 0) this.releaseInspectionPointer(event);
+      });
+      element.addEventListener('wheel', () => {
+        if (this.viewerIndex !== null) this.deferTour();
+      }, {passive: true});
+      element.addEventListener('camera-change', event => {
+        // Saving the outgoing frame can emit camera changes tagged with the
+        // previous input source. Only actual input may start a new hold.
+        if (this.inspecting && this.viewerIndex !== null && event.detail?.source === 'user-interaction') this.deferTour();
+      });
+      element.addEventListener('focusin', () => {
+        if (element.matches(':focus-visible') || element.shadowRoot?.activeElement?.matches(':focus-visible')) this.deferTour();
+      });
+      element.addEventListener('keydown', event => {
+        if (this.viewerIndex === null) return;
+        if (event.key.startsWith('Arrow') || event.key === 'Home') this.deferTour();
+        if (event.key !== 'Home') return;
+        event.preventDefault();
+        element.cameraOrbit = this.viewFraming().opening;
+        element.fieldOfView = '30deg';
+        element.resetTurntableRotation();
+        if (this.owner.reducedMotionQuery.matches) element.jumpCameraToGoal();
+      });
+    }
+    return element;
+  }
+
+  async load(index, fromTour = false) {
+    this.cancelPending();
     if (!this.active) return;
-    this.message = 'loading';
+    this.pendingIndex = index;
+    this.pendingFromTour = fromTour;
+    this.failed = false;
+    this.message = this.ready ? '' : 'loading';
     const token = this.generation;
-    const id = this.stage.id;
-    const attempt = this.attempts.get(id) || 0;
-    this.pendingAssetId = id;
-    const source = `${this.assets[id].modelUrl}${attempt ? `?retry=${attempt}` : ''}`;
-    const current = () => token === this.generation && this.active && this.stage.id === id;
-    const matches = url => url && new URL(url, location.href).href === new URL(source, location.href).href;
-    this.slowTimer = setTimeout(() => { if (current()) { this.message = 'slow'; this.update(); } }, 12000);
-    this.failureTimer = setTimeout(() => { if (current()) this.fail(id, attempt); }, 45000);
+    const id = this.owner.stages[index].id;
+    const source = this.modelSource(index);
+    const current = () => token === this.generation && this.active;
+    this.slowTimer = setTimeout(() => { if (current()) { this.message = 'slow'; this.update(); } }, 4000);
+    this.failureTimer = setTimeout(() => { if (current()) this.fail(index); }, MODEL_TIMEOUT_MS);
     this.update();
     try {
       verifyGraphics();
-      // The separate runtime and studio map are requested only after 3D opt-in.
-      const [, environment] = await Promise.all([loadViewerRuntime(), loadStudioEnvironment(this.environmentUrl)]);
-      await customElements.whenDefined('model-viewer');
+      const [, environment, model] = await Promise.all([
+        loadViewerRuntime(), loadStudioEnvironment(this.environmentUrl), this.takeModel(index, source),
+      ]);
       if (!this.viewer && this.idleViewer) await this.idleReady;
       if (!current()) return;
-      customElements.get('model-viewer').modelCacheSize = 1;
-      const element = this.viewer || this.idleViewer || document.createElement('model-viewer');
-      this.idleViewer = null;
-      this.viewer = element;
-      const attributes = {
-        'camera-controls': '', 'disable-pan': '', 'touch-action': 'pan-y',
-        'interaction-prompt': 'none', 'min-camera-orbit': 'auto 40deg 78%',
-        'max-camera-orbit': 'auto 100deg 135%', 'field-of-view': '30deg',
-        'shadow-intensity': '.55', 'shadow-softness': '.9', exposure: '.95',
-        'environment-image': environment, 'rotation-per-second': '6deg',
-        'auto-rotate-delay': '500', 'aria-hidden': 'true', tabindex: '-1',
-        'interpolation-decay': this.owner.reducedMotionQuery.matches ? '0' : '65',
-      };
-      for (const [key, value] of Object.entries(attributes)) element.setAttribute(key, value);
-      element.cameraOrbit = OPENING_ORBIT;
-      this.events = new AbortController();
-      const signal = this.events.signal;
+      this.downloadAbort = null;
+      if (this.ready) await this.captureOutgoing(current);
+      if (!current()) return;
+
+      const element = this.getViewer(environment);
+      this.viewerIndex = null;
+      if (this.ready && !this.snapshot) this.ready = false;
+      element.pause();
+      element.style.opacity = this.snapshot ? '0' : '';
+      element.cameraOrbit = this.viewFraming().opening;
+      this.modelObjectUrl = URL.createObjectURL(model);
+      const modelSource = `${this.modelObjectUrl}#model.glb`;
+      this.loadEvents = new AbortController();
+      const signal = this.loadEvents.signal;
       element.addEventListener('load', async event => {
-        if (!current() || !matches(event.detail?.url)) return;
+        if (!current() || event.detail?.url !== modelSource) return;
         await element.updateComplete;
-        if (!current() || !matches(element.src)) return;
+        if (!current() || !element.loaded) return;
         this.frame = requestAnimationFrame(() => {
-          this.frame = requestAnimationFrame(() => {
-            if (!current() || !matches(element.src) || !element.loaded) return;
-            clearTimeout(this.slowTimer);
-            clearTimeout(this.failureTimer);
-            element.resetTurntableRotation();
-            this.ready = true;
-            this.pendingAssetId = null;
-            this.message = this.owner.reducedMotionQuery.matches ? 'reduced' : 'ready';
-            element.removeAttribute('aria-hidden');
-            element.removeAttribute('tabindex');
-            this.root.dataset.modelReady = 'true';
-            this.host.removeAttribute('aria-hidden');
-            this.update();
-            this.scheduleDwell();
-            this.root.dispatchEvent(new CustomEvent('avatar-3d:ready', {detail: {id}}));
-          });
+          if (current() && element.src === modelSource && element.loaded) this.commit(element, index, id);
         });
       }, {signal});
-      element.addEventListener('error', () => { if (current()) this.fail(id, attempt); }, {signal});
-      element.addEventListener('camera-change', event => {
-        if (event.detail?.source === 'user-interaction') this.pause();
+      element.addEventListener('error', event => {
+        if (event.detail?.type === 'loadfailure' && current() && element.src === modelSource) this.fail(index);
       }, {signal});
-      element.src = source;
+      customElements.get('model-viewer').modelCacheSize = 1;
+      element.dataset.modelSource = source;
+      element.src = modelSource;
       if (!element.isConnected) this.host.append(element);
       this.update();
     } catch {
-      if (current()) this.fail(id, attempt);
+      if (current()) this.fail(index);
     }
   }
 
-  fail(id, attempt) {
-    this.attempts.set(id, attempt + 1);
-    this.pendingAssetId = null;
+  commit(element, index, id) {
+    clearTimeout(this.slowTimer);
+    clearTimeout(this.failureTimer);
+    this.loadEvents?.abort();
+    this.loadEvents = null;
+    this.releaseModelUrl();
+    element.resetTurntableRotation();
+    element.jumpCameraToGoal();
+    const animations = element.availableAnimations;
+    element.animationName = animations.find(name => /^idle$/i.test(name)) || animations[0];
+    element.animationCrossfadeDuration = 0;
+    element.currentTime = 0;
+    const changed = this.owner.index !== index;
+    const announce = changed && !this.pendingFromTour;
+    this.viewerIndex = index;
+    this.clearDwell();
+    this.pendingIndex = null;
+    this.pendingFromTour = false;
+    this.ready = true;
+    this.message = '';
+    this.owner.showStableStage(index);
+    this.update(announce);
+    if (changed) this.revealIncoming();
+    else this.clearSnapshot();
+    this.scheduleDwell();
+    this.root.dispatchEvent(new CustomEvent('avatar-3d:ready', {detail: {id, index}}));
+  }
+
+  fail(index) {
+    const id = this.owner.stages[index].id;
+    this.attempts.set(id, (this.attempts.get(id) || 0) + 1);
+    const announce = this.owner.index !== index && !this.pendingFromTour;
     this.dispose();
     this.failed = true;
     this.message = 'error';
-    this.update();
-    this.scheduleDwell();
+    this.owner.showStableStage(index);
+    this.update(announce);
   }
 
-  turn(degrees) {
-    if (!this.ready || !this.viewer) return;
-    this.pause();
-    const orbit = this.viewer.getCameraOrbit();
-    this.viewer.cameraOrbit = `${orbit.theta * 180 / Math.PI + degrees}deg ${orbit.phi * 180 / Math.PI}deg ${orbit.radius}m`;
-    if (this.owner.reducedMotionQuery.matches) this.viewer.jumpCameraToGoal();
-  }
-
-  resetView() {
-    if (!this.ready || !this.viewer) return;
-    this.viewer.cameraOrbit = OPENING_ORBIT;
-    this.viewer.fieldOfView = '30deg';
-    this.viewer.resetTurntableRotation();
-    if (this.owner.reducedMotionQuery.matches) this.viewer.jumpCameraToGoal();
-  }
-
-  update() {
+  update(announce = false) {
     this.root.dataset.representation = this.mode;
+    this.root.dataset.modelReady = String(this.ready);
+    if (this.pendingIndex === null) delete this.root.dataset.modelPending;
+    else this.root.dataset.modelPending = String(this.pendingIndex);
     this.root.querySelectorAll('[data-evolution-mode]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.evolutionMode === this.mode)));
     this.tools.hidden = this.mode !== '3d';
     this.owner.canvas?.setAttribute('role', this.mode === '3d' ? 'group' : 'img');
-    const rotating = this.ready && this.active && this.rotating && this.visible && !document.hidden && !this.owner.reducedMotionQuery.matches;
-    this.viewer?.toggleAttribute('auto-rotate', rotating);
+    this.host.setAttribute('aria-hidden', String(!this.ready));
     if (this.viewer) {
+      const operable = this.ready && this.viewerIndex !== null && this.active;
+      if (operable) {
+        this.viewer.removeAttribute('aria-hidden');
+        this.viewer.removeAttribute('tabindex');
+      } else {
+        this.viewer.setAttribute('aria-hidden', 'true');
+        this.viewer.setAttribute('tabindex', '-1');
+      }
       this.viewer.alt = this.t('viewer').replace('{title}', this.owner.locale === 'es' ? this.stage.titleEs : this.stage.title);
       if (this.viewer.dataset.locale !== this.owner.locale) {
-        const a11y = {'interaction-prompt': this.t('help')};
+        const a11y = {'interaction-prompt': this.t('keyboardHelp')};
         for (const direction of ['front', 'right', 'back', 'left']) {
           for (const elevation of ['', 'upper-', 'lower-']) {
             a11y[elevation + direction] = this.t(elevation === 'upper-' ? 'viewAbove' : elevation === 'lower-' ? 'viewBelow' : 'viewPosition')
@@ -382,17 +627,16 @@ export class AvatarThreeDController {
         this.viewer.dataset.locale = this.owner.locale;
       }
     }
+    this.updateMotion();
     if (this.status) this.status.textContent = this.message ? this.t(this.message) : '';
-    this.buttons.forEach(button => {
-      const action = button.getAttribute('data-evolution-3d-action');
-      button.disabled = action !== 'retry' && !this.ready;
-      if (action === 'retry') button.hidden = !this.failed;
-      if (action === 'rotation') {
-        button.disabled ||= this.owner.reducedMotionQuery.matches;
-        button.textContent = this.t(rotating ? 'stopRotation' : 'rotate');
-        button.setAttribute('aria-pressed', String(rotating));
-      }
-    });
-    this.owner.render(false);
+    if (this.retryButton) this.retryButton.hidden = !this.failed;
+    this.owner.render(announce);
+  }
+
+  updateMotion() {
+    if (!this.viewer) return;
+    const animating = this.ready && this.viewerIndex !== null && this.canRunTour && this.viewer.availableAnimations.length > 0;
+    if (animating && this.viewer.paused) this.viewer.play();
+    if (!animating && !this.viewer.paused) this.viewer.pause();
   }
 }

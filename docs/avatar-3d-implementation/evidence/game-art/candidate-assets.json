@@ -1,0 +1,87 @@
+{
+  "models": [
+    {
+      "id": "genesis-shell",
+      "version": "v0.0.1",
+      "filename": "turtleand-0.0.1.glb",
+      "rawBytes": 783548,
+      "gzipBytes": 447453,
+      "sha256": "98156a923b159ff5787081fdf502332911727fb73cb442e2d5e5a586efeabcff",
+      "meshes": 15,
+      "materials": 9,
+      "embeddedImages": 0,
+      "animations": 1,
+      "animationChannels": 5
+    },
+    {
+      "id": "quantum-shell",
+      "version": "v0.0.2",
+      "filename": "turtleand-0.0.2.glb",
+      "rawBytes": 908588,
+      "gzipBytes": 531482,
+      "sha256": "cbd3a48a7d7bc3806d514795842ad761ff78af252c504396b4810fc3a61efc1d",
+      "meshes": 17,
+      "materials": 11,
+      "embeddedImages": 0,
+      "animations": 1,
+      "animationChannels": 5
+    },
+    {
+      "id": "tech-nomad",
+      "version": "v0.0.3",
+      "filename": "turtleand-0.0.3.glb",
+      "rawBytes": 929988,
+      "gzipBytes": 541413,
+      "sha256": "4195fab50f6daa2ac7f14eea72e75b2935bc67c3cc1e14e0b3249458133105d8",
+      "meshes": 20,
+      "materials": 13,
+      "embeddedImages": 0,
+      "animations": 1,
+      "animationChannels": 5
+    },
+    {
+      "id": "network-visitor",
+      "version": "v0.0.4",
+      "filename": "turtleand-0.0.4.glb",
+      "rawBytes": 970560,
+      "gzipBytes": 558422,
+      "sha256": "99d08af72ea1afbad7f125efb88b8ca0012345371d92a7278863e033f08e1163",
+      "meshes": 23,
+      "materials": 13,
+      "embeddedImages": 0,
+      "animations": 1,
+      "animationChannels": 5
+    },
+    {
+      "id": "hydraulic-brace",
+      "version": "v0.1.0",
+      "filename": "turtleand-0.1.0.glb",
+      "rawBytes": 1072320,
+      "gzipBytes": 590125,
+      "sha256": "4e94dd452fc8e40956ab990f9beb92b9ca7a06a5cb8dd6d072f50bc3845f40fd",
+      "meshes": 23,
+      "materials": 13,
+      "embeddedImages": 0,
+      "animations": 1,
+      "animationChannels": 5
+    },
+    {
+      "id": "frontier-cartographer",
+      "version": "v0.1.1",
+      "filename": "turtleand-0.1.1.glb",
+      "rawBytes": 1128992,
+      "gzipBytes": 623275,
+      "sha256": "ea2b52a12ceb06fe1391b0c776ad64ecea1f36998ccb81e9599556c529bb3201",
+      "meshes": 25,
+      "materials": 14,
+      "embeddedImages": 0,
+      "animations": 1,
+      "animationChannels": 5
+    }
+  ],
+  "environment": {
+    "filename": "warm.hdr",
+    "rawBytes": 131121,
+    "gzipBytes": 63787
+  }
+}

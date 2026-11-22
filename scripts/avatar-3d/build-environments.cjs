@@ -4,11 +4,11 @@ const out = path.resolve(__dirname, "../../src/images/avatar/3d");
 fs.mkdirSync(out, { recursive: true });
 const setups = {
   warm: {
-    ambient: [0.28, 0.25, 0.2],
-    key: [5.5, 4.8, 3.7],
-    fill: [1.7, 2.4, 2.4],
-    rim: [2.6, 1.9, 1.2],
-    width: 0.42,
+    ambient: [0.27, 0.26, 0.24],
+    key: [7.6, 6.7, 5.6],
+    fill: [1.5, 1.65, 1.8],
+    rim: [3.2, 4.05, 4.6],
+    width: 0.46,
   },
 };
 function dir(az, el) {

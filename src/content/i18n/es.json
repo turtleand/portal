@@ -146,7 +146,7 @@
   },
   "avatar": {
     "modal": {
-      "badgeLabel": "Evolución del avatar",
+      "badgeLabel": "Turtleand",
       "closeLabel": "Cerrar",
       "ariaLabel": "Galería de Evolución del Avatar de Turtleand",
       "openLabel": "Abrir la galería de evolución del avatar de Turtleand"
@@ -174,20 +174,14 @@
       "representation": "Representación del avatar",
       "original": "Original 2D",
       "dimensional": "Vista 3D",
-      "help": "Arrastra para girar. Usa las flechas para ajustar la vista.",
-      "controls": "Controles de la vista 3D",
-      "left": "Girar a la izquierda",
-      "right": "Girar a la derecha",
-      "rotate": "Girar",
-      "stopRotation": "Detener giro",
-      "reset": "Restablecer vista",
+      "help": "Arrastra para girar",
+      "keyboardHelp": "Usa las flechas del teclado para girar el avatar.",
+      "filmstrip": "Etapas de evolución del avatar",
       "retry": "Reintentar 3D",
-      "loading": "Preparando la vista 3D. El original sigue visible.",
+      "loading": "Cargando la vista 3D…",
       "slow": "La carga continúa. Puedes volver al original 2D.",
       "error": "La vista 3D no está disponible. Puedes ver el original 2D.",
-      "ready": "Vista 3D lista.",
-      "viewer": "Avatar 3D interactivo: {title}",
-      "reduced": "El movimiento está reducido. Usa las flechas para girar el avatar.",
+      "viewer": "Turtleand en 3D, {title}",
       "viewPosition": "Vista desde {direction}.",
       "viewAbove": "Vista desde arriba, {direction}.",
       "viewBelow": "Vista desde abajo, {direction}.",
@@ -206,6 +200,76 @@
     "jsonRegistry": "Registro JSON",
     "opmlExport": "Exportar OPML",
     "rssLabel": "RSS",
-    "surfaceLabel": "Superficie"
+    "surfaceLabel": "Superficie",
+    "descriptions": {
+      "growth": "Ensayos sobre IA, tecnología, crecimiento y autonomía humana.",
+      "handbook": "Principios prácticos para la colaboración entre humanos e IA.",
+      "build": "Ingeniería de software, notas de implementación y razonamiento sobre sistemas.",
+      "lab": "Temas de IA, patrones de agentes y módulos de aprendizaje práctico."
+    }
+  },
+  "home": {
+    "title": "Turtleand | Un poco más de comprensión",
+    "description": "Ideas, historias y herramientas para comprender un poco más. Explora Growth, Handbook, Chronicle, AI Atlas y el ecosistema de Turtleand.",
+    "headline": "Un poco más de comprensión.",
+    "skip": "Ir al contenido",
+    "homeLabel": "Inicio de Turtleand",
+    "navigationLabel": "Navegación principal",
+    "exploreLabel": "Explora Turtleand",
+    "allSpaces": "Todos los espacios",
+    "closeDirectory": "Cerrar directorio",
+    "directoryIntro": "Cada espacio tiene su propio hogar.",
+    "source": "Código",
+    "portalSource": "Código de Portal ↗",
+    "mcpSource": "Servidor MCP ↗",
+    "feeds": "Suscribirse a los escritos ↗",
+    "destinations": {
+      "growth": {
+        "clarifier": "Ideas para pensar con claridad",
+        "description": "Ideas para pensar con claridad",
+        "sourceLabel": "Código fuente de Growth"
+      },
+      "handbook": {
+        "clarifier": "Colaboración entre humanos e IA",
+        "description": "Colaboración entre humanos e IA",
+        "sourceLabel": "Código fuente de Handbook"
+      },
+      "chronicle": {
+        "clarifier": "Historias de autonomía humana",
+        "description": "Historias de autonomía humana",
+        "sourceLabel": "Código fuente de Chronicle"
+      },
+      "atlas": {
+        "clarifier": "Explora el mundo de IA",
+        "description": "Explora el mundo de IA",
+        "sourceLabel": "Código fuente de AI Atlas"
+      },
+      "lab": {
+        "description": "Artículos técnicos y aprendizaje práctico de IA",
+        "sourceLabel": "Código fuente de AI Lab"
+      },
+      "build": {
+        "description": "Artículos técnicos sobre software y sistemas",
+        "sourceLabel": "Código fuente de Build"
+      },
+      "hermes": {
+        "description": "Notas sobre agentes",
+        "sourceLabel": "Código fuente de Hermes Lab"
+      },
+      "chain": {
+        "description": "Sistemas descentralizados",
+        "sourceLabel": "Código fuente de Chain Lab"
+      },
+      "energy": {
+        "description": "Electricidad y sistemas físicos",
+        "sourceLabel": "Código fuente de Energy"
+      },
+      "openclaw": {
+        "description": "Histórico · código archivado",
+        "sourceLabel": "Código fuente de OpenClaw"
+      }
+    },
+    "technicalTitle": "Artículos técnicos",
+    "ecosystemSource": "Explora Turtleand en GitHub ↗"
   }
 }
