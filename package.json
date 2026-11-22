@@ -17,7 +17,7 @@
     "prebuild": "npm run validate:avatar-3d"
   },
   "dependencies": {
-    "@astrojs/netlify": "^8.1.2",
+    "@astrojs/netlify": "^8.2.5",
     "@google/model-viewer": "4.3.1",
     "astro": "^7.1.3"
   },
