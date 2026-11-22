@@ -9,8 +9,9 @@ try{
       if(mode==='3d'){await page.locator(S.mode(mode)).click();await ready(page);}
       for(const index of [5,0,5,0]){
         const initial=await page.locator(S.panel).evaluate(el=>{el.scrollTop=Math.min(100,el.scrollHeight-el.clientHeight);return el.scrollTop;});
-        await page.locator(S.version(index)).evaluate(el=>el.click());if(mode==='3d')await ready(page);
-        const result=await page.evaluate(({panel,index})=>{const button=document.querySelector(`[data-evolution-select="${index}"]`),rail=document.querySelector('[data-evolution-timeline]').parentElement,b=button.getBoundingClientRect(),r=rail.getBoundingClientRect();return{scrollTop:document.querySelector(panel).scrollTop,selectedVisible:b.left>=r.left-.5&&b.right<=r.right+.5,buttonLeft:b.left,buttonRight:b.right,railLeft:r.left,railRight:r.right,scrollLeft:rail.scrollLeft};},{panel:S.panel,index});
+        const selector=mode==='3d'?S.threeDVersion(index):S.version(index);
+        await page.locator(selector).evaluate(el=>el.click());if(mode==='3d')await ready(page);
+        const result=await page.evaluate(({panel,selector,mode})=>{const button=document.querySelector(selector),rail=mode==='3d'?document.querySelector('[data-evolution-3d-filmstrip]'):document.querySelector('[data-evolution-timeline]').parentElement,b=button.getBoundingClientRect(),r=rail.getBoundingClientRect();return{scrollTop:document.querySelector(panel).scrollTop,selectedVisible:button.getAttribute('aria-current')==='step'&&b.left>=r.left-.5&&b.right<=r.right+.5,buttonLeft:b.left,buttonRight:b.right,railLeft:r.left,railRight:r.right,scrollLeft:rail.scrollLeft};},{panel:S.panel,selector,mode});
         check(report,`${lang} ${mode} ${manifest[index].version} reveals marker without vertical scroll`,result.selectedVisible&&Math.abs(result.scrollTop-initial)<1,{initial,...result});
       }
     }

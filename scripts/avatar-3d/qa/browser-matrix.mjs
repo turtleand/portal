@@ -10,7 +10,7 @@ async function contactSheet(buffers,name,width,height){
   for(let i=0;i<buffers.length;i++){
     const left=(i%3)*cellWidth,top=Math.floor(i/3)*(cellHeight+caption);
     items.push({input:await sharp(buffers[i]).resize(cellWidth,cellHeight).png().toBuffer(),left,top:top+caption});
-    items.push({input:Buffer.from(`<svg width="${cellWidth}" height="${caption}"><rect width="100%" height="100%" fill="#102922"/><text x="12" y="18" font-size="14" fill="#fff" font-family="sans-serif">${manifest[i].version} · ${name.includes('-2d-')?'2D canonical':'3D Sculpted Warmth'}</text></svg>`),left,top});
+    items.push({input:Buffer.from(`<svg width="${cellWidth}" height="${caption}"><rect width="100%" height="100%" fill="#102922"/><text x="12" y="18" font-size="14" fill="#fff" font-family="sans-serif">${manifest[i].version} · ${name.includes('-2d-')?'2D canonical':'3D model'}</text></svg>`),left,top});
   }
   await sharp({create:{width:cellWidth*3,height:(cellHeight+caption)*2,channels:4,background:'#102922'}}).composite(items).png().toFile(path.join(evidence,name));
   report.screens.push(name);
@@ -61,14 +61,32 @@ for(const engine of engines){
           if(index){await version(page,index);await ready(page);}
           const found=await state(page);
           check(report,`${prefix} 3D ${manifest[index].version} geometry, text, one viewer`,found.ready==='true'&&found.loaded&&found.viewers===1&&Object.values(found.dimensions||{}).length===3&&Object.values(found.dimensions||{}).every(value=>value>0)&&found.version.includes(manifest[index].version)&&found.title===manifest[index][lang==='es'?'titleEs':'title'],{state:found});
+          if(size.name==='narrow'){
+            const fits=await page.locator(S.model).evaluate(el=>{
+              const {left,right,top,height}=el.getBoundingClientRect();
+              for(let row=1;row<40;row++){
+                const y=top+height*row/40;
+                if(el.positionAndNormalFromPoint(left+2,y)||el.positionAndNormalFromPoint(right-2,y))return false;
+              }
+              return true;
+            });
+            check(report,`${prefix} ${manifest[index].version} clears both horizontal frame edges`,fits);
+          }
           if(process.env.PORTAL_QA_CONTACT_SHEETS==='1'){await page.locator(S.model).scrollIntoViewIfNeeded();modelCaptures.push(await page.screenshot());}
         }
         if(modelCaptures.length)await contactSheet(modelCaptures,`${label}-${engine}-${size.name}-${lang}-3d-lineage.png`,size.width,size.height);
-        check(report,`${prefix} reduced 3D automatic motion disabled`,!(await state(page)).rotating&&await page.locator(S.action('rotation')).isDisabled());
+        check(report,`${prefix} reduced 3D automatic motion stays paused while stages remain selectable`,
+          await page.locator(S.model).evaluate(el=>el.paused&&!el.hasAttribute('auto-rotate'))
+          &&await page.locator(S.threeDVersion(0)).isEnabled());
         const before=await page.locator(S.model).evaluate(el=>el.getCameraOrbit().theta);
-        if(size.name==='narrow')await page.locator(S.action('right')).tap();else await page.locator(S.action('right')).click();
+        const cameraInput=page.locator(S.model).locator('.userInput');
+        await cameraInput.press('ArrowRight');
+        await page.waitForFunction(({selector,before})=>Math.abs(document.querySelector(selector).getCameraOrbit().theta-before)>.1,
+          {selector:S.model,before},{timeout:1500}).catch(()=>{});
         const after=await page.locator(S.model).evaluate(el=>el.getCameraOrbit().theta);
-        await page.locator(S.action('reset')).click();
+        await cameraInput.press('Home');
+        await page.waitForFunction(({selector,before})=>Math.abs(document.querySelector(selector).getCameraOrbit().theta-before)<.02,
+          {selector:S.model,before},{timeout:1500}).catch(()=>{});
         const reset=await page.locator(S.model).evaluate(el=>el.getCameraOrbit().theta);
         check(report,`${prefix} accessible camera controls and reset`,Math.abs(after-before)>.1&&Math.abs(reset-before)<.02,{before,after,reset});
         await page.locator(S.mode('2d')).click();

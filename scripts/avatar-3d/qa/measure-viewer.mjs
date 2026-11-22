@@ -1,6 +1,6 @@
 import { base,label,launch,writeReport,sourceHashes,S,openGallery,ready,version,installDrawProbe,threeDResource } from './shared.mjs';
 const browser=await launch('chromium',true),runs=Number(process.env.PORTAL_QA_RUNS||10);
-const report={at:new Date().toISOString(),base,label,sourceHashes:await sourceHashes(),browser:browser.version(),method:'Fresh browser contexts with actual production client build and local gzip responses. Selected heaviest/latest model; no OS/GPU cache flush. UI-ready event follows model load, component update and two rAF. WebGL calls establish drawing but not native GPU completion or first screen-presentation timestamp.',profiles:[],errors:[]};
+const report={at:new Date().toISOString(),base,label,sourceHashes:await sourceHashes(),browser:browser.version(),method:'Fresh browser contexts with the production client build and local gzip responses. Selected the heaviest model. No OS/GPU cache flush. Measured the avatar-3d:ready event after the viewer updates and the gallery commits the model. WebGL calls establish drawing, not native GPU completion or first screen presentation.',profiles:[],errors:[]};
 try{
   for(const profile of [{name:'desktop',width:1440,height:1000,dpr:1},{name:'narrow-lab',width:390,height:844,dpr:2,downloadMbit:10,rttMs:80,cpuSlowdown:4}]){
     const rows=[];

@@ -13,6 +13,8 @@ node scripts/avatar-3d/qa/browser-inventory.mjs
 node scripts/avatar-3d/qa/browser-matrix.mjs
 node scripts/avatar-3d/qa/canonical-failure.mjs
 node scripts/avatar-3d/qa/failures-and-lifecycle.mjs
+node scripts/avatar-3d/qa/filmstrip-tour.mjs
+node scripts/avatar-3d/qa/loading-and-animation.mjs
 node scripts/avatar-3d/qa/navigation-and-motion.mjs
 node scripts/avatar-3d/qa/timeout-restart-proof.cjs
 node scripts/avatar-3d/qa/timeline-regression.mjs
@@ -25,7 +27,7 @@ PORTAL_QA_LABEL=candidate node scripts/avatar-3d/qa/summarize-performance.mjs
 
 The page measurement script takes ten fresh-context samples for each EN/ES and desktop/390px combination, records supported LCP/CLS/long-task metrics, and records all resource requests. Chrome with ANGLE Metal is used for these measurements on this host; viewport and DPR settings are laboratory conditions, not a physical phone claim. Keep both raw reports when comparing medians. The baseline uses its own build output and candidate uses its own build output.
 
-Reports are written to `docs/avatar-3d-implementation/evidence/`. Set `PORTAL_QA_SOURCE_ROOT` to the baseline checkout during baseline measurements so source hashes refer to the tested snapshot. It defaults to the candidate repository. Record the baseline commit and same-toolchain build separately, and freeze/rebuild the candidate before final evidence collection. Unavailable engines or metrics must be reported explicitly.
+Reports are written to `docs/avatar-3d-implementation/evidence/` by default. Use `PORTAL_QA_EVIDENCE` with an isolated absolute output directory for new reviews. Set `PORTAL_QA_SOURCE_ROOT` to the baseline checkout during baseline measurements so source hashes refer to the tested snapshot. It defaults to the candidate repository. Record the baseline commit and same-toolchain build separately, and freeze/rebuild the candidate before final evidence collection. Unavailable engines or metrics must be reported explicitly.
 
 The shared WebGL probe wraps actual WebGL drawing methods for optional idle/visibility checks. It counts draw submissions, not rAF callback cadence, GPU execution time, or GPU memory. It runs only in QA browser contexts and is never bundled into Portal.
 
@@ -35,4 +37,14 @@ On this macOS WebKit host, Option+Tab enables navigation through all controls. P
 
 The motion script separately records CPU draw-submission duration, animation-frame cadence and GPU draw-batch elapsed time if `EXT_disjoint_timer_query_webgl2` is available. Those metrics are not interchangeable, and none is native screen-presentation latency. Run performance scripts serially with other local browser/heavy workloads idle.
 
+`review-game-art.mjs` captures a contact sheet for each model's six manual camera angles, a sheet of all six default opening views, and fixed-camera neutral, blink and breath poses. It checks actual named rig transforms and saves its results under `game-art/` in the evidence directory. The rig inspection uses model-viewer internals only in the QA harness.
+
+`measure-game-art.mjs` compares the selected latest model in fresh desktop and 390px/DPR2 contexts. The narrow profile simulates 10 Mbit/s, 80 ms latency and 4x CPU throttling. Set `PORTAL_QA_RUNS` (default 3), `PORTAL_QA_LABEL` and `PORTAL_QA_BASE_URL` for each build. It records click-to-ready timing and compressed resource bytes. Use the same renderer, server and build config for baseline and candidate; keep browsers and other heavy work idle while measuring. Software WebGL measurements describe this lab, not a physical phone or hardware GPU.
+
+When normal production builds and static QA builds share a checkout, keep QA output outside `dist/`, for example `coverage/qa-candidate/`. The normal Astro build clears `dist/` and can otherwise interrupt a running QA server.
+
 `canonical-failure.mjs` verifies that a failed canonical SVG cannot cover a ready 3D model or leave its accessible label unavailable. It also checks return to 2D, a failed GLB and explicit retry in both languages. The unavailable state is preserved whenever neither representation can render.
+
+`loading-and-animation.mjs` holds the runtime response to verify that only the selected GLB downloads concurrently, observes cancellation during navigation and close, and checks real `Idle` animation playback, pause, resume, manual inspection and reduced motion. It also verifies each version's resting pose. `PORTAL_QA_CHROMIUM` selects a local Chromium executable; `PORTAL_QA_SOFTWARE_GL=1` explicitly enables SwiftShader for environments without hardware graphics and records that condition. `PORTAL_QA_CASES` can filter cases, but only an unfiltered run proves the full suite.
+
+`filmstrip-tour.mjs` measures the first automatic stage change and snapshot fade in real time. It verifies the 2D request boundary, one-stage warming during the tour, automatic continuation after pointer inspection and keyboard use, a full dwell after manual selection, recovery, and reduced motion. It captures the desktop English and narrow Spanish filmstrip. The same `PORTAL_QA_CASES` filter can run an individual scenario.

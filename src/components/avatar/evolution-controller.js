@@ -75,6 +75,7 @@ class AvatarEvolutionController {
     this.motion = null;
     this.index = 0;
     this.revealedTimelineIndex = -1;
+    this.revealedTimelineMode = '2d';
     this.active = false;
     this.loaded = false;
     this.loading = false;
@@ -121,6 +122,12 @@ class AvatarEvolutionController {
     this.restartButton = this.getButton('restart');
     this.playLabel = this.root.querySelector('[data-evolution-play-label]');
     this.playIcon = this.root.querySelector('[data-evolution-play-icon]');
+    this.threeDMarkers = [...this.root.querySelectorAll('[data-evolution-3d-marker]')];
+    this.threeDFilmstrip = this.root.querySelector('[data-evolution-3d-filmstrip]');
+    this.threeDTitle = this.root.querySelector('[data-evolution-3d-title]');
+    this.threeDDescription = this.root.querySelector('[data-evolution-3d-description]');
+    this.threeDMeta = this.root.querySelector('[data-evolution-3d-meta]');
+    this.threeDProgress = this.root.querySelector('[data-evolution-3d-progress]');
 
     if (!this.stages.length || !(this.stageHost instanceof HTMLElement)) return;
     this.threeD = new AvatarThreeDController(this, threeDAssets, environmentUrl);
@@ -141,6 +148,12 @@ class AvatarEvolutionController {
     this.restartButton?.addEventListener('click', () => this.restart());
     this.root.querySelectorAll('[data-evolution-select]').forEach(button => {
       button.addEventListener('click', () => this.navigate(Number(button.getAttribute('data-evolution-select')) - this.index));
+    });
+    this.threeDFilmstrip?.querySelectorAll('[data-evolution-3d-select]').forEach(button => {
+      button.addEventListener('click', () => this.threeD.select(Number(button.getAttribute('data-evolution-3d-select'))));
+    });
+    this.threeDFilmstrip?.addEventListener('focusin', event => {
+      if (event.target instanceof HTMLElement && event.target.matches(':focus-visible')) this.threeD.deferTour();
     });
 
     const modal = this.root.closest('[data-avatar-modal]');
@@ -332,7 +345,7 @@ class AvatarEvolutionController {
   }
 
   togglePlayback() {
-    if (this.threeD.mode === '3d') return this.threeD.togglePlayback();
+    if (this.threeD.mode === '3d') return;
     if (this.reducedMotionQuery.matches || this.fallbackMode || this.loading) return;
     const isRunning = !this.paused && (
       this.autoplay ||
@@ -370,8 +383,8 @@ class AvatarEvolutionController {
   }
 
   restart() {
+    if (this.threeD.mode === '3d') return;
     this.revealedTimelineIndex = -1;
-    if (this.threeD.mode === '3d') return this.threeD.restart();
     this.clearHold();
     this.cancelMotion();
     this.visitId += 1;
@@ -1027,24 +1040,14 @@ class AvatarEvolutionController {
         .replace('{total}', total);
     }
 
-    this.markers.forEach((marker, markerIndex) => {
-      if (marker instanceof HTMLElement) {
-        marker.dataset.active = String(markerIndex === this.index);
-        const button = marker.querySelector('button');
-        const item = this.stages[markerIndex];
-        button?.setAttribute('aria-label', `${item.version}: ${this.locale === 'es' ? item.titleEs : item.title}`);
-        if (markerIndex === this.index) button?.setAttribute('aria-current', 'step');
-        else button?.removeAttribute('aria-current');
-        if (button) button.disabled = this.loading || this.motion?.type === 'transition';
-      }
-    });
-    this.revealTimelineMarker();
-
     const in3d = this.threeD?.mode === '3d';
+    this.markers.forEach((marker, index) => this.renderStageMarker(marker, index, this.loading || this.motion?.type === 'transition'));
+    if (in3d) this.renderFilmstrip(title, description, stage, current, total);
+    this.revealTimelineMarker();
     this.root.querySelectorAll('[data-evolution-mode]').forEach(button => {
       if (button instanceof HTMLButtonElement) button.disabled = this.loading;
     });
-    const showPause = in3d ? this.threeD.playing || this.threeD.rotating : !this.paused && (
+    const showPause = !this.paused && (
       this.autoplay ||
       Boolean(this.motion) ||
       Boolean(this.holdId) ||
@@ -1057,7 +1060,7 @@ class AvatarEvolutionController {
     if (this.playButton) {
       const label = this.translate(showPause ? 'avatar.evolution.pause' : 'avatar.evolution.play');
       this.playButton.setAttribute('aria-label', label);
-      this.playButton.disabled = this.loading || (!in3d && this.fallbackMode) || this.reducedMotionQuery.matches;
+      this.playButton.disabled = this.loading || this.fallbackMode || this.reducedMotionQuery.matches;
     }
     const transitionActive = this.motion?.type === 'transition';
     if (this.previousButton) this.previousButton.disabled = this.loading || (!in3d && transitionActive) || this.index === 0;
@@ -1069,10 +1072,47 @@ class AvatarEvolutionController {
     return document.documentElement.lang.toLowerCase().startsWith('es') ? 'es' : 'en';
   }
 
+  /** @param {Element} marker @param {number} index @param {boolean} disabled */
+  renderStageMarker(marker, index, disabled) {
+    if (!(marker instanceof HTMLElement)) return;
+    const stage = this.stages[index];
+    const name = this.locale === 'es' ? stage.titleEs : stage.title;
+    const active = index === this.index;
+    marker.dataset.active = String(active);
+    const button = marker.querySelector('button');
+    if (button) {
+      button.setAttribute('aria-label', `${stage.version}: ${name}`);
+      if (active) button.setAttribute('aria-current', 'step');
+      else button.removeAttribute('aria-current');
+      button.disabled = disabled;
+    }
+    const thumbnailTitle = marker.querySelector('[data-evolution-3d-thumbnail-title]');
+    if (thumbnailTitle) thumbnailTitle.textContent = name;
+  }
+
+  /** @param {string} title @param {string} description @param {AvatarEvolutionStage} stage @param {string} current @param {string} total */
+  renderFilmstrip(title, description, stage, current, total) {
+    if (this.threeDTitle) this.threeDTitle.textContent = title;
+    if (this.threeDDescription) this.threeDDescription.textContent = description;
+    if (this.threeDMeta) this.threeDMeta.textContent = `${stage.version} • ${stage.date}`;
+    if (this.threeDProgress) {
+      this.threeDProgress.textContent = `${current} / ${total}`;
+      this.threeDProgress.setAttribute('aria-label', this.translate('avatar.evolution.progress')
+        .replace('{current}', current).replace('{total}', total));
+    }
+    this.threeDMarkers.forEach((marker, index) => {
+      this.renderStageMarker(marker, index, false);
+      if (marker instanceof HTMLElement) marker.dataset.pending = String(index !== this.index && index === this.threeD.pendingIndex);
+      const image = marker.querySelector('img[data-src]');
+      if (image instanceof HTMLImageElement && image.dataset.src && !image.hasAttribute('src')) image.src = image.dataset.src;
+    });
+  }
+
   revealTimelineMarker() {
-    if (!this.active || this.revealedTimelineIndex === this.index) return;
-    const marker = this.markers[this.index];
-    const scroller = marker?.closest('[data-evolution-timeline]')?.parentElement;
+    const mode = this.threeD?.mode ?? '2d';
+    if (!this.active || (this.revealedTimelineIndex === this.index && this.revealedTimelineMode === mode)) return;
+    const marker = (mode === '3d' ? this.threeDMarkers : this.markers)[this.index];
+    const scroller = mode === '3d' ? this.threeDFilmstrip : marker?.closest('[data-evolution-timeline]')?.parentElement;
     if (!(marker instanceof HTMLElement) || !(scroller instanceof HTMLElement) || !scroller.clientWidth) return;
     const selected = marker.getBoundingClientRect();
     const visible = scroller.getBoundingClientRect();
@@ -1080,6 +1120,7 @@ class AvatarEvolutionController {
     if (selected.left < visible.left) scroller.scrollLeft += selected.left - visible.left;
     else if (selected.right > visible.right) scroller.scrollLeft += selected.right - visible.right;
     this.revealedTimelineIndex = this.index;
+    this.revealedTimelineMode = mode;
   }
 
   /** @param {string} key */

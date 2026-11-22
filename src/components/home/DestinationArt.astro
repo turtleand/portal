@@ -1,0 +1,42 @@
+---
+interface Props { destination: 'growth' | 'handbook' | 'chronicle' | 'atlas' | string }
+const { destination } = Astro.props;
+const artwork = {
+  growth: {
+    source: 'tree', desktop: 'translate(110 13) scale(.98)', mobile: 'translate(178 10) scale(.46)',
+    desktopHit: 'M131 178 L178 79 L253 0 L338 4 L408 57 L478 149 L498 251 L459 329 L458 377 L354 420 L169 396 L135 342Z',
+    mobileHit: 'M185 70 L211 28 L249 3 L292 8 L325 46 L349 100 L349 159 L356 192 L317 206 L201 196 L190 166Z',
+  },
+  handbook: {
+    source: 'book', desktop: 'translate(640 371) scale(1)', mobile: 'translate(105 254) scale(0.7)',
+    desktopHit: 'M572.93 338.07 L632.68 346.61 L659.51 330.76 L725.37 336.85 L730.24 389.29 L714.39 417.34 L693.66 499.05 L583.9 489.29 L583.9 410.02Z',
+    mobileHit: 'M58.69 230.31 L93.15 240 L120.08 226 L157.77 231.38 L168.54 265.85 L155.62 283.08 L142.69 343.38 L65.15 334.77 L68.38 282Z',
+  },
+  chronicle: {
+    source: 'room-scene', desktop: 'translate(1020 365) scale(0.45)', mobile: 'translate(300 465) scale(0.25)',
+    desktopHit: 'M1020 378.4 L1078.88 365 L1097.07 375.53 L1097.07 475.11 L1104.73 476.06 L1104.73 481.33 L1026.22 491.38 L1017.61 483.24 L1017.61 472.71 L1020 472.23Z',
+    mobileHit: 'M300 472.78 L332.78 465 L342.78 471.11 L342.78 526.11 L347.22 526.67 L347.22 530 L310 535.56 L310 512.78 L300 512.78Z',
+  },
+  atlas: {
+    source: 'islands', desktop: 'translate(690 62) scale(1.75)', mobile: 'translate(205 365) scale(0.69)',
+    desktopHit: 'M656.13 148.56 L765.27 118.45 L891.34 58.24 L1017.42 45.06 L1096.45 99.63 L1132.2 184.31 L1092.69 285.92 L951.56 295.33 L808.55 244.53 L673.06 238.88Z',
+    mobileHit: 'M194.96 395.11 L235.11 380.05 L282.78 362.49 L331.71 358.73 L363.07 382.56 L379.38 415.18 L361.82 454.07 L306.62 455.33 L251.42 436.51 L199.98 435.25Z',
+  },
+}[destination];
+---
+{artwork && <>
+  <svg class="scene destination-art scene-desktop" viewBox="0 0 1280 610" aria-hidden="true" focusable="false">
+    {destination === 'handbook' ? <g>
+      <g class="art-visual"><use href="#landscape-book-pages" transform={artwork.desktop} /></g>
+      <use href="#landscape-book-pedestal" transform={artwork.desktop} />
+    </g> : <g class="art-visual"><use href={`#landscape-${artwork.source}`} transform={artwork.desktop} /></g>}
+    <path class="art-hit" d={artwork.desktopHit} />
+  </svg>
+  <svg class="scene destination-art scene-mobile" viewBox="0 0 390 555" aria-hidden="true" focusable="false">
+    {destination === 'handbook' ? <g mask="url(#landscape-book-terrace-mask)">
+      <g class="art-visual"><use href="#landscape-book-pages" transform={artwork.mobile} /></g>
+      <use href="#landscape-book-pedestal" transform={artwork.mobile} />
+    </g> : <g class="art-visual"><use href={`#landscape-${artwork.source}`} transform={artwork.mobile} /></g>}
+    <path class="art-hit" d={artwork.mobileHit} />
+  </svg>
+</>}

@@ -139,8 +139,15 @@ const archivedVersions = rasterReferenceFiles.map((filename) => {
 assert.deepEqual(archivedVersions, expectedVersionSet, 'Expected exactly one archived raster reference for every avatar version');
 
 const avatarAssetFiles = await listFiles(avatarDirectory);
+const filmstripThumbnails = versions.map(version => `3d-thumbnails/turtleand-${version}.webp`).sort();
+const actualThumbnails = avatarAssetFiles.filter(filename => filename.startsWith('3d-thumbnails/')).sort();
+assert.deepEqual(actualThumbnails, filmstripThumbnails, 'Expected one 3D filmstrip thumbnail per avatar version');
+for (const filename of actualThumbnails) {
+  const bytes = await readFile(path.join(avatarDirectory, filename));
+  assert(bytes.toString('ascii', 0, 4) === 'RIFF' && bytes.toString('ascii', 8, 12) === 'WEBP', `${filename}: expected WebP image data`);
+}
 const rasterFilesOutsideArchive = avatarAssetFiles.filter(
-  (filename) => /\.(?:png|jpe?g|webp)$/i.test(filename) && !filename.startsWith('archive/raster/'),
+  (filename) => /\.(?:png|jpe?g|webp)$/i.test(filename) && !filename.startsWith('archive/raster/') && !filmstripThumbnails.includes(filename),
 );
 assert.deepEqual(rasterFilesOutsideArchive, [], 'Avatar raster references must live only in archive/raster');
 
@@ -171,7 +178,7 @@ const localeDictionaries = {
 };
 assert(!('tabs' in localeDictionaries.en.avatar), 'English avatar translations still expose obsolete gallery tabs');
 assert(!('tabs' in localeDictionaries.es.avatar), 'Spanish avatar translations still expose obsolete gallery tabs');
-for (const section of ['modal', 'evolution']) {
+for (const section of ['modal', 'evolution', 'threeD']) {
   const english = localeDictionaries.en.avatar[section];
   const spanish = localeDictionaries.es.avatar[section];
   assert.deepEqual(Object.keys(spanish).sort(), Object.keys(english).sort(), `${section}: English and Spanish keys differ`);
@@ -291,4 +298,4 @@ versions.forEach((version) => {
   assert.equal(poseGeometry.get(version)?.size, walkPoses.length, `v${version}: expected three unique pose geometries`);
 });
 
-console.log(`Validated ${canonicalFiles.length} SVG-first avatar versions, ${expectedWalkingFiles.length} articulated walking poses, and ${rasterReferenceFiles.length} archived raster references.`);
+console.log(`Validated ${canonicalFiles.length} SVG-first avatar versions, ${expectedWalkingFiles.length} articulated walking poses, ${rasterReferenceFiles.length} archived references, and ${actualThumbnails.length} 3D filmstrip thumbnails.`);

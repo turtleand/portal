@@ -1,0 +1,632 @@
+{
+  "at": "2026-10-10T14:43:23.563Z",
+  "base": "http://127.0.0.1:4391",
+  "label": "game-art",
+  "sourceHashes": {
+    "src/components/avatar/three-d-controller.js": "54099632b0980f59558a386a4dac504aa167bc21d788d7d14c54f7dcf7cfdea3",
+    "src/components/avatar/evolution-controller.js": "3c5cce5788a44a33f9518f387ec916a8d9950886b4e4d5dd87f8b1d4bebd7501",
+    "src/components/avatar/AnimatedAvatarGallery.astro": "0af87f5b337de45ef4f0b8f6b304d5d7505d39afe7bf9ecb40dc1cfcb52766df",
+    "src/components/avatar/modal-controller.js": "ba5e1c3595cc5fe1a4f8a936ba06c2cc8a5240b4f9b00cf59d991ec06282c253",
+    "src/data/avatar3d.ts": "5442022e9bdffb64b404043f4da48a8b7668a2e1a8a9b47a62274b3c52123588",
+    "package-lock.json": "b927b8f5811e9359091fda75975b07e65830aabce78121ad50fe435ecf01d9c0",
+    "src/images/avatar/3d/turtleand-0.0.1.glb": "98156a923b159ff5787081fdf502332911727fb73cb442e2d5e5a586efeabcff",
+    "src/images/avatar/3d/turtleand-0.0.2.glb": "cbd3a48a7d7bc3806d514795842ad761ff78af252c504396b4810fc3a61efc1d",
+    "src/images/avatar/3d/turtleand-0.0.3.glb": "4195fab50f6daa2ac7f14eea72e75b2935bc67c3cc1e14e0b3249458133105d8",
+    "src/images/avatar/3d/turtleand-0.0.4.glb": "99d08af72ea1afbad7f125efb88b8ca0012345371d92a7278863e033f08e1163",
+    "src/images/avatar/3d/turtleand-0.1.0.glb": "4e94dd452fc8e40956ab990f9beb92b9ca7a06a5cb8dd6d072f50bc3845f40fd",
+    "src/images/avatar/3d/turtleand-0.1.1.glb": "ea2b52a12ceb06fe1391b0c776ad64ecea1f36998ccb81e9599556c529bb3201",
+    "src/images/avatar/3d/warm.hdr": "a4244c1b6983bb1fe2a5e0f381dc3f3f56ae815524bc28c4c26aef9e802c603e"
+  },
+  "browser": "154.0.8037.57",
+  "scope": "Chrome production client QA build; injected network/graphics faults and observed draw submissions. No GPU duration or memory claim.",
+  "checks": [
+    {
+      "name": "Canonical SVG remains visible while selected GLB is delayed",
+      "pass": true
+    },
+    {
+      "name": "Old model completion cannot replace latest selected version",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "true",
+        "open": true,
+        "version": "v0.1.1 • 2026-06-25",
+        "title": "The Frontier Cartographer",
+        "description": "Maps the frontier and turns changing terrain into direction.",
+        "lang": "en",
+        "viewers": 1,
+        "modelSrc": "/_astro/turtleand-0.1.1.D0ryH9OL.glb",
+        "loaded": true,
+        "dimensions": {
+          "x": 2.232379913330078,
+          "y": 2.1185899102687835,
+          "z": 3.4744875249266625
+        },
+        "rotating": false,
+        "status": "Motion is reduced. Turn the avatar with the arrow controls.",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "Delayed model and latest selection no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "Model failure preserves selected canonical SVG and retry",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "false",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "3D is unavailable. The 2D original remains available.",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "Retry recovers the failed selected model",
+      "pass": true
+    },
+    {
+      "name": "Missing model and explicit retry no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "Decoder failure returns a usable selected canonical SVG",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "false",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "3D is unavailable. The 2D original remains available.",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "Gallery navigation survives decode failure",
+      "pass": true
+    },
+    {
+      "name": "Malformed GLB no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "blocked HDR returns selected canonical fallback",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "false",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "3D is unavailable. The 2D original remains available.",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "blocked HDR explicit retry recovers lighting and model",
+      "pass": true
+    },
+    {
+      "name": "blocked HDR environment and retry no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "malformed HDR returns selected canonical fallback",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "false",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "3D is unavailable. The 2D original remains available.",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "malformed HDR explicit retry recovers lighting and model",
+      "pass": true
+    },
+    {
+      "name": "malformed HDR environment and retry no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "Renderer import failure retains canonical and controls",
+      "pass": true
+    },
+    {
+      "name": "Explicit retry recovers renderer import",
+      "pass": true
+    },
+    {
+      "name": "Runtime import failure no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "Late loads cannot reopen or recreate a closed viewer",
+      "pass": true,
+      "state": {
+        "mode": "2d",
+        "ready": "false",
+        "open": false,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "Reopen starts canonical first stage in 2D",
+      "pass": true
+    },
+    {
+      "name": "3D remains usable after interrupted open/close",
+      "pass": true
+    },
+    {
+      "name": "Rapid mode changes and close while loading no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "Late canonical activation cannot silently reset a user-selected 3D version",
+      "pass": true,
+      "selectionGated": true,
+      "state": {
+        "mode": "2d",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "Initial canonical loading race no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "Unavailable graphics leaves selected canonical and usable navigation",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "false",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "3D is unavailable. The 2D original remains available.",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "2D navigation works without WebGL",
+      "pass": true
+    },
+    {
+      "name": "Unsupported graphics no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "Context loss returns canonical fallback",
+      "pass": true,
+      "state": {
+        "mode": "3d",
+        "ready": "false",
+        "open": true,
+        "version": "v0.0.1 • 2025-03-10",
+        "title": "The Genesis Shell",
+        "description": "The beginning of the journey with innocence and wonder.",
+        "lang": "en",
+        "viewers": 0,
+        "dimensions": null,
+        "status": "3D is unavailable. The 2D original remains available.",
+        "canonical": [
+          {
+            "index": "0",
+            "svg": true,
+            "pose": "rest"
+          }
+        ],
+        "overflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "name": "Context restoration and explicit retry recover 3D",
+      "pass": true
+    },
+    {
+      "name": "Real WebGL context loss no unhandled page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "Paused settled viewer submits no WebGL draws",
+      "pass": true,
+      "draws": 0
+    },
+    {
+      "name": "Active turntable submits WebGL draws",
+      "pass": true,
+      "draws": 32
+    },
+    {
+      "name": "Main pause stops turntable WebGL draw work",
+      "pass": true,
+      "draws": 0
+    },
+    {
+      "name": "Synthetic hidden-document branch stops WebGL draws",
+      "pass": true,
+      "draws": 0,
+      "synthetic": true
+    },
+    {
+      "name": "Closed gallery submits no WebGL draws",
+      "pass": true,
+      "draws": 0
+    },
+    {
+      "name": "Twenty cycles retain no active viewers and stabilize DOM/listeners",
+      "pass": true,
+      "tail": [
+        {
+          "cycle": 16,
+          "heap": 8158760,
+          "documents": 7,
+          "nodes": 6606,
+          "jsEventListeners": 80,
+          "viewers": 0
+        },
+        {
+          "cycle": 17,
+          "heap": 8172360,
+          "documents": 7,
+          "nodes": 6606,
+          "jsEventListeners": 80,
+          "viewers": 0
+        },
+        {
+          "cycle": 18,
+          "heap": 8017096,
+          "documents": 7,
+          "nodes": 6606,
+          "jsEventListeners": 80,
+          "viewers": 0
+        },
+        {
+          "cycle": 19,
+          "heap": 8022920,
+          "documents": 7,
+          "nodes": 6606,
+          "jsEventListeners": 80,
+          "viewers": 0
+        },
+        {
+          "cycle": 20,
+          "heap": 8033908,
+          "documents": 7,
+          "nodes": 6606,
+          "jsEventListeners": 80,
+          "viewers": 0
+        }
+      ]
+    },
+    {
+      "name": "Draw work and twenty lifecycle cycles no unhandled page errors",
+      "pass": true,
+      "errors": []
+    }
+  ],
+  "cases": [
+    {
+      "name": "Delayed model and latest selection",
+      "errors": []
+    },
+    {
+      "name": "Missing model and explicit retry",
+      "errors": []
+    },
+    {
+      "name": "Malformed GLB",
+      "errors": []
+    },
+    {
+      "name": "blocked HDR environment and retry",
+      "errors": []
+    },
+    {
+      "name": "malformed HDR environment and retry",
+      "errors": []
+    },
+    {
+      "name": "Runtime import failure",
+      "errors": []
+    },
+    {
+      "name": "Rapid mode changes and close while loading",
+      "errors": []
+    },
+    {
+      "name": "Initial canonical loading race",
+      "errors": []
+    },
+    {
+      "name": "Unsupported graphics",
+      "errors": []
+    },
+    {
+      "name": "Real WebGL context loss",
+      "errors": []
+    },
+    {
+      "name": "Actual headless tab visibility",
+      "available": false,
+      "reason": "Browser keeps both headless pages visible; synthetic visibility branch check recorded separately."
+    },
+    {
+      "name": "Draw work and twenty lifecycle cycles",
+      "errors": []
+    }
+  ],
+  "errors": [],
+  "lifecycle": {
+    "method": "20 full-lineage cycles; close, 500ms settle, forced CDP GC, JS heap/DOM counters. Draw probe retains renderer contexts; no GPU disposal claim.",
+    "cycles": [
+      {
+        "cycle": 1,
+        "heap": 7287520,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 2,
+        "heap": 7564456,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 3,
+        "heap": 7639840,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 4,
+        "heap": 7696544,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 5,
+        "heap": 7715044,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 6,
+        "heap": 7748336,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 7,
+        "heap": 7843584,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 8,
+        "heap": 7941232,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 9,
+        "heap": 7972300,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 10,
+        "heap": 7986652,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 11,
+        "heap": 8040556,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 12,
+        "heap": 8052532,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 13,
+        "heap": 8100968,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 14,
+        "heap": 8140384,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 15,
+        "heap": 8148144,
+        "documents": 7,
+        "nodes": 6613,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 16,
+        "heap": 8158760,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 17,
+        "heap": 8172360,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 18,
+        "heap": 8017096,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 19,
+        "heap": 8022920,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      },
+      {
+        "cycle": 20,
+        "heap": 8033908,
+        "documents": 7,
+        "nodes": 6606,
+        "jsEventListeners": 80,
+        "viewers": 0
+      }
+    ]
+  }
+}
