@@ -22,7 +22,7 @@
     "astro": "^7.4.13"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.3.3",
+    "@tailwindcss/postcss": "^4.3.5",
     "autoprefixer": "^10.7.0",
     "postcss": "^8.5.33",
     "tailwindcss": "^4.3.3",
